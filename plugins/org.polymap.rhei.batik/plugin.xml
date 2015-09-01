@@ -20,7 +20,7 @@
             name="Batik Default">
       </theme>
       <!-- Done via SASS import -->
-      <!--themeContribution
+      <themeContribution
             file="resources/css/default/batik.css"
             themeId="org.polymap.rhei.batik.theme">
       </themeContribution>
@@ -35,14 +35,14 @@
       <themeContribution
             file="resources/css/default/table.css"
             themeId="org.polymap.rhei.batik.theme">
-      </themeContribution-->
+      </themeContribution>
       <theme
             file="resources/css_old/md/default-rap23.css"
             id="org.polymap.rhei.batik.materialDesign"
             name="Material Design">
       </theme>
       <!-- Done via SASS import -->
-      <!--themeContribution
+      <themeContribution
             file="resources/css_old/md/batik.css"
             themeId="org.polymap.rhei.batik.materialDesign">
       </themeContribution>
@@ -57,7 +57,7 @@
       <themeContribution
             file="resources/css_old/md/messages.css"
             themeId="org.polymap.rhei.batik.materialDesign">
-      </themeContribution-->
+      </themeContribution>
    </extension>
    <extension
          point="org.eclipse.rap.ui.branding">
