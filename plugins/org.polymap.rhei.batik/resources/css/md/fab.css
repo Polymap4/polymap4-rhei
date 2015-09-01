@@ -1,5 +1,5 @@
 /* FAB theme */
-
+/* line 3, ../../sass/md/fab.scss */
 Button.batik-panel-fab {
   background-image: none;
   background-repeat: repeat;
@@ -13,10 +13,14 @@ Button.batik-panel-fab {
   opacity: 1;
   text-decoration: none;
   box-shadow: 0px 3px 4px #c0c0c0;
-  background-color: #81CC39;  /*#60A7CA;*/  /*5a9cbd;*/
+  background-color: #81CC39;
+  /*#60A7CA;*/
+  /*5a9cbd;*/
 }
+
+/* line 18, ../../sass/md/fab.scss */
 Button:hover.batik-panel-fab {
-  background-color: #6eb02e; /*#a0a0a0;*/  /*5a9cbd;*/
-}
-Button:pressed.batik-panel-fab {
+  background-color: #6eb02e;
+  /*#a0a0a0;*/
+  /*5a9cbd;*/
 }

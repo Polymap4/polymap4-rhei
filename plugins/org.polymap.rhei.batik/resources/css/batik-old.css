@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*******************************************************************************
  * Copyright (c) 2012 EclipseSource and others.
  * All rights reserved. This program and the accompanying materials
@@ -8,19 +9,22 @@
  * Contributors:
  *    EclipseSource - initial API and implementation
  ******************************************************************************/
-
 /*! fonts - Einbindung über additionalHeaders */
-
 /* Custom theme for all widgets */
- * {
+/* line 15, ../sass/batik-old.scss */
+* {
   color: #222222;
   background-color: #fff;
   background-image: none;
-  font: 14px/120%"Open Sans", Arial, sans-serif;
+  font: 14px/120% "Open Sans", Arial, sans-serif;
 }
+
+/* line 21, ../sass/batik-old.scss */
 *:disabled {
   color: #cdcdcd;
 }
+
+/* line 24, ../sass/batik-old.scss */
 Display {
   rwt-shadow-color: #cdcdcd;
   rwt-highlight-color: #ffffff;
@@ -29,25 +33,31 @@ Display {
   rwt-thinborder-color: #fff;
   rwt-selectionmarker-color: #fec83c;
   rwt-infobackground-color: #ffffff;
-  rwt-error-image: url(resources/icons/rap/dialog/error.png );
-  rwt-information-image: url(resources/icons/rap/dialog/information.png );
-  rwt-question-image: url(resources/icons/rap/dialog/question.png );
-  rwt-warning-image: url(resources/icons/rap/dialog/warning.png );
-  rwt-working-image: url(resources/icons/rap/dialog/information.png );
-  rwt-fontlist: 14px"Open Sans", 'Segoe UI', Corbel, Calibri, Tahoma, 'Lucida Sans Unicode';
+  rwt-error-image: url(resources/icons/rap/dialog/error.png);
+  rwt-information-image: url(resources/icons/rap/dialog/information.png);
+  rwt-question-image: url(resources/icons/rap/dialog/question.png);
+  rwt-warning-image: url(resources/icons/rap/dialog/warning.png);
+  rwt-working-image: url(resources/icons/rap/dialog/information.png);
+  rwt-fontlist: 14px "Open Sans", "Segoe UI", Corbel, Calibri, Tahoma, "Lucida Sans Unicode";
   /*background-image: url(resources/icons/rap/display/browser_bg.png );*/
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
 }
+
 /* Default theme for all controls */
- * {
+/* line 42, ../sass/batik-old.scss */
+* {
   border: none;
   padding: 0px;
 }
+
+/* line 46, ../sass/batik-old.scss */
 *[BORDER] {
   border: 1px solid #cdcdcd;
 }
+
 /* Default theme for all composites */
- Composite {
+/* line 50, ../sass/batik-old.scss */
+Composite {
   padding: 0;
   opacity: 1;
   background-color: transparent;
@@ -56,20 +66,24 @@ Display {
   box-shadow: none;
   animation: none;
 }
+
+/* line 59, ../sass/batik-old.scss */
 Composite[BORDER] {
   border: none;
   border-radius: 2px;
 }
+
 /* Mosaic-UI elements (org.polymap.mosaic.ui) */
- Composite.mosaic-case-action-active {
+/* line 64, ../sass/batik-old.scss */
+Composite.mosaic-case-action-active {
   animation: slideIn 400ms ease-in;
   background-color: #cacfd2;
   background-image: url(resources/images/bg-noise-grey.png);
   border-radius: 0px 8px 8px 8px;
   border: none;
 }
-Composite.mosaic-case-action-deactive {
-}
+
+/* line 73, ../sass/batik-old.scss */
 Composite.mosaic-case-status {
   animation: fadeIn 600ms linear;
   background-color: #f9f9f9;
@@ -78,12 +92,16 @@ Composite.mosaic-case-status {
   border: 1px solid #e2e2e0;
   padding: 8px 5px 8px 5px;
 }
+
+/* line 81, ../sass/batik-old.scss */
 Composite.mosaic-case-toolbar {
   background-color: transparent;
 }
+
 /* Button default theme */
- Button {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 85, ../sass/batik-old.scss */
+Button {
+  font: 14px "Open Sans", Arial, sans-serif;
   background-image: none;
   border: none;
   border-radius: 4px;
@@ -98,6 +116,7 @@ Composite.mosaic-case-toolbar {
   box-shadow: none;
 }
 
+/* line 101, ../sass/batik-old.scss */
 Button[PUSH], Button[PUSH].formeditor, Button[TOGGLE], Button[PUSH][BORDER], Button[TOGGLE][BORDER], Button[PUSH][FLAT], Button[TOGGLE][FLAT] {
   border: none;
   border-radius: 4px;
@@ -107,6 +126,8 @@ Button[PUSH], Button[PUSH].formeditor, Button[TOGGLE], Button[PUSH][BORDER], But
   cursor: pointer;
   color: #fff;
 }
+
+/* line 110, ../sass/batik-old.scss */
 Button[ARROW], Button[ARROW][BORDER], Button[ARROW][FLAT] {
   border: 1px solid #cdcdcd;
   border-radius: 2px;
@@ -114,9 +135,13 @@ Button[ARROW], Button[ARROW][BORDER], Button[ARROW][FLAT] {
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
   cursor: pointer;
 }
+
+/* line 117, ../sass/batik-old.scss */
 Button[ARROW]:default, Button[PUSH]:default {
   border: none;
 }
+
+/* line 120, ../sass/batik-old.scss */
 Button[ARROW]:disabled, Button[PUSH]:disabled {
   cursor: default;
   color: #ffffff;
@@ -125,15 +150,21 @@ Button[ARROW]:disabled, Button[PUSH]:disabled {
   opacity: 0.2;
   border: none;
 }
+
+/* line 128, ../sass/batik-old.scss */
 Button[ARROW]:hover, Button[PUSH]:hover {
   background-color: #216292;
   animation: hoverOut 400ms ease-out;
 }
+
+/* line 132, ../sass/batik-old.scss */
 Button[ARROW]:pressed, Button[PUSH]:pressed {
   color: #fff;
   background-color: #216292;
 }
+
 /*TOGGLE Button*/
+/* line 137, ../sass/batik-old.scss */
 Button[TOGGLE], Button[TOGGLE][BORDER], Button[TOGGLE][FLAT] {
   border: 1px solid #4a8aaf;
   border-radius: 4px;
@@ -143,74 +174,100 @@ Button[TOGGLE], Button[TOGGLE][BORDER], Button[TOGGLE][FLAT] {
   cursor: pointer;
   color: #4a8aaf;
 }
+
 /*Button[TOGGLE]:default {
   color: #4a8aaf;
   background-color: #ffffff;
 }*/
+/* line 150, ../sass/batik-old.scss */
 Button[TOGGLE]:hover {
   color: #216292;
   background-color: #f1f4f6;
   animation: hoverOut 400ms ease-out;
 }
+
+/* line 155, ../sass/batik-old.scss */
 Button[TOGGLE]:selected, Button[TOGGLE]:pressed {
   color: #216292;
   background-color: transparent;
-  background-image: url(resources/icons/active.png );
+  background-image: url(resources/icons/active.png);
 }
+
+/* line 160, ../sass/batik-old.scss */
 Button[TOGGLE]:selected:hover {
   background-color: #ffffff;
-  background-image: url(resources/icons/active.png );
+  background-image: url(resources/icons/active.png);
   /*opacity: 0.7;*/
 }
+
+/* line 165, ../sass/batik-old.scss */
 Button[TOGGLE]:disabled:hover {
   background-color: #216292;
 }
-Button[TOGGLE]:disabled.mosaic-case-submit, 
-Button[TOGGLE]:disabled.mosaic-case-discard, 
-Button[TOGGLE]:disabled, 
-Button[TOGGLE]:selected:disabled, 
+
+/* line 168, ../sass/batik-old.scss */
+Button[TOGGLE]:disabled.mosaic-case-submit,
+Button[TOGGLE]:disabled.mosaic-case-discard,
+Button[TOGGLE]:disabled,
+Button[TOGGLE]:selected:disabled,
 Button[TOGGLE].mosaic-case-toolbar:disabled {
   background-color: #f1f4f6;
 }
+
 /*Submit und Cancel Buttons*/
+/* line 176, ../sass/batik-old.scss */
 Button[TOGGLE].mosaic-case-submit, Button[TOGGLE].mosaic-case-discard {
   border: none;
   background-image: none;
   color: #ffffff;
 }
+
 /*Green Action/Submit Buttons*/
-Button[TOGGLE].mosaic-case-submit, 
-Button[PUSH].mosaic-case-submit, 
-Button[PUSH]:selected.mosaic-case-submit, 
+/* line 182, ../sass/batik-old.scss */
+Button[TOGGLE].mosaic-case-submit,
+Button[PUSH].mosaic-case-submit,
+Button[PUSH]:selected.mosaic-case-submit,
 Button[TOGGLE]:selected.mosaic-case-submit {
   background-color: #6eb02e;
   background-image: none;
 }
-Button[TOGGLE]:hover.mosaic-case-submit, 
-Button[PUSH]:hover.mosaic-case-submit, 
+
+/* line 189, ../sass/batik-old.scss */
+Button[TOGGLE]:hover.mosaic-case-submit,
+Button[PUSH]:hover.mosaic-case-submit,
 Button[PUSH]:selected:hover.mosaic-case-submit {
   background-color: #519028;
   background-image: none;
 }
+
+/* line 195, ../sass/batik-old.scss */
 Button[PUSH]:disabled.mosaic-case-submit, Button[TOGGLE]:disabled.mosaic-case-submit {
   background-color: #f0f7ea;
   border: 1px solid #f0f7ea;
   color: #ffffff;
 }
+
 /*Red Cancel Buttons*/
+/* line 201, ../sass/batik-old.scss */
 Button[PUSH].mosaic-case-discard, Button[PUSH]:selected.mosaic-case-discard {
   background-color: #d32516;
 }
+
+/* line 204, ../sass/batik-old.scss */
 Button[PUSH]:hover.mosaic-case-discard {
   background-color: #9c1e13;
 }
+
 /*Toolbar-Button*/
+/* line 208, ../sass/batik-old.scss */
 Button[TOGGLE].mosaic-case-toolbar {
   color: #4a8aaf;
   background-color: #e5e9ec;
   border: none;
   background-image: none;
 }
+
+/* line 214, ../sass/batik-old.scss */
 Button[TOGGLE].mosaic-case-toolbar:hover, Button[TOGGLE].mosaic-case-toolbar:selected, Button[TOGGLE].mosaic-case-toolbar:selected:hover {
   color: #0f1c23;
   background-color: #cacfd2;
@@ -218,20 +275,27 @@ Button[TOGGLE].mosaic-case-toolbar:hover, Button[TOGGLE].mosaic-case-toolbar:sel
   background-image: none;
   background-image: url(resources/images/bg-noise-grey.png);
 }
+
+/* line 221, ../sass/batik-old.scss */
 Button[TOGGLE].mosaic-case-toolbar:hover {
   border-radius: 4px;
 }
 
+/* line 225, ../sass/batik-old.scss */
 Button[TOGGLE]:selected:hover.mosaic-case-toolbar {
   color: #4a8aaf;
 }
+
 /*Navigation Buttons*/
+/* line 229, ../sass/batik-old.scss */
 Button[TOGGLE].atlas-navi, Button[PUSH].atlas-navi {
   color: #4a8aaf;
   background-color: #e5e9ec;
   background-image: none;
   border: none;
 }
+
+/* line 235, ../sass/batik-old.scss */
 Button[TOGGLE]:selected.atlas-navi, Button[TOGGLE]:hover.atlas-navi, Button[PUSH]:hover.atlas-navi {
   color: #0f1c23;
   background-color: #cacfd2;
@@ -239,64 +303,100 @@ Button[TOGGLE]:selected.atlas-navi, Button[TOGGLE]:hover.atlas-navi, Button[PUSH
   background-image: url(resources/images/bg-noise-grey.png);
   border: none;
 }
+
 /*Check-Button*/
+/* line 243, ../sass/batik-old.scss */
 Button[CHECK], Button[RADIO] {
   padding: 3px 3px 3px 0;
   spacing: 7px;
   background-color: transparent;
   color: #0f1c23;
 }
+
+/* line 249, ../sass/batik-old.scss */
 Button[CHECK][BORDER], Button[RADIO][BORDER] {
   cursor: default;
   background-image: none;
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
+
+/* line 255, ../sass/batik-old.scss */
 Button-CheckIcon {
-  background-image: url(resources/icons/rap/button/check-unselected.png );
+  background-image: url(resources/icons/rap/button/check-unselected.png);
 }
+
+/* line 258, ../sass/batik-old.scss */
 Button-CheckIcon:hover {
-  background-image: url(resources/icons/rap/button/check-selected-hover.png );
+  background-image: url(resources/icons/rap/button/check-selected-hover.png);
 }
+
+/* line 261, ../sass/batik-old.scss */
 Button-CheckIcon:selected {
-  background-image: url(resources/icons/rap/button/check-selected.png );
+  background-image: url(resources/icons/rap/button/check-selected.png);
 }
+
+/* line 264, ../sass/batik-old.scss */
 Button-CheckIcon:hover:pressed {
-  background-image: url(resources/icons/rap/button/check-selected.png );
+  background-image: url(resources/icons/rap/button/check-selected.png);
 }
+
+/* line 267, ../sass/batik-old.scss */
 Button-CheckIcon:selected:hover {
-  background-image: url(resources/icons/rap/button/check-selected.png );
+  background-image: url(resources/icons/rap/button/check-selected.png);
 }
+
+/* line 270, ../sass/batik-old.scss */
 Button-CheckIcon:selected:grayed {
-  background-image: url(resources/icons/rap/button/check-grayed.png );
+  background-image: url(resources/icons/rap/button/check-grayed.png);
 }
+
+/* line 273, ../sass/batik-old.scss */
 Button-CheckIcon:selected:grayed:hover {
-  background-image: url(resources/icons/rap/button/check-grayed-hover.png );
+  background-image: url(resources/icons/rap/button/check-grayed-hover.png);
 }
+
+/* line 276, ../sass/batik-old.scss */
 Button-RadioIcon {
-  background-image: url(resources/icons/rap/button/radio-unselected.png );
+  background-image: url(resources/icons/rap/button/radio-unselected.png);
 }
+
+/* line 279, ../sass/batik-old.scss */
 Button-RadioIcon:hover {
-  background-image: url(resources/icons/rap/button/radio-unselected-hover.png );
+  background-image: url(resources/icons/rap/button/radio-unselected-hover.png);
 }
+
+/* line 282, ../sass/batik-old.scss */
 Button-RadioIcon:selected {
-  background-image: url(resources/icons/rap/button/radio-selected.png );
+  background-image: url(resources/icons/rap/button/radio-selected.png);
 }
+
+/* line 285, ../sass/batik-old.scss */
 Button-RadioIcon:selected:hover {
-  background-image: url(resources/icons/rap/button/radio-selected-hover.png );
+  background-image: url(resources/icons/rap/button/radio-selected-hover.png);
 }
+
+/* line 288, ../sass/batik-old.scss */
 Button-ArrowIcon[UP] {
-  background-image: url(resources/icons/rap/button/arrow-up.png );
+  background-image: url(resources/icons/rap/button/arrow-up.png);
 }
+
+/* line 291, ../sass/batik-old.scss */
 Button-ArrowIcon[DOWN] {
-  background-image: url(resources/icons/rap/button/arrow-down.png );
+  background-image: url(resources/icons/rap/button/arrow-down.png);
 }
+
+/* line 294, ../sass/batik-old.scss */
 Button-ArrowIcon[LEFT] {
-  background-image: url(resources/icons/rap/button/arrow-left.png );
+  background-image: url(resources/icons/rap/button/arrow-left.png);
 }
+
+/* line 297, ../sass/batik-old.scss */
 Button-ArrowIcon[RIGHT] {
-  background-image: url(resources/icons/rap/button/arrow-right.png );
+  background-image: url(resources/icons/rap/button/arrow-right.png);
 }
+
+/* line 300, ../sass/batik-old.scss */
 Button-FocusIndicator[ARROW], Button-FocusIndicator[PUSH], Button-FocusIndicator[TOGGLE] {
   background-color: transparent;
   border: 0px dotted #b8b8b8;
@@ -304,6 +404,8 @@ Button-FocusIndicator[ARROW], Button-FocusIndicator[PUSH], Button-FocusIndicator
   padding: 0px;
   opacity: 1;
 }
+
+/* line 307, ../sass/batik-old.scss */
 Button-FocusIndicator[CHECK], Button-FocusIndicator[RADIO] {
   background-color: transparent;
   border: 1px dotted #b8b8b8;
@@ -311,9 +413,11 @@ Button-FocusIndicator[CHECK], Button-FocusIndicator[RADIO] {
   margin: 0px;
   opacity: 1;
 }
+
 /* Combo default theme */
- Combo, Combo[BORDER] {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 315, ../sass/batik-old.scss */
+Combo, Combo[BORDER] {
+  font: 14px "Open Sans", Arial, sans-serif;
   /*color: #4a4a4a;*/
   background-color: #ffffff;
   border: 1px solid #cfcfcf;
@@ -322,11 +426,15 @@ Button-FocusIndicator[CHECK], Button-FocusIndicator[RADIO] {
   text-shadow: none;
   box-shadow: inset 0 0 1px #cdcdcd;
 }
+
+/* line 325, ../sass/batik-old.scss */
 Combo:focused, Combo[BORDER]:focused {
   border: 1px solid #4a8aaf;
   box-shadow: none;
   background-color: #FFFEDB;
 }
+
+/* line 330, ../sass/batik-old.scss */
 Combo:disabled, Combo[BORDER]:disabled {
   box-shadow: none;
   border: none;
@@ -334,6 +442,8 @@ Combo:disabled, Combo[BORDER]:disabled {
   background-color: #faf9f7;
   padding: 1px 3px 3px 3px;
 }
+
+/* line 337, ../sass/batik-old.scss */
 Combo-Button {
   cursor: default;
   background-color: #efefef;
@@ -343,49 +453,71 @@ Combo-Button {
   background-color: #f1f4f6;
   width: 30px;
 }
+
+/* line 346, ../sass/batik-old.scss */
 Combo-Button:disabled {
   background-image: none;
   background-color: #ffffff;
   border-left: none;
 }
+
+/* line 351, ../sass/batik-old.scss */
 Combo-Button-Icon {
-  background-image: url(resources/icons/rap/combo/down.png );
+  background-image: url(resources/icons/rap/combo/down.png);
 }
+
+/* line 354, ../sass/batik-old.scss */
 Combo-Button-Icon:hover {
-  background-image: url(resources/icons/rap/combo/down-hover.png );
+  background-image: url(resources/icons/rap/combo/down-hover.png);
 }
+
+/* line 357, ../sass/batik-old.scss */
 Combo-Button-Icon:disabled {
   background-image: none;
 }
+
+/* line 360, ../sass/batik-old.scss */
 Combo-List {
   border: 1px solid #4f7cb1;
   box-shadow: 0 1px 3px #606060;
   border-radius: 2px;
 }
+
+/* line 365, ../sass/batik-old.scss */
 Combo-Field {
   padding: 3px 6px 3px 6px;
 }
+
+/* line 368, ../sass/batik-old.scss */
 Combo-FocusIndicator {
   background-color: transparent;
   border: none;
   margin: 0;
   opacity: 0;
 }
+
 /* CoolBar default theme */
+/* line 375, ../sass/batik-old.scss */
 CoolBar {
   background-image: none;
 }
+
+/* line 378, ../sass/batik-old.scss */
 CoolItem-Handle {
   border: 1px solid #cdcdcd;
   width: 2px;
 }
+
 /* CTabFolder default theme */
- CTabFolder {
+/* line 383, ../sass/batik-old.scss */
+CTabFolder {
   border-color: #cdcdcd;
   border-radius: 2px;
 }
+
+/* line 387, ../sass/batik-old.scss */
 CTabItem {
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   color: #4a4a4a;
   background-color: #f0f0f0;
   background-image: none;
@@ -393,33 +525,47 @@ CTabItem {
   spacing: 10px;
   text-shadow: none;
 }
+
+/* line 396, ../sass/batik-old.scss */
 CTabItem:selected {
   color: #4a4a4a;
   background-color: #d6d6d6;
 }
+
 /* Do not gray out disabled CTabItems, this is SWT behavior */
- CTabItem:disabled {
+/* line 401, ../sass/batik-old.scss */
+CTabItem:disabled {
   color: black;
 }
+
+/* line 404, ../sass/batik-old.scss */
 CTabFolder-DropDownButton-Icon {
-  background-image: url(resources/icons/rap/ctabfolder/ctabfolder-dropdown.png );
+  background-image: url(resources/icons/rap/ctabfolder/ctabfolder-dropdown.png);
 }
+
+/* line 407, ../sass/batik-old.scss */
 CTabFolder-DropDownButton-Icon:hover {
-  background-image: url(resources/icons/rap/ctabfolder/ctabfolder-dropdown-hover.png );
+  background-image: url(resources/icons/rap/ctabfolder/ctabfolder-dropdown-hover.png);
 }
+
 /* Group default theme */
- Group {
-  font: 10px"Open Sans", Arial, sans-serif;
+/* line 411, ../sass/batik-old.scss */
+Group {
+  font: 10px "Open Sans", Arial, sans-serif;
   color: #4a4a4a;
   background-color: #ffffff;
   border: none;
 }
+
+/* line 417, ../sass/batik-old.scss */
 Group-Frame {
   margin: 20px 0 0 0;
   padding: 15px 8px 8px 8px;
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
+
+/* line 423, ../sass/batik-old.scss */
 Group-Label {
   padding: 2px 10px 2px 10px;
   background-color: #f0f0f0;
@@ -429,9 +575,11 @@ Group-Label {
   margin: 10px 10px 10px 20px;
   text-shadow: none;
 }
+
 /* Label default theme */
+/* line 433, ../sass/batik-old.scss */
 Label, CLabel {
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   color: #4a4a4a;
   background-color: transparent;
   background-image: none;
@@ -442,13 +590,14 @@ Label, CLabel {
   opacity: 1;
   text-shadow: none;
 }
+
+/* line 445, ../sass/batik-old.scss */
 Label[BORDER], CLabel[BORDER] {
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
-Label[SEPARATOR] {
-  
-}
+
+/* line 452, ../sass/batik-old.scss */
 Label-SeparatorLine {
   background-image: none;
   background-color: transparent;
@@ -456,84 +605,120 @@ Label-SeparatorLine {
   border-radius: 0px;
   width: 2px;
 }
+
+/* line 459, ../sass/batik-old.scss */
 Label-SeparatorLine[SHADOW_IN] {
   border: 1px inset;
 }
+
+/* line 462, ../sass/batik-old.scss */
 Label-SeparatorLine[SHADOW_OUT] {
   border: 1px outset;
 }
+
 /* Link default theme */
- Link {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 466, ../sass/batik-old.scss */
+Link {
+  font: 14px "Open Sans", Arial, sans-serif;
   color: #4a8aaf;
   text-shadow: none;
   text-decoration: none;
 }
+
+/* line 472, ../sass/batik-old.scss */
 Link[BORDER] {
   border: 1px solid #cdcdcd;
 }
+
+/* line 475, ../sass/batik-old.scss */
 Link-Hyperlink {
   color: #4a8aaf;
   text-shadow: none;
   text-decoration: none;
 }
+
+/* line 480, ../sass/batik-old.scss */
 Link-Hyperlink:hover {
   color: #0f1c23;
   text-shadow: none;
   text-decoration: underline;
 }
+
+/* line 485, ../sass/batik-old.scss */
 Link-Hyperlink:disabled {
   color: #959595;
 }
+
 /* List default theme */
- List {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 489, ../sass/batik-old.scss */
+List {
+  font: 14px "Open Sans", Arial, sans-serif;
   background-color: #ffffff;
   border: none;
   color: #4a4a4a;
 }
+
+/* line 495, ../sass/batik-old.scss */
 List[BORDER] {
   border: 1px solid #cacfd2;
 }
+
+/* line 498, ../sass/batik-old.scss */
 List-Item {
   padding: 5px 10px 5px 10px;
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   background-color: #ffffff;
   background-image: url(resources/images/list-border.png);
   color: inherit;
   text-shadow: none;
 }
+
+/* line 506, ../sass/batik-old.scss */
 List-Item:hover {
   color: #0f1c23;
   background-color: #f1f4f6;
   background-image: none;
 }
+
+/* line 511, ../sass/batik-old.scss */
 List-Item:selected {
   color: #0f1c23;
   background-color: #e5e9ec;
   background-image: none;
 }
+
+/* line 516, ../sass/batik-old.scss */
 List-Item:selected:unfocused {
   color: inherit;
   background-color: #e5e9ec;
 }
+
+/* line 520, ../sass/batik-old.scss */
 List-Item:even {
   background-color: #f0f0f0;
 }
+
+/* line 523, ../sass/batik-old.scss */
 List-Item:even:hover {
   color: #0f1c23;
   background-color: #f1f4f6;
 }
+
+/* line 527, ../sass/batik-old.scss */
 List-Item:even:selected {
   color: #0f1c23;
   background-color: #e5e9ec;
 }
+
+/* line 531, ../sass/batik-old.scss */
 List-Item:even:selected:unfocused {
   color: inherit;
   background-color: #e5e9ec;
 }
+
 /* Menu default theme */
- Menu {
+/* line 536, ../sass/batik-old.scss */
+Menu {
   padding: 0;
   color: #0059a5;
   background-color: #f9f9f9;
@@ -543,6 +728,8 @@ List-Item:even:selected:unfocused {
   opacity: 1;
   animation: none;
 }
+
+/* line 546, ../sass/batik-old.scss */
 MenuItem {
   color: #4a4a4a;
   background-color: transparent;
@@ -551,53 +738,79 @@ MenuItem {
   text-shadow: none;
   padding: 4px 10px 4px 10px;
 }
+
+/* line 554, ../sass/batik-old.scss */
 MenuItem[SEPARATOR] {
   padding: 0px 10px;
 }
+
+/* line 557, ../sass/batik-old.scss */
 MenuItem:hover {
   color: #ffffff;
   background-color: #216292;
 }
+
+/* line 561, ../sass/batik-old.scss */
 MenuItem:pressed {
   color: #ffffff;
   background-color: #216292;
 }
+
+/* line 565, ../sass/batik-old.scss */
 MenuItem:disabled {
   color: #cdcdcd;
   text-shadow: none;
 }
+
+/* line 569, ../sass/batik-old.scss */
 MenuItem:onMenuBar {
   padding: 4px 6px;
 }
+
+/* line 572, ../sass/batik-old.scss */
 MenuItem-CheckIcon {
-  background-image: url(resources/icons/rap/menu/checkbox.gif );
+  background-image: url(resources/icons/rap/menu/checkbox.gif);
 }
+
+/* line 575, ../sass/batik-old.scss */
 MenuItem-RadioIcon {
-  background-image: url(resources/icons/rap/menu/radiobutton.gif );
+  background-image: url(resources/icons/rap/menu/radiobutton.gif);
 }
+
+/* line 578, ../sass/batik-old.scss */
 MenuItem-CascadeIcon {
-  background-image: url(resources/icons/rap/menu/arrow.gif );
+  background-image: url(resources/icons/rap/menu/arrow.gif);
 }
+
 /* ProgressBar default theme */
- ProgressBar {
+/* line 582, ../sass/batik-old.scss */
+ProgressBar {
   background-color: #ffffff;
-  background-image: url(resources/icons/rap/progressbar/progressbar-background.png );
+  background-image: url(resources/icons/rap/progressbar/progressbar-background.png);
   border: 1px solid #dbe8ef;
   border-radius: 10px;
 }
+
+/* line 588, ../sass/batik-old.scss */
 ProgressBar-Indicator {
   background-color: #6eb02e;
   border: none;
   opacity: 0.9;
 }
+
+/* line 593, ../sass/batik-old.scss */
 ProgressBar-Indicator:paused {
   background-color: #ffcc00;
 }
+
+/* line 596, ../sass/batik-old.scss */
 ProgressBar-Indicator:error {
   background-color: #d32516;
 }
+
 /* Shell default theme */
- Shell {
+/* line 600, ../sass/batik-old.scss */
+Shell {
   animation: none;
   border: none;
   border-radius: 2px;
@@ -607,6 +820,8 @@ ProgressBar-Indicator:error {
   opacity: 1;
   box-shadow: none;
 }
+
+/* line 610, ../sass/batik-old.scss */
 Shell[TITLE], Shell[BORDER] {
   background-color: #ffffff;
   border: 1px solid #6e6e6e;
@@ -614,24 +829,32 @@ Shell[TITLE], Shell[BORDER] {
   padding: 15px;
   box-shadow: 0 0 4px #ababab;
 }
+
+/* line 617, ../sass/batik-old.scss */
 Shell[BORDER]:inactive, Shell[TITLE]:inactive {
   border: 1px solid #cdcdcd;
   box-shadow: none;
 }
+
+/* line 621, ../sass/batik-old.scss */
 Shell:maximized, Shell:maximized:inactive {
   border: none;
   box-shadow: none;
   border-radius: 0px;
 }
+
+/* line 626, ../sass/batik-old.scss */
 Shell-DisplayOverlay {
   animation: fadeIn 200ms linear, fadeOut 400ms ease-out;
   background-image: none;
   background-color: #808080;
   opacity: 0.2;
 }
+
 /* Shell titlebar */
- Shell-Titlebar {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 633, ../sass/batik-old.scss */
+Shell-Titlebar {
+  font: 14px "Open Sans", Arial, sans-serif;
   background-color: #4a8aaf;
   color: #ffffff;
   padding: 0 10px 0 10px;
@@ -641,73 +864,108 @@ Shell-DisplayOverlay {
   border-radius: 0;
   text-shadow: none;
 }
+
+/* line 644, ../sass/batik-old.scss */
 Shell-Titlebar:inactive {
   background-color: #f1f4f6;
-  color: #0f1c23
+  color: #0f1c23;
 }
-/* Shell buttons */
 
+/* Shell buttons */
 /* Minimize button */
- Shell-MinButton {
-  background-image: url(resources/icons/rap/window/shell-min.png );
+/* line 651, ../sass/batik-old.scss */
+Shell-MinButton {
+  background-image: url(resources/icons/rap/window/shell-min.png);
   margin: 0 -2px 0 0;
 }
+
+/* line 655, ../sass/batik-old.scss */
 Shell-MinButton:hover {
-  background-image: url(resources/icons/rap/window/shell-min-hover.png );
+  background-image: url(resources/icons/rap/window/shell-min-hover.png);
 }
+
+/* line 658, ../sass/batik-old.scss */
 Shell-MinButton:inactive {
-  background-image: url(resources/icons/rap/window/shell-min.png );
+  background-image: url(resources/icons/rap/window/shell-min.png);
   margin: 0 -2px 0 0;
 }
+
+/* line 662, ../sass/batik-old.scss */
 Shell-MinButton:inactive:hover {
-  background-image: url(resources/icons/rap/window/shell-min-hover.png );
+  background-image: url(resources/icons/rap/window/shell-min-hover.png);
 }
+
 /* Maximize button */
- Shell-MaxButton {
-  background-image: url(resources/icons/rap/window/shell-max.png );
+/* line 666, ../sass/batik-old.scss */
+Shell-MaxButton {
+  background-image: url(resources/icons/rap/window/shell-max.png);
   margin: 0 -2px 0 0;
 }
+
+/* line 670, ../sass/batik-old.scss */
 Shell-MaxButton:hover {
-  background-image: url(resources/icons/rap/window/shell-max-hover.png );
+  background-image: url(resources/icons/rap/window/shell-max-hover.png);
 }
+
+/* line 673, ../sass/batik-old.scss */
 Shell-MaxButton:inactive {
-  background-image: url(resources/icons/rap/window/shell-max.png );
+  background-image: url(resources/icons/rap/window/shell-max.png);
   margin: 0 -2px 0 0;
 }
+
+/* line 677, ../sass/batik-old.scss */
 Shell-MaxButton:inactive:hover {
-  background-image: url(resources/icons/rap/window/shell-max-hover.png );
+  background-image: url(resources/icons/rap/window/shell-max-hover.png);
 }
+
 /* Restore button */
- Shell-MaxButton:maximized {
-  background-image: url(resources/icons/rap/window/shell-restore.png );
+/* line 681, ../sass/batik-old.scss */
+Shell-MaxButton:maximized {
+  background-image: url(resources/icons/rap/window/shell-restore.png);
 }
+
+/* line 684, ../sass/batik-old.scss */
 Shell-MaxButton:maximized:hover {
-  background-image: url(resources/icons/rap/window/shell-restore-hover.png );
+  background-image: url(resources/icons/rap/window/shell-restore-hover.png);
 }
+
+/* line 687, ../sass/batik-old.scss */
 Shell-MaxButton:maximized:inactive {
-  background-image: url(resources/icons/rap/window/shell-restore.png );
+  background-image: url(resources/icons/rap/window/shell-restore.png);
 }
+
+/* line 690, ../sass/batik-old.scss */
 Shell-MaxButton:maximized:inactive:hover {
-  background-image: url(resources/icons/rap/window/shell-restore-hover.png );
+  background-image: url(resources/icons/rap/window/shell-restore-hover.png);
 }
+
 /* Close button */
- Shell-CloseButton {
-  background-image: url(resources/icons/rap/window/shell-close.png );
+/* line 694, ../sass/batik-old.scss */
+Shell-CloseButton {
+  background-image: url(resources/icons/rap/window/shell-close.png);
   margin: 0 -2px 0 0;
 }
+
+/* line 698, ../sass/batik-old.scss */
 Shell-CloseButton:hover {
-  background-image: url(resources/icons/rap/window/shell-close-hover.png );
+  background-image: url(resources/icons/rap/window/shell-close-hover.png);
 }
+
+/* line 701, ../sass/batik-old.scss */
 Shell-CloseButton:inactive {
-  background-image: url(resources/icons/rap/window/shell-close.png );
+  background-image: url(resources/icons/rap/window/shell-close.png);
   margin: 0 -2px 0 0;
 }
+
+/* line 705, ../sass/batik-old.scss */
 Shell-CloseButton:inactive:hover {
-  background-image: url(resources/icons/rap/window/shell-close-hover.png );
+  background-image: url(resources/icons/rap/window/shell-close-hover.png);
 }
+
 /* Spinner default theme */
- Spinner {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 709, ../sass/batik-old.scss */
+Spinner {
+  font: 14px "Open Sans", Arial, sans-serif;
   border: none;
   border-radius: 0 2px 2px 0;
   color: #464a4e;
@@ -716,21 +974,31 @@ Shell-CloseButton:inactive:hover {
   text-shadow: none;
   box-shadow: none;
 }
+
+/* line 719, ../sass/batik-old.scss */
 Spinner[BORDER] {
   border: 1px solid #aaaaaa;
   border-radius: 0 2px 2px 0;
   box-shadow: inset 0 0 3px #cdcdcd;
 }
+
+/* line 724, ../sass/batik-old.scss */
 Spinner[BORDER]:focused {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
 }
+
+/* line 728, ../sass/batik-old.scss */
 Spinner:disabled, Spinner[BORDER]:disabled {
   box-shadow: none;
 }
+
+/* line 731, ../sass/batik-old.scss */
 Spinner-Field {
   padding: 6px 10px 6px 10px;
 }
+
+/* line 734, ../sass/batik-old.scss */
 Spinner-UpButton {
   background-color: #efefef;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#efefef));
@@ -740,16 +1008,24 @@ Spinner-UpButton {
   border-radius: 0px 2px 0px 0px;
   cursor: default;
 }
+
+/* line 743, ../sass/batik-old.scss */
 Spinner-UpButton:disabled {
   background-image: none;
   background-color: transparent;
 }
+
+/* line 747, ../sass/batik-old.scss */
 Spinner-UpButton-Icon {
-  background-image: url(resources/icons/rap/spinner/up.png );
+  background-image: url(resources/icons/rap/spinner/up.png);
 }
+
+/* line 750, ../sass/batik-old.scss */
 Spinner-UpButton-Icon:hover {
-  background-image: url(resources/icons/rap/spinner/up-hover.png );
+  background-image: url(resources/icons/rap/spinner/up-hover.png);
 }
+
+/* line 753, ../sass/batik-old.scss */
 Spinner-DownButton {
   background-color: #efefef;
   background-image: gradient(linear, left top, left bottom, from(#efefef), to(#e4e4e4));
@@ -759,64 +1035,89 @@ Spinner-DownButton {
   border-radius: 0px 0px 2px 0px;
   cursor: default;
 }
+
+/* line 762, ../sass/batik-old.scss */
 Spinner-DownButton:disabled {
   background-image: none;
   background-color: transparent;
 }
+
+/* line 766, ../sass/batik-old.scss */
 Spinner-DownButton-Icon {
-  background-image: url(resources/icons/rap/spinner/down.png );
+  background-image: url(resources/icons/rap/spinner/down.png);
 }
+
+/* line 769, ../sass/batik-old.scss */
 Spinner-DownButton-Icon:hover {
-  background-image: url(resources/icons/rap/spinner/down-hover.png );
+  background-image: url(resources/icons/rap/spinner/down-hover.png);
 }
+
 /* TabFolder default theme */
- TabFolder {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 773, ../sass/batik-old.scss */
+TabFolder {
+  font: 14px "Open Sans", Arial, sans-serif;
   border: none;
 }
+
+/* line 777, ../sass/batik-old.scss */
 TabFolder[BORDER] {
   border: 1px solid #cdcdcd;
 }
+
+/* line 780, ../sass/batik-old.scss */
 TabFolder-ContentContainer {
   border: 1px solid #cdcdcd;
 }
+
+/* line 783, ../sass/batik-old.scss */
 TabItem {
   background-color: #ffffff;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
   border-top-color: #5882b5;
   border-bottom-color: #5882b5;
   text-shadow: 0 1px 0 #ffffff;
-  padding : 6px;
+  padding: 6px;
 }
+
+/* line 791, ../sass/batik-old.scss */
 TabItem:selected {
   color: #216292;
   background-image: none;
-  padding : 6px 6px 7px 6px;
+  padding: 6px 6px 7px 6px;
 }
+
 /* Table default theme */
- Table {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 797, ../sass/batik-old.scss */
+Table {
+  font: 14px "Open Sans", Arial, sans-serif;
   background-color: #ffffff;
   background-image: none;
   color: #4a4a4a;
   border-bottom: 1px solid #cacfd2;
 }
+
+/* line 804, ../sass/batik-old.scss */
 Table[BORDER] {
   border: none;
 }
+
+/* line 807, ../sass/batik-old.scss */
 TableColumn {
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   background-color: #f1f4f6;
   padding: 4px 10px 4px 10px;
   background-image: none;
   border-bottom: 1px solid #cacfd2;
   text-shadow: 0 1px 0 #ffffff;
-
 }
+
+/* line 816, ../sass/batik-old.scss */
 TableColumn:hover {
   background-color: #f6f6f6;
   animation: hoverOut 400ms ease-out;
 }
+
+/* line 820, ../sass/batik-old.scss */
 TableItem {
   background-color: transparent;
   color: inherit;
@@ -825,65 +1126,97 @@ TableItem {
   background-image: none;
   border-bottom: 1px solid #edf1f3;
 }
+
+/* line 828, ../sass/batik-old.scss */
 TableItem:linesvisible {
   border-bottom: none;
 }
+
+/* line 831, ../sass/batik-old.scss */
 TableItem:linesvisible:even {
   background-color: #ffffff;
   color: inherit;
   border-bottom: none;
 }
- Table-RowOverlay {
+
+/* line 836, ../sass/batik-old.scss */
+Table-RowOverlay {
   background-color: transparent;
   color: inherit;
   background-image: none;
 }
+
+/* line 841, ../sass/batik-old.scss */
 Table-RowOverlay:hover {
   color: #0f1c23;
   background-color: #f1f4f6;
   text-shadow: 0 1px 0 #ffffff;
 }
+
+/* line 846, ../sass/batik-old.scss */
 Table-RowOverlay:selected {
   color: #0f1c23;
   background-color: #e5e9ec;
 }
+
+/* line 850, ../sass/batik-old.scss */
 Table-RowOverlay:selected:unfocused {
   color: inherit;
   background-color: transparent;
 }
+
+/* line 854, ../sass/batik-old.scss */
 Table-RowOverlay:linesvisible:even:hover {
   color: #0f1c23;
 }
+
+/* line 857, ../sass/batik-old.scss */
 Table-RowOverlay:linesvisible:even:selected {
   color: #0f1c23;
   background-color: #e5e9ec;
 }
+
+/* line 861, ../sass/batik-old.scss */
 Table-RowOverlay:linesvisible:even:selected:unfocused {
   color: inherit;
   background-color: transparent;
 }
+
+/* line 865, ../sass/batik-old.scss */
 TableColumn-SortIndicator {
   background-image: none;
   spacing: 5px;
 }
+
+/* line 869, ../sass/batik-old.scss */
 TableColumn-SortIndicator:up {
-  background-image: url(resources/icons/rap/column/sort-indicator-up.png );
+  background-image: url(resources/icons/rap/column/sort-indicator-up.png);
 }
+
+/* line 872, ../sass/batik-old.scss */
 TableColumn-SortIndicator:down {
-  background-image: url(resources/icons/rap/column/sort-indicator-down.png );
+  background-image: url(resources/icons/rap/column/sort-indicator-down.png);
 }
+
+/* line 875, ../sass/batik-old.scss */
 Table-Cell {
   spacing: 3px;
   padding: 4px 10px 4px 10px;
 }
+
+/* line 879, ../sass/batik-old.scss */
 Table-GridLine {
   color: transparent;
   /*#dedede;*/
 }
+
+/* line 883, ../sass/batik-old.scss */
 Table-GridLine:horizontal {
   color: #edf1f3;
   /*transparent;*/
 }
+
+/* line 887, ../sass/batik-old.scss */
 Table-Checkbox {
   /*
   For backward compatibility we have to keep the width property.
@@ -891,26 +1224,38 @@ Table-Checkbox {
   */
   width: 21px;
   margin: 0 0 0 4px;
-  background-image: url(resources/icons/rap/button/check-unselected.png );
+  background-image: url(resources/icons/rap/button/check-unselected.png);
 }
+
+/* line 896, ../sass/batik-old.scss */
 Table-Checkbox:hover {
-  background-image: url(resources/icons/rap/button/check-unselected-hover.png );
+  background-image: url(resources/icons/rap/button/check-unselected-hover.png);
 }
+
+/* line 899, ../sass/batik-old.scss */
 Table-Checkbox:checked {
-  background-image: url(resources/icons/rap/button/check-selected.png );
+  background-image: url(resources/icons/rap/button/check-selected.png);
 }
+
+/* line 902, ../sass/batik-old.scss */
 Table-Checkbox:checked:hover {
-  background-image: url(resources/icons/rap/button/check-selected-hover.png );
+  background-image: url(resources/icons/rap/button/check-selected-hover.png);
 }
+
+/* line 905, ../sass/batik-old.scss */
 Table-Checkbox:checked:grayed {
-  background-image: url(resources/icons/rap/button/check-grayed.png );
+  background-image: url(resources/icons/rap/button/check-grayed.png);
 }
+
+/* line 908, ../sass/batik-old.scss */
 Table-Checkbox:checked:grayed:hover {
-  background-image: url(resources/icons/rap/button/check-grayed-hover.png );
+  background-image: url(resources/icons/rap/button/check-grayed-hover.png);
 }
+
 /* Text default theme - style formfields*/
+/* line 912, ../sass/batik-old.scss */
 Text {
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   border: none;
   border-radius: 3px;
   padding: 3px 6px 3px 6px;
@@ -920,24 +1265,32 @@ Text {
   text-shadow: none;
   box-shadow: none;
 }
+
+/* line 923, ../sass/batik-old.scss */
 Text[MULTI] {
-  /*
- * padding currently has no effect because of bug 253644
- * [TODO] remove comment if bug fixed
- */
+ /*
+* padding currently has no effect because of bug 253644
+* [TODO] remove comment if bug fixed
+*/
   padding: 3px 6px 3px 6px;
 }
+
+/* line 930, ../sass/batik-old.scss */
 Text[BORDER], Text[MULTI][BORDER] {
   border: 1px solid #cfcfcf;
   border-radius: 3px;
   background-color: #ffffff;
   box-shadow: inset 0 0 1px #cdcdcd;
 }
+
+/* line 936, ../sass/batik-old.scss */
 Text[BORDER]:focused, Text[MULTI][BORDER]:focused {
   border: 1px solid #4a8aaf;
   background-color: #FFFEDB;
   box-shadow: none;
 }
+
+/* line 941, ../sass/batik-old.scss */
 Text[BORDER]:disabled, Text[MULTI][BORDER]:disabled, Text[BORDER]:read-only, Text[MULTI][BORDER]:read-only {
   box-shadow: none;
   border-radius: 3px;
@@ -946,51 +1299,75 @@ Text[BORDER]:disabled, Text[MULTI][BORDER]:disabled, Text[BORDER]:read-only, Tex
   background-color: #DDE0E3;
   padding: 1px 3px 3px 3px;
 }
+
+/* line 949, ../sass/batik-old.scss */
 Text-Message {
   color: #f1f4f6;
   text-shadow: none;
 }
+
+/* line 953, ../sass/batik-old.scss */
 Text-Message:disabled {
   color: #0f1c23;
   text-shadow: none;
   padding: 0px;
 }
+
 /*Forms Background*/
+/* line 959, ../sass/batik-old.scss */
 Composite.batik-panel-form {
   background-color: #e5e9ec;
   border: none;
   border-radius: 3px;
 }
+
+/* line 964, ../sass/batik-old.scss */
 Composite.batik-panel-form-disabled {
-  background-color: #e5e9ec; /*#EDF1F4;*/
+  background-color: #e5e9ec;
+  /*#EDF1F4;*/
   border: none;
   border-radius: 3px;
 }
+
+/* line 969, ../sass/batik-old.scss */
 Composite.batik-panel-formfield {
   background-color: #e5e9ec;
 }
+
+/* line 972, ../sass/batik-old.scss */
 Composite.batik-panel-formfield-disabled {
-  background-color: #e5e9ec; 
+  background-color: #e5e9ec;
 }
+
+/* line 975, ../sass/batik-old.scss */
 Composite.formeditor-label-disabled {
   background-color: #e5e9ec;
   padding: 0px 0px 0px 2px;
 }
+
+/* line 979, ../sass/batik-old.scss */
 Composite.formeditor-label {
   border: none;
 }
+
 /*Forms Fields*/
+/* line 983, ../sass/batik-old.scss */
 Label.batik-panel-formfield {
   border-radius: 0px;
 }
+
+/* line 986, ../sass/batik-old.scss */
 Label.batik-panel-formfield-disabled {
   color: #909090;
   border-radius: 0px;
 }
+
+/* line 990, ../sass/batik-old.scss */
 Label.azv-formfield {
   color: #303030;
   border-radius: 0px;
 }
+
 /*Text.batik-panel-formfield {
   padding: 4px 8px 4px 8px;
   border: 1px solid green;
@@ -1008,9 +1385,12 @@ Text.batik-panel-formfield-disabled {
   background-color: #fff;
 }*/
 /* Navigation*/
-Composite.atlas-navi/*, Composite.atlas-status, CLabel.atlas-status*/ {
+/* line 1011, ../sass/batik-old.scss */
+Composite.atlas-navi {
   background-color: #e5e9ec;
 }
+
+/* line 1014, ../sass/batik-old.scss */
 Composite.atlas-status {
   cursor: default;
   border: 0px solid #cdcdcd;
@@ -1018,16 +1398,17 @@ Composite.atlas-status {
   padding: 2px 4px;
   opacity: 1;
   color: #0f1c23;
-  background-image : gradient(linear, left top, right top, from(#fffae5), to(#fff5ce));
-  font: 14px"Open Sans", Arial, sans-serif;
+  background-image: gradient(linear, left top, right top, from(#fffae5), to(#fff5ce));
+  font: 14px "Open Sans", Arial, sans-serif;
   background-color: #fffae5;
   animation: fadeIn 200ms linear, fadeOut 200ms ease-out;
   box-shadow: 0px 1px 4px #999;
 }
 
 /* ToolBar default theme */
- ToolBar {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 1029, ../sass/batik-old.scss */
+ToolBar {
+  font: 14px "Open Sans", Arial, sans-serif;
   color: #4a4a4a;
   padding: 0;
   spacing: 0;
@@ -1037,10 +1418,14 @@ Composite.atlas-status {
   border-radius: 0;
   opacity: 1;
 }
+
+/* line 1040, ../sass/batik-old.scss */
 ToolBar[BORDER] {
   border: 1px solid #a4a4a4;
   border-radius: 2px;
 }
+
+/* line 1044, ../sass/batik-old.scss */
 ToolItem {
   color: inherit;
   background-color: #fff;
@@ -1053,37 +1438,53 @@ ToolItem {
   animation: none;
   text-shadow: none;
 }
+
+/* line 1056, ../sass/batik-old.scss */
 ToolItem:hover {
   background-color: #f0f0f0;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
+
+/* line 1062, ../sass/batik-old.scss */
 ToolItem:pressed, ToolItem:selected {
   border: 1px solid #a4a4a4;
   border-radius: 2px;
   padding: 9px 8px 8px 9px;
   background-image: gradient(linear, left top, left bottom, from(#e4e4e4), to(#f9f9f9));
 }
+
+/* line 1068, ../sass/batik-old.scss */
 ToolItem-DropDownIcon {
-  background-image: url(resources/icons/rap/toolbar/down.png );
+  background-image: url(resources/icons/rap/toolbar/down.png);
   border: none;
 }
+
+/* line 1072, ../sass/batik-old.scss */
 ToolItem-DropDownIcon:hover {
   border: 1px inset;
 }
+
+/* line 1075, ../sass/batik-old.scss */
 ToolItem-Separator {
   width: 4px;
 }
+
 /* Tree default theme */
- Tree {
+/* line 1079, ../sass/batik-old.scss */
+Tree {
   background-color: #ffffff;
   border: none;
   color: #4a4a4a;
 }
+
+/* line 1084, ../sass/batik-old.scss */
 Tree[BORDER] {
   border: 1px solid #cdcdcd;
 }
+
+/* line 1087, ../sass/batik-old.scss */
 TreeItem {
   background-color: transparent;
   color: inherit;
@@ -1091,48 +1492,66 @@ TreeItem {
   text-shadow: none;
   background-image: none;
 }
+
+/* line 1094, ../sass/batik-old.scss */
 TreeItem:linesvisible:even {
   background-color: #f0f0f0;
   color: inherit;
   border: none;
 }
+
+/* line 1099, ../sass/batik-old.scss */
 Tree-RowOverlay {
   background-color: transparent;
   color: inherit;
   background-image: none;
 }
+
+/* line 1104, ../sass/batik-old.scss */
 Tree-RowOverlay:hover {
   color: #4a4a4a;
   background-color: #b5b5b5;
   background-image: gradient(linear, left top, left bottom, from(#ebebeb), to(#d5d5d5));
 }
+
+/* line 1109, ../sass/batik-old.scss */
 Tree-RowOverlay:selected {
   color: #ffffff;
   background-color: #5882b5;
   background-image: gradient(linear, left top, left bottom, from(green), to(#416693));
 }
+
+/* line 1114, ../sass/batik-old.scss */
 Tree-RowOverlay:selected:unfocused {
   color: #ffffff;
   background-color: #b5b5b5;
   background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
 }
+
+/* line 1119, ../sass/batik-old.scss */
 Tree-RowOverlay:linesvisible:even:hover {
   color: #4a4a4a;
   background-color: #b5b5b5;
   background-image: gradient(linear, left top, left bottom, from(#ebebeb), to(#d5d5d5));
 }
+
+/* line 1124, ../sass/batik-old.scss */
 Tree-RowOverlay:linesvisible:even:selected {
   color: #ffffff;
   background-color: #5882b5;
   background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
 }
+
+/* line 1129, ../sass/batik-old.scss */
 Tree-RowOverlay:linesvisible:even:selected:unfocused {
   color: #ffffff;
   background-color: #b5b5b5;
   background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
 }
+
+/* line 1134, ../sass/batik-old.scss */
 TreeColumn {
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   color: inherit;
   background-color: #f0f0f0;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
@@ -1140,127 +1559,203 @@ TreeColumn {
   border-bottom: 1px solid #cdcdcd;
   text-shadow: none;
 }
+
+/* line 1143, ../sass/batik-old.scss */
 TreeColumn:hover {
   background-image: gradient(linear, left top, left bottom, from(#e4e4e4), to(#f9f9f9));
 }
+
+/* line 1146, ../sass/batik-old.scss */
 TreeColumn-SortIndicator {
   background-image: none;
 }
+
+/* line 1149, ../sass/batik-old.scss */
 TreeColumn-SortIndicator:up {
-  background-image: url(resources/icons/rap/column/sort-indicator-up.png );
+  background-image: url(resources/icons/rap/column/sort-indicator-up.png);
 }
+
+/* line 1152, ../sass/batik-old.scss */
 TreeColumn-SortIndicator:down {
-  background-image: url(resources/icons/rap/column/sort-indicator-down.png );
+  background-image: url(resources/icons/rap/column/sort-indicator-down.png);
 }
+
+/* line 1155, ../sass/batik-old.scss */
 Tree-Cell {
   spacing: 3px;
   padding: 5px 3px 5px 3px;
 }
+
+/* line 1159, ../sass/batik-old.scss */
 Tree-GridLine {
   color: #d0d0d0;
 }
+
+/* line 1162, ../sass/batik-old.scss */
 Tree-GridLine:horizontal {
   color: transparent;
 }
+
+/* line 1165, ../sass/batik-old.scss */
 Tree-Checkbox {
   margin: 0px 2px 0px 0px;
-  background-image: url(resources/icons/rap/button/check-unselected.png );
+  background-image: url(resources/icons/rap/button/check-unselected.png);
 }
+
+/* line 1169, ../sass/batik-old.scss */
 Tree-Checkbox:hover {
-  background-image: url(resources/icons/rap/button/check-unselected-hover.png );
+  background-image: url(resources/icons/rap/button/check-unselected-hover.png);
 }
+
+/* line 1172, ../sass/batik-old.scss */
 Tree-Checkbox:checked {
-  background-image: url(resources/icons/rap/button/check-selected.png );
+  background-image: url(resources/icons/rap/button/check-selected.png);
 }
+
+/* line 1175, ../sass/batik-old.scss */
 Tree-Checkbox:checked:hover {
-  background-image: url(resources/icons/rap/button/check-selected-hover.png );
+  background-image: url(resources/icons/rap/button/check-selected-hover.png);
 }
+
+/* line 1178, ../sass/batik-old.scss */
 Tree-Checkbox:checked:grayed {
-  background-image: url(resources/icons/rap/button/check-grayed.png );
+  background-image: url(resources/icons/rap/button/check-grayed.png);
 }
+
+/* line 1181, ../sass/batik-old.scss */
 Tree-Checkbox:checked:grayed:hover {
-  background-image: url(resources/icons/rap/button/check-grayed-hover.png );
+  background-image: url(resources/icons/rap/button/check-grayed-hover.png);
 }
+
+/* line 1184, ../sass/batik-old.scss */
 Tree-Indent {
   width: 16px;
   background-image: none;
 }
+
+/* line 1188, ../sass/batik-old.scss */
 Tree-Indent:collapsed {
-  background-image: url(resources/icons/rap/tree/tree-collapsed.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed.png);
 }
+
+/* line 1191, ../sass/batik-old.scss */
 Tree-Indent:collapsed:hover {
-  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png);
 }
+
+/* line 1194, ../sass/batik-old.scss */
 Tree-Indent:expanded {
-  background-image: url(resources/icons/rap/tree/tree-expanded.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded.png);
 }
+
+/* line 1197, ../sass/batik-old.scss */
 Tree-Indent:expanded:hover {
-  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png);
 }
+
+/* line 1200, ../sass/batik-old.scss */
 Tree-Indent:line {
   background-image: none;
 }
+
+/* line 1203, ../sass/batik-old.scss */
 Tree-Indent:first {
   background-image: none;
 }
+
+/* line 1206, ../sass/batik-old.scss */
 Tree-Indent:first:collapsed {
-  background-image: url(resources/icons/rap/tree/tree-collapsed.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed.png);
 }
+
+/* line 1209, ../sass/batik-old.scss */
 Tree-Indent:first:collapsed:hover {
-  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png);
 }
+
+/* line 1212, ../sass/batik-old.scss */
 Tree-Indent:first:expanded {
-  background-image: url(resources/icons/rap/tree/tree-expanded.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded.png);
 }
+
+/* line 1215, ../sass/batik-old.scss */
 Tree-Indent:first:expanded:hover {
-  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png);
 }
+
+/* line 1218, ../sass/batik-old.scss */
 Tree-Indent:last {
   background-image: none;
 }
+
+/* line 1221, ../sass/batik-old.scss */
 Tree-Indent:last:collapsed {
-  background-image: url(resources/icons/rap/tree/tree-collapsed.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed.png);
 }
+
+/* line 1224, ../sass/batik-old.scss */
 Tree-Indent:last:collapsed:hover {
-  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png);
 }
+
+/* line 1227, ../sass/batik-old.scss */
 Tree-Indent:last:expanded {
-  background-image: url(resources/icons/rap/tree/tree-expanded.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded.png);
 }
+
+/* line 1230, ../sass/batik-old.scss */
 Tree-Indent:last:expanded:hover {
-  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png);
 }
+
+/* line 1233, ../sass/batik-old.scss */
 Tree-Indent:first:last {
   background-image: none;
 }
+
+/* line 1236, ../sass/batik-old.scss */
 Tree-Indent:first:last:collapsed {
-  background-image: url(resources/icons/rap/tree/tree-collapsed.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed.png);
 }
+
+/* line 1239, ../sass/batik-old.scss */
 Tree-Indent:first:last:collapsed:hover {
-  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-collapsed-hover.png);
 }
+
+/* line 1242, ../sass/batik-old.scss */
 Tree-Indent:first:last:expanded {
-  background-image: url(resources/icons/rap/tree/tree-expanded.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded.png);
 }
+
+/* line 1245, ../sass/batik-old.scss */
 Tree-Indent:first:last:expanded:hover {
-  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png );
+  background-image: url(resources/icons/rap/tree/tree-expanded-hover.png);
 }
+
 /* Scale default theme */
- Scale {
+/* line 1249, ../sass/batik-old.scss */
+Scale {
   background-color: transparent;
   border-radius: 3px;
 }
+
+/* line 1253, ../sass/batik-old.scss */
 Scale-Thumb {
   background-color: #e5e5e5;
   border: 1px solid #a4a4a4;
   border-radius: 2px 2px 2px 2px;
 }
+
+/* line 1258, ../sass/batik-old.scss */
 Scale-Thumb:focused {
   border: 1px solid #4f7cb1;
 }
+
 /* DateTime default theme */
- DateTime {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 1262, ../sass/batik-old.scss */
+DateTime {
+  font: 14px "Open Sans", Arial, sans-serif;
   border: none;
   border-radius: 0 2px 2px 0;
   color: #464a4e;
@@ -1268,75 +1763,113 @@ Scale-Thumb:focused {
   background-image: none;
   text-shadow: none;
 }
+
+/* line 1271, ../sass/batik-old.scss */
 DateTime[BORDER]:focused {
   border: 1px solid #4f7cb1;
 }
+
+/* line 1274, ../sass/batik-old.scss */
 DateTime-Field {
   padding: 5px 3px 6px 3px;
   text-shadow: none;
 }
+
+/* line 1278, ../sass/batik-old.scss */
 DateTime[BORDER] {
   border: 1px solid #cdcdcd;
   border-radius: 0 2px 2px 0;
 }
+
+/* line 1282, ../sass/batik-old.scss */
 DateTime-Calendar-Day {
   text-shadow: none;
 }
+
+/* line 1285, ../sass/batik-old.scss */
 DateTime-Field:selected, DateTime-Calendar-Day:selected {
   background-color: #5882b5;
   color: #ffffff;
 }
+
+/* line 1289, ../sass/batik-old.scss */
 DateTime-Calendar-Day:selected:hover {
   background-color: #5882b5;
   color: #ffffff;
 }
+
+/* line 1293, ../sass/batik-old.scss */
 DateTime-Calendar-Day:selected:unfocused {
   background-color: #c0c0c0;
 }
+
+/* line 1296, ../sass/batik-old.scss */
 DateTime-Calendar-Day:otherMonth {
   background-color: transparent;
   color: #808080;
 }
+
+/* line 1300, ../sass/batik-old.scss */
 DateTime-Calendar-Day:hover {
   background-color: #b5b5b5;
 }
+
+/* line 1303, ../sass/batik-old.scss */
 DateTime-Calendar-Navbar {
   border: none;
   border-radius: 0;
   background-color: #00569c;
   background-image: gradient(linear, left top, left bottom, from(#416693), to(#5882b5));
   color: white;
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   text-shadow: none;
 }
+
+/* line 1312, ../sass/batik-old.scss */
 DateTime-Calendar-PreviousMonthButton {
-  background-image: url(resources/icons/rap/calendar/lastMonth.png );
+  background-image: url(resources/icons/rap/calendar/lastMonth.png);
   cursor: default;
 }
+
+/* line 1316, ../sass/batik-old.scss */
 DateTime-Calendar-PreviousMonthButton:hover {
-  background-image: url(resources/icons/rap/calendar/lastMonth-hover.png );
+  background-image: url(resources/icons/rap/calendar/lastMonth-hover.png);
 }
+
+/* line 1319, ../sass/batik-old.scss */
 DateTime-Calendar-NextMonthButton {
-  background-image: url(resources/icons/rap/calendar/nextMonth.png );
+  background-image: url(resources/icons/rap/calendar/nextMonth.png);
   cursor: default;
 }
+
+/* line 1323, ../sass/batik-old.scss */
 DateTime-Calendar-NextMonthButton:hover {
-  background-image: url(resources/icons/rap/calendar/nextMonth-hover.png );
+  background-image: url(resources/icons/rap/calendar/nextMonth-hover.png);
 }
+
+/* line 1326, ../sass/batik-old.scss */
 DateTime-Calendar-PreviousYearButton {
-  background-image: url(resources/icons/rap/calendar/lastYear.png );
+  background-image: url(resources/icons/rap/calendar/lastYear.png);
   cursor: default;
 }
+
+/* line 1330, ../sass/batik-old.scss */
 DateTime-Calendar-PreviousYearButton:hover {
-  background-image: url(resources/icons/rap/calendar/lastYear-hover.png );
+  background-image: url(resources/icons/rap/calendar/lastYear-hover.png);
 }
+
+/* line 1333, ../sass/batik-old.scss */
 DateTime-Calendar-NextYearButton {
-  background-image: url(resources/icons/rap/calendar/nextYear.png );
+  background-image: url(resources/icons/rap/calendar/nextYear.png);
   cursor: default;
 }
+
+/* line 1337, ../sass/batik-old.scss */
 DateTime-Calendar-NextYearButton:hover {
-  background-image: url(resources/icons/rap/calendar/nextYear-hover.png );
+  background-image: url(resources/icons/rap/calendar/nextYear-hover.png);
 }
+
+/* line 1340, ../sass/batik-old.scss */
 DateTime-UpButton {
   background-color: #f0f0f0;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#efefef));
@@ -1346,12 +1879,18 @@ DateTime-UpButton {
   border-radius: 0px 2px 0px 0px;
   cursor: default;
 }
+
+/* line 1349, ../sass/batik-old.scss */
 DateTime-UpButton-Icon {
-  background-image: url(resources/icons/rap/datetime/up.png );
+  background-image: url(resources/icons/rap/datetime/up.png);
 }
+
+/* line 1352, ../sass/batik-old.scss */
 DateTime-UpButton-Icon:hover {
-  background-image: url(resources/icons/rap/datetime/up-hover.png );
+  background-image: url(resources/icons/rap/datetime/up-hover.png);
 }
+
+/* line 1355, ../sass/batik-old.scss */
 DateTime-DownButton {
   background-color: #f0f0f0;
   background-image: gradient(linear, left top, left bottom, from(#efefef), to(#e4e4e4));
@@ -1361,12 +1900,18 @@ DateTime-DownButton {
   border-radius: 0px 0px 2px 0px;
   cursor: default;
 }
+
+/* line 1364, ../sass/batik-old.scss */
 DateTime-DownButton-Icon {
-  background-image: url(resources/icons/rap/datetime/down.png );
+  background-image: url(resources/icons/rap/datetime/down.png);
 }
+
+/* line 1367, ../sass/batik-old.scss */
 DateTime-DownButton-Icon:hover {
-  background-image: url(resources/icons/rap/datetime/down-hover.png );
+  background-image: url(resources/icons/rap/datetime/down-hover.png);
 }
+
+/* line 1370, ../sass/batik-old.scss */
 DateTime-DropDownButton {
   cursor: default;
   background-color: #f0f0f0;
@@ -1376,32 +1921,48 @@ DateTime-DropDownButton {
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
   width: 30px;
 }
+
+/* line 1379, ../sass/batik-old.scss */
 DateTime-DropDownButton:disabled, DateTime-UpButton:disabled, DateTime-DownButton:disabled {
   background-image: none;
   background-color: transparent;
 }
+
+/* line 1383, ../sass/batik-old.scss */
 DateTime-DropDownButton-Icon {
-  background-image: url(resources/icons/rap/spinner/down.png );
+  background-image: url(resources/icons/rap/spinner/down.png);
 }
+
+/* line 1386, ../sass/batik-old.scss */
 DateTime-DropDownButton-Icon:hover {
-  background-image: url(resources/icons/rap/spinner/down-hover.png );
+  background-image: url(resources/icons/rap/spinner/down-hover.png);
 }
+
+/* line 1389, ../sass/batik-old.scss */
 DateTime-DropDownCalendar {
   border: 1px #a7a6aa;
 }
+
 /* ExpandBar default theme */
- ExpandBar {
+/* line 1393, ../sass/batik-old.scss */
+ExpandBar {
   color: #4a4a4a;
   background-color: white;
 }
+
+/* line 1397, ../sass/batik-old.scss */
 ExpandBar[BORDER] {
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
+
+/* line 1401, ../sass/batik-old.scss */
 ExpandItem {
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
+
+/* line 1405, ../sass/batik-old.scss */
 ExpandItem-Header {
   border: none;
   border-radius: 0;
@@ -1409,118 +1970,167 @@ ExpandItem-Header {
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
   text-shadow: none;
 }
+
+/* line 1412, ../sass/batik-old.scss */
 ExpandItem-Header:disabled {
   cursor: default;
 }
+
+/* line 1415, ../sass/batik-old.scss */
 ExpandItem-Button {
-  background-image: url(resources/icons/rap/expanditem/expanditem-expand.png );
+  background-image: url(resources/icons/rap/expanditem/expanditem-expand.png);
 }
+
+/* line 1418, ../sass/batik-old.scss */
 ExpandItem-Button:hover {
-  background-image: url(resources/icons/rap/expanditem/expanditem-expand-hover.png );
+  background-image: url(resources/icons/rap/expanditem/expanditem-expand-hover.png);
 }
+
+/* line 1421, ../sass/batik-old.scss */
 ExpandItem-Button:expanded {
-  background-image: url(resources/icons/rap/expanditem/expanditem-collapse.png );
+  background-image: url(resources/icons/rap/expanditem/expanditem-collapse.png);
 }
+
+/* line 1424, ../sass/batik-old.scss */
 ExpandItem-Button:expanded:hover {
-  background-image: url(resources/icons/rap/expanditem/expanditem-collapse-hover.png );
+  background-image: url(resources/icons/rap/expanditem/expanditem-collapse-hover.png);
 }
+
 /* Sash default theme */
- Sash {
+/* line 1428, ../sass/batik-old.scss */
+Sash {
   border: none;
   background-image: none;
   background-color: transparent;
 }
+
+/* line 1433, ../sass/batik-old.scss */
 Sash[BORDER] {
   border: 1px solid #cdcdcd;
 }
+
+/* line 1436, ../sass/batik-old.scss */
 Sash:hover {
   background-color: #e5e5e5;
 }
+
+/* line 1439, ../sass/batik-old.scss */
 Sash-Handle:horizontal {
-  background-image: url(resources/icons/rap/sash/sash-handle-horizontal.png );
+  background-image: url(resources/icons/rap/sash/sash-handle-horizontal.png);
 }
+
+/* line 1442, ../sass/batik-old.scss */
 Sash-Handle:vertical {
-  background-image: url(resources/icons/rap/sash/sash-handle-vertical.png );
+  background-image: url(resources/icons/rap/sash/sash-handle-vertical.png);
 }
+
 /* Slider default theme */
- Slider {
+/* line 1446, ../sass/batik-old.scss */
+Slider {
   border: none;
   background-color: #f0f0f0;
   border-radius: 2px;
 }
+
 /* Thumb */
- Slider-Thumb[HORIZONTAL], Slider-Thumb[VERTICAL] {
+/* line 1452, ../sass/batik-old.scss */
+Slider-Thumb[HORIZONTAL], Slider-Thumb[VERTICAL] {
   background-color: #e4e4e4;
-  background-image: url(resources/icons/rap/slider/slider-background.png );
+  background-image: url(resources/icons/rap/slider/slider-background.png);
   border: 1px solid #cdcdcd;
   border-radius: 2px;
 }
+
 /* Buttons */
- Slider-UpButton, Slider-DownButton {
+/* line 1459, ../sass/batik-old.scss */
+Slider-UpButton, Slider-DownButton {
   background-color: #e4e4e4;
   border: 1px solid #cdcdcd;
   cursor: default;
   padding: 0;
 }
+
+/* line 1465, ../sass/batik-old.scss */
 Slider-UpButton[HORIZONTAL], Slider-DownButton[HORIZONTAL] {
   background-image: none;
 }
+
+/* line 1468, ../sass/batik-old.scss */
 Slider-UpButton[VERTICAL], Slider-DownButton[VERTICAL] {
   background-image: none;
 }
+
+/* line 1471, ../sass/batik-old.scss */
 Slider-UpButton[HORIZONTAL]:pressed, Slider-DownButton[HORIZONTAL]:pressed {
   background-image: none;
 }
+
+/* line 1474, ../sass/batik-old.scss */
 Slider-UpButton[VERTICAL]:pressed, Slider-DownButton[VERTICAL]:pressed {
   background-image: none;
 }
+
 /* Rounded Borders */
- Slider-UpButton[HORIZONTAL] {
+/* line 1478, ../sass/batik-old.scss */
+Slider-UpButton[HORIZONTAL] {
   border-radius: 0px 2px 2px 0px;
 }
+
+/* line 1481, ../sass/batik-old.scss */
 Slider-UpButton[VERTICAL] {
   border-radius: 0px 0px 2px 2px;
 }
+
+/* line 1484, ../sass/batik-old.scss */
 Slider-DownButton[HORIZONTAL] {
   border-radius: 2px 0px 0px 2px;
 }
+
+/* line 1487, ../sass/batik-old.scss */
 Slider-DownButton[VERTICAL] {
   border-radius: 2px 2px 0px 0px;
 }
+
 /* Button Icons */
- Slider-UpButton-Icon[HORIZONTAL] {
-  background-image: url(resources/icons/rap/slider/right.png );
+/* line 1491, ../sass/batik-old.scss */
+Slider-UpButton-Icon[HORIZONTAL] {
+  background-image: url(resources/icons/rap/slider/right.png);
 }
+
+/* line 1494, ../sass/batik-old.scss */
 Slider-UpButton-Icon[VERTICAL] {
-  background-image: url(resources/icons/rap/slider/down.png );
+  background-image: url(resources/icons/rap/slider/down.png);
 }
+
+/* line 1497, ../sass/batik-old.scss */
 Slider-DownButton-Icon[HORIZONTAL] {
-  background-image: url(resources/icons/rap/slider/left.png );
+  background-image: url(resources/icons/rap/slider/left.png);
 }
+
+/* line 1500, ../sass/batik-old.scss */
 Slider-DownButton-Icon[VERTICAL] {
-  background-image: url(resources/icons/rap/slider/up.png );
+  background-image: url(resources/icons/rap/slider/up.png);
 }
+
 /* ToolTip default theme */
+/* line 1504, ../sass/batik-old.scss */
 ToolTip, Shell.batik-status-tooltip {
   cursor: default;
   border-radius: 3px;
   padding: 3px 3px;
   opacity: 1;
   /*background-image : gradient(linear, left top, right top, from(#fffae5), to(#fff5ce));*/
-  font: 14px"Open Sans", Arial, sans-serif;
-  
+  font: 14px "Open Sans", Arial, sans-serif;
   border: 1px solid #6FA1DA;
   background-color: #f8f8f8;
   /*background-color: #FFFEDB;*/
   /*background-image: gradient(linear, left top, left bottom, from(#888), to(#363532));*/
   /*background-image: gradient(linear, left top, left bottom, from(#ffffff), to(#e5e9ec));*/
   /*background-image: gradient(linear, left top, left bottom, from(#f6f8fa), to(#dde0e1));*/
-
   color: #f0f0f0;
   animation: fadeIn 200ms linear, fadeOut 500ms ease-out;
   animation: flyInTop 500ms ease-out, flyOutTop 500ms ease-in;
   box-shadow: 0px 1px 2px #808080;
-
   /*  
   border: 2px solid #6eb02e;
   background-color: #f5f5f5;
@@ -1530,25 +2140,37 @@ ToolTip, Shell.batik-status-tooltip {
   background-image: gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
   */
 }
+
+/* line 1533, ../sass/batik-old.scss */
 ToolTip-Image[ICON_ERROR] {
-  background-image: url(resources/icons/rap/tooltip/error.png );
+  background-image: url(resources/icons/rap/tooltip/error.png);
 }
+
+/* line 1536, ../sass/batik-old.scss */
 ToolTip-Image[ICON_INFORMATION] {
-  background-image: url(resources/icons/rap/tooltip/information.png );
+  background-image: url(resources/icons/rap/tooltip/information.png);
 }
+
+/* line 1539, ../sass/batik-old.scss */
 ToolTip-Image[ICON_WARNING] {
-  background-image: url(resources/icons/rap/tooltip/warning.png );
+  background-image: url(resources/icons/rap/tooltip/warning.png);
 }
+
+/* line 1542, ../sass/batik-old.scss */
 ToolTip-Text, Label.batik-status-tooltip-text {
   color: #f8f8f8;
-  font: bold 14px"Open Sans", Arial, sans-serif;
+  font: bold 14px "Open Sans", Arial, sans-serif;
   text-shadow: none;
 }
+
+/* line 1547, ../sass/batik-old.scss */
 ToolTip-Message, Label.batik-status-tooltip-message {
   color: #e8e8e8;
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   text-shadow: none;
 }
+
+/* line 1552, ../sass/batik-old.scss */
 Widget-ToolTip {
   /*border: 1px solid #cdcdcd;*/
   border-radius: 2px;
@@ -1557,13 +2179,15 @@ Widget-ToolTip {
   color: #e8e8e8;
   background-color: #363532;
   background-image: gradient(linear, left top, left bottom, from(#666), to(#363532));
-  font: 14px"Open Sans", Arial, sans-serif;
+  font: 14px "Open Sans", Arial, sans-serif;
   animation: fadeIn 100ms linear, fadeOut 150ms ease-out;
   box-shadow: 0px 1px 6px #888;
 }
+
 /* CCombo default theme */
- CCombo {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 1565, ../sass/batik-old.scss */
+CCombo {
+  font: 14px "Open Sans", Arial, sans-serif;
   color: #4a4a4a;
   background-color: #ffffff;
   background-image: none;
@@ -1572,18 +2196,26 @@ Widget-ToolTip {
   text-shadow: none;
   box-shadow: none;
 }
+
+/* line 1575, ../sass/batik-old.scss */
 CCombo[BORDER] {
   border: 1px solid #aaaaaa;
   border-radius: 0 2px 2px 0;
   box-shadow: inset 0 0 3px #cdcdcd;
 }
+
+/* line 1580, ../sass/batik-old.scss */
 CCombo[BORDER]:focused {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
 }
+
+/* line 1584, ../sass/batik-old.scss */
 CCombo:disabled, CCombo[BORDER]:disabled {
   box-shadow: none;
 }
+
+/* line 1587, ../sass/batik-old.scss */
 CCombo-Button {
   cursor: default;
   background-color: #efefef;
@@ -1593,30 +2225,43 @@ CCombo-Button {
   border-radius: 0px 2px 2px 0px;
   width: 30px;
 }
+
+/* line 1596, ../sass/batik-old.scss */
 CCombo-Button:disabled {
   background-image: none;
   background-color: transparent;
 }
+
+/* line 1600, ../sass/batik-old.scss */
 CCombo-Button-Icon {
-  background-image: url(resources/icons/rap/ccombo/down.png );
+  background-image: url(resources/icons/rap/ccombo/down.png);
 }
+
+/* line 1603, ../sass/batik-old.scss */
 CCombo-Button-Icon:hover {
-  background-image: url(resources/icons/rap/ccombo/down-hover.png );
+  background-image: url(resources/icons/rap/ccombo/down-hover.png);
 }
+
+/* line 1606, ../sass/batik-old.scss */
 CCombo-List {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
   border-radius: 2px;
 }
+
+/* line 1611, ../sass/batik-old.scss */
 CCombo-Field {
   padding: 5px 10px 5px 10px;
 }
+
+/* line 1614, ../sass/batik-old.scss */
 CCombo-FocusIndicator {
   background-color: transparent;
   border: none;
   margin: 0;
   opacity: 0;
 }
+
 /* CLabel default theme */
 /* CLabel {
   font: 14px"Open Sans", Arial, sans-serif;
@@ -1635,48 +2280,67 @@ CLabel[BORDER] {
   border-radius: 2px;
 }*/
 /* Browser default theme */
- Browser {
+/* line 1638, ../sass/batik-old.scss */
+Browser {
   border: none;
 }
+
+/* line 1641, ../sass/batik-old.scss */
 Browser[BORDER] {
   border: 1px solid #a4a4a4;
 }
+
 /* ScrollBar default theme */
- ScrollBar {
+/* line 1645, ../sass/batik-old.scss */
+ScrollBar {
   background-color: #f0f0f0;
   background-image: none;
   border: none;
   border-radius: 0;
   width: 10px;
 }
+
+/* line 1652, ../sass/batik-old.scss */
 ScrollBar-Thumb {
   background-color: #f0f0f0;
   border: 1px solid #cdcdcd;
   border-radius: 15px;
-  background-image: url(resources/icons/rap/scrollbar/scrollbar-background.png );
+  background-image: url(resources/icons/rap/scrollbar/scrollbar-background.png);
   min-height: 20px;
 }
+
+/* line 1659, ../sass/batik-old.scss */
 ScrollBar-UpButton, ScrollBar-DownButton {
   background-color: transparent;
   border: none;
   border-radius: 0;
   cursor: default;
 }
+
+/* line 1665, ../sass/batik-old.scss */
 ScrollBar-UpButton[HORIZONTAL] {
-  background-image: url(resources/icons/rap/scrollbar/right.png );
+  background-image: url(resources/icons/rap/scrollbar/right.png);
 }
+
+/* line 1668, ../sass/batik-old.scss */
 ScrollBar-DownButton[HORIZONTAL] {
-  background-image: url(resources/icons/rap/scrollbar/left.png );
+  background-image: url(resources/icons/rap/scrollbar/left.png);
 }
+
+/* line 1671, ../sass/batik-old.scss */
 ScrollBar-UpButton[VERTICAL] {
-  background-image: url(resources/icons/rap/scrollbar/down.png )
+  background-image: url(resources/icons/rap/scrollbar/down.png);
 }
+
+/* line 1674, ../sass/batik-old.scss */
 ScrollBar-DownButton[VERTICAL] {
-  background-image: url(resources/icons/rap/scrollbar/up.png );
+  background-image: url(resources/icons/rap/scrollbar/up.png);
 }
+
 /* FileUpload default theme */
- FileUpload {
-  font: 14px"Open Sans", Arial, sans-serif;
+/* line 1678, ../sass/batik-old.scss */
+FileUpload {
+  font: 14px "Open Sans", Arial, sans-serif;
   background-image: none;
   border: none;
   border-radius: 4px;
@@ -1689,6 +2353,8 @@ ScrollBar-DownButton[VERTICAL] {
   opacity: 1;
   text-shadow: none;
 }
+
+/* line 1692, ../sass/batik-old.scss */
 FileUpload:disabled {
   cursor: default;
   color: #d2d2d2;
@@ -1696,12 +2362,18 @@ FileUpload:disabled {
   background-color: #fafafa;
   border: 1px solid #d2d2d2;
 }
+
+/* line 1699, ../sass/batik-old.scss */
 FileUpload:hover {
   background-color: #216292;
 }
+
+/* line 1702, ../sass/batik-old.scss */
 FileUpload:pressed {
   background-color: #216292;
 }
+
+/* line 1705, ../sass/batik-old.scss */
 FileUpload-FocusIndicator {
   background-color: transparent;
   border: 1px dotted #b8b8b8;
@@ -1709,35 +2381,44 @@ FileUpload-FocusIndicator {
   padding: 0px;
   opacity: 1;
 }
+
 /* JFace specific theming */
- Shell.jface_contentProposalPopup, Shell.jface_infoPopupDialog {
+/* line 1713, ../sass/batik-old.scss */
+Shell.jface_contentProposalPopup, Shell.jface_infoPopupDialog {
   border: 1px solid #cdcdcd;
   padding: 0;
   box-shadow: 0 0 4px #ababab;
 }
+
 /* Mosaic User-Styles */
-
 /* Mosaic CSS-Pseudoklassen */
-
 /* Batik Section*/
+/* line 1723, ../sass/batik-old.scss */
 Composite[BORDER].batik-panel-section-client {
   border-radius: 4px;
   box-shadow: 0px 1px 4px #a0a0a0;
   /*border: 1px solid #cdcdcd;*/
 }
+
+/* line 1728, ../sass/batik-old.scss */
 Composite[BORDER].batik-panel-section {
   border-radius: 4px;
   box-shadow: 0px 1px 4px #a0a0a0;
   border: 1px solid #cdcdcd;
 }
+
+/* line 1733, ../sass/batik-old.scss */
 Label.batik-panel-section-title {
-  font: 22px/100%"Open Sans", Arial, sans-serif;
+  font: 22px/100% "Open Sans", Arial, sans-serif;
   color: #0f1c23;
   border: none;
 }
+
+/* line 1738, ../sass/batik-old.scss */
 Label:disabled.batik-panel-section-title {
   opacity: 0.3;
 }
+
 /* Label.batik-panel-section-separator {
   opacity: 0;
 }*/
