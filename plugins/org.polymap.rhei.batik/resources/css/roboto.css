@@ -7,5 +7,5 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(../fonts/Roboto.woff2) format('woff2'), url(../fonts/Roboto.woff) format('woff');
+  src: local("Roboto"), local("Roboto-Regular"), url(../fonts/Roboto.woff2) format("woff2"), url(../fonts/Roboto.woff) format("woff");
 }

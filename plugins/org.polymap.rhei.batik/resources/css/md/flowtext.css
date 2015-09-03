@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
  * polymap.org
  * Copyright 2015, Falko Bräutigam. All rights reserved.
@@ -12,21 +13,24 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-
 /*
  * Batik default definitions for flowtext
  */
-
+/* line 20, ../../sass/md/flowtext.scss */
 a {
   /*color: #50D225; */
   color: #5a9cbd;
   text-decoration: none;
 }
+
+/* line 25, ../../sass/md/flowtext.scss */
 a:hover {
   /*color: #9999FF;*/
   /*color: #69FF37;*/
   text-decoration: underline;
 }
+
+/* line 30, ../../sass/md/flowtext.scss */
 p {
   color: #606060;
   font-size: 13px;
@@ -34,35 +38,46 @@ p {
   text-align: justify;
   margin: 3px 0 3px 0;
 }
+
+/* line 37, ../../sass/md/flowtext.scss */
 ul {
   color: #606060;
   font-size: 13px;
   margin: 3px 0 3px 0;
   padding-left: 30px;
 }
+
+/* line 43, ../../sass/md/flowtext.scss */
 h1 {
   font-size: 24px;
   font-weight: normal;
   margin: 30px 0 8px 0;
 }
+
+/* line 48, ../../sass/md/flowtext.scss */
 h2 {
   font-size: 22px;
   font-weight: normal;
   margin: 20px 0 5px 0;
 }
+
+/* line 53, ../../sass/md/flowtext.scss */
 h3 {
   font-size: 19px;
   font-weight: normal;
   margin: 10px 0 3px 0;
 }
+
+/* line 58, ../../sass/md/flowtext.scss */
 h4 {
   font-size: 16px;
   font-weight: normal;
   margin: 5px 0 0px 0;
 }
+
+/* line 63, ../../sass/md/flowtext.scss */
 hr {
   height: 0px;
   border: none;
   border-top: 1px solid #c8c8c8;
-  
 }

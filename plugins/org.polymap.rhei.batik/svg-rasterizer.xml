@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<project default="rasterize" basedir=".">
+	<property name="library.path" value="${basedir}/lib" />
+
+	<path id="icons.classpath">
+		<fileset dir="${library.path}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="rasterize">
+		<taskdef name="svg2Png" classname="org.polymap.rhei.batik.image.Svg2PngTask" classpath="build/eclipse" classpathref="icons.classpath"/>
+		<svg2Png svgPath="resources/icons" pngPath="resources/icons_conv"
+			scale="64, 128">
+			<imageConfig name="gray" colorType="gray" />
+			<imageConfig name="monochrom" colorType="monochrom" />
+			<imageConfig name="blue_by_rgb" rgb="#0000ff" />
+			<imageConfig name="white_by_rgb" rgb="#ffffff" />
+			<imageConfig name="black_by_rgb" rgb="#000000" />
+		</svg2Png>	
+	</target>
+
+</project>

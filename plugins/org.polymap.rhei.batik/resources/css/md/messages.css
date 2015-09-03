@@ -1,26 +1,32 @@
+/* line 1, ../../sass/md/messages.scss */
 .warning {
   color: #dddd00;
 }
 
+/* line 5, ../../sass/md/messages.scss */
 .error {
   color: #ff0000;
 }
 
+/* line 9, ../../sass/md/messages.scss */
 .warnlabel {
   color: #ffffff;
   background-color: #dddd00;
 }
 
+/* line 14, ../../sass/md/messages.scss */
 .errorlabel {
   color: #ffffff;
   background-color: #ff0000;
 }
 
+/* line 19, ../../sass/md/messages.scss */
 .warnbox {
   background-color: #dddd00;
   animation: flyInBottom 500ms ease-in-out, flyOutBottom 500ms ease-in-out;
 }
 
+/* line 24, ../../sass/md/messages.scss */
 .errorbox {
   background-color: #ff0000;
   animation: flyInBottom 500ms ease-in-out, flyOutBottom 500ms ease-in-out;
