@@ -17,11 +17,9 @@ package org.polymap.rhei.batik.toolkit.md;
 import static org.polymap.core.runtime.event.TypeEventFilter.ifType;
 import static org.polymap.core.ui.UIUtils.setVariant;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventObject;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,7 +27,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -38,13 +35,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 
-import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
-import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultPropertyConcern;
-import org.polymap.core.runtime.config.Immutable;
-import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
 
@@ -55,7 +48,7 @@ import org.polymap.core.runtime.event.EventManager;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class MdToolbar2
-        implements MdToolItemContainer {
+        implements MdItemContainer {
 
     private static Log log = LogFactory.getLog( MdToolbar2.class );
     
@@ -78,7 +71,7 @@ public class MdToolbar2
 
     private MdToolkit           tk;
     
-    private GroupItem           rootGroup = new GroupItem( null, "root" );            
+    private MdGroupItem         rootGroup = new MdGroupItem( null, "root" );            
     
 
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
@@ -88,7 +81,7 @@ public class MdToolbar2
         bar.setLayout( new FillLayout() );  //RowLayoutFactory.fillDefaults().spacing( 3 ).create() );
         
         EventManager.instance().subscribe( this, ifType( ToolItemEvent.class, 
-                ev2 -> ev2.getSource().toolbar() == MdToolbar2.this ) );
+                ev2 -> ev2.getSource().container() == MdToolbar2.this ) );
     }
     
     
@@ -103,7 +96,19 @@ public class MdToolbar2
     }
     
 
-    protected void renderGroup( Composite parent, GroupItem group ) {
+    @Override
+    public void addItem( MdItem item ) {
+        rootGroup.addItem( item );
+    }
+
+
+    @Override
+    public List<MdItem> items() {
+        return rootGroup.items();
+    }
+
+
+    protected void renderGroup( Composite parent, MdGroupItem group ) {
         // find Control of the group
         Composite control = findControl( parent, group );
         
@@ -115,18 +120,18 @@ public class MdToolbar2
         }
         
         //
-        for (ToolItem item : group.items) {
+        for (MdItem item : group.items()) {
             renderItem( control, item );    
         }
     }
     
     
-    protected void renderItem( Composite parent, ToolItem item ) {
+    protected void renderItem( Composite parent, MdItem item ) {
         // find Control of the group
         Button btn = findControl( parent, item );
         
-        // PushToolItem
-        if (item instanceof PushToolItem) {
+        // action item
+        if (item instanceof MdActionItem) {
             if (btn == null) {
                 btn = setVariant( tk.createButton( parent, null, SWT.PUSH ), CSS_TOOLBAR_ITEM );
                 btn.setData( "_item_", item );
@@ -134,13 +139,16 @@ public class MdToolbar2
                 btn.addSelectionListener( new SelectionAdapter() {
                     @Override
                     public void widgetSelected( SelectionEvent ev ) {
-                        ((PushToolItem)item).action.get().accept( ev );
+                        ((MdActionItem)item).action.get().accept( ev );
                     }
                 });
             }
-            btn.setText( ((PushToolItem)item).text.get() );
-            btn.setToolTipText( ((PushToolItem)item).tooltip.get() );
-            btn.setImage( ((PushToolItem)item).icon.get() );
+            
+            //o = item.text.get();
+            
+            btn.setText( item.text.get() );
+            btn.setToolTipText( ((MdActionItem)item).tooltip.get() );
+            btn.setImage( ((MdActionItem)item).icon.get() );
         }
         // unknown
         else {
@@ -149,7 +157,7 @@ public class MdToolbar2
     }
     
     
-    protected <C extends Control> C findControl( Composite parent, ToolItem item ) {
+    protected <C extends Control> C findControl( Composite parent, MdItem item ) {
         return (C)Arrays.stream( parent.getChildren() )
                 .filter( c -> c.getData( "_item_" ) == item )
                 .findAny().orElse( null );
@@ -161,121 +169,25 @@ public class MdToolbar2
     }
     
     
-    // ToolItem *******************************************
-
-    /**
-     * 
-     */
-    public abstract static class ToolItem
-            extends Configurable {
-        
-        /** The container of this item, or null if this is the root group of a toolbar */
-        private MdToolItemContainer     container;
-        
-        
-        public ToolItem( MdToolItemContainer container ) {
-            this.container = container;
-            if (container == null) {
-                // nothing to do, we are root GroupItem
-            }
-            else if (container instanceof GroupItem) {
-                ((GroupItem)container).addItem( this );
-            }
-            else if (container instanceof MdToolbar2) {
-                ((MdToolbar2)container).rootGroup.addItem( this );
-            }
-            else {
-                throw new RuntimeException( "Unknown container type: " + container );
-            }
-        }
-        
-        public MdToolbar2 toolbar() {
-            return container instanceof GroupItem 
-                    ? ((GroupItem)container).toolbar() 
-                    : (MdToolbar2)container;
-            
-        }
-    }
-    
-    
-    // GroupItem ******************************************
+    // ToolItemEvent **************************************
     
     /**
-     * 
-     */
-    public static class GroupItem
-            extends ToolItem
-            implements MdToolItemContainer {
-
-        @Mandatory
-        @Immutable
-        @Concern( ToolItemEvent.Fire.class )
-        public Config2<GroupItem,String>    id;
-        
-        @Mandatory
-        @Concern( ToolItemEvent.Fire.class )
-        public Config2<GroupItem,Alignment> align;
-        
-        private List<ToolItem>              items = new ArrayList();
-        
-        
-        public GroupItem( MdToolItemContainer container, String id ) {
-            super( container );
-            this.id.set( id );
-            this.align.set( Alignment.Left );
-        }
-
-
-        protected void addItem( ToolItem item ) {
-            items.add( item );
-        }
-    }
-
-    
-    // PushToolItem ***************************************
-    
-    /**
-     * 
-     */
-    public static class PushToolItem
-            extends ToolItem {
-        
-        public PushToolItem( MdToolbar2 parent ) {
-            super( parent );
-        }
-
-        @Concern( ToolItemEvent.Fire.class )
-        public Config2<PushToolItem,String>     text;
-        
-        @Concern( ToolItemEvent.Fire.class )
-        public Config2<PushToolItem,String>     tooltip;
-        
-        @Concern( ToolItemEvent.Fire.class )
-        public Config2<PushToolItem,Image>      icon;
-        
-        @Mandatory
-        @Concern( ToolItemEvent.Fire.class )
-        public Config2<PushToolItem,Consumer<SelectionEvent>> action;
-    }
-    
-    
-    /**
-     * 
+     * Thrown when a {@link Config} property of an item is changed. 
      */
     static class ToolItemEvent
             extends EventObject {
 
-        public ToolItemEvent( ToolItem source ) {
+        public ToolItemEvent( MdItem source ) {
             super( source );
         }
 
-        public <T extends ToolItem> T item() {
+        public <T extends MdItem> T item() {
             return (T)super.getSource();
         }
         
         @Override
-        public ToolItem getSource() {
-            return (ToolItem)super.getSource();
+        public MdItem getSource() {
+            return (MdItem)super.getSource();
         }
         
         /**
@@ -292,7 +204,7 @@ public class MdToolbar2
              */
             @Override
             public Object doSet( Object obj, Config prop, Object newValue ) {
-                ToolItem item = prop.info().getHostObject();
+                MdItem item = prop.info().getHostObject();
                 EventManager.instance().syncPublish( new ToolItemEvent( item ) );
                 return newValue;
             }

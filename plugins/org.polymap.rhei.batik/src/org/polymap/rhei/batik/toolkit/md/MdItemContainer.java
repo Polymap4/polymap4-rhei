@@ -14,11 +14,22 @@
  */
 package org.polymap.rhei.batik.toolkit.md;
 
+import java.util.List;
+
 /**
  * 
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public interface MdItemContainer {
+    
+    /**
+     * Internally add an item to this group. Client code should use item constructor.
+     *
+     * @param item
+     */
+    public void addItem( MdItem item );
+
+    public List<MdItem> items();
     
 }

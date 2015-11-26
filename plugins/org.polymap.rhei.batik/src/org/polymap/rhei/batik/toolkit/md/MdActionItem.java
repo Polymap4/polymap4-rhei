@@ -14,13 +14,27 @@
  */
 package org.polymap.rhei.batik.toolkit.md;
 
+import java.util.function.Consumer;
+
+import org.eclipse.swt.events.SelectionEvent;
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.Mandatory;
+
+import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
 
 /**
  * 
- *
- * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public interface MdToolItemContainer
-        extends MdItemContainer {
-
+public class MdActionItem
+        extends MdItem {
+    
+    public MdActionItem( MdItemContainer container ) {
+        super( container );
+    }
+    
+    @Mandatory
+    @Concern( ToolItemEvent.Fire.class )
+    public Config2<MdActionItem,Consumer<SelectionEvent>> action;
+    
 }
