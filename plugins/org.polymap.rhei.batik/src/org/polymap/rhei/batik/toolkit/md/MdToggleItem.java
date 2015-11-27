@@ -24,22 +24,28 @@ import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
 
 /**
- * Performs a single action when the item is pressed.
+ * A two state item that is notified when un/selected.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class MdActionItem
+public class MdToggleItem
         extends MdItem {
-    
-    public MdActionItem( MdItemContainer container ) {
+
+    public MdToggleItem( MdItemContainer container ) {
         super( container );
     }
-    
+
     /**
-     * The action to be performed when the item is pressed.
+     * The action to be performed when the item is selected.
      */
     @Mandatory
     @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdActionItem,Consumer<SelectionEvent>> action;
-    
+    public Config2<MdToggleItem,Consumer<SelectionEvent>> onSelected;
+
+    /**
+     * The action to be performed when the item is unselected.
+     */
+    @Concern( ToolItemEvent.Fire.class )
+    public Config2<MdToggleItem,Consumer<SelectionEvent>> onUnselected;
+
 }

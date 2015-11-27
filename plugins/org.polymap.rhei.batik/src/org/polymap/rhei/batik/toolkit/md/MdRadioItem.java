@@ -24,22 +24,22 @@ import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
 
 /**
- * Performs a single action when the item is pressed.
+ * 
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class MdActionItem
+public class MdRadioItem
         extends MdItem {
-    
-    public MdActionItem( MdItemContainer container ) {
+
+    public MdRadioItem( MdItemContainer container ) {
         super( container );
     }
-    
-    /**
-     * The action to be performed when the item is pressed.
-     */
+
     @Mandatory
     @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdActionItem,Consumer<SelectionEvent>> action;
-    
+    public Config2<MdRadioItem,Consumer<SelectionEvent>> onSelected;
+
+    @Concern( ToolItemEvent.Fire.class )
+    public Config2<MdRadioItem,Consumer<SelectionEvent>> onUnselected;
+
 }

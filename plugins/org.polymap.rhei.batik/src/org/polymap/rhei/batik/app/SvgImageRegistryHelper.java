@@ -176,16 +176,27 @@ public class SvgImageRegistryHelper
      * @return Newly generated are cached image. Must no be used outside current user session!
      */
     public Image svgImage( String path, String configName ) {
-        String key = configName + "-" + path;
-        Image image = registry.get().get( key );
+        final String key = configName + "-" + path;
         
+        Image image = registry.get().get( key );
         if (image == null || image.isDisposed()) {
-            registry.get().put( key, createSvgImage( configName, path ) );
-            image = registry.get().get( key );
+        
+            // create
+            ImageDescriptor desc = createSvgImage( configName, path );
+
+            // check again, maybe anybody else did it meanwhile
+            synchronized (registryLock) {
+                image = registry.get().get( key );
+                if (image == null || image.isDisposed()) {
+                    registry.get().put( key, desc );
+                    image = registry.get().get( key );
+                }
+            }
         }
         return image;
     }
 
+    
     /**
      * 
      *

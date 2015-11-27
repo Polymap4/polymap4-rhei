@@ -19,7 +19,9 @@ import static org.polymap.core.ui.UIUtils.setVariant;
 
 import java.util.Arrays;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,9 +44,8 @@ import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
 
 /**
+ * The next generation toolbar :) 
  * 
- * 
- *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class MdToolbar2
@@ -67,11 +68,13 @@ public class MdToolbar2
     
     // instance *******************************************
     
-    private Composite           bar;
+    private Composite               bar;
 
-    private MdToolkit           tk;
+    private MdToolkit               tk;
     
-    private MdGroupItem         rootGroup = new MdGroupItem( null, "root" );            
+    private MdGroupItem             rootGroup = new MdGroupItem( null, "root" );
+    
+    private Map<MdGroupItem,Button> selectedRadios = new HashMap();
     
 
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
@@ -119,23 +122,21 @@ public class MdToolbar2
             control.setData( "_item_", group );
         }
         
-        //
+        // items
         for (MdItem item : group.items()) {
-            renderItem( control, item );    
+            renderItem( control, item, group );
         }
     }
     
     
-    protected void renderItem( Composite parent, MdItem item ) {
+    protected void renderItem( Composite parent, MdItem item, MdGroupItem group ) {
         // find Control of the group
         Button btn = findControl( parent, item );
         
-        // action item
+        // action
         if (item instanceof MdActionItem) {
             if (btn == null) {
-                btn = setVariant( tk.createButton( parent, null, SWT.PUSH ), CSS_TOOLBAR_ITEM );
-                btn.setData( "_item_", item );
-                btn.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
+                btn = createBtn( item, parent, SWT.PUSH );
                 btn.addSelectionListener( new SelectionAdapter() {
                     @Override
                     public void widgetSelected( SelectionEvent ev ) {
@@ -143,20 +144,73 @@ public class MdToolbar2
                     }
                 });
             }
-            
-            //o = item.text.get();
-            
-            btn.setText( item.text.get() );
-            btn.setToolTipText( ((MdActionItem)item).tooltip.get() );
-            btn.setImage( ((MdActionItem)item).icon.get() );
+            updateBtn( item, btn );
         }
+
+        // toggle
+        else if (item instanceof MdToggleItem) {
+            if (btn == null) {
+                btn = createBtn( item, parent, SWT.TOGGLE );
+                btn.addSelectionListener( new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected( SelectionEvent ev ) {
+                        (((Button)ev.widget).getSelection()
+                            ? ((MdToggleItem)item).onSelected.get()
+                            : ((MdToggleItem)item).onUnselected.get()).accept( ev );                            
+                    }
+                });
+            }
+            updateBtn( item, btn );
+        }
+
+        // radio
+        else if (item instanceof MdRadioItem) {
+            if (btn == null) {
+                btn = createBtn( item, parent, SWT.TOGGLE );
+                btn.addSelectionListener( new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected( SelectionEvent ev ) {
+                        Button _btn = (Button)ev.widget;
+                        Button currentSelection = selectedRadios.remove( group );
+                        // selected
+                        if (_btn.getSelection()) {
+                            if (currentSelection != null) {
+                                currentSelection.setSelection( false );
+                            }
+                            selectedRadios.put( group, _btn );
+                        }
+                        // action
+                        (_btn.getSelection()
+                                ? ((MdRadioItem)item).onSelected.get()
+                                : ((MdRadioItem)item).onUnselected.get()).accept( ev );                            
+                    }
+                });
+            }
+            updateBtn( item, btn );
+        }
+
         // unknown
         else {
             throw new RuntimeException( "Unhandled ToolItem type: " + item );
         }
     }
+
+
+    protected Button createBtn( MdItem item, Composite parent, int style ) {
+        Button btn = setVariant( tk.createButton( parent, null, style ), CSS_TOOLBAR_ITEM );
+        btn.setData( "_item_", item );
+        btn.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
+        return btn;
+    }
     
     
+    protected void updateBtn( MdItem item, Button btn ) {
+        btn.setText( item.text.get() );
+        btn.setToolTipText( ((MdItem)item).tooltip.get() );
+        btn.setImage( ((MdItem)item).icon.get() );
+    }
+
+
     protected <C extends Control> C findControl( Composite parent, MdItem item ) {
         return (C)Arrays.stream( parent.getChildren() )
                 .filter( c -> c.getData( "_item_" ) == item )

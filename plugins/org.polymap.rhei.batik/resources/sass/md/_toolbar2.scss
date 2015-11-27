@@ -7,9 +7,9 @@
 /** MdToolbar2 */
 
 Composite.toolbar2 {
-  color: $header-fg;
-  background-color: #64686F;  /*$header-bg;*/
-  box-shadow: 0px -1px 2px $shadow;
+  color: $text-color;
+  background-color: #f3f3f3; /*#64686F;  /*$header-bg;*/
+  box-shadow: 0px -1px 3px $shadow;
   border-radius: 2px;
   padding: 0px;
   spacing: 0;
@@ -18,11 +18,28 @@ Composite.toolbar2 {
   opacity: 1;
 }
 
-Button[PUSH].toolbar2-item {
-  color: $header-fg;
+Button[PUSH].toolbar2-item,
+Button[TOGGLE].toolbar2-item {
+  color: inherit;
   background-color: inherit;
   box-shadow: none;
   border-radius: 2px;
   background-image: none;
   border: none;
+}
+
+Button[PUSH].toolbar2-item:hover,
+Button[TOGGLE].toolbar2-item:hover,
+Button[TOGGLE].toolbar2-item:selected:hover {
+  color: $action-fg;
+  background-color: lighten( $action-bg, 10% );
+}
+
+Button[PUSH].toolbar2-item:pressed {
+  background-color: $action-bg;
+}
+
+Button[TOGGLE].toolbar2-item:selected {
+  color: $text-color;
+  background-color: darken( #f3f3f3, 10% );
 }
