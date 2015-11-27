@@ -56,5 +56,4 @@ public abstract class DefaultDashlet
         }
         return this;
     }
-    
 }
