@@ -35,6 +35,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -143,7 +146,30 @@ public class FeatureTableViewer
         editors.clear();
     }
 
+    
+    /**
+     * Suppress selection of rows altogether. This is useful for tables with editing enabled.
+     */
+    public void suppressSelection() {
+        Table table = getTable();
+        table.addListener( SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent( Event ev ) {
+                ev.detail = SWT.NONE;
+                ev.type = SWT.None;
+                ev.doit = false;
+                try {
+                    table.setRedraw( false );
+                    table.deselectAll();
+                }
+                finally {
+                    table.setRedraw( true );
+                }
+            }
+        });    
+    }
 
+    
     @Override
     public void addFilter( ViewerFilter filter ) {
         assert getContentProvider() != null;

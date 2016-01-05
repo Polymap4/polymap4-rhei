@@ -77,7 +77,7 @@ public abstract class FormPageContainer
      * @throws Exception 
      */
     public void submit( IProgressMonitor monitor ) throws Exception {
-        pageController.doSubmit( monitor );
+        pageController.doSubmit( monitor != null ? monitor : new NullProgressMonitor() );
     }
     
 }
