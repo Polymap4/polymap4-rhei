@@ -2742,3 +2742,38 @@ Combo-FocusIndicator {
   margin: 0;
   opacity: 0;
 }
+
+/** Snackbar */
+/* line 3, ../../sass/md/_snackbar.scss */
+Composite.snackbar-fly {
+  color: #ffffff;
+  background-color: #323232;
+  box-shadow: 0px -1px 2px #b0b0b0;
+  border-radius: 3px;
+  padding: 0px;
+  spacing: 0;
+  background-image: none;
+  border: none;
+  opacity: 0.8;
+  animation: flyInBottom 500ms ease, flyOutBottom 300ms ease;
+}
+
+/* line 16, ../../sass/md/_snackbar.scss */
+Composite.snackbar-fade {
+  color: #ffffff;
+  background-color: #323232;
+  box-shadow: 0px 0px 2px #b0b0b0;
+  border-radius: 3px;
+  padding: 0px;
+  spacing: 0;
+  background-image: none;
+  border: none;
+  opacity: 1;
+  animation: fadeIn 500ms linear, fadeOut 300ms linear;
+}
+
+/* line 29, ../../sass/md/_snackbar.scss */
+Label.snackbar-message {
+  font: 15px "Roboto", "Noto", sans-serif;
+  color: #ffffff;
+}

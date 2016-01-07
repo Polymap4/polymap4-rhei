@@ -124,6 +124,10 @@ public abstract class PanelSite
      */
     public abstract LayoutSupplier layoutPreferences();
     
+
+    /**
+     * 
+     */
     public static class FireEvent
             extends DefaultPropertyConcern {
 

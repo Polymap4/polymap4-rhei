@@ -14,6 +14,7 @@
  */
 package org.polymap.rhei.batik.toolkit.md;
 
+import static org.polymap.core.ui.FormDataFactory.on;
 import static org.polymap.rhei.batik.toolkit.md.MdAppDesign.dp;
 
 import org.apache.commons.logging.Log;
@@ -116,8 +117,7 @@ public class MdToolkit
         int margin = dp( 40 );
         int size = dp( 72 );
 
-        FormDataFactory layout = FormDataFactory.on( result )
-                .width( size ).height( size );
+        FormDataFactory layout = on( result ).width( size ).height( size );
         
         if ((position & SWT.TOP) != 0) {
             layout.top( 0, marginTop );
@@ -143,31 +143,21 @@ public class MdToolkit
 
 
     /**
-     * Creates a snack bar.
+     * Creates a {@link MdSnackbar}
      * 
      * @see <a
      *      href="http://www.google.com/design/spec/components/snackbars-toasts.html">Material
      *      Design</a>.
      */
     @SuppressWarnings("javadoc")
-    public MdSnackbar createSnackbar( int... styleBits ) {
-        return new MdSnackbar( this, panelPage.control, stylebits( styleBits ) );
+    public MdSnackbar createSnackbar( MdSnackbar.Appearance appearance, String message, MdItem... actions ) {
+        return new MdSnackbar( this, panelPage.control )
+                .appearance.put( appearance )
+                .message.put( message )
+                .actions.put( actions );
     }
     
     
-    /**
-     * Creates a toast.
-     * 
-     * @see <a
-     *      href="http://www.google.com/design/spec/components/snackbars-toasts.html">Material
-     *      Design</a>.
-     */
-    @SuppressWarnings("javadoc")
-    public MdToast createToast( int verticalPosition, int... styleBits ) {
-        return new MdToast( this, panelPage.control, verticalPosition, stylebits( styleBits ) );
-    }    
-
-
     public Composite createCard( Composite parent ) {
         throw new RuntimeException( "not yet..." );
     }

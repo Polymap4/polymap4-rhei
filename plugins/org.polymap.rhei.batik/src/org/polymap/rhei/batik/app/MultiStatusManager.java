@@ -26,47 +26,17 @@ import org.eclipse.core.runtime.Status;
 import org.polymap.rhei.batik.IPanel;
 
 /**
- * Handles multiple {@link IStatus} coming from different senders of an
+ * Handles multiple {@link IStatus} coming from different senders from within an
  * {@link IPanel}. The highest severity status is set as active status of the panel.
- * Optionaly the enable state of a submit {@link Enableable} (IAction or Button) is
- * managed.
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class SubmitStatusManager {
+public abstract class MultiStatusManager {
 
-    private static Log log = LogFactory.getLog( SubmitStatusManager.class );
-    
-    private IPanel                      panel;
+    private static Log log = LogFactory.getLog( MultiStatusManager.class );
     
     private Map<Object,IStatus>         status = new HashMap();
     
-    private Enableable                  submit;
-    
-    private Enableable                  revert;
-    
-    
-    public SubmitStatusManager( IPanel panel ) {
-        this.panel = panel;
-    }
-
-    public SubmitStatusManager setSubmit( Enableable submit ) {
-        this.submit = submit;
-        return this;
-    }
-
-    public Enableable getSubmit() {
-        return submit;
-    }
-    
-    public SubmitStatusManager setRevert( Enableable revert ) {
-        this.revert = revert;
-        return this;
-    }
-
-    public Enableable getRevert() {
-        return revert;
-    }
     
     public IStatus updateStatusOf( Object sender, IStatus newStatus ) {
         assert sender != null;
@@ -76,21 +46,19 @@ public class SubmitStatusManager {
         updateUI();
         return result;
     }
+
     
     protected void updateUI() {
         IStatus highestSeverity = Status.OK_STATUS;
         for (IStatus s : status.values()) {
-            highestSeverity = highestSeverity == Status.OK_STATUS || highestSeverity.getSeverity() < s.getSeverity() 
-                    ? s : highestSeverity;
+            highestSeverity = highestSeverity == Status.OK_STATUS 
+                    || highestSeverity.getSeverity() < s.getSeverity() ? s : highestSeverity;
             log.debug( "    checking: " + s + " -> highest: " + highestSeverity );
         }
-        
-        log.debug( "highestSeverity: " + highestSeverity );
-        panel.site().status.set( highestSeverity );
-        
-        if (submit != null) {
-            submit.setEnabled( highestSeverity.isOK() && highestSeverity != Status.OK_STATUS );
-        }
+        doUpdateUI( highestSeverity );
     }
+    
+    
+    protected abstract void doUpdateUI( IStatus highestSeverity );
     
 }
