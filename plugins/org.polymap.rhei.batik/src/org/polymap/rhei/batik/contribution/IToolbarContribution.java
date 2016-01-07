@@ -14,15 +14,16 @@
  */
 package org.polymap.rhei.batik.contribution;
 
+import org.polymap.rhei.batik.toolkit.md.MdToolbar2;
+
 /**
  * 
- * @see DefaultContribution
+ *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public interface IContributionFactory {
+public interface IToolbarContribution
+        extends IContributionProvider {
 
-    public void fillToolbar( IContributionSite site, Object toolbar );
-    
-    public void fillFab( IContributionSite site );
+    public void fillToolbar( IContributionSite site, MdToolbar2 toolbar );
     
 }
