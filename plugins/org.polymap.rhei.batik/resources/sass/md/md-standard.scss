@@ -38,40 +38,6 @@ should be handled by each component.
   color: $text-color-disabled;
 }*/
 
-
-Widget-ToolTip {
-  padding: 10px;
-  background-color: rgb(32, 31, 27);
-  background-image: none;
-  border: none;
-  border-radius: 1px;
-  color: #e0e0e0;
-  opacity: 0.9;
-  animation: fadeIn 150ms ease-in, fadeOut 150ms ease-in;
-  box-shadow: none;
-  text-align: center;
-}
-
-Widget-ToolTip-Pointer {
-  background-image: none;
-}
-
-Widget-ToolTip-Pointer:up {
-  background-image : url( resource/widget/rap/arrows/tooltip-up.png );
-}
-
-Widget-ToolTip-Pointer:down {
-  background-image : url( resource/widget/rap/arrows/tooltip-down.png );
-}
-
-Widget-ToolTip-Pointer:left {
-  background-image : url( resource/widget/rap/arrows/tooltip-left.png );
-}
-
-Widget-ToolTip-Pointer:right {
-  background-image : url( resource/widget/rap/arrows/tooltip-right.png );
-}
-
 Display {
   rwt-shadow-color: #a7a6aa;
   rwt-highlight-color: #ffffff;
@@ -990,47 +956,6 @@ Slider-DownButton-Icon[VERTICAL] {
   background-image: url( resource/widget/rap/slider/up.png );
 }
 
-/* ToolTip default theme */
-
-ToolTip {
-  cursor: default;
-  border: 1px solid #a0b3ca;
-  border-radius: 2px;
-  padding: 8px;
-  opacity: 1;
-  color: #4a4a4a;
-  background-image : gradient(
-    linear, left top, right top,
-    from( #f8f9ff ),
-    to( #f4f4f4 )
-  );
-  background-color: #fcfcfc;
-  animation: fadeIn 200ms linear, fadeOut 600ms ease-out;
-  box-shadow: 0 0 4px #adadad;
-}
-
-ToolTip-Image[ICON_ERROR] {
-  background-image: url( resource/widget/rap/tooltip/error.png );
-}
-
-ToolTip-Image[ICON_INFORMATION] {
-  background-image: url( resource/widget/rap/tooltip/information.png );
-}
-
-ToolTip-Image[ICON_WARNING] {
-  background-image: url( resource/widget/rap/tooltip/warning.png );
-}
-
-ToolTip-Text {
-  color: #4a4a4a;
-  text-shadow: none;
-}
-
-ToolTip-Message {
-  color: #4a4a4a;
-  text-shadow: none;
-}
-
 /* CCombo default theme */
 
 CCombo {
@@ -1187,3 +1112,4 @@ Shell.jface_contentProposalPopup, Shell.jface_infoPopupDialog {
 @import "toolbar2";
 @import "combo";
 @import "snackbar";
+@import "tooltip";
