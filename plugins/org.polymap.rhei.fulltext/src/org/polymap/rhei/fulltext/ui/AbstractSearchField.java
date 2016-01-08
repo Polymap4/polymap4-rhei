@@ -33,8 +33,6 @@ import org.eclipse.swt.widgets.Text;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.rap.rwt.graphics.Graphics;
-
 import org.polymap.core.runtime.UIJob;
 import org.polymap.core.runtime.config.Check;
 import org.polymap.core.runtime.config.Config2;
@@ -44,7 +42,9 @@ import org.polymap.core.runtime.config.DefaultInt;
 import org.polymap.core.runtime.config.NumberRangeValidator;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
+import org.polymap.core.ui.UIUtils;
 
+import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 import org.polymap.rhei.fulltext.FulltextPlugin;
 
 /**
@@ -94,8 +94,15 @@ public abstract class AbstractSearchField
 
         clearBtn = new Label( container, SWT.PUSH | SWT.SEARCH );
         clearBtn.setToolTipText( "Zurücksetzen" );
-        clearBtn.setImage( FulltextPlugin.images().image( "icons/delete_edit.gif" ) );
-        clearBtn.setLayoutData( FormDataFactory.filled().top( 0, 5 ).right( 100, -5 ).left( -1 ).create() );
+        try {
+            clearBtn.setImage( FulltextPlugin.images().svgImage( "broom.svg", SvgImageRegistryHelper.DISABLED12 ) );
+        }
+        catch (Exception e1) {
+            log.warn( "No Batik plugin: falling back to gif image" );
+            clearBtn.setImage( FulltextPlugin.images().image( "resources/icons/delete_edit.gif" ) );
+        }
+
+        clearBtn.setLayoutData( FormDataFactory.filled().top( 0, 6 ).right( 100, -10 ).left( -1 ).create() );
         clearBtn.addMouseListener( new MouseAdapter() {
             public void mouseUp( MouseEvent e ) {
                 searchTxt.setText( "" );
@@ -111,7 +118,7 @@ public abstract class AbstractSearchField
 
         searchTxt.setText( "Suchen..." );
         searchTxt.setToolTipText( "Suchbegriff: min. 3 Zeichen" );
-        searchTxt.setForeground( Graphics.getColor( 0xa0, 0xa0, 0xa0 ) );
+        searchTxt.setForeground( UIUtils.getColor( 0xa0, 0xa0, 0xa0 ) );
         searchTxt.addFocusListener( new FocusListener() {
             @Override
             public void focusLost( FocusEvent ev ) {
@@ -125,7 +132,7 @@ public abstract class AbstractSearchField
             public void focusGained( FocusEvent ev ) {
                 if (searchTxt.getText().startsWith( "Suchen" )) {
                     searchTxt.setText( "" );
-                    searchTxt.setForeground( Graphics.getColor( 0x00, 0x00, 0x00 ) );
+                    searchTxt.setForeground( UIUtils.getColor( 0x00, 0x00, 0x00 ) );
                 }
             }
         });

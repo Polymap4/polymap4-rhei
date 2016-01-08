@@ -18,8 +18,9 @@ import org.osgi.framework.BundleContext;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import org.polymap.core.ui.ImageRegistryHelper;
 import org.polymap.core.ui.StatusDispatcher;
+
+import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 
 /**
  * 
@@ -41,14 +42,14 @@ public class FulltextPlugin
     /**
      * Use this to create frequently used images used by this plugin.
      */
-    public static ImageRegistryHelper images() {
+    public static SvgImageRegistryHelper images() {
         return instance().images;
     }
 
     
 	// instance *******************************************
 
-    private ImageRegistryHelper         images = new ImageRegistryHelper( this );
+    private SvgImageRegistryHelper      images = new SvgImageRegistryHelper( this );
     
     private ErrorHandler                errorHandler;
 

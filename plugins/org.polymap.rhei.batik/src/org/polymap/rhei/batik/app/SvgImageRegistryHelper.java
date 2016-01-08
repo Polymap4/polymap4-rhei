@@ -94,6 +94,9 @@ public class SvgImageRegistryHelper
     /** Image configuration for normale, disabled icons created by {@link #svgImage(String, String)}. */
     public final static String      DISABLED24 = "normal24-disabled";
     
+    /** Image configuration for normale, disabled icons created by {@link #svgImage(String, String)}. */
+    public final static String      DISABLED12 = "normal12-disabled";
+    
     /** Image configuration for normale, hovered icons created by {@link #svgImage(String, String)}. */
     public final static String      HOVER24 = "normal24-hovered";
     
@@ -146,6 +149,7 @@ public class SvgImageRegistryHelper
         RGB white = new RGB( 0xFF, 0xFF, 0xFF );
         RGB action = new RGB( 0x5A, 0xA9, 0xDD );
         RGB normal = new RGB( 0x84, 0xA4, 0xC1 );  //new RGB( 150, 150, 150 );
+        RGB disabled = new RGB( 0xb0, 0xb0, 0xb0 );
         putConfig( NORMAL12, new ReplaceBlackSvgConfiguration( normal, 16 ) );
         putConfig( NORMAL24, new ReplaceBlackSvgConfiguration( normal, 24 ) );
         putConfig( NORMAL48, new ReplaceBlackSvgConfiguration( normal, 48 ) );
@@ -157,6 +161,8 @@ public class SvgImageRegistryHelper
         putConfig( ERROR24, new ReplaceBlackSvgConfiguration( new RGB( 0xFF, 0x61, 0x39 ), 24 ) );
         putConfig( WHITE24, new ReplaceBlackSvgConfiguration( white, 24 ) );
         putConfig( OVR12_ACTION, new ReplaceBlackSvgConfiguration( new RGB( 140, 240, 100 ), 16 ) );
+        putConfig( DISABLED24, new ReplaceBlackSvgConfiguration( disabled, 24 ) );
+        putConfig( DISABLED12, new ReplaceBlackSvgConfiguration( disabled, 16 ) );
     }
 
     
