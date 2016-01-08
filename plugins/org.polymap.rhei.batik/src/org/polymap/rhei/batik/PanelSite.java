@@ -20,9 +20,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
@@ -54,24 +51,24 @@ public abstract class PanelSite
     @Immutable
     public Config2<PanelSite,Integer>       stackPriority;
     
-    /**
-     * Changes the status of the panel. {@link Status#OK_STATUS} signals that the
-     * panel has valid state. If status is not valid then the given message is
-     * displayed.
-     * <p/>
-     * Use status severity as follows:
-     * <ul>
-     * <li>{@link Status#OK_STATUS} : Everything is ok. No message.</li>
-     * <li>{@link IStatus#OK} : An action has been complete successfully. Message gets displayed.</li>
-     * <li>{@link IStatus#INFO} : ...</li>
-     * <li>{@link IStatus#WARNING} : The user's attention is needed.</li>
-     * <li>{@link IStatus#ERROR} : An error/exception occured. An</li>
-     * </ul>
-     */
-    @Mandatory
-    @Concern( FireEvent.class )
-    @FireEventType( EventType.STATUS )
-    public Config2<PanelSite,IStatus>       status;
+//    /**
+//     * Changes the status of the panel. {@link Status#OK_STATUS} signals that the
+//     * panel has valid state. If status is not valid then the given message is
+//     * displayed.
+//     * <p/>
+//     * Use status severity as follows:
+//     * <ul>
+//     * <li>{@link Status#OK_STATUS} : Everything is ok. No message.</li>
+//     * <li>{@link IStatus#OK} : An action has been complete successfully. Message gets displayed.</li>
+//     * <li>{@link IStatus#INFO} : ...</li>
+//     * <li>{@link IStatus#WARNING} : The user's attention is needed.</li>
+//     * <li>{@link IStatus#ERROR} : An error/exception occured. An</li>
+//     * </ul>
+//     */
+//    @Mandatory
+//    @Concern( FireEvent.class )
+//    @FireEventType( EventType.STATUS )
+//    public Config2<PanelSite,IStatus>       status;
     
     /**
      * The title of the page. Null specifies that the panel does not show up in

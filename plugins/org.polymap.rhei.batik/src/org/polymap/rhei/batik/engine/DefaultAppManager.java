@@ -45,8 +45,6 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.XMLMemento;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Status;
-
 import org.polymap.core.runtime.Lazy;
 import org.polymap.core.runtime.PlainLazyInit;
 import org.polymap.core.runtime.StreamIterable;
@@ -351,7 +349,6 @@ public class DefaultAppManager
     
     /**
      * 
-     * 
      */
     protected class PanelSiteImpl
             extends PanelSite {
@@ -372,7 +369,6 @@ public class DefaultAppManager
             assert path != null;
             this.path = path;
             this.stackPriority.set( stackPriority );
-            status.set( Status.OK_STATUS );
         }
         
         @Override

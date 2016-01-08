@@ -12,7 +12,7 @@
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
-package org.polymap.rhei.batik.toolkit.md;
+package org.polymap.rhei.batik.toolkit;
 
 import static org.polymap.core.ui.FormDataFactory.on;
 import static org.polymap.core.ui.UIUtils.setVariant;
@@ -29,6 +29,8 @@ import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
 
+import org.polymap.rhei.batik.toolkit.md.MdAppDesign;
+
 /**
  * Snackbars provide lightweight feedback about an operation by showing a brief
  * message at the bottom of the screen. Snackbars can contain an action.
@@ -38,40 +40,49 @@ import org.polymap.core.ui.FormLayoutFactory;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 @SuppressWarnings("javadoc")
-public class MdSnackbar
+public class Snackbar
         extends Configurable {
 
     public enum Appearance {
-        /** Fly in from bottom. */
+        /**
+         * Makes the snackbar flying in from bottom.
+         * <p/>
+         * Use this to give feedback about some <b>progress</b>, such as a process
+         * has been started or something has been opened.
+         */
         FlyIn,
-        /** Fade in at bottom. */
+        /** Fade in at bottom.
+         * <p/>
+         * Use this to give feedback about a <b>single action</b>, such as user input
+         * was wrong.
+         */
         FadeIn    
     }
 
     @Mandatory
-    public Config2<MdSnackbar,Appearance>   appearance;
+    public Config2<Snackbar,Appearance>   appearance;
     
     /** The timeout before the snackbar disappears. */
     @Mandatory
     @DefaultInt( 5 )
-    public Config2<MdSnackbar,Integer>      hideTimeout;
+    public Config2<Snackbar,Integer>      hideTimeout;
     
     /** The message to display in the Snackbar. */
     @Mandatory
-    public Config2<MdSnackbar,String>       message;
+    public Config2<Snackbar,String>       message;
     
     @Mandatory
-    public Config2<MdSnackbar,MdItem[]>     actions;
+    public Config2<Snackbar,Item[]>       actions;
+
+    private Composite                     control;
     
-    private Composite                       control;
     
-    
-    public MdSnackbar( MdToolkit tk, Composite parent ) {
+    public Snackbar( IPanelToolkit tk, Composite parent ) {
         UIThreadExecutor.async( () -> createContents( tk, parent ) );
     }
     
     
-    protected void createContents( MdToolkit tk, Composite parent ) {
+    protected void createContents( IPanelToolkit tk, Composite parent ) {
         int height = MdAppDesign.dp( 80 );
         
         control = tk.createComposite( parent );
@@ -100,9 +111,9 @@ public class MdSnackbar
         
         // actions
         Control lastBtn = null;
-        for (MdItem action : actions.get()) {
+        for (Item action : actions.get()) {
             Control btn = null;
-            if (action instanceof MdActionItem) {
+            if (action instanceof ActionItem) {
                 btn = tk.createButton( control, action.text.get(), SWT.FLAT );
             }
             else {

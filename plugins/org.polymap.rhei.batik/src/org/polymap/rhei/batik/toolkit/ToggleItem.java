@@ -12,34 +12,39 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package org.polymap.rhei.batik.toolkit.md;
+package org.polymap.rhei.batik.toolkit;
 
 import java.util.function.Consumer;
 
 import org.eclipse.swt.events.SelectionEvent;
+
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Mandatory;
 
-import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
-
 /**
- * Performs a single action when the item is pressed.
+ * A two state item that is notified when un/selected.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class MdActionItem
-        extends MdItem {
-    
-    public MdActionItem( MdItemContainer container ) {
+public class ToggleItem
+        extends Item {
+
+    public ToggleItem( ItemContainer container ) {
         super( container );
     }
-    
+
     /**
-     * The action to be performed when the item is pressed.
+     * The action to be performed when the item is selected.
      */
     @Mandatory
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdActionItem,Consumer<SelectionEvent>> action;
-    
+    @Concern( ItemEvent.Fire.class )
+    public Config2<ToggleItem,Consumer<SelectionEvent>> onSelected;
+
+    /**
+     * The action to be performed when the item is unselected.
+     */
+    @Concern( ItemEvent.Fire.class )
+    public Config2<ToggleItem,Consumer<SelectionEvent>> onUnselected;
+
 }

@@ -18,9 +18,6 @@ import java.util.Arrays;
 
 import org.eclipse.swt.graphics.Image;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 
@@ -66,24 +63,24 @@ public interface IPanelSite {
      */
     public PanelPath getPath();
     
-    /**
-     * Changes the status of the panel. {@link Status#OK_STATUS} signals that the
-     * panel has valid state. If status is not valid then the given message is
-     * displayed.
-     * <p/>
-     * Use status severity as follows:
-     * <ul>
-     * <li>{@link Status#OK_STATUS} : Everything is ok. No message.</li>
-     * <li>{@link IStatus#OK} : An action has been complete successfully. Message gets displayed.</li>
-     * <li>{@link IStatus#INFO} : ...</li>
-     * <li>{@link IStatus#WARNING} : The user's attention is needed.</li>
-     * <li>{@link IStatus#ERROR} : An error/exception occured. An</li>
-     * </ul>
-     *
-     * @param status The current status of the panel. {@link Status#OK_STATUS}
-     *        signals that the panel has valid state.
-     */
-    public void setStatus( IStatus status );
+//    /**
+//     * Changes the status of the panel. {@link Status#OK_STATUS} signals that the
+//     * panel has valid state. If status is not valid then the given message is
+//     * displayed.
+//     * <p/>
+//     * Use status severity as follows:
+//     * <ul>
+//     * <li>{@link Status#OK_STATUS} : Everything is ok. No message.</li>
+//     * <li>{@link IStatus#OK} : An action has been complete successfully. Message gets displayed.</li>
+//     * <li>{@link IStatus#INFO} : ...</li>
+//     * <li>{@link IStatus#WARNING} : The user's attention is needed.</li>
+//     * <li>{@link IStatus#ERROR} : An error/exception occured. An</li>
+//     * </ul>
+//     *
+//     * @param status The current status of the panel. {@link Status#OK_STATUS}
+//     *        signals that the panel has valid state.
+//     */
+//    public void setStatus( IStatus status );
 
     public IPanelToolkit toolkit();
     

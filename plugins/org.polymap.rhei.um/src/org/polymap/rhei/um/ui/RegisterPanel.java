@@ -24,8 +24,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import org.eclipse.core.commands.operations.IUndoableOperation;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 
@@ -44,10 +42,10 @@ import org.polymap.rhei.batik.toolkit.IPanelSection;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.MinWidthConstraint;
 import org.polymap.rhei.batik.toolkit.PriorityConstraint;
+import org.polymap.rhei.batik.toolkit.Snackbar.Appearance;
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormFieldListener;
 import org.polymap.rhei.form.batik.BatikFormContainer;
-import org.polymap.rhei.um.UmPlugin;
 import org.polymap.rhei.um.User;
 import org.polymap.rhei.um.UserRepository;
 import org.polymap.rhei.um.internal.Messages;
@@ -148,11 +146,11 @@ public class RegisterPanel
                         @Override
                         public void done( IJobChangeEvent ev2 ) {
                             if (ev2.getResult().isOK()) {
-                                getSite().setStatus( new Status( IStatus.OK, UmPlugin.ID, i18n.get( "okText" ) ) );
+                                site().toolkit().createSnackbar( Appearance.FlyIn, i18n.get( "okText" ) );
                                 getContext().closePanel( getSite().getPath() );
                             }
                             else {
-                                getSite().setStatus( new Status( IStatus.ERROR, UmPlugin.ID, i18n.get( "errorText", ev2.getResult().getMessage() ) ) );                                
+                                site().toolkit().createSnackbar( Appearance.FadeIn, i18n.get( "errorText", ev2.getResult().getMessage() ) );                                
                             }
                         }
                     });                    
@@ -186,13 +184,12 @@ public class RegisterPanel
             if (personForm.isValid()
                     // XXX "short" login for test :)
                     || name != null && name.startsWith( "@" ) && email != null) {
-                getSite().setStatus( Status.OK_STATUS );
 
                 if (UserRepository.instance().findUser( email ) == null) {
                     okBtn.setEnabled( true );
                 }
                 else {
-                    getSite().setStatus( new Status( IStatus.WARNING, UmPlugin.ID, "Der Nutzername existiert bereits: " + email ) );
+                    site().toolkit().createSnackbar( Appearance.FadeIn, "Der Nutzername existiert bereits: " + email );
                 }
             }
         }

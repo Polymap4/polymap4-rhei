@@ -157,11 +157,6 @@ public abstract class DefaultPanel
         }
 
         @Override
-        public void setStatus( IStatus status ) {
-            site.status.set( status );
-        }
-
-        @Override
         public IPanelSite setTitle( String title ) {
             site.title.set( title );
             return this;

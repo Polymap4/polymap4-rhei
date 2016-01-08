@@ -12,34 +12,33 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package org.polymap.rhei.batik.toolkit.md;
+package org.polymap.rhei.batik.toolkit;
 
 import java.util.function.Consumer;
 
 import org.eclipse.swt.events.SelectionEvent;
+
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Mandatory;
-
-import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
 
 /**
  * 
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class MdRadioItem
-        extends MdItem {
+public class RadioItem
+        extends Item {
 
-    public MdRadioItem( MdItemContainer container ) {
+    public RadioItem( ItemContainer container ) {
         super( container );
     }
 
     @Mandatory
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdRadioItem,Consumer<SelectionEvent>> onSelected;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<RadioItem,Consumer<SelectionEvent>> onSelected;
 
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdRadioItem,Consumer<SelectionEvent>> onUnselected;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<RadioItem,Consumer<SelectionEvent>> onUnselected;
 
 }

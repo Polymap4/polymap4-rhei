@@ -38,7 +38,7 @@ public class BatikStatusAdapter
 
     private static Log log = LogFactory.getLog( BatikStatusAdapter.class );
 
-    private static final DefaultToolkit    tk = new DefaultToolkit( null );
+    private static final DefaultToolkit    tk = new DefaultToolkit( null, null );
     
     
     @Override

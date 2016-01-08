@@ -27,8 +27,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Link;
 
 import org.eclipse.core.commands.operations.IUndoableOperation;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.service.ISettingStore;
 
@@ -48,6 +46,7 @@ import org.polymap.rhei.batik.PanelIdentifier;
 import org.polymap.rhei.batik.toolkit.IPanelSection;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
+import org.polymap.rhei.batik.toolkit.Snackbar.Appearance;
 import org.polymap.rhei.field.CheckboxFormField;
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormFieldListener;
@@ -58,7 +57,6 @@ import org.polymap.rhei.field.StringFormField.Style;
 import org.polymap.rhei.form.DefaultFormPage;
 import org.polymap.rhei.form.IFormPageSite;
 import org.polymap.rhei.form.batik.BatikFormContainer;
-import org.polymap.rhei.um.UmPlugin;
 import org.polymap.rhei.um.User;
 import org.polymap.rhei.um.UserRepository;
 import org.polymap.rhei.um.auth.UmSecurityConfiguration;
@@ -78,9 +76,9 @@ public class LoginPanel
 
     public static final PanelIdentifier ID = new PanelIdentifier( "um", "login" );
 
-    private Context<UserPrincipal> user;
+    private Context<UserPrincipal>      user;
 
-    private IPanelToolkit                  tk;
+    private IPanelToolkit               tk;
 
     
     @Override
@@ -106,7 +104,7 @@ public class LoginPanel
                     return true;
                 }
                 else {
-                    getSite().setStatus( new Status( IStatus.WARNING, UmPlugin.ID, "Nutzername oder Passwort sind nicht korrekt." ) );
+                    site().toolkit().createSnackbar( Appearance.FadeIn, "Nutzername oder Passwort ist nicht korrekt." );
                     return false;
                 }
             }
@@ -312,10 +310,10 @@ public class LoginPanel
             if (umuser != null) {
                 IUndoableOperation op = new NewPasswordOperation( umuser );
                 OperationSupport.instance().execute( op, true, false );
-                panelSite.setStatus( new Status( IStatus.OK, UmPlugin.ID, i18n.get( "passwordSent", name ) ) );
+                panelSite.toolkit().createSnackbar( Appearance.FlyIn, i18n.get( "passwordSent", name ) );
             }
             else {
-                panelSite.setStatus( new Status( IStatus.WARNING, UmPlugin.ID, i18n.get( "noSuchUser", name ) ) );
+                panelSite.toolkit().createSnackbar( Appearance.FadeIn, i18n.get( "noSuchUser", name ) );
             }
         }
 

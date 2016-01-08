@@ -12,24 +12,33 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package org.polymap.rhei.batik.toolkit.md;
+package org.polymap.rhei.batik.toolkit;
 
-import java.util.List;
+import java.util.function.Consumer;
+
+import org.eclipse.swt.events.SelectionEvent;
+
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.Mandatory;
 
 /**
- * 
+ * Performs a single action when the item is pressed.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public interface MdItemContainer {
+public class ActionItem
+        extends Item {
+    
+    public ActionItem( ItemContainer container ) {
+        super( container );
+    }
     
     /**
-     * Internally add an item to this group. Client code should use item constructor.
-     *
-     * @param item
+     * The action to be performed when the item is pressed.
      */
-    public void addItem( MdItem item );
-
-    public List<MdItem> items();
+    @Mandatory
+    @Concern( ItemEvent.Fire.class )
+    public Config2<ActionItem,Consumer<SelectionEvent>> action;
     
 }

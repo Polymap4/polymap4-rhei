@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package org.polymap.rhei.batik.toolkit.md;
+package org.polymap.rhei.batik.toolkit;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,29 +24,29 @@ import org.polymap.core.runtime.config.Immutable;
 import org.polymap.core.runtime.config.Mandatory;
 
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2.Alignment;
-import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
 
 /**
  * 
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class MdGroupItem
-        extends MdItem
-        implements MdItemContainer {
+public class GroupItem
+        extends Item
+        implements ItemContainer {
 
     @Mandatory
     @Immutable
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdGroupItem,String>      id;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<GroupItem,String>      id;
     
     /** Defaults to {@link Alignment#Left}. */
     @Mandatory
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdGroupItem,Alignment>   align;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<GroupItem,Alignment>   align;
     
-    private List<MdItem>                    items = new ArrayList();
+    private List<Item>                    items = new ArrayList();
     
     
-    public MdGroupItem( MdItemContainer container, String id ) {
+    public GroupItem( ItemContainer container, String id ) {
         super( container );
         this.id.set( id );
         this.align.set( Alignment.Left );
@@ -54,13 +54,13 @@ public class MdGroupItem
 
 
     @Override
-    public void addItem( MdItem item ) {
+    public void addItem( Item item ) {
         items.add( item );
     }
 
 
     @Override
-    public List<MdItem> items() {
+    public List<Item> items() {
         return Collections.unmodifiableList( items );
     }
     

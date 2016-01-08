@@ -59,6 +59,7 @@ import org.polymap.core.runtime.Polymap;
 import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.PanelPath;
+import org.polymap.rhei.batik.engine.PageStack;
 
 /**
  *
@@ -102,13 +103,16 @@ public class DefaultToolkit
     
     // instance *******************************************
 
-    private PanelPath           panelPath;
+    protected PanelPath                 panelPath;
     
-    private FormColors          colors;
+    protected PageStack<PanelPath>.Page panelPage;
+    
+    protected FormColors                colors;
     
     
-    public DefaultToolkit( PanelPath panelPath ) {
+    public DefaultToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
         this.panelPath = panelPath;
+        this.panelPage = panelPage;
     }
     
     public PanelPath getPanelPath() {
@@ -411,6 +415,14 @@ public class DefaultToolkit
     @Override
     public SimpleDialog createSimpleDialog( String title ) {
         return new SimpleDialog().title.put( title );
+    }
+
+
+    public Snackbar createSnackbar( Snackbar.Appearance appearance, String message, Item... actions ) {
+        return new Snackbar( this, panelPage.control )
+                .appearance.put( appearance )
+                .message.put( message )
+                .actions.put( actions );
     }
 
     

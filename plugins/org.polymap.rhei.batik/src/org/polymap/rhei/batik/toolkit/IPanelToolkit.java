@@ -178,4 +178,15 @@ public interface IPanelToolkit
      */
     public SimpleDialog createSimpleDialog( String title );
     
+
+    /**
+     * Creates a {@link Snackbar}
+     * 
+     * @see <a
+     *      href="http://www.google.com/design/spec/components/snackbars-toasts.html">Material
+     *      Design</a>.
+     */
+    @SuppressWarnings("javadoc")
+    public Snackbar createSnackbar( Snackbar.Appearance appearance, String message, Item... actions );
+
 }

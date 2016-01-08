@@ -27,15 +27,13 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.rap.rwt.RWT;
 
 import org.polymap.core.ui.UIUtils;
 
-import org.polymap.rhei.batik.BatikPlugin;
 import org.polymap.rhei.batik.IPanelSite;
 import org.polymap.rhei.batik.toolkit.ILayoutContainer;
+import org.polymap.rhei.batik.toolkit.Snackbar.Appearance;
 import org.polymap.rhei.engine.form.BaseFieldComposite;
 import org.polymap.rhei.engine.form.FormPageController;
 import org.polymap.rhei.field.FormFieldEvent;
@@ -175,12 +173,14 @@ public class BatikFormContainer
     public void activateStatusAdapter( final IPanelSite panelSite ) {
         assert statusAdapter == null;
         pageController.addFieldListener( statusAdapter = new IFormFieldListener() {
+            private boolean previouslyValid = true;
+            
             @Override
             public void fieldChange( FormFieldEvent ev ) {
-                if (ev.getEventCode() == VALUE_CHANGE) {
-                    panelSite.setStatus( pageController.isValid() ? Status.OK_STATUS 
-                            : new Status( IStatus.WARNING, BatikPlugin.PLUGIN_ID, "Eingaben sind noch nicht vollständig/korrekt." ));
+                if (ev.getEventCode() == VALUE_CHANGE && !pageController.isValid() && previouslyValid) {
+                    panelSite.toolkit().createSnackbar( Appearance.FadeIn, "Eingaben sind nicht vollständig/korrekt." );
                 }
+                previouslyValid = pageController.isValid();
             }
         });
         // init status message

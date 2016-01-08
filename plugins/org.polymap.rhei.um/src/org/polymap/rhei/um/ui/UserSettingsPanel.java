@@ -24,8 +24,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import org.eclipse.core.commands.operations.IUndoableOperation;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.service.ISettingStore;
 
@@ -41,10 +39,10 @@ import org.polymap.rhei.batik.toolkit.IPanelSection;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.MinWidthConstraint;
 import org.polymap.rhei.batik.toolkit.PriorityConstraint;
+import org.polymap.rhei.batik.toolkit.Snackbar.Appearance;
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormFieldListener;
 import org.polymap.rhei.form.batik.BatikFormContainer;
-import org.polymap.rhei.um.UmPlugin;
 import org.polymap.rhei.um.User;
 import org.polymap.rhei.um.UserRepository;
 import org.polymap.rhei.um.internal.Messages;
@@ -125,7 +123,7 @@ public class UserSettingsPanel
                     OperationSupport.instance().execute( op, false, false );
                     
                     pwdBtn.setEnabled( false );
-                    getSite().setStatus( new Status( IStatus.OK, UmPlugin.ID, i18n.get( "passwordChanged" ) ) );
+                    site().toolkit().createSnackbar( Appearance.FlyIn, i18n.get( "passwordChanged" ) );
 
                     ISettingStore settings = RWT.getSettingStore();
                     settings.removeAttribute( "org.polymap.rhei.um.LoginForm.login" );
@@ -161,7 +159,7 @@ public class UserSettingsPanel
                     okBtn.getDisplay().asyncExec( new Runnable() {
                         public void run() {
                             okBtn.setEnabled( false );
-                            getSite().setStatus( new Status( IStatus.OK, UmPlugin.ID, i18n.get( "settingsChanged" ) ) );
+                            site().toolkit().createSnackbar( Appearance.FlyIn, i18n.get( "settingsChanged" ) );
                         }
                     });
                 }
@@ -183,7 +181,6 @@ public class UserSettingsPanel
         public void fieldChange( FormFieldEvent ev ) {
             if (ev.getEventCode() == IFormFieldListener.VALUE_CHANGE) {
                 pwdBtn.setEnabled( true );            
-                getSite().setStatus( Status.OK_STATUS );
 
                 if (ev.getFieldName().equals( "pwd1" )) {
                     pwd1 = (String)ev.getNewModelValue().orElse( null );
@@ -197,7 +194,7 @@ public class UserSettingsPanel
                 }
                 else if (!pwd1.equals( pwd2 )) {
                     pwdBtn.setEnabled( false );
-                    getSite().setStatus( new Status( IStatus.WARNING, UmPlugin.ID, i18n.get( "passwordsNotEqual" ) ) );
+                    site().toolkit().createSnackbar( Appearance.FadeIn, i18n.get( "passwordsNotEqual" ) );
                 }
 //                else if (pwd1.length() < 8) {
 //                    pwdBtn.setEnabled( false );
@@ -231,7 +228,6 @@ public class UserSettingsPanel
                 }
 
                 if (personForm.isValid()) {
-                    getSite().setStatus( Status.OK_STATUS );
                     okBtn.setEnabled( true );
 
 //                    if (UserRepository.instance().findUser( email ) == null) {

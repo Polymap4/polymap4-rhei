@@ -50,13 +50,10 @@ public class MdToolkit
 
     public static final String        CSS_FAB = CSS_PREFIX + "-fab";
 
-    private PageStack<PanelPath>.Page panelPage;
-
 
     public MdToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
-        super( panelPath );
+        super( panelPath, panelPage );
         assert panelPage != null;
-        this.panelPage = panelPage;
     }
 
 
@@ -142,22 +139,6 @@ public class MdToolkit
     }
 
 
-    /**
-     * Creates a {@link MdSnackbar}
-     * 
-     * @see <a
-     *      href="http://www.google.com/design/spec/components/snackbars-toasts.html">Material
-     *      Design</a>.
-     */
-    @SuppressWarnings("javadoc")
-    public MdSnackbar createSnackbar( MdSnackbar.Appearance appearance, String message, MdItem... actions ) {
-        return new MdSnackbar( this, panelPage.control )
-                .appearance.put( appearance )
-                .message.put( message )
-                .actions.put( actions );
-    }
-    
-    
     public Composite createCard( Composite parent ) {
         throw new RuntimeException( "not yet..." );
     }

@@ -18,7 +18,6 @@ import static org.polymap.core.runtime.event.TypeEventFilter.ifType;
 import static org.polymap.core.ui.UIUtils.setVariant;
 
 import java.util.Arrays;
-import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +36,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.jface.layout.RowDataFactory;
 import org.eclipse.jface.layout.RowLayoutFactory;
 
-import org.polymap.core.runtime.config.Config;
-import org.polymap.core.runtime.config.Config2;
-import org.polymap.core.runtime.config.DefaultPropertyConcern;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
+
+import org.polymap.rhei.batik.toolkit.ActionItem;
+import org.polymap.rhei.batik.toolkit.GroupItem;
+import org.polymap.rhei.batik.toolkit.Item;
+import org.polymap.rhei.batik.toolkit.ItemContainer;
+import org.polymap.rhei.batik.toolkit.RadioItem;
+import org.polymap.rhei.batik.toolkit.ToggleItem;
+import org.polymap.rhei.batik.toolkit.ItemEvent;
 
 /**
  * The next generation toolbar :) 
@@ -49,7 +53,7 @@ import org.polymap.core.runtime.event.EventManager;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class MdToolbar2
-        implements MdItemContainer {
+        implements ItemContainer {
 
     private static Log log = LogFactory.getLog( MdToolbar2.class );
     
@@ -72,9 +76,9 @@ public class MdToolbar2
 
     private MdToolkit               tk;
     
-    private MdGroupItem             rootGroup = new MdGroupItem( null, "root" );
+    private GroupItem             rootGroup = new GroupItem( null, "root" );
     
-    private Map<MdGroupItem,Button> selectedRadios = new HashMap();
+    private Map<GroupItem,Button> selectedRadios = new HashMap();
     
 
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
@@ -83,7 +87,7 @@ public class MdToolbar2
         bar = setVariant( tk.createComposite( parent, style ), CSS_TOOLBAR );
         bar.setLayout( new FillLayout() );  //RowLayoutFactory.fillDefaults().spacing( 3 ).create() );
         
-        EventManager.instance().subscribe( this, ifType( ToolItemEvent.class, 
+        EventManager.instance().subscribe( this, ifType( ItemEvent.class, 
                 ev2 -> ev2.getSource().container() == MdToolbar2.this ) );
     }
     
@@ -94,24 +98,24 @@ public class MdToolbar2
     
     
     @EventHandler( display=true, delay=100 )
-    protected void onItemChange( List<ToolItemEvent> evs ) {
+    protected void onItemChange( List<ItemEvent> evs ) {
         renderGroup( bar, rootGroup );
     }
     
 
     @Override
-    public void addItem( MdItem item ) {
+    public void addItem( Item item ) {
         rootGroup.addItem( item );
     }
 
 
     @Override
-    public List<MdItem> items() {
+    public List<Item> items() {
         return rootGroup.items();
     }
 
 
-    protected void renderGroup( Composite parent, MdGroupItem group ) {
+    protected void renderGroup( Composite parent, GroupItem group ) {
         // find Control of the group
         Composite control = findControl( parent, group );
         
@@ -123,24 +127,24 @@ public class MdToolbar2
         }
         
         // items
-        for (MdItem item : group.items()) {
+        for (Item item : group.items()) {
             renderItem( control, item, group );
         }
     }
     
     
-    protected void renderItem( Composite parent, MdItem item, MdGroupItem group ) {
+    protected void renderItem( Composite parent, Item item, GroupItem group ) {
         // find Control of the group
         Button btn = findControl( parent, item );
         
         // action
-        if (item instanceof MdActionItem) {
+        if (item instanceof ActionItem) {
             if (btn == null) {
                 btn = createBtn( item, parent, SWT.PUSH );
                 btn.addSelectionListener( new SelectionAdapter() {
                     @Override
                     public void widgetSelected( SelectionEvent ev ) {
-                        ((MdActionItem)item).action.get().accept( ev );
+                        ((ActionItem)item).action.get().accept( ev );
                     }
                 });
             }
@@ -148,15 +152,15 @@ public class MdToolbar2
         }
 
         // toggle
-        else if (item instanceof MdToggleItem) {
+        else if (item instanceof ToggleItem) {
             if (btn == null) {
                 btn = createBtn( item, parent, SWT.TOGGLE );
                 btn.addSelectionListener( new SelectionAdapter() {
                     @Override
                     public void widgetSelected( SelectionEvent ev ) {
                         (((Button)ev.widget).getSelection()
-                            ? ((MdToggleItem)item).onSelected.get()
-                            : ((MdToggleItem)item).onUnselected.get()).accept( ev );                            
+                            ? ((ToggleItem)item).onSelected.get()
+                            : ((ToggleItem)item).onUnselected.get()).accept( ev );                            
                     }
                 });
             }
@@ -164,7 +168,7 @@ public class MdToolbar2
         }
 
         // radio
-        else if (item instanceof MdRadioItem) {
+        else if (item instanceof RadioItem) {
             if (btn == null) {
                 btn = createBtn( item, parent, SWT.TOGGLE );
                 btn.addSelectionListener( new SelectionAdapter() {
@@ -181,8 +185,8 @@ public class MdToolbar2
                         }
                         // action
                         (_btn.getSelection()
-                                ? ((MdRadioItem)item).onSelected.get()
-                                : ((MdRadioItem)item).onUnselected.get()).accept( ev );                            
+                                ? ((RadioItem)item).onSelected.get()
+                                : ((RadioItem)item).onUnselected.get()).accept( ev );                            
                     }
                 });
             }
@@ -196,7 +200,7 @@ public class MdToolbar2
     }
 
 
-    protected Button createBtn( MdItem item, Composite parent, int style ) {
+    protected Button createBtn( Item item, Composite parent, int style ) {
         Button btn = setVariant( tk.createButton( parent, null, style ), CSS_TOOLBAR_ITEM );
         btn.setData( "_item_", item );
         btn.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
@@ -204,14 +208,14 @@ public class MdToolbar2
     }
     
     
-    protected void updateBtn( MdItem item, Button btn ) {
+    protected void updateBtn( Item item, Button btn ) {
         btn.setText( item.text.get() );
-        btn.setToolTipText( ((MdItem)item).tooltip.get() );
-        btn.setImage( ((MdItem)item).icon.get() );
+        btn.setToolTipText( ((Item)item).tooltip.get() );
+        btn.setImage( ((Item)item).icon.get() );
     }
 
 
-    protected <C extends Control> C findControl( Composite parent, MdItem item ) {
+    protected <C extends Control> C findControl( Composite parent, Item item ) {
         return (C)Arrays.stream( parent.getChildren() )
                 .filter( c -> c.getData( "_item_" ) == item )
                 .findAny().orElse( null );
@@ -224,45 +228,6 @@ public class MdToolbar2
     
     
     // ToolItemEvent **************************************
-    
-    /**
-     * Thrown when a {@link Config} property of an item is changed. 
-     */
-    static class ToolItemEvent
-            extends EventObject {
 
-        public ToolItemEvent( MdItem source ) {
-            super( source );
-        }
-
-        public <T extends MdItem> T item() {
-            return (T)super.getSource();
-        }
-        
-        @Override
-        public MdItem getSource() {
-            return (MdItem)super.getSource();
-        }
-        
-        /**
-         * 
-         */
-        public static class Fire
-                extends DefaultPropertyConcern {
-
-            /**
-             * This is called *before* the {@link Config2} property is set. However, there is no
-             * race condition between event handler thread, that might access property value, and
-             * the current thread, that sets the property value, because most {@link EventHandler}s
-             * are done in display thread.
-             */
-            @Override
-            public Object doSet( Object obj, Config prop, Object newValue ) {
-                MdItem item = prop.info().getHostObject();
-                EventManager.instance().syncPublish( new ToolItemEvent( item ) );
-                return newValue;
-            }
-        }
-    }
     
 }

@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  */
-package org.polymap.rhei.batik.toolkit.md;
+package org.polymap.rhei.batik.toolkit;
 
 import org.eclipse.swt.graphics.Image;
 
@@ -20,27 +20,25 @@ import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 
-import org.polymap.rhei.batik.toolkit.md.MdToolbar2.ToolItemEvent;
-
 /**
  * 
  */
-public abstract class MdItem
+public abstract class Item
         extends Configurable {
     
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdItem,String>        text;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<Item,String>        text;
     
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdItem,String>        tooltip;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<Item,String>        tooltip;
     
-    @Concern( ToolItemEvent.Fire.class )
-    public Config2<MdItem,Image>         icon;
+    @Concern( ItemEvent.Fire.class )
+    public Config2<Item,Image>         icon;
 
-    private MdItemContainer              container;
+    private ItemContainer              container;
     
     
-    public MdItem( MdItemContainer container ) {
+    public Item( ItemContainer container ) {
         this.container = container;
         if (container != null) {
             container.addItem( this );
@@ -51,7 +49,7 @@ public abstract class MdItem
     /**
      * The container of this item, or null if this is a root container. 
      */
-    public <C extends MdItemContainer> C container() {
+    public <C extends ItemContainer> C container() {
         return (C)container;
     }
     

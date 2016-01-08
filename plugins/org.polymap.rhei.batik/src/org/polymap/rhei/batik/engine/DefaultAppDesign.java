@@ -97,8 +97,6 @@ public class DefaultAppDesign
     
     protected BrowserNavigation         browserHistory;
 
-    protected StatusManager2            statusManager;
-
     protected DefaultUserPreferences    userPrefs;
 
     protected PageStack<PanelPath>      panelsArea;
@@ -143,7 +141,8 @@ public class DefaultAppDesign
 
     @Override
     public IPanelToolkit createToolkit( PanelPath panelPath ) {
-        return new DefaultToolkit( panelPath );
+        PageStack<PanelPath>.Page panelParent = panelsArea.getPage( panelPath );
+        return new DefaultToolkit( panelPath, panelParent );
     }
 
 
@@ -181,10 +180,6 @@ public class DefaultAppDesign
             panelContainer.setLayoutData( FormDataFactory.filled().top( headerContainer ).create() );
         }
 
-        // status manager
-        statusManager = new StatusManager2( appManager );
-        statusManager.createContents( mainWindow );
-        
         appManager.getContext().addListener( this, ev -> ev.getType().isOnOf( EventType.LIFECYCLE, EventType.TITLE ) );
         
         mainWindow.open();
