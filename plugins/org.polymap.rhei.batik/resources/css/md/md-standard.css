@@ -2651,10 +2651,11 @@ Combo-List-Item:selected {
 
 /* line 81, ../../sass/md/_combo.scss */
 Combo-Field {
-  padding: 5px 10px 5px 10px;
+  padding: 3px 6px 3px 6px;
+  /*padding: 5px 10px 5px 10px;*/
 }
 
-/* line 85, ../../sass/md/_combo.scss */
+/* line 86, ../../sass/md/_combo.scss */
 Combo-FocusIndicator {
   background-color: transparent;
   border: none;
