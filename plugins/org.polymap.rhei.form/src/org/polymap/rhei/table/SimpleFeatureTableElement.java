@@ -36,7 +36,6 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import org.polymap.core.data.DataPlugin;
 import org.polymap.core.runtime.cache.Cache;
-import org.polymap.core.runtime.cache.CacheLoader;
 
 /**
  * Default implementation for {@link SimpleFeature} features.
@@ -128,20 +127,28 @@ public class SimpleFeatureTableElement
             if (cache.isDisposed()) {
                 return null;
             }
-            return cache.get( fid, new CacheLoader<String,Feature,RuntimeException>() {
-                public Feature load( String _fid ) throws RuntimeException {
-                    FetchJob fetcher = new FetchJob();
-                    //fetcher.schedule();
+            return cache.get( fid, (String _fid) -> {
+                FetchJob fetcher = new FetchJob();
+                //fetcher.schedule();
 
-                    // XXX this may block forever; use PlatformJobs!?
-                    //fetcher.join();
-                    fetcher.run( null );
-                    return fetcher.result;
-                }
-                public int size() throws RuntimeException {
-                    return Cache.ELEMENT_SIZE_UNKNOW;
-                }
+                // XXX this may block forever; use PlatformJobs!?
+                //fetcher.join();
+                fetcher.run( null );
+                return fetcher.result;
             });
+
+//            return cache.get( fid, new CacheLoader<String,Feature,RuntimeException>() {
+//                public Feature load( String _fid ) throws RuntimeException {
+//                    FetchJob fetcher = new FetchJob();
+//                    //fetcher.schedule();
+//
+//                    // XXX this may block forever; use PlatformJobs!?
+//                    //fetcher.join();
+//                    fetcher.run( null );
+//                    return fetcher.result;
+//                }
+//            });
+            
 //        }
 //        catch (RuntimeException e) {
 //            throw e;

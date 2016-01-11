@@ -50,7 +50,6 @@ import org.polymap.core.data.Messages;
 import org.polymap.core.runtime.UIJob;
 import org.polymap.core.runtime.cache.Cache;
 import org.polymap.core.runtime.cache.CacheConfig;
-import org.polymap.core.runtime.cache.CacheManager;
 import org.polymap.core.ui.SelectionAdapter;
 
 /**
@@ -79,8 +78,7 @@ public class DeferredFeatureContentProvider2
     
     private Comparator              sortOrder;
     
-    private Cache<String,Feature>   elementCache = 
-            CacheManager.instance().newCache( CacheConfig.DEFAULT );
+    private Cache<String,Feature>   elementCache = CacheConfig.defaults().createCache();
 
     private volatile UpdatorJob     updator;
 

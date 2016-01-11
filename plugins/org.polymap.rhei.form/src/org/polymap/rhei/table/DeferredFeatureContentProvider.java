@@ -45,7 +45,6 @@ import org.polymap.core.data.DataPlugin;
 import org.polymap.core.data.Messages;
 import org.polymap.core.runtime.cache.Cache;
 import org.polymap.core.runtime.cache.CacheConfig;
-import org.polymap.core.runtime.cache.CacheManager;
 
 /**
  * Feature content provider that performs sorting and filtering in a background
@@ -73,8 +72,7 @@ class DeferredFeatureContentProvider
      */
     private LazySortedCollection    sortedElements;
 
-    private Cache<String,Feature>   elementCache = 
-            CacheManager.instance().newCache( CacheConfig.DEFAULT );
+    private Cache<String,Feature>   elementCache = CacheConfig.defaults().createCache();
 
     
     DeferredFeatureContentProvider( FeatureTableViewer viewer,

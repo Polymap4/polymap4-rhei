@@ -75,7 +75,7 @@ public class UsersTableSearchField
 
     protected String                filterText;
     
-    private Cache<String,PropertyAccessor>  accessors = CacheConfig.DEFAULT.defaultElementSize( 1024 ).createCache();
+    private Cache<String,PropertyAccessor>  accessors = CacheConfig.defaults().createCache();
 
     
     public UsersTableSearchField( UsersTableViewer _viewer, Composite _parent, Iterable<String> _searchPropNames ) {
@@ -195,12 +195,6 @@ public class UsersTableSearchField
         return propName.equals( "street" ) || propName.equals( "city" )
                 ? new AddressPropertyAccessor( propName )
                 : new PropertyAccessor( propName );
-    }
-
-
-    @Override
-    public int size() throws RuntimeException {
-        return 1024;
     }
 
 
