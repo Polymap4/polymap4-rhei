@@ -19,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -47,12 +46,10 @@ public class DefaultFormFieldDecorator
     
     private IFormFieldSite      site;
     
-    private Label               label;
+    private Label              label;
     
     private boolean             dirty, focus, invalid;
 
-    private Composite           contents;
-    
 
     static {
         dirtyImage = ImageDescriptor.createFromURL( 
@@ -63,68 +60,67 @@ public class DefaultFormFieldDecorator
                 RheiFormPlugin.getDefault().getBundle().getResource( "icons/field_invalid.gif" ) ).createImage();
     }
     
+    @Override
     public void init( IFormFieldSite _site ) {
         this.site = _site;    
     }
 
+    
+    @Override
     public void dispose() {
         if (site != null) {
             site.removeChangeListener( this );
         }
     }
 
+    
+    @Override
     public Control createControl( Composite parent, IFormToolkit toolkit ) {
-        contents = toolkit.createComposite( parent, SWT.NONE );
-        RowLayout layout = new RowLayout( SWT.HORIZONTAL );
-        layout.marginWidth = 0;
-        layout.marginHeight = 0;
-        layout.spacing = 0;
-        layout.pack = false;
-        layout.wrap = false;
-        contents.setLayout( layout );
-
-        label = toolkit.createLabel( contents, "", SWT.NO_FOCUS );
+        label = toolkit.createLabel( parent, null, SWT.NO_FOCUS );
+//        label = new CLabel( parent, SWT.NONE );
+//        label.setMargins( 1, 3, 0, 0 );
+        label.setAlignment( SWT.LEFT );
+        label.setBackground( parent.getBackground() );
+        label.pack();
         
         this.invalid = site.getErrorMessage() != null;
         updateUI();
         
         site.addChangeListener( this );
-        contents.pack( true );
-        return contents;
+        return label;
     }
 
+    
     protected void updateUI() {
-        if (label.isDisposed()) {
-            return;
-        }
-        // reset
-        label.setImage( null );
-        label.setToolTipText( "" );
-//        if (focus) {
-//            label.setImage( focusImage );            
-//        }
-        if (dirty) {
-            label.setImage( dirtyImage );
-            try {
-                String tooltip = "Eingabe ist korrekt.";
-                Object origValue = site.getFieldValue();
-                if (origValue != null) {
-                    tooltip += " Originalwert: '" + origValue + "'";
+        if (!label.isDisposed()) {
+            if (invalid) {
+                label.setImage( invalidImage );
+                label.setToolTipText( invalid ? site.getErrorMessage() : "" );
+            }
+            else if (dirty) {
+                label.setImage( dirtyImage );
+                try {
+                    String tooltip = "Eingabe ist korrekt.";
+                    Object origValue = site.getFieldValue();
+                    if (origValue != null && origValue.toString().length() > 0) {
+                        tooltip += " Originalwert: '" + origValue + "'";
+                    }
+                    label.setToolTipText( tooltip );
                 }
-                label.setToolTipText( tooltip );
+                catch (Exception e) {
+                    log.warn( e );
+                    label.setToolTipText( dirty ? "Dieser Wert wurde geändert. Originalwert kann nicht ermittelt werden." : "" );
+                }
             }
-            catch (Exception e) {
-                log.warn( e );
-                label.setToolTipText( dirty ? "Dieser Wert wurde geändert. Originalwert kann nicht ermittelt werden." : "" );
+            else {
+                label.setImage( null );
+                label.setToolTipText( "" );
             }
         }
-        if (invalid) {
-            label.setImage( invalid ? invalidImage : null );
-            label.setToolTipText( invalid ? site.getErrorMessage() : "" );
-        }
-        contents.pack( true );
     }
     
+    
+    @Override
     public void fieldChange( FormFieldEvent ev ) {
         if (ev.getEventCode() == FOCUS_GAINED) {
             focus = true;

@@ -1,7 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2010, Falko Bräutigam, and other contributors as indicated
- * by the @authors tag.
+ * Copyright (C) 2010-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -12,8 +11,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- *
- * $Id: $
  */
 package org.polymap.rhei.engine;
 
@@ -21,13 +18,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-
-import org.polymap.core.ui.FormDataFactory;
-import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.engine.form.FormEditorToolkit;
 import org.polymap.rhei.field.FormFieldEvent;
@@ -44,7 +37,7 @@ import org.polymap.rhei.form.IFormToolkit;
 public class DefaultFormFieldLabeler
         implements IFormFieldLabel, IFormFieldListener {
 
-    public static final String      CUSTOM_VARIANT_VALUE = "formeditor-label";
+    public static final String  CUSTOM_VARIANT_VALUE = "formeditor-label";
 
     private IFormFieldSite      site;
     
@@ -64,6 +57,7 @@ public class DefaultFormFieldLabeler
         this.maxWidth = maxWidth;
     }
 
+    
     public DefaultFormFieldLabeler( int maxWidth, String label ) {
         if (label != null && label.equals( NO_LABEL )) {
             this.labelStr = label;
@@ -75,38 +69,35 @@ public class DefaultFormFieldLabeler
         }
     }
 
+    
     public void init( IFormFieldSite _site ) {
         this.site = _site;    
     }
 
+    
     public void dispose() {
         site.removeChangeListener( this );
     }
 
+    
     public Control createControl( Composite parent, IFormToolkit toolkit ) {
-        Control result = null;
-        if (labelStr != null && labelStr.equals( NO_LABEL )) {
-            result = label = toolkit.createLabel( parent, "" );            
+        String text = labelStr;
+        if (labelStr == null) {
+            text = StringUtils.capitalize( site.getFieldName() );
         }
-        else {
-            result = new Composite( parent, SWT.NO_FOCUS ) {
-                public void setEnabled( boolean enabled ) {
-                    UIUtils.setVariant( this, enabled ? CUSTOM_VARIANT_VALUE : CUSTOM_VARIANT_VALUE+"-disabled" );
-                }
-            };
-            ((Composite)result).setLayout( new FormLayout() );
-            UIUtils.setVariant( result, CUSTOM_VARIANT_VALUE );
-            label = toolkit.createLabel( (Composite)result, 
-                    labelStr != null ? labelStr : StringUtils.capitalize( site.getFieldName() ), SWT.WRAP );
-           // label.setFont( JFaceResources.getFontRegistry().getBold( JFaceResources.DEFAULT_FONT ) );
-            label.setLayoutData( FormDataFactory.filled().top( 0, 4 ).create() );
+        else if (NO_LABEL.equals( labelStr )) {
+            text = null;
         }
+        
+        label = toolkit.createLabel( parent, text, SWT.WRAP );
+        // label.setFont( JFaceResources.getFontRegistry().getBold( JFaceResources.DEFAULT_FONT ) );
     
         // focus listener
         site.addChangeListener( this );
-        return result;
+        return label;
     }
 
+    
     public void fieldChange( FormFieldEvent ev ) {
         if (label.isDisposed()) {
             return;
@@ -122,10 +113,12 @@ public class DefaultFormFieldLabeler
         }
     }
     
+    
     public void setMaxWidth( int maxWidth ) {
         this.maxWidth = maxWidth;
     }
 
+    
     public int getMaxWidth() {
         return maxWidth;
     }

@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2010, 2012 Falko Bräutigam, and other contributors as
+ * Copyright (C) 2010-2016 Falko Bräutigam, and other contributors as
  * indicated by the @authors tag.
  *
  * This is free software; you can redistribute it and/or modify it
@@ -15,17 +15,18 @@
  */
 package org.polymap.rhei.engine.form;
 
+import static org.polymap.core.ui.FormDataFactory.on;
+
 import java.util.Objects;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import org.polymap.core.runtime.event.EventFilter;
 import org.polymap.core.runtime.event.EventManager;
+import org.polymap.core.ui.FormDataFactory.Alignment;
+
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormField;
 import org.polymap.rhei.field.IFormFieldDecorator;
@@ -88,41 +89,21 @@ public abstract class BaseFieldComposite
     
     
     public void createComposite( Composite result, int style ) {
-//        final Composite result = toolkit.createComposite( parent, style );
-//        UIUtils.setVariant( result, CUSTOM_VARIANT_VALUE );
         result.setLayout( new FormLayout() );
         
         labeler.init( this );
         Control labelControl = labeler.createControl( result, toolkit );
-        decorator.init( this );
-        Control decoControl = decorator.createControl( result, toolkit );
+        
         field.init( this );
         Control fieldControl = field.createControl( result, toolkit );
-        int height = SWT.DEFAULT; //fieldControl.computeSize( SWT.DEFAULT, SWT.DEFAULT ).y;
         
-        // label
-        FormData layoutData = new FormData( labeler.getMaxWidth(), height );
-        layoutData.left = new FormAttachment( 0 );
-        layoutData.bottom = new FormAttachment( 100 );
-        layoutData.top = new FormAttachment( 0 );
-        labelControl.setLayoutData( layoutData );
-        
-        // decorator
-        layoutData = new FormData( 19, 20 );
-        layoutData.left = new FormAttachment( 100, -19 );
-        layoutData.right = new FormAttachment( 100 );
-        layoutData.top = new FormAttachment( 0, 0 );
-        decoControl.setLayoutData( layoutData );
-        
-        // field
-        layoutData = fieldControl.getLayoutData() != null
-                ? (FormData)fieldControl.getLayoutData()
-                : new FormData( 50, height );
-        layoutData.top = new FormAttachment( 0 );
-        layoutData.left = new FormAttachment( labelControl, 5 );
-        layoutData.right = new FormAttachment( decoControl, -1 );
-        fieldControl.setLayoutData( layoutData );
+        decorator.init( this );
+        Control decoControl = decorator.createControl( result, toolkit );
 
+        on( labelControl ).top( fieldControl, 0, Alignment.CENTER).width( labeler.getMaxWidth() );
+        on( fieldControl ).top( 0 ).left( labelControl, 5 ).right( 100, -19 ).width( 50 );
+        on( decoControl ).top( fieldControl, 0, Alignment.CENTER ).left( fieldControl, 0 ).right( 100 );
+        
 //        // focus listener
 //        addChangeListener( new IFormFieldListener() {
 //            Color defaultBg = result.getBackground();

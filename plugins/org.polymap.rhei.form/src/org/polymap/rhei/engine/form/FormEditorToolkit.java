@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2010-2013, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2010-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -41,7 +41,6 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
 
-import org.eclipse.rap.rwt.graphics.Graphics;
 import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.form.IFormToolkit;
@@ -62,9 +61,9 @@ public class FormEditorToolkit
 //    public static final Color   textBackground = Graphics.getColor( 0xFF, 0xFE, 0xE1 );
 //    public static final Color   textBackgroundDisabled = Graphics.getColor( 0xF9, 0xF7, 0xF7 );
 //    public static final Color   textBackgroundFocused = Graphics.getColor( 0xff, 0xf0, 0xd2 );
-    public static final Color   backgroundFocused = Graphics.getColor( 0xF0, 0xF0, 0xFF );
-    public static final Color   labelForeground = Graphics.getColor( 0x70, 0x70, 0x70 );
-    public static final Color   labelForegroundFocused = Graphics.getColor( 0x00, 0x00, 0x00 );
+    public static final Color   backgroundFocused = UIUtils.getColor( 0xF0, 0xF0, 0xFF );
+    public static final Color   labelForeground = UIUtils.getColor( 0x70, 0x70, 0x70 );
+    public static final Color   labelForegroundFocused = UIUtils.getColor( 0x00, 0x00, 0x00 );
     
     
     private FormToolkit         delegate;
