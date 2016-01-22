@@ -17,6 +17,9 @@ package org.polymap.rhei.batik.contribution;
 /**
  * Contributes actions and decorations to the UI. Contributions are a way to extend
  * and enhance the UI of an application via extensions provided by a plugin.
+ * <p/>
+ * A new <b>instance</b> is created fro every call of
+ * {@link ContributionManager#contributeTo(Object, org.polymap.rhei.batik.IPanel)}.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */

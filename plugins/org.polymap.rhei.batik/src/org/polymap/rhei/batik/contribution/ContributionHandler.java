@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,22 +14,23 @@
  */
 package org.polymap.rhei.batik.contribution;
 
+import java.util.function.Predicate;
+
 import org.polymap.rhei.batik.IPanel;
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2;
 
 /**
  * Provides the logic to actually create and/or modify UI elements for a particular
- * {@link IContributionProvider} type.
+ * {@link IContributionProvider} type. Handler instances are stateless.
  *
  * @param <T> The type of the target of the {@link IContributionProvider}.
+ * @param <C> The type of the {@link IContributionProvider}
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public abstract class ContributionHandler<T, C extends IContributionProvider> {
+public abstract class ContributionHandler<T, C extends IContributionProvider>
+        implements Predicate<T> {
     
-    public abstract boolean test( C contrib, T target );
-
-
-    public abstract void handle( IContributionSite site, C contrib, T target );
+    public abstract boolean handle( IContributionSite site, C contrib, T target );
 
 
     /**
@@ -39,12 +40,14 @@ public abstract class ContributionHandler<T, C extends IContributionProvider> {
             extends ContributionHandler<IPanel, IFabContribution> {
 
         @Override
-        public boolean test( IFabContribution contrib, IPanel target ) {
-            throw new RuntimeException( "not yet implemented." );
+        public boolean test( IPanel target ) {
+            return target instanceof IPanel;
         }
 
         @Override
-        public void handle( IContributionSite site, IFabContribution contrib, IPanel target ) {
+        public boolean handle( IContributionSite site, IFabContribution contrib, IPanel target ) {
+            contrib.fillFab( site, target );
+            return true;
         }
     }
 
@@ -56,13 +59,14 @@ public abstract class ContributionHandler<T, C extends IContributionProvider> {
             extends ContributionHandler<MdToolbar2, IToolbarContribution> {
 
         @Override
-        public boolean test( IToolbarContribution contrib, MdToolbar2 target ) {
-            throw new RuntimeException( "not yet implemented." );
+        public boolean test( MdToolbar2 target ) {
+            return target instanceof MdToolbar2;
         }
 
         @Override
-        public void handle( IContributionSite site, IToolbarContribution contrib, MdToolbar2 target ) {
+        public boolean handle( IContributionSite site, IToolbarContribution contrib, MdToolbar2 target ) {
             contrib.fillToolbar( site, target );
+            return true;
         }
     }
     

@@ -76,9 +76,9 @@ public class MdToolbar2
 
     private MdToolkit               tk;
     
-    private GroupItem             rootGroup = new GroupItem( null, "root" );
+    private GroupItem               rootGroup = new GroupItem( null, "root" );
     
-    private Map<GroupItem,Button> selectedRadios = new HashMap();
+    private Map<GroupItem,Button>   selectedRadios = new HashMap();
     
 
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
@@ -225,9 +225,5 @@ public class MdToolbar2
     public Control getControl() {
         return bar;
     }
-    
-    
-    // ToolItemEvent **************************************
-
     
 }

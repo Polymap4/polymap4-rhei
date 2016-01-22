@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -17,14 +17,10 @@ package org.polymap.rhei.batik.contribution;
 import static com.google.common.collect.Iterables.concat;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
-
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import org.polymap.core.runtime.session.SessionContext;
 import org.polymap.core.runtime.session.SessionSingleton;
 
 import org.polymap.rhei.batik.BatikApplication;
@@ -43,13 +39,19 @@ public class ContributionManager
 
     private static Log log = LogFactory.getLog( ContributionManager.class );
     
+    private static final ContributionHandler[]          handlers = { 
+            new ContributionHandler.PanelFabHandler(),
+            new ContributionHandler.ToolbarHandler() };
+    
+    private static List<ContributionProviderExtension>  staticSuppliers = new CopyOnWriteArrayList();
+    
+    
+    /**
+     * The instance of the current {@link SessionContext}.
+     */
     public static ContributionManager instance() {
         return instance( ContributionManager.class );
     }
-    
-    private static final ContributionHandler[]          handlers = { new ContributionHandler.PanelFabHandler() };
-    
-    private static List<ContributionProviderExtension>  staticSuppliers = new CopyOnWriteArrayList();
     
     /**
      * Programmatically register an {@link IContributionProvider} extension.
@@ -66,78 +68,43 @@ public class ContributionManager
     
     // instance *******************************************
 
-    private Cache<Class,Pair<IContributionProvider,ContributionHandler>> cache = CacheBuilder.newBuilder().softValues().build();
-    
-            
+    /**
+     * Add contributions to the given target of the given panel. 
+     *
+     * @param target
+     * @param panel
+     */
     public void contributeTo( Object target, IPanel panel ) {
-        Pair<IContributionProvider,ContributionHandler> contrib = contributionForTarget( target );
         IContributionSite site = newSite( panel );
-        ContributionHandler handler = contrib.getRight();
-        IContributionProvider provider = contrib.getLeft();
-        handler.handle( site, provider, target );
-    }
-
-    
-    protected Pair<IContributionProvider,ContributionHandler> contributionForTarget( Object target ) {
-        try {
-            return cache.get( target.getClass(), () -> {
-                Iterable<ContributionProviderExtension> suppliers = concat( staticSuppliers, ContributionProviderExtension.all.get() );
-                
-                for (ContributionHandler handler : handlers) {
-                    for (ContributionProviderExtension supplier : suppliers) {
+        for (ContributionHandler handler : handlers) {
+            try {
+                if (handler.test( target )) {
+                    for (ContributionProviderExtension supplier : suppliers()) {
                         IContributionProvider provider = supplier.createProvider();
+                        BatikApplication.instance().getContext().propagate( provider );
+
                         try {
-                            if (handler.test( provider, target )) {
-                                BatikApplication.instance().getContext().propagate( provider );
-                                return Pair.of( provider, handler );
-                            }
+                            handler.handle( site, provider, target );
                         }
                         catch (ClassCastException e) {
                             // type parameter does not match, ignore and next
                         }
                     }
                 }
-                return null;
-            });
-        }
-        catch (ExecutionException e) {
-            throw new RuntimeException( e );
+            }
+            catch (ClassCastException e) {
+                // type parameter does not match when calling test(), ignore and next
+            }
         }
     }
 
     
-//    /**
-//     * Make contributions to the FAB of the given panel.
-//     *
-//     * @param panel The panel to contribute to.
-//     */
-//    public void contributeFab( IPanel panel ) {
-//        factories().forEach( factory -> factory.fillFab( newSite( panel ) ) );
-//    }
-//
-//    
-//    /**
-//     * Make contributions to the given toolbar of the given panel.
-//     *
-//     * @param panel The panel to contribute to.
-//     * @param tb2 
-//     */
-//    public void contributeToolbar( IPanel panel, Object toolbar ) {
-//        factories().forEach( factory -> factory.fillToolbar( newSite( panel ), toolbar ) );
-//    }
-//
-//    
-//    protected Iterable<IContributionProvider> providers( Class<? extends IContributionProvider> type ) {
-//        IAppContext context = BatikApplication.instance().getContext();
-//        
-//        return Streams.iterable(
-//                concat( staticSuppliers.stream(), ContributionProviderExtension.all.get().stream() )
-//                .map( supplier -> {
-//                    IContributionProvider provider = supplier.createProvider();
-//                    context.propagate( provider );
-//                    return provider;
-//                }));
-//    }
+    /**
+     * All suppliers: {@link #staticSuppliers} + {@link ContributionProviderExtension#all}
+     */
+    protected Iterable<ContributionProviderExtension> suppliers() {
+        return concat( staticSuppliers, ContributionProviderExtension.all.get() );
+    }
 
     
     protected IContributionSite newSite( IPanel panel ) {

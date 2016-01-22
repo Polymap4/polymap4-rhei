@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -15,9 +15,11 @@
 package org.polymap.rhei.batik.contribution;
 
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2;
+import org.polymap.rhei.batik.toolkit.md.MdToolkit;
 
 /**
- * 
+ * An {@link IContributionProvider} that adds a
+ * {@link MdToolkit#createToolbar(String, int...) Toolbar} to a panel.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */

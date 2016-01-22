@@ -15,9 +15,10 @@
 package org.polymap.rhei.batik.contribution;
 
 import org.polymap.rhei.batik.IPanel;
+import org.polymap.rhei.batik.toolkit.md.MdToolkit;
 
 /**
- * 
+ * An {@link IContributionProvider} that adds a {@link MdToolkit#createFab() FAB} to a panel.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
