@@ -14,6 +14,10 @@
  */
 package org.polymap.rhei.field;
 
+import static org.polymap.rhei.field.IFormFieldListener.FOCUS_GAINED;
+import static org.polymap.rhei.field.IFormFieldListener.FOCUS_LOST;
+import static org.polymap.rhei.field.IFormFieldListener.VALUE_CHANGE;
+
 import java.util.EventObject;
 import java.util.Optional;
 
@@ -72,12 +76,25 @@ public class FormFieldEvent
     /**
      * The type of the vent.
      * 
+     * @see #hasEventCode(int)
      * @see IFormFieldListener#VALUE_CHANGE
      * @see IFormFieldListener#FOCUS_GAINED
      * @see IFormFieldListener#FOCUS_LOST
      */
     public int getEventCode() {
         return eventCode;
+    }
+
+    /**
+     * Returns <code>true</code> if this event has the given event code.
+     *
+     * @param code One of {@link IFormFieldListener#VALUE_CHANGE},
+     *        {@link IFormFieldListener#FOCUS_GAINED},
+     *        {@link IFormFieldListener#FOCUS_LOST}
+     */
+    public boolean hasEventCode( int code ) {
+        assert code == VALUE_CHANGE || code == FOCUS_GAINED || code == FOCUS_LOST;
+        return eventCode == code;
     }
     
     /**
