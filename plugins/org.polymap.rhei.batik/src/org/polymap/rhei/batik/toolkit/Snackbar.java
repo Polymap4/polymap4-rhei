@@ -17,6 +17,9 @@ package org.polymap.rhei.batik.toolkit;
 import static org.polymap.core.ui.FormDataFactory.on;
 import static org.polymap.core.ui.UIUtils.setVariant;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -42,6 +45,8 @@ import org.polymap.rhei.batik.toolkit.md.MdAppDesign;
 @SuppressWarnings("javadoc")
 public class Snackbar
         extends Configurable {
+
+    private static Log log = LogFactory.getLog( Snackbar.class );
 
     public enum Appearance {
         /**
@@ -83,6 +88,11 @@ public class Snackbar
     
     
     protected void createContents( IPanelToolkit tk, Composite parent ) {
+        if (parent.isDisposed()) {
+            log.warn( "Parent is disposed." );
+            return;
+        }
+        
         int height = MdAppDesign.dp( 80 );
         
         control = tk.createComposite( parent );

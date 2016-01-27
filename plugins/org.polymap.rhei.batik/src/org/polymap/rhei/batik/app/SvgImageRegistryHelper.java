@@ -301,10 +301,10 @@ public class SvgImageRegistryHelper
                 Scale scale = scale();
                 URL svgInput = plugin.getBundle().getResource( svgPath );
                 new Svg2Png().transcode( pngFile, svgInput, scale, imageConfig );
-                log.info( "SVG -> " + pngFile.getAbsolutePath() + " (" + timer.elapsedTime() + "ms)" );
+                log.debug( "SVG -> " + pngFile.getAbsolutePath() + " (" + timer.elapsedTime() + "ms)" );
             }
             else {
-                log.info( "SVG -> " + pngFile.getAbsolutePath() + " (cached)" );
+                log.debug( "SVG -> " + pngFile.getAbsolutePath() + " (cached)" );
             }
             ImageDescriptor result = ImageDescriptor.createFromURL( pngFile.toURI().toURL() );
             return result;
