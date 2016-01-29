@@ -76,7 +76,7 @@ public class FeatureCollectionContentProvider
      *
      */
     public class FeatureTableElement
-            implements IFeatureTableElement {
+            extends DefaultFeatureTableElement {
 
         private Feature         feature;
 

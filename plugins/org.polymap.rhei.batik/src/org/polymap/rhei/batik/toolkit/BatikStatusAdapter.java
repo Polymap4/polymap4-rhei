@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Label;
 
 import org.eclipse.core.runtime.IStatus;
 
+import org.polymap.core.runtime.UIThreadExecutor;
 import org.polymap.core.ui.FormLayoutFactory;
 import org.polymap.core.ui.StatusDispatcher;
 import org.polymap.core.ui.StatusDispatcher.Adapter;
@@ -43,24 +44,26 @@ public class BatikStatusAdapter
     
     @Override
     public void handle( IStatus status, Style... styles ) {
-        SimpleDialog dialog = new SimpleDialog();
-        switch (status.getSeverity()) {
-            case IStatus.WARNING : dialog.title.put( "Warning" ); break;
-            case IStatus.ERROR : dialog.title.put( "Error" ); break;
-            case IStatus.INFO : dialog.title.put( "Information" ); break;
-        }
-        dialog.setContents( parent -> {
-            parent.setLayout( FormLayoutFactory.defaults().spacing( 0 ).create() );
-            Label msg = on( tk.createFlowText( parent, status.getMessage() ) )
-                    .fill().noBottom().width( 300 ).control();
-
-            if (status.getException() != null) {
-                on( tk.createFlowText( parent, "**Reason**: " + status.getException().getMessage() ) )
-                    .fill().top( msg );
+        UIThreadExecutor.asyncFast( () -> {
+            SimpleDialog dialog = new SimpleDialog();
+            switch (status.getSeverity()) {
+                case IStatus.WARNING : dialog.title.put( "Warning" ); break;
+                case IStatus.ERROR : dialog.title.put( "Error" ); break;
+                case IStatus.INFO : dialog.title.put( "Information" ); break;
             }
+            dialog.setContents( parent -> {
+                parent.setLayout( FormLayoutFactory.defaults().spacing( 0 ).create() );
+                Label msg = on( tk.createFlowText( parent, status.getMessage() ) )
+                        .fill().noBottom().width( 300 ).control();
+
+                if (status.getException() != null) {
+                    on( tk.createFlowText( parent, "**Reason**: " + status.getException().getMessage() ) )
+                    .fill().top( msg );
+                }
+            });
+            dialog.addOkAction( () -> dialog.close() );
+            dialog.open();
         });
-        dialog.addOkAction( () -> dialog.close() );
-        dialog.open();
     }
 
 }

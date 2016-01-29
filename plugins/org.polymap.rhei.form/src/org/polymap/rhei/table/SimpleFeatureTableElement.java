@@ -47,7 +47,7 @@ import org.polymap.core.runtime.cache.Cache;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class SimpleFeatureTableElement
-        implements IFeatureTableElement {
+        extends DefaultFeatureTableElement {
 
     private static Log log = LogFactory.getLog( SimpleFeatureTableElement.class );
 
@@ -81,23 +81,6 @@ public class SimpleFeatureTableElement
         this.fid = feature.getIdentifier().getID();
         this.cache = cache;
         this.cache.putIfAbsent( fid, feature );
-    }
-
-
-    public boolean equals( Object other ) {
-        return other instanceof IFeatureTableElement
-                ? fid.equals( ((IFeatureTableElement)other).fid() )
-                : false;
-    }
-
-    
-    public int hashCode() {
-        return fid.hashCode();
-    }
-    
-    
-    public String toString() {
-        return "SimpleFeatureTableElement [fid=" + fid + "]";
     }
 
 

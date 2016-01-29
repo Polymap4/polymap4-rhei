@@ -28,6 +28,9 @@ import org.polymap.rhei.table.DefaultFeatureTableColumn.DefaultCellLabelProvider
  * The content element are not plain {@link Feature} instances in order to let the
  * feature table handle any combinations of attributes, including complex attributes
  * or even multiple features in one table.
+ * <p/>
+ * This *must* implements {@link #equals(Object)} in order to make selection work
+ * with all content provider types. See {@link DefaultFeatureTableElement}.
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
@@ -54,5 +57,5 @@ public interface IFeatureTableElement {
      * @param value
      */
     public void setValue( String name, Object value );
-
+    
 }

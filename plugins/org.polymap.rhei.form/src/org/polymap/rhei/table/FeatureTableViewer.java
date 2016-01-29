@@ -53,10 +53,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-import org.eclipse.rap.rwt.graphics.Graphics;
-
 import org.polymap.core.runtime.ListenerList;
 import org.polymap.core.ui.SelectionAdapter;
+import org.polymap.core.ui.UIUtils;
 
 /**
  *
@@ -73,8 +72,8 @@ public class FeatureTableViewer
 
     public static final Object              LOADING_ELEMENT = new Object();
 
-    public static final Color               LOADING_FOREGROUND = Graphics.getColor( 0xa0, 0xa0, 0xa0 );
-    public static final Color               LOADING_BACKGROUND = Graphics.getColor( 0xfa, 0xfb, 0xff );
+    public static final Color               LOADING_FOREGROUND = UIUtils.getColor( 0xa0, 0xa0, 0xa0 );
+    public static final Color               LOADING_BACKGROUND = UIUtils.getColor( 0xfa, 0xfb, 0xff );
     
     protected Map<String,IFeatureTableColumn> displayed = new HashMap();
 
@@ -116,22 +115,28 @@ public class FeatureTableViewer
     }
 
 
+    private int         cachedWidth = -1;
+    
     protected void controlResized( ControlEvent ev ) {
         if (!getTable().isDisposed() && !displayed.isEmpty()) {
             Rectangle area = getTable().getParent().getClientArea();
-            int avgWidth = area.width / displayed.size();
             
-            int sumWeight = displayed.values().stream().mapToInt( c -> c.getWeight() ).sum();
+            if (area.width != cachedWidth) {
+                cachedWidth = area.width;                
+                int avgWidth = area.width / displayed.size();
 
-            for (IFeatureTableColumn column : displayed.values()) {
-                TableViewerColumn viewerColumn = column.getViewerColumn();
-                
-                if (column.getWeight() > 0) {
-                    int width = area.width * column.getWeight() / sumWeight;
-                    viewerColumn.getColumn().setWidth( width );
-                }
-                else {
-                    viewerColumn.getColumn().setWidth( avgWidth );
+                int sumWeight = displayed.values().stream().mapToInt( c -> c.getWeight() ).sum();
+
+                for (IFeatureTableColumn column : displayed.values()) {
+                    TableViewerColumn viewerColumn = column.getViewerColumn();
+
+                    if (column.getWeight() > 0) {
+                        int width = ((area.width / sumWeight) * column.getWeight()) - 5;
+                        viewerColumn.getColumn().setWidth( width );
+                    }
+                    else {
+                        viewerColumn.getColumn().setWidth( avgWidth );
+                    }
                 }
             }
         }
@@ -238,29 +243,19 @@ public class FeatureTableViewer
      */
     public void selectElement( final String fid, boolean reveal, boolean fireEvent ) {
         assert fid != null;
-        IFeatureTableElement search = new IFeatureTableElement() {
+        IFeatureTableElement search = new DefaultFeatureTableElement() {
             @Override
-            public Object getValue( String name ) {
-                throw new RuntimeException( "not yet implemented." );
+            public Object getValue( String name ) { 
+                throw new RuntimeException( "not yet implemented." ); 
             }
             @Override
-            public void setValue( String name, Object value ) {
-                throw new RuntimeException( "not yet implemented." );
+            public void setValue( String name, Object value ) { 
+                throw new RuntimeException( "not yet implemented." ); 
             }
             @Override
-            public String fid() {
-                return fid;
+            public String fid() { 
+                return fid; 
             }            
-            @Override
-            public boolean equals( Object other ) {
-                return other instanceof IFeatureTableElement
-                        ? fid.equals( ((IFeatureTableElement)other).fid() )
-                        : false;
-            }
-            @Override
-            public int hashCode() {
-                return fid.hashCode();
-            }
         };
         
         int index = -1;
