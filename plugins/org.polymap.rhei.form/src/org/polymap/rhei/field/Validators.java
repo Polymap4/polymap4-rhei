@@ -14,8 +14,11 @@
  */
 package org.polymap.rhei.field;
 
+import org.polymap.rhei.table.IFeatureTableElement;
+import org.polymap.rhei.table.ITableFieldValidator;
+
 /**
- * Statis methods to work with validators.
+ * Static methods to work with validators.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
@@ -27,9 +30,18 @@ public class Validators {
      * @param delegates The validators the concat.
      * @return A newly created validator that calls the delegates.
      */
-    public static IFormFieldValidator AND( final IFormFieldValidator... delegates ) {
-        return new IFormFieldValidator() {
+    public static <V extends IFormFieldValidator> V AND( final V... delegates ) {
+        return (V)new ITableFieldValidator() {
     
+            @Override
+            public void init( IFeatureTableElement elm ) {
+                for (IFormFieldValidator delegate : delegates) {
+                    if (delegate instanceof ITableFieldValidator) {
+                        ((ITableFieldValidator)delegate).init( elm );
+                    }
+                }
+            }
+
             @Override
             public String validate( Object fieldValue ) {
                 for (IFormFieldValidator delegate : delegates) {

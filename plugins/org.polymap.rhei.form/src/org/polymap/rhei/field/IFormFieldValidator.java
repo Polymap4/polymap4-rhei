@@ -52,4 +52,16 @@ public interface IFormFieldValidator<F,M> {
     
     public F transform2Field( M modelValue ) throws Exception;
     
+    
+    /**
+     * Concatenates the given validator. The delegates are called in the given order.
+     *
+     * @see Validators#AND(IFormFieldValidator...)
+     * @param other The validator the concat.
+     * @return A newly created validator that calls the delegates.
+     */
+    public default IFormFieldValidator and( IFormFieldValidator other ) {
+        return Validators.AND( this, other );    
+    }
+    
 }
