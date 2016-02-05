@@ -16,8 +16,10 @@ package org.polymap.rhei.batik.app;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
@@ -175,31 +177,64 @@ public class SvgImageRegistryHelper
     
     /**
      * 
+     * @see #svgImageChecked(String, String)
+     * @param path The path to the image inside the bundle. This can be relative to
+     *        the bundle root or relative to {@link #svgBasePath}.
+     * @param configName
+     * @return Newly generated are cached image. Must no be used outside current user session!
+     * @throws IllegalArgumentException(FileNotFoundException) If the given path does not exist. 
+     */
+    public Image svgImage( String path, String configName ) {
+        return svgImageOpt( path, configName )
+                .orElseThrow( () -> new IllegalArgumentException( new FileNotFoundException( "No such SVG file/resource found: " + path ) ) );
+    }
+    
+    
+    /**
+     * 
+     * @see #svgImageChecked(String, String)
+     * @param path The path to the image inside the bundle. This can be relative to
+     *        the bundle root or relative to {@link #svgBasePath}.
+     * @param configName
+     * @return Newly generated are cached image. Must no be used outside current user session!
+     * @throws FileNotFoundException If the given path does not exist. 
+     */
+    public Image svgImageChecked( String path, String configName ) throws FileNotFoundException {
+        return svgImageOpt( path, configName )
+                .orElseThrow( () -> new FileNotFoundException( "No such SVG file/resource found: " + path ) );
+    }
+    
+    
+    /**
+     * 
      *
      * @param path The path to the image inside the bundle. This can be relative to
      *        the bundle root or relative to {@link #svgBasePath}.
      * @param configName
      * @return Newly generated are cached image. Must no be used outside current user session!
+     * @throws FileNotFoundException 
      */
-    public Image svgImage( String path, String configName ) {
+    public Optional<Image> svgImageOpt( String path, String configName ) {
         final String key = configName + "-" + path;
         
         Image image = registry.get().get( key );
         if (image == null || image.isDisposed()) {
-        
             // create
-            ImageDescriptor desc = createSvgImage( configName, path );
+            Optional<ImageDescriptor> desc = createSvgImage( configName, path );
+            if (!desc.isPresent()) {
+                return Optional.empty();
+            }
 
             // check again, maybe anybody else did it meanwhile
             synchronized (registryLock) {
                 image = registry.get().get( key );
                 if (image == null || image.isDisposed()) {
-                    registry.get().put( key, desc );
+                    registry.get().put( key, desc.get() );
                     image = registry.get().get( key );
                 }
             }
         }
-        return image;
+        return Optional.of( image );
     }
 
     
@@ -251,17 +286,18 @@ public class SvgImageRegistryHelper
      * @param path The path to the image inside the bundle. This can be relative to
      *        the bundle root or relative to {@link #svgBasePath}.
      * @return Newly created {@link Image}.
+     * @throws FileNotFoundException 
      */
-    protected ImageDescriptor createSvgImage( String configName, String path ) {
+    protected Optional<ImageDescriptor> createSvgImage( String configName, String path ) {
         if (plugin.getBundle().getResource( path ) == null) {
             path = svgBasePath.get() + path;
         }
         if (plugin.getBundle().getResource( path ) == null) {
-            throw new IllegalStateException( "No such SVG file found: " + path );
+            return Optional.empty();
         }
         
         try {
-            return svgConfigs.get( configName ).createImage( path );
+            return Optional.of( svgConfigs.get( configName ).createImage( path ) );
         }
         catch (Exception e) {
             throw new RuntimeException( e );
