@@ -83,7 +83,7 @@ public class FulltextProposal
      * {@link FulltextProposal}.
      */
     @Immutable
-    public Config2<FulltextProposal,Point>   popupSize;
+    public Config2<FulltextProposal,Point>  popupSize;
     
     private FulltextIndex                   index;
     
