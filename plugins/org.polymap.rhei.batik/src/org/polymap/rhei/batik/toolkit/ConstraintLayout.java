@@ -132,7 +132,7 @@ public class ConstraintLayout
             }
             Rectangle displayArea = composite.getDisplay().getBounds();
             if (clientArea.width > displayArea.width) {
-                log.info( "Invalid client area: " + clientArea + ", display width: " + displayArea.width + ", fluschCache: " + flushCache );
+                log.info( "Invalid client area: " + clientArea + ", display width: " + displayArea.width + ", flushCache: " + flushCache );
                 return false;
             }
 

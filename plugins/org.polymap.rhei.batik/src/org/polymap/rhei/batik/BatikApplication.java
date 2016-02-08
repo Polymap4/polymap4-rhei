@@ -27,6 +27,7 @@ import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.rap.rwt.application.EntryPoint;
 
+import org.polymap.core.ui.StatusDispatcher;
 import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.app.IAppDesign;
@@ -119,8 +120,13 @@ public class BatikApplication
 
             // main loop
             while (!mainWindow.isDisposed()) {
-                if (!display.readAndDispatch()) {
-                    display.sleep();
+                try {
+                    if (!display.readAndDispatch()) {
+                        display.sleep();
+                    }
+                }
+                catch (Throwable e) {
+                    StatusDispatcher.handleError( "Unable to perform this operation.", e );
                 }
             }
             log.info( "Exiting..." );

@@ -34,10 +34,10 @@ import org.polymap.core.ui.StatusDispatcher.Style;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class BatikStatusAdapter
+public class BatikDialogStatusAdapter
         implements Adapter {
 
-    private static Log log = LogFactory.getLog( BatikStatusAdapter.class );
+    private static Log log = LogFactory.getLog( BatikDialogStatusAdapter.class );
 
     private static final DefaultToolkit    tk = new DefaultToolkit( null, null );
     
@@ -46,19 +46,21 @@ public class BatikStatusAdapter
     public void handle( IStatus status, Style... styles ) {
         UIThreadExecutor.asyncFast( () -> {
             SimpleDialog dialog = new SimpleDialog();
+            // title
             switch (status.getSeverity()) {
                 case IStatus.WARNING : dialog.title.put( "Warning" ); break;
-                case IStatus.ERROR : dialog.title.put( "Error" ); break;
+                case IStatus.ERROR : dialog.title.put( "Application Error" ); break;
                 case IStatus.INFO : dialog.title.put( "Information" ); break;
             }
+            // contents
             dialog.setContents( parent -> {
                 parent.setLayout( FormLayoutFactory.defaults().spacing( 0 ).create() );
                 Label msg = on( tk.createFlowText( parent, status.getMessage() ) )
-                        .fill().noBottom().width( 300 ).control();
+                        .fill().noBottom().width( 350 ).control();
 
                 if (status.getException() != null) {
                     on( tk.createFlowText( parent, "**Reason**: " + status.getException().getMessage() ) )
-                    .fill().top( msg );
+                            .fill().top( msg );
                 }
             });
             dialog.addOkAction( () -> dialog.close() );
