@@ -35,7 +35,6 @@ import org.polymap.core.ui.ColumnLayoutFactory;
 import org.polymap.rhei.batik.BatikPlugin;
 import org.polymap.rhei.batik.Context;
 import org.polymap.rhei.batik.DefaultPanel;
-import org.polymap.rhei.batik.IPanel;
 import org.polymap.rhei.batik.PanelIdentifier;
 import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 import org.polymap.rhei.batik.toolkit.IPanelSection;
@@ -58,7 +57,7 @@ import org.polymap.rhei.um.operations.NewUserOperation;
  */
 public class RegisterPanel
         extends DefaultPanel
-        implements IPanel, IFormFieldListener {
+        implements IFormFieldListener {
 
     private static Log log = LogFactory.getLog( RegisterPanel.class );
 

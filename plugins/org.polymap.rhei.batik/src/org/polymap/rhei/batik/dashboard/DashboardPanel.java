@@ -20,7 +20,6 @@ import org.eclipse.swt.widgets.Label;
 
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.rhei.batik.DefaultPanel;
-import org.polymap.rhei.batik.IPanel;
 import org.polymap.rhei.batik.PanelIdentifier;
 
 /**
@@ -29,8 +28,7 @@ import org.polymap.rhei.batik.PanelIdentifier;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class DashboardPanel
-        extends DefaultPanel
-        implements IPanel {
+        extends DefaultPanel {
 
     public static final PanelIdentifier     ID = new PanelIdentifier( "dashboard" );
 

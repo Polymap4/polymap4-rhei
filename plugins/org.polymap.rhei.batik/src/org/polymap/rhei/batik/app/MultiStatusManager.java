@@ -48,14 +48,18 @@ public abstract class MultiStatusManager {
     }
 
     
-    protected void updateUI() {
-        IStatus highestSeverity = Status.OK_STATUS;
+    public IStatus highestSeverity() {
+        IStatus result = Status.OK_STATUS;
         for (IStatus s : status.values()) {
-            highestSeverity = highestSeverity == Status.OK_STATUS 
-                    || highestSeverity.getSeverity() < s.getSeverity() ? s : highestSeverity;
-            log.debug( "    checking: " + s + " -> highest: " + highestSeverity );
+            result = result == Status.OK_STATUS || result.getSeverity() < s.getSeverity() ? s : result;
+            log.debug( "    checking: " + s + " -> highest: " + result );
         }
-        doUpdateUI( highestSeverity );
+        return result;
+    }
+    
+    
+    protected void updateUI() {
+        doUpdateUI( highestSeverity() );
     }
     
     

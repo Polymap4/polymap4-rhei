@@ -125,6 +125,9 @@ public class BatikApplication
                         display.sleep();
                     }
                 }
+                catch (ThreadDeath e) {
+                    throw e;
+                }
                 catch (Throwable e) {
                     StatusDispatcher.handleError( "Unable to perform this operation.", e );
                 }

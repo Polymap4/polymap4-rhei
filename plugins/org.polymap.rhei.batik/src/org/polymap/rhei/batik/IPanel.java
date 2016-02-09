@@ -42,12 +42,17 @@ public interface IPanel {
      */
     public void setSite( PanelSite site, IAppContext context );
     
+    /**
+     * The {@link PanelSite} interface of this panel.
+     *
+     * @return The instance previously given to {@link #setSite(PanelSite, IAppContext)}.
+     */
     public PanelSite site();
 
     /**
      * This method is called before {@link #init(IPanelSite, IAppContext)} in order
      * to check if the panel wants to be displayed on top of the current panel in the
-     * given context. All context properties are initialized when the method is
+     * given context. All {@link Context} properties are initialized when the method is
      * called.
      * <p/>
      * This method should be lightweight and should not initialize anything, except
@@ -76,8 +81,8 @@ public interface IPanel {
      * @param context
      * @return True if the panels wants to be shown.
      */
-    public boolean wantsToBeShown();
-    
+    public boolean beforeInit();
+
     /**
      * Initializes the panel. This method is called right before the panel is
      * activated for the first time.
@@ -89,7 +94,16 @@ public interface IPanel {
      * @param context
      */
     public void init();
-
+    
+    /**
+     * This method is called before {@link #dispose()} in order to check if the panel
+     * can be closed. This method should be lightweight and should not dispose
+     * anything.
+     *
+     * @return False specifies that this panel does not want to be closed.
+     */
+    public boolean beforeDispose();
+    
     public void dispose();
 
     public PanelIdentifier id();

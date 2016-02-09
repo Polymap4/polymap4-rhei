@@ -24,8 +24,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.graphics.Image;
 
-import org.eclipse.core.runtime.IStatus;
-
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 
@@ -56,24 +54,34 @@ public abstract class DefaultPanel
     }
 
 
-    /** 
-     * This default implementation always returns <code>false</code>. 
+    /**
+     * Deprecated as of {@link #beforeInit()}.
+     * @deprecated See {@link #beforeInit()}
      */
-    @Override
     public boolean wantsToBeShown() {
         return false;
     }
 
 
-    /**
-     * This default implementation does nothing.
+    /** 
+     * {@inheritDoc}
+     * <p/>
+     * This default implementation always returns <code>false</code>. 
      */
+    @Override
+    public boolean beforeInit() {
+        return wantsToBeShown();
+    }
+
+
     @Override
     public void init() {
     }
 
 
     /**
+     * {@inheritDoc}
+     * <p/>
      * This default implementation returns the value of the first found static member
      * of type {@link PanelIdentifier} of this class.
      * 
@@ -98,16 +106,21 @@ public abstract class DefaultPanel
 
 
     /**
-     * This default implementation does nothing.
+     * {@inheritDoc}
+     * <p/>
+     * This default implementation always returns <code>true</code>.
      */
+    @Override
+    public boolean beforeDispose() {
+        return true;
+    }
+
+
     @Override
     public void dispose() {
     }
 
     
-    /**
-     * The site interface of this panel.
-     */
     @Override
     public PanelSite site() {
         return site;

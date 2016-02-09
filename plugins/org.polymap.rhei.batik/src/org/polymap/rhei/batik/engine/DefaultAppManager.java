@@ -19,9 +19,11 @@ import static org.polymap.rhei.batik.IPanelSite.PanelStatus.FOCUSED;
 import static org.polymap.rhei.batik.IPanelSite.PanelStatus.INITIALIZED;
 import static org.polymap.rhei.batik.IPanelSite.PanelStatus.VISIBLE;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -210,30 +212,58 @@ public class DefaultAppManager
 //                .sorted( Collections.reverseOrder( Comparator.comparing( ep -> ep.stackPriority ) ) )
                 // initialize, then filter
                 .map( ep -> createPanel( ep, parentPath ) )
-                .filter( panel -> panel.wantsToBeShown() ) );
+                .filter( panel -> panel.beforeInit() ) );
     }
 
     
     /**
-     * Provides the default logic for opening a panel:
-     * <ul>
-     * </ul>
+     * Provides the default logic for opening a panel.
      */
-    protected IPanel openPanel( PanelPath parentPath, PanelIdentifier panelId ) {
-        disposePanels( parentPath );
-        IPanel panel = createPanel( parentPath, panelId );
-        raisePanelStatus( panel, PanelStatus.FOCUSED );
-        top = panel.site().path();
-        return panel;
+    protected Optional<IPanel> openPanel( PanelPath parentPath, PanelIdentifier panelId ) {
+        if (!disposePanels( parentPath )) {
+            return Optional.empty();
+        }
+        else {
+            IPanel panel = createPanel( parentPath, panelId );
+            raisePanelStatus( panel, PanelStatus.FOCUSED );
+            top = panel.site().path();
+            return Optional.of( panel );
+        }
     }
 
-    
-    protected void disposePanels( PanelPath parentPath ) {
+
+    /**
+     * 
+     *
+     * @param parentPath
+     * @return False if one of the panels vetoed via {@link IPanel#beforeDispose()}
+     *         or a {@link RuntimeException} was thrown by beforeClose().
+     */
+    protected boolean disposePanels( PanelPath parentPath ) {
         int pathSize = parentPath.size();
-        panels.values().stream()
-                .filter( panel -> panel.site().path().size() > pathSize )
-                .collect( Collectors.toList() )  // keep stable while removing
-                .forEach( panel -> disposePanel( panel ) );
+        // beforeDispose()
+        List<IPanel> disposable = new ArrayList();  // stable while remove
+        for (IPanel panel : panels.values()) {
+            if (panel.site().path().size() > pathSize) {
+                try {
+                    if (!panel.beforeDispose()) {
+                        return false;
+                    }
+                    disposable.add( panel );
+                }
+                catch (Exception e) {
+                    StatusDispatcher.handleError( "Error while initializing panel", e );
+                    return false;
+                }         
+            }
+        }
+        // disposePanel()
+        for (IPanel panel : disposable) {
+            if (panel.site().path().size() > pathSize) {
+                disposePanel( panel );
+            }
+        }
+        return true;
     }
     
     
@@ -255,18 +285,29 @@ public class DefaultAppManager
         log.info( "    " + panels.values().toString() );
     }
         
-    
-    protected void closePanel( PanelPath panelPath ) {
+
+    /**
+     * Disposes all panels in the given panelPath by calling
+     * {@link #disposePanels(PanelPath)}. Makes parentPath the top panel and raises
+     * its status to {@link PanelStatus#FOCUSED}.
+     *
+     * @param panelPath
+     * @return False if one of the panels vetoed via {@link IPanel#beforeDispose()}
+     *         or a {@link RuntimeException} was thrown by beforeClose().
+     */
+    protected boolean closePanel( PanelPath panelPath ) {
         // close all children and siblings
         PanelPath parentPath = panelPath.removeLast( 1 );
-        disposePanels( parentPath );
+        if (disposePanels( parentPath )) {
+            // set top 
+            top = parentPath;
 
-        // set top 
-        top = parentPath;
-
-        // raise top's panel status
-        IPanel panel = getPanel( top );
-        raisePanelStatus( panel, PanelStatus.FOCUSED );
+            // raise top's panel status
+            IPanel panel = getPanel( top );
+            raisePanelStatus( panel, PanelStatus.FOCUSED );
+            return true;
+        }
+        return false;
     }
 
     
@@ -321,13 +362,13 @@ public class DefaultAppManager
         }
 
         @Override
-        public IPanel openPanel( final PanelPath panelPath, final PanelIdentifier panelId ) {
+        public Optional<IPanel> openPanel( final PanelPath panelPath, final PanelIdentifier panelId ) {
             return DefaultAppManager.this.openPanel( panelPath, panelId );
         }
 
         @Override
-        public void closePanel( final PanelPath panelPath ) {
-            DefaultAppManager.this.closePanel( panelPath );
+        public boolean closePanel( final PanelPath panelPath ) {
+            return DefaultAppManager.this.closePanel( panelPath );
         }
         
         @Override

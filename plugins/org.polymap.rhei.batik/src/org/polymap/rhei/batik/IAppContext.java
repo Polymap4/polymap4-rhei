@@ -14,6 +14,7 @@
  */
 package org.polymap.rhei.batik;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.eclipse.jface.action.IAction;
@@ -53,17 +54,19 @@ public interface IAppContext {
      *
      * @param parentPath The path of the parent panel to open the new panel for.
      * @param panelId The id of the panel to open
-     * @return Null if the given panels was not found.
+     * @return {@link Optional#empty()} if a currently open panel vetoed close, the
+     *         newly opened panel otherwise.
      */
-    public IPanel openPanel( PanelPath parentPath, PanelIdentifier panelId );
+    public Optional<IPanel> openPanel( PanelPath parentPath, PanelIdentifier panelId );
 
     /**
      * Closes the panel with the given path. This panel must be the current top/active
      * panel.
      * 
      * @param panelPath
+     * @return False if the panel has vetoed closing via {@link IPanel#beforeDispose()}.
      */
-    public void closePanel( PanelPath panelPath );
+    public boolean closePanel( PanelPath panelPath );
 
     /**
      * List of panels that want to be shown on top of the given parent.

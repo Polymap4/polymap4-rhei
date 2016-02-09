@@ -21,6 +21,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -125,6 +128,11 @@ public class Snackbar
             Control btn = null;
             if (action instanceof ActionItem) {
                 btn = tk.createButton( control, action.text.get(), SWT.FLAT );
+                ((Button)btn).addSelectionListener( new SelectionAdapter() {
+                    public void widgetSelected( SelectionEvent ev ) {
+                        ((ActionItem)action).action.ifPresent( a -> a.accept( ev ) );
+                    }
+                });
             }
             else {
                 throw new RuntimeException();
