@@ -19,19 +19,19 @@ package org.polymap.rhei.field;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class NullValidator
-        implements IFormFieldValidator {
+public class NullValidator<F,M>
+        implements IFormFieldValidator<F,M> {
 
-    public String validate( Object value ) {
+    public String validate( F value ) {
         return null;
     }
 
-    public Object transform2Field( Object modelValue ) throws Exception {
-        return modelValue;
+    public F transform2Field( M modelValue ) throws Exception {
+        return (F)modelValue;
     }
 
-    public Object transform2Model( Object fieldValue ) throws Exception {
-        return fieldValue;
+    public M transform2Model( F fieldValue ) throws Exception {
+        return (M)fieldValue;
     }
 
 }

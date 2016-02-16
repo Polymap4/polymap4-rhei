@@ -14,7 +14,6 @@
  */
 package org.polymap.rhei.field;
 
-import org.polymap.rhei.table.IFeatureTableElement;
 import org.polymap.rhei.table.ITableFieldValidator;
 
 /**
@@ -31,17 +30,8 @@ public class Validators {
      * @return A newly created validator that calls the delegates.
      */
     public static <V extends IFormFieldValidator> V AND( final V... delegates ) {
-        return (V)new ITableFieldValidator() {
+        return (V)new IFormFieldValidator() {
     
-            @Override
-            public void init( IFeatureTableElement elm ) {
-                for (IFormFieldValidator delegate : delegates) {
-                    if (delegate instanceof ITableFieldValidator) {
-                        ((ITableFieldValidator)delegate).init( elm );
-                    }
-                }
-            }
-
             @Override
             public String validate( Object fieldValue ) {
                 for (IFormFieldValidator delegate : delegates) {
@@ -67,6 +57,47 @@ public class Validators {
                 Object transformed = modelValue;
                 for (IFormFieldValidator delegate : delegates) {
                     transformed = delegate.transform2Field( transformed );
+                }
+                return transformed;
+            }
+        };
+    }
+
+    
+    /**
+     * Concatenates the given validators. The delegates are called in the given order.
+     *
+     * @param delegates The validators the concat.
+     * @return A newly created validator that calls the delegates.
+     */
+    public static <V extends ITableFieldValidator> V AND( final V... delegates ) {
+        return (V)new ITableFieldValidator() {
+    
+            @Override
+            public String validate( Object fieldValue, ValidatorSite site ) {
+                for (V delegate : delegates) {
+                    String result = delegate.validate( fieldValue, site );
+                    if (result != null) {
+                        return result;
+                    }
+                }
+                return null;
+            }
+            
+            @Override
+            public Object transform2Model( Object fieldValue, ValidatorSite site ) throws Exception {
+                Object transformed = fieldValue;
+                for (V delegate : delegates) {
+                    transformed = delegate.transform2Model( transformed, site );
+                }
+                return transformed;
+            }
+            
+            @Override
+            public Object transform2Field( Object modelValue, ValidatorSite site ) throws Exception {
+                Object transformed = modelValue;
+                for (V delegate : delegates) {
+                    transformed = delegate.transform2Field( transformed, site );
                 }
                 return transformed;
             }

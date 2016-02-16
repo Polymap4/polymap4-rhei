@@ -14,6 +14,8 @@
  */
 package org.polymap.rhei.field;
 
+import org.polymap.rhei.table.ITableFieldValidator;
+
 /**
  * A validator bridges the gap between {@link IFormField} and the data model. It
  * checks if a given user input is valid and it performs transformations from
@@ -52,7 +54,6 @@ public interface IFormFieldValidator<F,M> {
     
     public F transform2Field( M modelValue ) throws Exception;
     
-    
     /**
      * Concatenates the given validator. The delegates are called in the given order.
      *
@@ -62,6 +63,10 @@ public interface IFormFieldValidator<F,M> {
      */
     public default IFormFieldValidator and( IFormFieldValidator other ) {
         return Validators.AND( this, other );    
+    }
+
+    public default ITableFieldValidator forTable() {
+        return ITableFieldValidator.of( this );    
     }
     
 }

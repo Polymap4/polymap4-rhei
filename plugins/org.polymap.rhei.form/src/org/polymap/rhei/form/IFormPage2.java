@@ -28,6 +28,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public interface IFormPage2
         extends IFormPage {
 
+    /**
+     * Returns <code>true</code> if this page has unsubmitted changes.
+     * <p/>
+     * This method is called before the default implementation checks the field
+     * status. This default check is not done if <code>true</code> is returned.
+     *
+     * @return True if this page is 'dirty'.
+     */
     boolean isDirty();
     
     boolean isValid();

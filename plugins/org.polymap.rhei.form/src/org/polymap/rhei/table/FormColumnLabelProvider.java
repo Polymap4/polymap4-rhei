@@ -16,8 +16,6 @@ package org.polymap.rhei.table;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 
-import org.polymap.rhei.field.IFormFieldValidator;
-
 /**
  * 
  *
@@ -28,31 +26,38 @@ class FormColumnLabelProvider
         
     private FormFeatureTableColumn      tableColumn;
 
-    /** Used to validate and transform values to String. */
-    private IFormFieldValidator         validator;
-
     
-    public FormColumnLabelProvider( FormFeatureTableColumn tableColumn, IFormFieldValidator validator ) {
+    public FormColumnLabelProvider( FormFeatureTableColumn tableColumn ) {
         this.tableColumn = tableColumn;
-        this.validator = validator;
-        assert validator != null;
     }
 
     
-    protected IFormFieldValidator getValidator() {
-        return validator;
-    }
-
-
     @Override
     public String getText( Object elm ) {
         try {
-            IFeatureTableElement featureElm = (IFeatureTableElement)elm;
+            IFeatureTableElement felm = (IFeatureTableElement)elm;
             //log.info( "getText(): fid=" + featureElm.fid() + ", prop=" + prop.getName().getLocalPart() );
 
-            Object value = featureElm.getValue( tableColumn.getName() );
-            String transformed = (String)validator.transform2Field( value );
-            return transformed != null ? transformed : "";
+            Object result = tableColumn.modifiedFieldValue( felm, false );
+            if (result == null) {
+                return "";
+            }
+            // XXX the modified field value is the value that the IFormField can work with;
+            // this can be any type (for example when using PicklistFormField) but we need a
+            // String representation here; validator.transform2Field() expects the value from
+            // the model, so it is a wild guess to use it for the field value
+            else if (result instanceof String) {
+                return (String)result;
+            }
+            else {
+                try {
+                    DefaultValidatorSite site = new DefaultValidatorSite( felm, tableColumn, false );
+                    return (String)tableColumn.validator.transform2Field( result, site );
+                }
+                catch (Exception e) {
+                    return result.toString();
+                }
+            }
         }
         catch (Exception e) {
             FormFeatureTableColumn.log.warn( "", e );

@@ -15,8 +15,6 @@
 package org.polymap.rhei.table;
 
 import java.util.Objects;
-import java.util.function.Supplier;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -28,15 +26,12 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.EditingSupport;
 
-import org.polymap.core.runtime.Lazy;
-import org.polymap.core.runtime.PlainLazyInit;
 import org.polymap.core.runtime.event.EventManager;
 
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormField;
 import org.polymap.rhei.field.IFormFieldListener;
 import org.polymap.rhei.field.IFormFieldSite;
-import org.polymap.rhei.field.IFormFieldValidator;
 import org.polymap.rhei.form.IFormToolkit;
 
 /**
@@ -53,14 +48,24 @@ class FormEditingSupport
     
     private IFormField                  field;
     
-    private IFormFieldValidator         validator;
+    private ITableFieldValidator        validator;
+    
+    private CellEditor                  cellEditor;
+    
+    private Object                      initValue;
     
     
-    public FormEditingSupport( ColumnViewer viewer, FormFeatureTableColumn tableColumn, IFormField field, IFormFieldValidator validator ) {
+    public FormEditingSupport( ColumnViewer viewer, FormFeatureTableColumn tableColumn, IFormField field, ITableFieldValidator validator ) {
         super( viewer );
         this.tableColumn = tableColumn;
         this.field = field;
         this.validator = validator;
+    }
+
+    public FormEditingSupport( ColumnViewer viewer, FormFeatureTableColumn tableColumn, CellEditor cellEditor ) {
+        super( viewer );
+        this.tableColumn = tableColumn;
+        this.cellEditor = cellEditor;
     }
 
     @Override
@@ -70,14 +75,21 @@ class FormEditingSupport
 
     @Override
     protected CellEditor getCellEditor( Object elm ) {
-        return new FormCellEditor( (Composite)tableColumn.getViewer().getControl(), (IFeatureTableElement)elm );
+        if (cellEditor != null) {
+            if (cellEditor instanceof ActionCellEditor) {
+                ((ActionCellEditor)cellEditor).setSelected( (IFeatureTableElement)elm );
+            }
+            return cellEditor;
+        }
+        else {
+            return new FormCellEditor( (Composite)tableColumn.getViewer().getControl(), (IFeatureTableElement)elm );
+        }
     }
 
     @Override
     protected Object getValue( Object elm ) {
         try {
-            IFeatureTableElement featureElm = (IFeatureTableElement)elm;
-            return featureElm.getValue( tableColumn.getName() );
+            return initValue = tableColumn.modifiedFieldValue( (IFeatureTableElement)elm, true );
         }
         catch (Exception e) {
             return "Fehler: " + e.getLocalizedMessage();
@@ -85,13 +97,10 @@ class FormEditingSupport
     }
 
     @Override
-    protected void setValue( Object elm, Object value ) {
-        IFeatureTableElement featureElm = (IFeatureTableElement)elm;
-        featureElm.setValue( tableColumn.getName(), value );
-        
-//        boolean valid = true;
-//        tableColumn.markElement( featureElm, true, !valid );
-        tableColumn.getViewer().update( elm, null );
+    protected void setValue( Object elm, Object newFieldValue ) {
+        if (!Objects.equals( initValue, newFieldValue )) {
+            tableColumn.updateFieldValue( (IFeatureTableElement)elm, newFieldValue );
+        }
     }
     
     
@@ -101,29 +110,21 @@ class FormEditingSupport
     class FormCellEditor
             extends CellEditor {
 
+        private IFeatureTableElement    elm;
+
         private Control                 control;
 
         private Color                   defaultBackground;
 
         private FormFieldSite           fieldSite;
         
-        private IFeatureTableElement    elm;
-
         private String                  errorMsg;
 
         private String                  externalErrorMsg;
 
         private boolean                 isDirty;
         
-        private Lazy<IFormFieldValidator> initializedValidator = new PlainLazyInit( new Supplier<IFormFieldValidator>() {
-            @Override
-            public IFormFieldValidator get() {
-                if (validator instanceof ITableFieldValidator) {
-                    ((ITableFieldValidator)validator).init( elm );
-                }
-                return validator;
-            }
-        });
+        private Object                  fieldValue;
 
         
         public FormCellEditor( Composite parent, IFeatureTableElement elm ) {
@@ -155,7 +156,7 @@ class FormEditingSupport
         @Override
         protected void doSetValue( Object value ) {
             try {
-                // validate and set value
+                this.fieldValue = value;
                 field.load();
             }
             catch (Exception e) {
@@ -166,11 +167,8 @@ class FormEditingSupport
         @Override
         protected Object doGetValue() {
             try {
-                // validate and write value
                 field.store();
-                
-                tableColumn.markElement( elm, fieldSite.isDirty(), !fieldSite.isValid() );
-                return fieldSite.getValue();
+                return fieldValue;
             }
             catch (Exception e) {
                 throw new RuntimeException( e ); 
@@ -197,21 +195,14 @@ class FormEditingSupport
                 return tableColumn.getProperty().getName().getLocalPart();
             }
 
-            protected Object getValue() throws Exception {
-                return elm.getValue( tableColumn.getName() );
-            }
-
             @Override
             public Object getFieldValue() throws Exception {
-                return initializedValidator.get().transform2Field( getValue() );
+                return fieldValue;
             }
 
             @Override
             public void setFieldValue( Object value ) throws Exception {
-                if (isValid()) {
-                    Object fieldValue = initializedValidator.get().transform2Model( value );
-                    elm.setValue( tableColumn.getName(), fieldValue );
-                }
+                fieldValue = value;
             }
 
             @Override
@@ -245,12 +236,13 @@ class FormEditingSupport
                         isDirty = !Objects.equals( getFieldValue(), newFieldValue );
 
                         // isValid?
-                        errorMsg = externalErrorMsg == null ? initializedValidator.get().validate( newFieldValue ) : externalErrorMsg;
+                        DefaultValidatorSite validatorSite = new DefaultValidatorSite( elm, tableColumn, true );
+                        errorMsg = externalErrorMsg == null ? validator.validate( newFieldValue, validatorSite ) : externalErrorMsg;
                         if (isValid()) {
                             // tranform
-                            Object validatedNewValue = validator.transform2Model( newFieldValue );
+                            Object validatedNewValue = validator.transform2Model( newFieldValue, validatorSite );
                             // fire event
-                            EventManager.instance().syncPublish( new FormFieldEvent( FormEditingSupport.this, source, 
+                            EventManager.instance().publish( new FormFieldEvent( FormEditingSupport.this, source, 
                                     getFieldName(), field, eventCode, null, validatedNewValue ) );
                         }
                     }
@@ -283,7 +275,6 @@ class FormEditingSupport
             public void setErrorMessage( String msg ) {
                 externalErrorMsg = msg;
             }
-
         }
     }
     

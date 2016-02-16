@@ -77,7 +77,7 @@ public class FeatureTableViewer
     
     protected Map<String,IFeatureTableColumn> displayed = new HashMap();
 
-    private Map<String,IFeatureTableColumn> available = new HashMap();
+    protected Map<String,IFeatureTableColumn> available = new HashMap();
 
     private Map<String,CellEditor>          editors = new HashMap();
     

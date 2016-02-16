@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2011-2014, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2011-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -27,10 +27,9 @@ import org.apache.commons.logging.LogFactory;
  * 
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
- * @since 3.0
  */
-public class NumberValidator
-        implements IFormFieldValidator {
+public class NumberValidator<M extends Number>
+        implements IFormFieldValidator<String,M> {
 
     private static Log log = LogFactory.getLog( NumberValidator.class );
 
@@ -88,7 +87,7 @@ public class NumberValidator
     }
     
 
-    public String validate( Object fieldValue ) {
+    public String validate( String fieldValue ) {
         if (fieldValue instanceof String) {
             try {
                 transform2Model( fieldValue );
@@ -106,7 +105,7 @@ public class NumberValidator
     }
 
     
-    public Object transform2Model( Object fieldValue ) throws Exception {
+    public M transform2Model( String fieldValue ) throws Exception {
         if (fieldValue == null) {
             return null;
         }
@@ -123,16 +122,16 @@ public class NumberValidator
             // XXX check max digits
             
             if (Float.class.isAssignableFrom( targetClass )) {
-                return Float.valueOf( result.floatValue() );
+                return (M)Float.valueOf( result.floatValue() );
             }
             else if (Double.class.isAssignableFrom( targetClass )) {
-                return Double.valueOf( result.floatValue() );
+                return (M)Double.valueOf( result.floatValue() );
             }
             else if (Integer.class.isAssignableFrom( targetClass )) {
-                return Integer.valueOf( result.intValue() );
+                return (M)Integer.valueOf( result.intValue() );
             }
             else if (Long.class.isAssignableFrom( targetClass )) {
-                return Long.valueOf( result.longValue() );
+                return (M)Long.valueOf( result.longValue() );
             }
             else {
                 throw new RuntimeException( "Unsupported target type: " + targetClass );
@@ -144,7 +143,7 @@ public class NumberValidator
     }
     
     
-    public Object transform2Field( Object modelValue ) throws Exception {
+    public String transform2Field( M modelValue ) throws Exception {
         return  modelValue == null ? null : nf.format( targetClass.cast( modelValue ) );
     }
     
