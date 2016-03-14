@@ -105,7 +105,7 @@ public class BatikApplication
 
     @Override
     public int createUI() {
-        display = PlatformUI.createDisplay();
+        display = new Display();  // PlatformUI.createDisplay();
 
         instances.put( display, this );
         log.info( "Display DPI: " + display.getDPI().x + "x" + display.getDPI().y );
