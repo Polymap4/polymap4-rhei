@@ -30,7 +30,6 @@ import org.polymap.core.runtime.config.DefaultBoolean;
 import org.polymap.rhei.field.CheckboxFormField;
 import org.polymap.rhei.field.DateTimeFormField;
 import org.polymap.rhei.field.IFormField;
-import org.polymap.rhei.field.IFormFieldLabel;
 import org.polymap.rhei.field.IFormFieldValidator;
 import org.polymap.rhei.field.NumberValidator;
 import org.polymap.rhei.field.StringFormField;
@@ -90,11 +89,11 @@ public abstract class FieldBuilder
                 field.set( new StringFormField() );
             }
         }
-        // tooltip -> decorate label
-        if (tooltip.isPresent() && label.isPresent() 
-                && !label.get().endsWith( "*" ) && label.get() != IFormFieldLabel.NO_LABEL ) {
-            label.set( label.get() + "*" );
-        }
+//        // tooltip -> decorate label
+//        if (tooltip.isPresent() && label.isPresent() 
+//                && !label.get().endsWith( "*" ) && label.get() != IFormFieldLabel.NO_LABEL ) {
+//            label.set( label.get() + "*" );
+//        }
         
         Composite result = createFormField();
         
