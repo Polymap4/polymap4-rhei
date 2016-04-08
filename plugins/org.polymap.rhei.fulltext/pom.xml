@@ -9,7 +9,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>org.polymap.rhei.um</artifactId>
+	<artifactId>org.polymap.rhei.fulltext</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<version>4.0.0-SNAPSHOT</version>
 </project>
