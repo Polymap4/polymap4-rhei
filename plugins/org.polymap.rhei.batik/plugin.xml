@@ -105,5 +105,17 @@
             id="org.polymap.rhei.batik.statusHandler">
       </statusHandler>
    </extension>
+   <extension
+         id="org.polymap.rhei.batik.app"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.polymap.rhei.batik.BatikProductApplication">
+         </run>
+      </application>
+   </extension>
 
 </plugin>
