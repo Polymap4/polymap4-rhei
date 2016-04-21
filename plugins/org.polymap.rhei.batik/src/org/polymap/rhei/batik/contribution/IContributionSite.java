@@ -20,18 +20,28 @@ import org.polymap.rhei.batik.IAppContext;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 
 /**
- * 
+ * The site of an {@link IContributionProvider}.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public interface IContributionSite {
 
+    /** The {@link IPanel} to contribute to. */
     public IPanel panel();
     
+    /** The site of the {@link #panel()}. */
     public PanelSite panelSite();
     
+    /** The context of the {@link #panel()}. */
     public IAppContext context();
     
+    /** The toolkit of the {@link #panel()}. */
     public <T extends IPanelToolkit> T toolkit();
+
+    /** The tags that identify to target to contribute to. */
+    public String[] tags();
+    
+    /** True if {@link #tags()} contain the given tag. */
+    public boolean tagsContain( String tag );
     
 }

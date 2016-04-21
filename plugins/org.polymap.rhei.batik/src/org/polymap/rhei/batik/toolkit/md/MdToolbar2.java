@@ -38,7 +38,6 @@ import org.eclipse.jface.layout.RowLayoutFactory;
 
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
-
 import org.polymap.rhei.batik.toolkit.ActionItem;
 import org.polymap.rhei.batik.toolkit.GroupItem;
 import org.polymap.rhei.batik.toolkit.Item;
@@ -57,8 +56,17 @@ public class MdToolbar2
 
     private static Log log = LogFactory.getLog( MdToolbar2.class );
     
-    /** Pseudo class for toolbar Composite. */
+    /** Pseudo class of the toolbar Composite: basic, no shadow */
     private static final String     CSS_TOOLBAR = "toolbar2";
+    
+    /** Pseudo class of the toolbar Composite: bottom shadow */
+    private static final String     CSS_TOOLBAR_TOP = "toolbar2-top";
+    
+    /** Pseudo class of the toolbar Composite: top shadow */
+    private static final String     CSS_TOOLBAR_BOTTOM = "toolbar2-top";
+
+    private static final String     CSS_TOOLBAR_GROUP = "toolbar2-group";
+    
     /** Pseudo class for toolbar item (Button). */
     private static final String     CSS_TOOLBAR_ITEM = "toolbar2-item";
     
@@ -84,8 +92,23 @@ public class MdToolbar2
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
         this.tk = tk;
         
-        bar = setVariant( tk.createComposite( parent, style ), CSS_TOOLBAR );
-        bar.setLayout( new FillLayout() );  //RowLayoutFactory.fillDefaults().spacing( 3 ).create() );
+        if ((style & SWT.RIGHT) > 0) {
+            log.warn( "Aligment is not supported yet." );
+            rootGroup.align.set( Alignment.Right );
+        }
+        
+        String css = CSS_TOOLBAR;
+        if ((style & SWT.TOP) > 0) {
+            css = CSS_TOOLBAR_TOP;
+        }
+        else if ((style & SWT.BOTTOM) > 0) {
+            css = CSS_TOOLBAR_BOTTOM;
+        }
+        else if ((style & SWT.FLAT) > 0) {
+            css = CSS_TOOLBAR;
+        }
+        bar = setVariant( tk.createComposite( parent, style ), css );
+        bar.setLayout( new FillLayout() );
         
         EventManager.instance().subscribe( this, ifType( ItemEvent.class, 
                 ev2 -> ev2.getSource().container() == MdToolbar2.this ) );
@@ -100,6 +123,7 @@ public class MdToolbar2
     @EventHandler( display=true, delay=100 )
     protected void onItemChange( List<ItemEvent> evs ) {
         renderGroup( bar, rootGroup );
+        bar.layout( true );
     }
     
 
@@ -121,7 +145,7 @@ public class MdToolbar2
         
         // create if not yet present
         if (control == null) {
-            control = tk.createComposite( parent );
+            control = setVariant( tk.createComposite( parent ), CSS_TOOLBAR_GROUP );
             control.setLayout( RowLayoutFactory.fillDefaults().spacing( 3 ).create() );
             control.setData( "_item_", group );
         }

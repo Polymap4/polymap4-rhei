@@ -15,8 +15,13 @@
 package org.polymap.rhei.batik.contribution;
 
 import static com.google.common.collect.Iterables.concat;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -73,9 +78,10 @@ public class ContributionManager
      *
      * @param target
      * @param panel
+     * @param tags Tags that identify the target.
      */
-    public void contributeTo( Object target, IPanel panel ) {
-        IContributionSite site = newSite( panel );
+    public void contributeTo( Object target, IPanel panel, String... tags ) {
+        IContributionSite site = newSite( panel, tags );
         for (ContributionHandler handler : handlers) {
             try {
                 if (handler.test( target )) {
@@ -107,7 +113,15 @@ public class ContributionManager
     }
 
     
-    protected IContributionSite newSite( IPanel panel ) {
+    protected IContributionSite newSite( IPanel panel, String[] tags ) {
+        assert panel != null;
+        assert tags != null;
+        
+        Set<String> tagsSet = new HashSet();
+        if (tags.length > 0 && !tagsSet.addAll( Arrays.asList( tags ) )) {
+            throw new IllegalArgumentException( "Duplicate tags in: " + Arrays.asList( tags ) );
+        }
+
         return new IContributionSite() {
             @Override
             public IPanel panel() {
@@ -124,6 +138,14 @@ public class ContributionManager
             @Override
             public <T extends IPanelToolkit> T toolkit() {
                 return (T)panelSite().toolkit();
+            }
+            @Override
+            public String[] tags() {
+                return tags;
+            }
+            @Override
+            public boolean tagsContain( String tag ) {
+                return tagsSet.contains( tag );
             }
         };
     }

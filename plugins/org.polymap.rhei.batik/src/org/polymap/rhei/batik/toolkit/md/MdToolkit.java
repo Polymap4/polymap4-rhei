@@ -160,8 +160,7 @@ public class MdToolkit
     /**
      * Creates the main toolbar of the panel.
      * 
-     * @param style {@link SWT#ON_TOP} The toolbar will float when scrolling. The
-     *        toolbar disappears when scrolling otherwise.
+     * @param style 
      * @see <a
      *      href="http://www.google.com/design/spec/components/toolbars.html">Material
      *      Design</a>
@@ -171,6 +170,17 @@ public class MdToolkit
     }
 
 
+    /**
+     * 
+     *
+     * @param parent
+     * @param styles
+     *        <ul>
+     *        <li>SWT.TOP - Toolbar on top, shadow at the bottom.</li>
+     *        <li>SWT.BOTTOM - Toolbar on bottom, shadow at the top.</li>
+     *        <li>SWT.FLAT|default - Flat style, no shadow</li>
+     *        </ul>
+     */
     public MdToolbar2 createToolbar( Composite parent, int... styles ) {
         return new MdToolbar2( parent, this, stylebits( styles ) );
     }

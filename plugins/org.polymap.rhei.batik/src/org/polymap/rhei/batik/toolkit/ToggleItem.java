@@ -30,9 +30,11 @@ import org.polymap.core.runtime.config.Mandatory;
 public class ToggleItem
         extends Item {
 
-    public ToggleItem( ItemContainer container ) {
-        super( container );
-    }
+    /**
+     * Not yet implemented.
+     */
+    @Concern( ItemEvent.Fire.class )
+    public Config2<ToggleItem,Boolean>                  selected;
 
     /**
      * The action to be performed when the item is selected.
@@ -47,4 +49,9 @@ public class ToggleItem
     @Concern( ItemEvent.Fire.class )
     public Config2<ToggleItem,Consumer<SelectionEvent>> onUnselected;
 
+
+    public ToggleItem( ItemContainer container ) {
+        super( container );
+    }
+    
 }
