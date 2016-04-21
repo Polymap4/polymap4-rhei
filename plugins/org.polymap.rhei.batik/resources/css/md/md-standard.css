@@ -315,74 +315,8 @@ Link-Hyperlink:hover:disabled {
   text-decoration: none;
 }
 
-/* List default theme */
-/* line 285, ../../sass/md/md-standard.scss */
-List {
-  background-color: #ffffff;
-  border: none;
-  color: #4a4a4a;
-}
-
-/* line 292, ../../sass/md/md-standard.scss */
-List[BORDER] {
-  border: 1px solid #bdbdbd;
-}
-
-/* line 296, ../../sass/md/md-standard.scss */
-List-Item {
-  padding: 5px 10px 5px 10px;
-  background-color: #ffffff;
-  color: inherit;
-  background-image: none;
-  text-shadow: none;
-}
-
-/* line 304, ../../sass/md/md-standard.scss */
-List-Item:hover {
-  color: #4a4a4a;
-  background-image: gradient(linear, left top, left bottom, from(#ebebeb), to(#d5d5d5));
-}
-
-/* line 313, ../../sass/md/md-standard.scss */
-List-Item:selected {
-  color: #ffffff;
-  /* background-color property is used on the server to compute system color with id
-     SWT.COLOR_LIST_SELECTION (see bug https://bugs.eclipse.org/bugs/show_bug.cgi?id=434191) */
-  background-color: #00589f;
-  background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
-}
-
-/* line 325, ../../sass/md/md-standard.scss */
-List-Item:selected:unfocused {
-  color: #ffffff;
-  background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
-}
-
-/* line 334, ../../sass/md/md-standard.scss */
-List-Item:even {
-  background-color: #f0f0f0;
-}
-
-/* line 338, ../../sass/md/md-standard.scss */
-List-Item:even:hover {
-  color: #4a4a4a;
-  background-image: gradient(linear, left top, left bottom, from(#ebebeb), to(#d5d5d5));
-}
-
-/* line 347, ../../sass/md/md-standard.scss */
-List-Item:even:selected {
-  color: #ffffff;
-  background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
-}
-
-/* line 356, ../../sass/md/md-standard.scss */
-List-Item:even:selected:unfocused {
-  color: #ffffff;
-  background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
-}
-
 /* Menu default theme */
-/* line 367, ../../sass/md/md-standard.scss */
+/* line 285, ../../sass/md/md-standard.scss */
 Menu {
   padding: 0;
   color: #0059a5;
@@ -395,7 +329,7 @@ Menu {
   animation: none;
 }
 
-/* line 383, ../../sass/md/md-standard.scss */
+/* line 301, ../../sass/md/md-standard.scss */
 MenuItem {
   color: #4a4a4a;
   background-color: transparent;
@@ -405,51 +339,51 @@ MenuItem {
   padding: 4px 10px 4px 10px;
 }
 
-/* line 392, ../../sass/md/md-standard.scss */
+/* line 310, ../../sass/md/md-standard.scss */
 MenuItem[SEPARATOR] {
   padding: 0px 10px;
 }
 
-/* line 396, ../../sass/md/md-standard.scss */
+/* line 314, ../../sass/md/md-standard.scss */
 MenuItem:hover {
   color: #ffffff;
   background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
 }
 
-/* line 405, ../../sass/md/md-standard.scss */
+/* line 323, ../../sass/md/md-standard.scss */
 MenuItem:pressed {
   color: #ffffff;
   background-image: gradient(linear, left top, left bottom, from(#416693), to(#5882b5));
 }
 
-/* line 414, ../../sass/md/md-standard.scss */
+/* line 332, ../../sass/md/md-standard.scss */
 MenuItem:disabled {
   color: #bdbdbd;
   text-shadow: none;
 }
 
-/* line 419, ../../sass/md/md-standard.scss */
+/* line 337, ../../sass/md/md-standard.scss */
 MenuItem:onMenuBar {
   padding: 4px 6px;
 }
 
-/* line 424, ../../sass/md/md-standard.scss */
+/* line 342, ../../sass/md/md-standard.scss */
 MenuItem-CheckIcon {
   background-image: url(resource/widget/rap/menu/checkbox.gif);
 }
 
-/* line 428, ../../sass/md/md-standard.scss */
+/* line 346, ../../sass/md/md-standard.scss */
 MenuItem-RadioIcon {
   background-image: url(resource/widget/rap/menu/radiobutton.gif);
 }
 
-/* line 432, ../../sass/md/md-standard.scss */
+/* line 350, ../../sass/md/md-standard.scss */
 MenuItem-CascadeIcon {
   background-image: url(resource/widget/rap/menu/arrow.gif);
 }
 
 /* ProgressBar default theme */
-/* line 438, ../../sass/md/md-standard.scss */
+/* line 356, ../../sass/md/md-standard.scss */
 ProgressBar {
   background-color: #ffffff;
   background-image: url(resource/widget/rap/progressbar/progressbar-background.png);
@@ -458,7 +392,7 @@ ProgressBar {
   width: 16px;
 }
 
-/* line 446, ../../sass/md/md-standard.scss */
+/* line 364, ../../sass/md/md-standard.scss */
 ProgressBar-Indicator {
   background-color: #00589f;
   background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
@@ -466,18 +400,18 @@ ProgressBar-Indicator {
   opacity: 1;
 }
 
-/* line 457, ../../sass/md/md-standard.scss */
+/* line 375, ../../sass/md/md-standard.scss */
 ProgressBar-Indicator:paused {
   background-image: gradient(linear, left top, left bottom, from(#818181), to(#b5b5b5));
 }
 
-/* line 465, ../../sass/md/md-standard.scss */
+/* line 383, ../../sass/md/md-standard.scss */
 ProgressBar-Indicator:error {
   background-image: gradient(linear, left top, left bottom, from(#bb1d1d), to(#fc0000));
 }
 
 /* Spinner default theme */
-/* line 476, ../../sass/md/md-standard.scss */
+/* line 394, ../../sass/md/md-standard.scss */
 Spinner {
   border: none;
   border-radius: 0 2px 2px 0;
@@ -488,31 +422,31 @@ Spinner {
   box-shadow: none;
 }
 
-/* line 486, ../../sass/md/md-standard.scss */
+/* line 404, ../../sass/md/md-standard.scss */
 Spinner[BORDER] {
   border: 1px solid #aaaaaa;
   border-radius: 0 2px 2px 0;
   box-shadow: inset 0 0 3px #bdbdbd;
 }
 
-/* line 492, ../../sass/md/md-standard.scss */
+/* line 410, ../../sass/md/md-standard.scss */
 Spinner[BORDER]:focused {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
 }
 
-/* line 497, ../../sass/md/md-standard.scss */
+/* line 415, ../../sass/md/md-standard.scss */
 Spinner:disabled,
 Spinner[BORDER]:disabled {
   box-shadow: none;
 }
 
-/* line 502, ../../sass/md/md-standard.scss */
+/* line 420, ../../sass/md/md-standard.scss */
 Spinner-Field {
   padding: 6px 10px 6px 10px;
 }
 
-/* line 506, ../../sass/md/md-standard.scss */
+/* line 424, ../../sass/md/md-standard.scss */
 Spinner-UpButton {
   background-color: #efefef;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#efefef));
@@ -523,23 +457,23 @@ Spinner-UpButton {
   cursor: default;
 }
 
-/* line 520, ../../sass/md/md-standard.scss */
+/* line 438, ../../sass/md/md-standard.scss */
 Spinner-UpButton:disabled {
   background-image: none;
   background-color: transparent;
 }
 
-/* line 525, ../../sass/md/md-standard.scss */
+/* line 443, ../../sass/md/md-standard.scss */
 Spinner-UpButton-Icon {
   background-image: url(resource/widget/rap/spinner/up.png);
 }
 
-/* line 529, ../../sass/md/md-standard.scss */
+/* line 447, ../../sass/md/md-standard.scss */
 Spinner-UpButton-Icon:hover {
   background-image: url(resource/widget/rap/spinner/up-hover.png);
 }
 
-/* line 533, ../../sass/md/md-standard.scss */
+/* line 451, ../../sass/md/md-standard.scss */
 Spinner-DownButton {
   background-color: #efefef;
   background-image: gradient(linear, left top, left bottom, from(#efefef), to(#e4e4e4));
@@ -550,39 +484,39 @@ Spinner-DownButton {
   cursor: default;
 }
 
-/* line 547, ../../sass/md/md-standard.scss */
+/* line 465, ../../sass/md/md-standard.scss */
 Spinner-DownButton:disabled {
   background-image: none;
   background-color: transparent;
 }
 
-/* line 552, ../../sass/md/md-standard.scss */
+/* line 470, ../../sass/md/md-standard.scss */
 Spinner-DownButton-Icon {
   background-image: url(resource/widget/rap/spinner/down.png);
 }
 
-/* line 556, ../../sass/md/md-standard.scss */
+/* line 474, ../../sass/md/md-standard.scss */
 Spinner-DownButton-Icon:hover {
   background-image: url(resource/widget/rap/spinner/down-hover.png);
 }
 
 /* TabFolder default theme */
-/* line 562, ../../sass/md/md-standard.scss */
+/* line 480, ../../sass/md/md-standard.scss */
 TabFolder {
   border: none;
 }
 
-/* line 566, ../../sass/md/md-standard.scss */
+/* line 484, ../../sass/md/md-standard.scss */
 TabFolder[BORDER] {
   border: 1px solid #bdbdbd;
 }
 
-/* line 570, ../../sass/md/md-standard.scss */
+/* line 488, ../../sass/md/md-standard.scss */
 TabFolder-ContentContainer {
   border: 1px solid #bdbdbd;
 }
 
-/* line 574, ../../sass/md/md-standard.scss */
+/* line 492, ../../sass/md/md-standard.scss */
 TabItem {
   background-color: #ffffff;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#e4e4e4));
@@ -592,33 +526,33 @@ TabItem {
   padding: 6px;
 }
 
-/* line 587, ../../sass/md/md-standard.scss */
+/* line 505, ../../sass/md/md-standard.scss */
 TabItem:selected {
   background-image: gradient(linear, left top, left bottom, from(#d5d5d5), to(#eaeaea));
   padding: 6px 6px 7px 6px;
 }
 
 /* Scale default theme */
-/* line 598, ../../sass/md/md-standard.scss */
+/* line 516, ../../sass/md/md-standard.scss */
 Scale {
   background-color: white;
   border-radius: 3px;
 }
 
-/* line 603, ../../sass/md/md-standard.scss */
+/* line 521, ../../sass/md/md-standard.scss */
 Scale-Thumb {
   background-color: #e5e5e5;
   border: 1px solid #a4a4a4;
   border-radius: 2px 2px 2px 2px;
 }
 
-/* line 609, ../../sass/md/md-standard.scss */
+/* line 527, ../../sass/md/md-standard.scss */
 Scale-Thumb:focused {
   border: 1px solid #4f7cb1;
 }
 
 /* DateTime default theme */
-/* line 615, ../../sass/md/md-standard.scss */
+/* line 533, ../../sass/md/md-standard.scss */
 DateTime {
   border: none;
   border-radius: 0 2px 2px 0;
@@ -629,13 +563,13 @@ DateTime {
   box-shadow: none;
 }
 
-/* line 625, ../../sass/md/md-standard.scss */
+/* line 543, ../../sass/md/md-standard.scss */
 DateTime[BORDER]:focused {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
 }
 
-/* line 630, ../../sass/md/md-standard.scss */
+/* line 548, ../../sass/md/md-standard.scss */
 DateTime-Field {
   color: inherit;
   background-color: transparent;
@@ -643,55 +577,55 @@ DateTime-Field {
   text-shadow: none;
 }
 
-/* line 637, ../../sass/md/md-standard.scss */
+/* line 555, ../../sass/md/md-standard.scss */
 DateTime[BORDER] {
   border: 1px solid #aaaaaa;
   border-radius: 0 2px 2px 0;
   box-shadow: inset 0 0 3px #bdbdbd;
 }
 
-/* line 643, ../../sass/md/md-standard.scss */
+/* line 561, ../../sass/md/md-standard.scss */
 DateTime[BORDER]:disabled {
   box-shadow: none;
 }
 
-/* line 647, ../../sass/md/md-standard.scss */
+/* line 565, ../../sass/md/md-standard.scss */
 DateTime-Calendar-Day {
   color: inherit;
   background-color: transparent;
   text-shadow: none;
 }
 
-/* line 653, ../../sass/md/md-standard.scss */
+/* line 571, ../../sass/md/md-standard.scss */
 DateTime-Field:selected,
 DateTime-Calendar-Day:selected {
   background-color: #5882b5;
   color: #ffffff;
 }
 
-/* line 659, ../../sass/md/md-standard.scss */
+/* line 577, ../../sass/md/md-standard.scss */
 DateTime-Calendar-Day:selected:hover {
   background-color: #5882b5;
   color: #ffffff;
 }
 
-/* line 664, ../../sass/md/md-standard.scss */
+/* line 582, ../../sass/md/md-standard.scss */
 DateTime-Calendar-Day:selected:unfocused {
   background-color: #c0c0c0;
 }
 
-/* line 668, ../../sass/md/md-standard.scss */
+/* line 586, ../../sass/md/md-standard.scss */
 DateTime-Calendar-Day:otherMonth {
   background-color: transparent;
   color: #808080;
 }
 
-/* line 673, ../../sass/md/md-standard.scss */
+/* line 591, ../../sass/md/md-standard.scss */
 DateTime-Calendar-Day:hover {
   background-color: #b5b5b5;
 }
 
-/* line 677, ../../sass/md/md-standard.scss */
+/* line 595, ../../sass/md/md-standard.scss */
 DateTime-Calendar-Navbar {
   border: none;
   border-radius: 0;
@@ -701,51 +635,51 @@ DateTime-Calendar-Navbar {
   text-shadow: none;
 }
 
-/* line 689, ../../sass/md/md-standard.scss */
+/* line 607, ../../sass/md/md-standard.scss */
 DateTime-Calendar-PreviousMonthButton {
   background-image: url(resource/widget/rap/calendar/lastMonth.png);
   cursor: default;
 }
 
-/* line 694, ../../sass/md/md-standard.scss */
+/* line 612, ../../sass/md/md-standard.scss */
 DateTime-Calendar-PreviousMonthButton:hover {
   background-image: url(resource/widget/rap/calendar/lastMonth-hover.png);
 }
 
-/* line 698, ../../sass/md/md-standard.scss */
+/* line 616, ../../sass/md/md-standard.scss */
 DateTime-Calendar-NextMonthButton {
   background-image: url(resource/widget/rap/calendar/nextMonth.png);
   cursor: default;
 }
 
-/* line 703, ../../sass/md/md-standard.scss */
+/* line 621, ../../sass/md/md-standard.scss */
 DateTime-Calendar-NextMonthButton:hover {
   background-image: url(resource/widget/rap/calendar/nextMonth-hover.png);
 }
 
-/* line 707, ../../sass/md/md-standard.scss */
+/* line 625, ../../sass/md/md-standard.scss */
 DateTime-Calendar-PreviousYearButton {
   background-image: url(resource/widget/rap/calendar/lastYear.png);
   cursor: default;
 }
 
-/* line 712, ../../sass/md/md-standard.scss */
+/* line 630, ../../sass/md/md-standard.scss */
 DateTime-Calendar-PreviousYearButton:hover {
   background-image: url(resource/widget/rap/calendar/lastYear-hover.png);
 }
 
-/* line 716, ../../sass/md/md-standard.scss */
+/* line 634, ../../sass/md/md-standard.scss */
 DateTime-Calendar-NextYearButton {
   background-image: url(resource/widget/rap/calendar/nextYear.png);
   cursor: default;
 }
 
-/* line 721, ../../sass/md/md-standard.scss */
+/* line 639, ../../sass/md/md-standard.scss */
 DateTime-Calendar-NextYearButton:hover {
   background-image: url(resource/widget/rap/calendar/nextYear-hover.png);
 }
 
-/* line 725, ../../sass/md/md-standard.scss */
+/* line 643, ../../sass/md/md-standard.scss */
 DateTime-UpButton {
   background-color: #f0f0f0;
   background-image: gradient(linear, left top, left bottom, from(#f9f9f9), to(#efefef));
@@ -756,17 +690,17 @@ DateTime-UpButton {
   cursor: default;
 }
 
-/* line 739, ../../sass/md/md-standard.scss */
+/* line 657, ../../sass/md/md-standard.scss */
 DateTime-UpButton-Icon {
   background-image: url(resource/widget/rap/datetime/up.png);
 }
 
-/* line 743, ../../sass/md/md-standard.scss */
+/* line 661, ../../sass/md/md-standard.scss */
 DateTime-UpButton-Icon:hover {
   background-image: url(resource/widget/rap/datetime/up-hover.png);
 }
 
-/* line 747, ../../sass/md/md-standard.scss */
+/* line 665, ../../sass/md/md-standard.scss */
 DateTime-DownButton {
   background-color: #f0f0f0;
   background-image: gradient(linear, left top, left bottom, from(#efefef), to(#e4e4e4));
@@ -777,17 +711,17 @@ DateTime-DownButton {
   cursor: default;
 }
 
-/* line 761, ../../sass/md/md-standard.scss */
+/* line 679, ../../sass/md/md-standard.scss */
 DateTime-DownButton-Icon {
   background-image: url(resource/widget/rap/datetime/down.png);
 }
 
-/* line 765, ../../sass/md/md-standard.scss */
+/* line 683, ../../sass/md/md-standard.scss */
 DateTime-DownButton-Icon:hover {
   background-image: url(resource/widget/rap/datetime/down-hover.png);
 }
 
-/* line 769, ../../sass/md/md-standard.scss */
+/* line 687, ../../sass/md/md-standard.scss */
 DateTime-DropDownButton {
   cursor: default;
   background-color: #f0f0f0;
@@ -798,7 +732,7 @@ DateTime-DropDownButton {
   width: 30px;
 }
 
-/* line 783, ../../sass/md/md-standard.scss */
+/* line 701, ../../sass/md/md-standard.scss */
 DateTime-DropDownButton:disabled,
 DateTime-UpButton:disabled,
 DateTime-DownButton:disabled {
@@ -806,41 +740,41 @@ DateTime-DownButton:disabled {
   background-color: transparent;
 }
 
-/* line 790, ../../sass/md/md-standard.scss */
+/* line 708, ../../sass/md/md-standard.scss */
 DateTime-DropDownButton-Icon {
   background-image: url(resource/widget/rap/spinner/down.png);
 }
 
-/* line 794, ../../sass/md/md-standard.scss */
+/* line 712, ../../sass/md/md-standard.scss */
 DateTime-DropDownButton-Icon:hover {
   background-image: url(resource/widget/rap/spinner/down-hover.png);
 }
 
-/* line 798, ../../sass/md/md-standard.scss */
+/* line 716, ../../sass/md/md-standard.scss */
 DateTime-DropDownCalendar {
   border: 1px #a7a6aa;
 }
 
 /* ExpandBar default theme */
-/* line 804, ../../sass/md/md-standard.scss */
+/* line 722, ../../sass/md/md-standard.scss */
 ExpandBar {
   color: #4a4a4a;
   background-color: white;
 }
 
-/* line 809, ../../sass/md/md-standard.scss */
+/* line 727, ../../sass/md/md-standard.scss */
 ExpandBar[BORDER] {
   border: 1px solid #bdbdbd;
   border-radius: 2px;
 }
 
-/* line 814, ../../sass/md/md-standard.scss */
+/* line 732, ../../sass/md/md-standard.scss */
 ExpandItem {
   border: 1px solid #bdbdbd;
   border-radius: 2px;
 }
 
-/* line 819, ../../sass/md/md-standard.scss */
+/* line 737, ../../sass/md/md-standard.scss */
 ExpandItem-Header {
   border: none;
   border-radius: 0;
@@ -849,61 +783,61 @@ ExpandItem-Header {
   text-shadow: none;
 }
 
-/* line 831, ../../sass/md/md-standard.scss */
+/* line 749, ../../sass/md/md-standard.scss */
 ExpandItem-Header:disabled {
   cursor: default;
 }
 
-/* line 835, ../../sass/md/md-standard.scss */
+/* line 753, ../../sass/md/md-standard.scss */
 ExpandItem-Button {
   background-image: url(resource/widget/rap/expanditem/expanditem-expand.png);
 }
 
-/* line 839, ../../sass/md/md-standard.scss */
+/* line 757, ../../sass/md/md-standard.scss */
 ExpandItem-Button:hover {
   background-image: url(resource/widget/rap/expanditem/expanditem-expand-hover.png);
 }
 
-/* line 843, ../../sass/md/md-standard.scss */
+/* line 761, ../../sass/md/md-standard.scss */
 ExpandItem-Button:expanded {
   background-image: url(resource/widget/rap/expanditem/expanditem-collapse.png);
 }
 
-/* line 847, ../../sass/md/md-standard.scss */
+/* line 765, ../../sass/md/md-standard.scss */
 ExpandItem-Button:expanded:hover {
   background-image: url(resource/widget/rap/expanditem/expanditem-collapse-hover.png);
 }
 
 /* Sash default theme */
-/* line 853, ../../sass/md/md-standard.scss */
+/* line 771, ../../sass/md/md-standard.scss */
 Sash {
   border: none;
   background-image: none;
   background-color: transparent;
 }
 
-/* line 859, ../../sass/md/md-standard.scss */
+/* line 777, ../../sass/md/md-standard.scss */
 Sash[BORDER] {
   border: 1px solid #bdbdbd;
 }
 
-/* line 863, ../../sass/md/md-standard.scss */
+/* line 781, ../../sass/md/md-standard.scss */
 Sash:hover {
   background-color: #e5e5e5;
 }
 
-/* line 867, ../../sass/md/md-standard.scss */
+/* line 785, ../../sass/md/md-standard.scss */
 Sash-Handle:horizontal {
   background-image: url(resource/widget/rap/sash/sash-handle-horizontal.png);
 }
 
-/* line 871, ../../sass/md/md-standard.scss */
+/* line 789, ../../sass/md/md-standard.scss */
 Sash-Handle:vertical {
   background-image: url(resource/widget/rap/sash/sash-handle-vertical.png);
 }
 
 /* Slider default theme */
-/* line 877, ../../sass/md/md-standard.scss */
+/* line 795, ../../sass/md/md-standard.scss */
 Slider {
   border: none;
   background-color: #f0f0f0;
@@ -911,7 +845,7 @@ Slider {
 }
 
 /* Thumb */
-/* line 885, ../../sass/md/md-standard.scss */
+/* line 803, ../../sass/md/md-standard.scss */
 Slider-Thumb[HORIZONTAL],
 Slider-Thumb[VERTICAL] {
   background-color: #e4e4e4;
@@ -921,7 +855,7 @@ Slider-Thumb[VERTICAL] {
 }
 
 /* Buttons */
-/* line 895, ../../sass/md/md-standard.scss */
+/* line 813, ../../sass/md/md-standard.scss */
 Slider-UpButton,
 Slider-DownButton {
   background-color: #e4e4e4;
@@ -930,74 +864,74 @@ Slider-DownButton {
   padding: 0;
 }
 
-/* line 903, ../../sass/md/md-standard.scss */
+/* line 821, ../../sass/md/md-standard.scss */
 Slider-UpButton[HORIZONTAL],
 Slider-DownButton[HORIZONTAL] {
   background-image: none;
 }
 
-/* line 908, ../../sass/md/md-standard.scss */
+/* line 826, ../../sass/md/md-standard.scss */
 Slider-UpButton[VERTICAL],
 Slider-DownButton[VERTICAL] {
   background-image: none;
 }
 
-/* line 913, ../../sass/md/md-standard.scss */
+/* line 831, ../../sass/md/md-standard.scss */
 Slider-UpButton[HORIZONTAL]:pressed,
 Slider-DownButton[HORIZONTAL]:pressed {
   background-image: none;
 }
 
-/* line 918, ../../sass/md/md-standard.scss */
+/* line 836, ../../sass/md/md-standard.scss */
 Slider-UpButton[VERTICAL]:pressed,
 Slider-DownButton[VERTICAL]:pressed {
   background-image: none;
 }
 
 /* Rounded Borders */
-/* line 925, ../../sass/md/md-standard.scss */
+/* line 843, ../../sass/md/md-standard.scss */
 Slider-UpButton[HORIZONTAL] {
   border-radius: 0px 2px 2px 0px;
 }
 
-/* line 929, ../../sass/md/md-standard.scss */
+/* line 847, ../../sass/md/md-standard.scss */
 Slider-UpButton[VERTICAL] {
   border-radius: 0px 0px 2px 2px;
 }
 
-/* line 933, ../../sass/md/md-standard.scss */
+/* line 851, ../../sass/md/md-standard.scss */
 Slider-DownButton[HORIZONTAL] {
   border-radius: 2px 0px 0px 2px;
 }
 
-/* line 937, ../../sass/md/md-standard.scss */
+/* line 855, ../../sass/md/md-standard.scss */
 Slider-DownButton[VERTICAL] {
   border-radius: 2px 2px 0px 0px;
 }
 
 /* Button Icons */
-/* line 943, ../../sass/md/md-standard.scss */
+/* line 861, ../../sass/md/md-standard.scss */
 Slider-UpButton-Icon[HORIZONTAL] {
   background-image: url(resource/widget/rap/slider/right.png);
 }
 
-/* line 947, ../../sass/md/md-standard.scss */
+/* line 865, ../../sass/md/md-standard.scss */
 Slider-UpButton-Icon[VERTICAL] {
   background-image: url(resource/widget/rap/slider/down.png);
 }
 
-/* line 951, ../../sass/md/md-standard.scss */
+/* line 869, ../../sass/md/md-standard.scss */
 Slider-DownButton-Icon[HORIZONTAL] {
   background-image: url(resource/widget/rap/slider/left.png);
 }
 
-/* line 955, ../../sass/md/md-standard.scss */
+/* line 873, ../../sass/md/md-standard.scss */
 Slider-DownButton-Icon[VERTICAL] {
   background-image: url(resource/widget/rap/slider/up.png);
 }
 
 /* CCombo default theme */
-/* line 961, ../../sass/md/md-standard.scss */
+/* line 879, ../../sass/md/md-standard.scss */
 CCombo {
   color: #4a4a4a;
   background-color: #ffffff;
@@ -1008,26 +942,26 @@ CCombo {
   box-shadow: none;
 }
 
-/* line 971, ../../sass/md/md-standard.scss */
+/* line 889, ../../sass/md/md-standard.scss */
 CCombo[BORDER] {
   border: 1px solid #aaaaaa;
   border-radius: 0 2px 2px 0;
   box-shadow: inset 0 0 3px #bdbdbd;
 }
 
-/* line 977, ../../sass/md/md-standard.scss */
+/* line 895, ../../sass/md/md-standard.scss */
 CCombo[BORDER]:focused {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
 }
 
-/* line 982, ../../sass/md/md-standard.scss */
+/* line 900, ../../sass/md/md-standard.scss */
 CCombo:disabled,
 CCombo[BORDER]:disabled {
   box-shadow: none;
 }
 
-/* line 987, ../../sass/md/md-standard.scss */
+/* line 905, ../../sass/md/md-standard.scss */
 CCombo-Button {
   cursor: default;
   background-color: #efefef;
@@ -1038,30 +972,30 @@ CCombo-Button {
   width: 30px;
 }
 
-/* line 1001, ../../sass/md/md-standard.scss */
+/* line 919, ../../sass/md/md-standard.scss */
 CCombo-Button:disabled {
   background-image: none;
   background-color: transparent;
 }
 
-/* line 1006, ../../sass/md/md-standard.scss */
+/* line 924, ../../sass/md/md-standard.scss */
 CCombo-Button-Icon {
   background-image: url(resource/widget/rap/ccombo/down.png);
 }
 
-/* line 1010, ../../sass/md/md-standard.scss */
+/* line 928, ../../sass/md/md-standard.scss */
 CCombo-Button-Icon:hover {
   background-image: url(resource/widget/rap/ccombo/down-hover.png);
 }
 
-/* line 1014, ../../sass/md/md-standard.scss */
+/* line 932, ../../sass/md/md-standard.scss */
 CCombo-List {
   border: 1px solid #4f7cb1;
   box-shadow: 0 0 5px #4f7cb1;
   border-radius: 2px;
 }
 
-/* line 1020, ../../sass/md/md-standard.scss */
+/* line 938, ../../sass/md/md-standard.scss */
 CCombo-List-Item {
   color: inherit;
   background-color: transparent;
@@ -1071,26 +1005,26 @@ CCombo-List-Item {
   padding: 6px 10px 6px 10px;
 }
 
-/* line 1029, ../../sass/md/md-standard.scss */
+/* line 947, ../../sass/md/md-standard.scss */
 CCombo-List-Item:hover {
   color: #4a4a4a;
   background-color: #b5b5b5;
   background-image: gradient(linear, left top, left bottom, from(#ebebeb), to(#d5d5d5));
 }
 
-/* line 1039, ../../sass/md/md-standard.scss */
+/* line 957, ../../sass/md/md-standard.scss */
 CCombo-List-Item:selected {
   color: #ffffff;
   background-color: #5882b5;
   background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
 }
 
-/* line 1049, ../../sass/md/md-standard.scss */
+/* line 967, ../../sass/md/md-standard.scss */
 CCombo-Field {
   padding: 5px 10px 5px 10px;
 }
 
-/* line 1053, ../../sass/md/md-standard.scss */
+/* line 971, ../../sass/md/md-standard.scss */
 CCombo-FocusIndicator {
   background-color: transparent;
   border: none;
@@ -1099,7 +1033,7 @@ CCombo-FocusIndicator {
 }
 
 /* CLabel default theme */
-/* line 1062, ../../sass/md/md-standard.scss */
+/* line 980, ../../sass/md/md-standard.scss */
 CLabel {
   color: #4a4a4a;
   background-color: #ffffff;
@@ -1114,25 +1048,25 @@ CLabel {
   text-shadow: none;
 }
 
-/* line 1076, ../../sass/md/md-standard.scss */
+/* line 994, ../../sass/md/md-standard.scss */
 CLabel[BORDER] {
   border: 1px solid #bdbdbd;
   border-radius: 2px;
 }
 
 /* Browser default theme */
-/* line 1083, ../../sass/md/md-standard.scss */
+/* line 1001, ../../sass/md/md-standard.scss */
 Browser {
   border: none;
 }
 
-/* line 1087, ../../sass/md/md-standard.scss */
+/* line 1005, ../../sass/md/md-standard.scss */
 Browser[BORDER] {
   border: 1px solid #a4a4a4;
 }
 
 /* JFace specific theming */
-/* line 1094, ../../sass/md/md-standard.scss */
+/* line 1012, ../../sass/md/md-standard.scss */
 Shell.jface_contentProposalPopup, Shell.jface_infoPopupDialog {
   border: 1px solid #bdbdbd;
   padding: 0;
@@ -2061,9 +1995,9 @@ Table[BORDER] {
   padding: 3px 3px;
 }
 
-/* line 24, ../../sass/md/_table.scss */
+/* line 25, ../../sass/md/_table.scss */
 TableColumn {
-  background-color: #f1f4f6;
+  background-color: #e5e5e3;
   padding: 4px 10px 4px 10px;
   background-image: none;
   border-bottom: 1px solid #cacfd2;
@@ -2072,7 +2006,7 @@ TableColumn {
 
 /* line 32, ../../sass/md/_table.scss */
 TableColumn:hover {
-  background-color: #e1e4e6;
+  background-color: #ccccc9;
   animation: hoverOut 400ms ease-out;
 }
 
@@ -2084,79 +2018,78 @@ TableItem:linesvisible:even:rowtemplate {
   text-decoration: none;
   text-shadow: none;
   background-image: none;
-  border-bottom: 1px solid #edf1f3;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-/* line 47, ../../sass/md/_table.scss */
+/* line 46, ../../sass/md/_table.scss */
 TableItem:linesvisible:even {
-  /*background-color: #f0f0f0;*/
+  /*background-color: #f5f5f3;*/
 }
 
-/* line 51, ../../sass/md/_table.scss */
+/* line 50, ../../sass/md/_table.scss */
 Table-RowOverlay {
   background-color: transparent;
   color: inherit;
   background-image: none;
 }
 
-/* line 56, ../../sass/md/_table.scss */
+/* line 55, ../../sass/md/_table.scss */
 Table-RowOverlay:hover,
 Table-RowOverlay:linesvisible:even:hover {
-  color: #0f1c23;
-  background-color: #f1f4f6;
-  text-shadow: 0 1px 0 #ffffff;
+  color: #171717;
+  background-color: #e4effa;
 }
 
-/* line 62, ../../sass/md/_table.scss */
+/* line 60, ../../sass/md/_table.scss */
 Table-RowOverlay:selected,
 Table-RowOverlay:selected:unfocused {
-  color: #0f1c23;
-  background-color: #e5e9ec;
+  color: #4a4a4a;
+  background-color: #FFFEDB;
 }
 
-/* line 67, ../../sass/md/_table.scss */
+/* line 65, ../../sass/md/_table.scss */
 Table-RowOverlay:linesvisible:even:selected,
 Table-RowOverlay:linesvisible:even:selected:unfocused {
-  color: #0f1c23;
-  background-color: #e5e9ec;
+  color: #4a4a4a;
+  background-color: #FFFEDB;
 }
 
-/* line 73, ../../sass/md/_table.scss */
+/* line 71, ../../sass/md/_table.scss */
 TableColumn-SortIndicator {
   background-image: none;
 }
 
-/* line 76, ../../sass/md/_table.scss */
+/* line 74, ../../sass/md/_table.scss */
 TableColumn-SortIndicator:up {
   background-image: url(resource/widget/rap/column/sort-indicator-up.png);
 }
 
-/* line 80, ../../sass/md/_table.scss */
+/* line 78, ../../sass/md/_table.scss */
 TableColumn-SortIndicator:down {
   background-image: url(resource/widget/rap/column/sort-indicator-down.png);
 }
 
-/* line 84, ../../sass/md/_table.scss */
+/* line 82, ../../sass/md/_table.scss */
 Table-Cell {
   spacing: 3px;
   padding: 4px 10px 4px 10px;
 }
 
-/* line 89, ../../sass/md/_table.scss */
+/* line 87, ../../sass/md/_table.scss */
 Table-GridLine,
 Table-GridLine:vertical,
 Table-GridLine:vertical:rowtemplate {
   color: transparent;
 }
 
-/* line 95, ../../sass/md/_table.scss */
+/* line 93, ../../sass/md/_table.scss */
 Table-GridLine:header,
 Table-GridLine:horizontal,
 Table-GridLine:horizontal:rowtemplate {
   color: #edf1f3;
 }
 
-/* line 101, ../../sass/md/_table.scss */
+/* line 99, ../../sass/md/_table.scss */
 Table-Checkbox {
   /*
   For backward compatibility we have to keep the width property.
@@ -2167,27 +2100,27 @@ Table-Checkbox {
   background-image: url(resource/widget/rap/button/check-unselected.png);
 }
 
-/* line 111, ../../sass/md/_table.scss */
+/* line 109, ../../sass/md/_table.scss */
 Table-Checkbox:hover {
   background-image: url(resource/widget/rap/button/check-unselected-hover.png);
 }
 
-/* line 115, ../../sass/md/_table.scss */
+/* line 113, ../../sass/md/_table.scss */
 Table-Checkbox:checked {
   background-image: url(resource/widget/rap/button/check-selected.png);
 }
 
-/* line 119, ../../sass/md/_table.scss */
+/* line 117, ../../sass/md/_table.scss */
 Table-Checkbox:checked:hover {
   background-image: url(resource/widget/rap/button/check-selected-hover.png);
 }
 
-/* line 123, ../../sass/md/_table.scss */
+/* line 121, ../../sass/md/_table.scss */
 Table-Checkbox:checked:grayed {
   background-image: url(resource/widget/rap/button/check-grayed.png);
 }
 
-/* line 127, ../../sass/md/_table.scss */
+/* line 125, ../../sass/md/_table.scss */
 Table-Checkbox:checked:grayed:hover {
   background-image: url(resource/widget/rap/button/check-grayed-hover.png);
 }
@@ -2514,11 +2447,10 @@ FileUpload-FocusIndicator {
 
 /** MdToolbar2 */
 /* line 9, ../../sass/md/_toolbar2.scss */
-Composite.toolbar2 {
+Composite.toolbar2, Composite.toolbar2-top, Composite.toolbar2-bottom {
   color: #4a4a4a;
   background-color: #f3f3f3;
   /*#64686F;  /*$header-bg;*/
-  box-shadow: 0px -1px 3px #b0b0b0;
   border-radius: 2px;
   padding: 0px;
   spacing: 0;
@@ -2527,34 +2459,49 @@ Composite.toolbar2 {
   opacity: 1;
 }
 
-/* line 21, ../../sass/md/_toolbar2.scss */
+/* line 19, ../../sass/md/_toolbar2.scss */
+Composite.toolbar2-top {
+  box-shadow: 0px -1px 3px #b0b0b0;
+}
+
+/* line 23, ../../sass/md/_toolbar2.scss */
+Composite.toolbar2-bottom {
+  box-shadow: 0px 1px 3px #b0b0b0;
+}
+
+/* line 28, ../../sass/md/_toolbar2.scss */
 Button[PUSH].toolbar2-item,
 Button[TOGGLE].toolbar2-item {
   color: inherit;
   background-color: inherit;
-  box-shadow: none;
-  border-radius: 2px;
   background-image: none;
+  box-shadow: none;
+  border-radius: 3px;
   border: none;
 }
 
-/* line 31, ../../sass/md/_toolbar2.scss */
+/* line 37, ../../sass/md/_toolbar2.scss */
 Button[PUSH].toolbar2-item:hover,
 Button[TOGGLE].toolbar2-item:hover,
-Button[TOGGLE].toolbar2-item:selected:hover {
-  color: #ffffff;
-  background-color: #84b8ea;
+Button[TOGGLE].toolbar2-item:hover:selected {
+  border: 1px solid #599FE2;
+  background-color: inherit;
+  background-image: none;
+  animation: hoverIn 400ms ease-in;
 }
 
-/* line 38, ../../sass/md/_toolbar2.scss */
-Button[PUSH].toolbar2-item:pressed {
-  background-color: #599FE2;
+/* line 45, ../../sass/md/_toolbar2.scss */
+Button[PUSH].toolbar2-item:pressed,
+Button[TOGGLE].toolbar2-item:pressed,
+Button[TOGGLE].toolbar2-item:pressed:selected {
+  border: 2px solid #599fe2;
 }
 
-/* line 42, ../../sass/md/_toolbar2.scss */
+/* line 50, ../../sass/md/_toolbar2.scss */
 Button[TOGGLE].toolbar2-item:selected {
-  color: #4a4a4a;
-  background-color: #dadada;
+  border-radius: 3px;
+  border: 1px solid #d0d0d0;
+  background-color: #e5e5e3;
 }
 
 /* Combo default theme */
@@ -2770,4 +2717,65 @@ ToolTip-Text {
 ToolTip-Message {
   color: #4a4a4a;
   text-shadow: none;
+}
+
+/* List default theme */
+/* line 3, ../../sass/md/_list.scss */
+List {
+  background-color: #ffffff;
+  border: none;
+  color: #4a4a4a;
+}
+
+/* line 10, ../../sass/md/_list.scss */
+List[BORDER] {
+  border: 1px solid #bdbdbd;
+}
+
+/* line 14, ../../sass/md/_list.scss */
+List-Item {
+  padding: 5px 10px 5px 10px;
+  background-color: #ffffff;
+  color: inherit;
+  background-image: none;
+  text-shadow: none;
+}
+
+/* line 22, ../../sass/md/_list.scss */
+List-Item:hover,
+List-Item:even:hover {
+  color: #171717;
+  background-color: #e4effa;
+}
+
+/* line 28, ../../sass/md/_list.scss */
+List-Item:selected {
+  color: #ffffff;
+  /* background-color property is used on the server to compute system color with id
+     SWT.COLOR_LIST_SELECTION (see bug https://bugs.eclipse.org/bugs/show_bug.cgi?id=434191) */
+  background-color: #00589f;
+  background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
+}
+
+/* line 40, ../../sass/md/_list.scss */
+List-Item:selected:unfocused {
+  color: #ffffff;
+  background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
+}
+
+/* line 49, ../../sass/md/_list.scss */
+List-Item:even {
+  background-color: #f5f5f3;
+}
+
+/* line 53, ../../sass/md/_list.scss */
+List-Item:even:selected {
+  color: #ffffff;
+  background-image: gradient(linear, left top, left bottom, from(#5882b5), to(#416693));
+}
+
+/* line 62, ../../sass/md/_list.scss */
+List-Item:even:selected:unfocused {
+  color: #ffffff;
+  background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
 }

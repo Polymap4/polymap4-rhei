@@ -9,7 +9,6 @@
 Composite.toolbar2 {
   color: $text-color;
   background-color: #f3f3f3; /*#64686F;  /*$header-bg;*/
-  box-shadow: 0px -1px 3px $shadow;
   border-radius: 2px;
   padding: 0px;
   spacing: 0;
@@ -17,29 +16,39 @@ Composite.toolbar2 {
   border: none;
   opacity: 1;
 }
+Composite.toolbar2-top {
+  @extend Composite.toolbar2;
+  box-shadow: 0px -1px 3px $shadow;
+}
+Composite.toolbar2-bottom {
+  @extend Composite.toolbar2;
+  box-shadow: 0px 1px 3px $shadow;
+}
 
 Button[PUSH].toolbar2-item,
 Button[TOGGLE].toolbar2-item {
   color: inherit;
   background-color: inherit;
-  box-shadow: none;
-  border-radius: 2px;
   background-image: none;
+  box-shadow: none;
+  border-radius: 3px;
   border: none;
 }
-
 Button[PUSH].toolbar2-item:hover,
 Button[TOGGLE].toolbar2-item:hover,
-Button[TOGGLE].toolbar2-item:selected:hover {
-  color: $action-fg;
-  background-color: lighten( $action-bg, 10% );
+Button[TOGGLE].toolbar2-item:hover:selected {
+  border: 1px solid $action-bg;
+  background-color: inherit;
+  background-image: none;
+  animation: hoverIn 400ms ease-in;
 }
-
-Button[PUSH].toolbar2-item:pressed {
-  background-color: $action-bg;
+Button[PUSH].toolbar2-item:pressed,
+Button[TOGGLE].toolbar2-item:pressed,
+Button[TOGGLE].toolbar2-item:pressed:selected {
+  border: 2px solid darken( $action-bg, 0% );
 }
-
 Button[TOGGLE].toolbar2-item:selected {
-  color: $text-color;
-  background-color: darken( #f3f3f3, 10% );
+  border-radius: 3px;
+  border: 1px solid $separator2;
+  background-color: #e5e5e3;
 }

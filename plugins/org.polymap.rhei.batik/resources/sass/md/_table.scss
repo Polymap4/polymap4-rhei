@@ -21,16 +21,16 @@ Table[BORDER] {
   padding: 3px 3px;
 }
 
+$column-bg: #e5e5e3;
 TableColumn {
-  background-color: #f1f4f6;
+  background-color: $column-bg;
   padding: 4px 10px 4px 10px;
   background-image: none;
   border-bottom: 1px solid #cacfd2;
   text-shadow: 0 1px 0 #ffffff;
 }
-
 TableColumn:hover {
-  background-color: #e1e4e6;
+  background-color: darken( $column-bg, 10% );
   animation: hoverOut 400ms ease-out;
 }
 
@@ -41,11 +41,10 @@ TableItem:linesvisible:even:rowtemplate {
   text-decoration: none;
   text-shadow: none;
   background-image: none;
-  border-bottom: 1px solid #edf1f3;
+  border-bottom: 1px solid $separator1;
 }
-
 TableItem:linesvisible:even {
-  /*background-color: #f0f0f0;*/
+  /*background-color: #f5f5f3;*/
 }
 
 Table-RowOverlay {
@@ -55,19 +54,18 @@ Table-RowOverlay {
 }
 Table-RowOverlay:hover,
 Table-RowOverlay:linesvisible:even:hover {
-  color: #0f1c23;
-  background-color: #f1f4f6;
-  text-shadow: 0 1px 0 #ffffff;
+  color: darken( $text-color, 20% );
+  background-color: lighten( $action-bg, 32% );
 }
 Table-RowOverlay:selected,
 Table-RowOverlay:selected:unfocused {
-  color: #0f1c23;
-  background-color: #e5e9ec;
+  color: $selection-fg;
+  background-color: $selection-bg;
 }
 Table-RowOverlay:linesvisible:even:selected,
 Table-RowOverlay:linesvisible:even:selected:unfocused {
-  color: #0f1c23;
-  background-color: #e5e9ec;
+  color: $selection-fg;
+  background-color: $selection-bg;
 }
 
 TableColumn-SortIndicator {
