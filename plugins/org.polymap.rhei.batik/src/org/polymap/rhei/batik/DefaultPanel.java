@@ -43,6 +43,8 @@ public abstract class DefaultPanel
     
     private IAppContext         context;
 
+    private boolean             disposed;
+
 
     @Override
     public void setSite( PanelSite site, IAppContext context ) {
@@ -118,9 +120,16 @@ public abstract class DefaultPanel
 
     @Override
     public void dispose() {
+        disposed = true;
     }
 
     
+    @Override
+    public boolean isDisposed() {
+        return disposed;
+    }
+
+
     @Override
     public PanelSite site() {
         return site;

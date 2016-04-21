@@ -57,7 +57,7 @@ public interface IAppContext {
      * @return {@link Optional#empty()} if a currently open panel vetoed close, the
      *         newly opened panel otherwise.
      */
-    public Optional<IPanel> openPanel( PanelPath parentPath, PanelIdentifier panelId );
+    public <P extends IPanel> Optional<P> openPanel( PanelPath parentPath, PanelIdentifier panelId );
 
     /**
      * Closes the panel with the given path. This panel must be the current top/active

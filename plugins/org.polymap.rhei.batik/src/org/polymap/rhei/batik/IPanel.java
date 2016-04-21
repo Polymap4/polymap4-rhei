@@ -105,6 +105,8 @@ public interface IPanel {
     public boolean beforeDispose();
     
     public void dispose();
+    
+    public boolean isDisposed();
 
     public PanelIdentifier id();
     

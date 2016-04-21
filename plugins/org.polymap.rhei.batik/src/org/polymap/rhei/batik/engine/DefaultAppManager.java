@@ -219,12 +219,12 @@ public class DefaultAppManager
     /**
      * Provides the default logic for opening a panel.
      */
-    protected Optional<IPanel> openPanel( PanelPath parentPath, PanelIdentifier panelId ) {
+    protected <P extends IPanel> Optional<P> openPanel( PanelPath parentPath, PanelIdentifier panelId ) {
         if (!disposePanels( parentPath )) {
             return Optional.empty();
         }
         else {
-            IPanel panel = createPanel( parentPath, panelId );
+            P panel = (P)createPanel( parentPath, panelId );
             raisePanelStatus( panel, PanelStatus.FOCUSED );
             top = panel.site().path();
             return Optional.of( panel );
@@ -362,7 +362,7 @@ public class DefaultAppManager
         }
 
         @Override
-        public Optional<IPanel> openPanel( final PanelPath panelPath, final PanelIdentifier panelId ) {
+        public <P extends IPanel> Optional<P> openPanel( final PanelPath panelPath, final PanelIdentifier panelId ) {
             return DefaultAppManager.this.openPanel( panelPath, panelId );
         }
 
