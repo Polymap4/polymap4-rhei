@@ -63,7 +63,7 @@ public class MdToolbar2
     private static final String     CSS_TOOLBAR_TOP = "toolbar2-top";
     
     /** Pseudo class of the toolbar Composite: top shadow */
-    private static final String     CSS_TOOLBAR_BOTTOM = "toolbar2-top";
+    private static final String     CSS_TOOLBAR_BOTTOM = "toolbar2-bottom";
 
     private static final String     CSS_TOOLBAR_GROUP = "toolbar2-group";
     

@@ -18,11 +18,11 @@ Composite.toolbar2 {
 }
 Composite.toolbar2-top {
   @extend Composite.toolbar2;
-  box-shadow: 0px -1px 3px $shadow;
+  box-shadow: 0px 1px 4px $shadow;
 }
 Composite.toolbar2-bottom {
   @extend Composite.toolbar2;
-  box-shadow: 0px 1px 3px $shadow;
+  box-shadow: 0px -1px 4px $shadow;
 }
 
 Button[PUSH].toolbar2-item,
