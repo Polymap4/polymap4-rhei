@@ -146,13 +146,19 @@ public class SimpleDialog
 
     /**
      * Adds a 'OK' action to the button bar that just closes the dialog.
+     * 
+     * @param task The task to perform when 'OK' is pressed. The dialog is closed
+     *        afterwards if the task returns {@link Boolean#TRUE} or
+     *        <code>null</code>. Otherwise it stays open.
      */
-    public SimpleDialog addOkAction( Callable task ) {
+    public SimpleDialog addOkAction( Callable<Boolean> task ) {
         return addAction( new Action( "OK" ) {
             public void run() {
                 try {
-                    task.call();
-                    SimpleDialog.this.close( );
+                    Boolean result = task.call();
+                    if (result == null || result.booleanValue()) {
+                        SimpleDialog.this.close();
+                    }
                 }
                 catch (Exception e) {
                     StatusDispatcher.handleError( "Unable to perform task.", e );
