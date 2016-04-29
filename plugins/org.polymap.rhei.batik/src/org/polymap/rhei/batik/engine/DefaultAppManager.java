@@ -449,7 +449,12 @@ public class DefaultAppManager
             if (result == null) {
                 result = memento.createChild( key );
             }
-            return new Memento( result );
+            return new Memento( result ) {
+                @Override
+                public void save() {
+                    saveMemento();
+                }
+            };
         }
 
         @Override

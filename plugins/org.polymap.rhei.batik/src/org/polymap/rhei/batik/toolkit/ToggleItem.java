@@ -33,6 +33,7 @@ public class ToggleItem
     /**
      * Not yet implemented.
      */
+    @Mandatory
     @Concern( ItemEvent.Fire.class )
     public Config2<ToggleItem,Boolean>                  selected;
 

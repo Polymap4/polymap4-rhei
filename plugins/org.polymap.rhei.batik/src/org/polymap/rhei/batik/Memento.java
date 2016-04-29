@@ -26,7 +26,7 @@ import org.eclipse.ui.IMemento;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class Memento
+public abstract class Memento
         implements IMemento {
 
     private static Log log = LogFactory.getLog( Memento.class );
@@ -36,7 +36,13 @@ public class Memento
     public Memento( IMemento delegate ) {
         this.delegate = delegate;
     }
-
+    
+    /**
+     * Memento is saved automatically when {@link IPanel} is closed. Call this method
+     * to save immediatelly.
+     */
+    public abstract void save();
+    
     public Optional<Boolean> optBoolean( String key ) {
         return Optional.ofNullable( getBoolean( key ) );    
     }
@@ -56,15 +62,33 @@ public class Memento
     // delegate *******************************************
     
     public Memento createChild( String type ) {
-        return new Memento( delegate.createChild( type ) );
+        Memento parent = this;
+        return new Memento( delegate.createChild( type ) ) {
+            @Override
+            public void save() {
+                parent.save();
+            }
+        };
     }
 
     public Memento createChild( String type, String id ) {
-        return new Memento( delegate.createChild( type, id ) );
+        Memento parent = this;
+        return new Memento( delegate.createChild( type, id ) ) {
+            @Override
+            public void save() {
+                parent.save();
+            }
+        };
     }
 
     public Memento getChild( String type ) {
-        return new Memento( delegate.getChild( type ) );
+        Memento parent = this;
+        return new Memento( delegate.getChild( type ) ) {
+            @Override
+            public void save() {
+                parent.save();
+            }
+        };
     }
 
     public IMemento[] getChildren( String type ) {

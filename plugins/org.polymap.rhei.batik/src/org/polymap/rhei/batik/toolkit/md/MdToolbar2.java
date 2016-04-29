@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -17,10 +17,12 @@ package org.polymap.rhei.batik.toolkit.md;
 import static org.polymap.core.runtime.event.TypeEventFilter.ifType;
 import static org.polymap.core.ui.UIUtils.setVariant;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,13 +40,13 @@ import org.eclipse.jface.layout.RowLayoutFactory;
 
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
+
 import org.polymap.rhei.batik.toolkit.ActionItem;
 import org.polymap.rhei.batik.toolkit.GroupItem;
 import org.polymap.rhei.batik.toolkit.Item;
 import org.polymap.rhei.batik.toolkit.ItemContainer;
-import org.polymap.rhei.batik.toolkit.RadioItem;
-import org.polymap.rhei.batik.toolkit.ToggleItem;
 import org.polymap.rhei.batik.toolkit.ItemEvent;
+import org.polymap.rhei.batik.toolkit.RadioItem;
 
 /**
  * The next generation toolbar :) 
@@ -84,18 +86,15 @@ public class MdToolbar2
 
     private MdToolkit               tk;
     
-    private GroupItem               rootGroup = new GroupItem( null, "root" );
+    private GroupItem               rootGroup;
     
-    private Map<GroupItem,Button>   selectedRadios = new HashMap();
+    private GroupItemHandler        rootGroupHandler;
     
+    private Map<Item,ItemHandler>   handlers = new HashMap();
+
 
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
         this.tk = tk;
-        
-        if ((style & SWT.RIGHT) > 0) {
-            log.warn( "Aligment is not supported yet." );
-            rootGroup.align.set( Alignment.Right );
-        }
         
         String css = CSS_TOOLBAR;
         if ((style & SWT.TOP) > 0) {
@@ -109,9 +108,20 @@ public class MdToolbar2
         }
         bar = setVariant( tk.createComposite( parent, style ), css );
         bar.setLayout( new FillLayout() );
+
+        // rootGroup/Handler
+        rootGroup = new GroupItem( null, "root" );
+        if ((style & SWT.RIGHT) > 0) {
+            log.warn( "Aligment is not supported yet." );
+            rootGroup.align.set( Alignment.Right );
+        }
+        rootGroupHandler = new GroupItemHandler( rootGroup );
+        handlers.put( rootGroup, rootGroupHandler );
+        rootGroupHandler.onItemChange( null );
         
-        EventManager.instance().subscribe( this, ifType( ItemEvent.class, 
-                ev2 -> ev2.getSource().container() == MdToolbar2.this ) );
+        // FIXME does not work for hierarchy of GroupItem
+        EventManager.instance().subscribe( this, ifType( ItemEvent.class, ev2 -> 
+                ev2.getSource().container() == MdToolbar2.this ) );
     }
     
     
@@ -122,129 +132,202 @@ public class MdToolbar2
     
     @EventHandler( display=true, delay=100 )
     protected void onItemChange( List<ItemEvent> evs ) {
-        renderGroup( bar, rootGroup );
+        if (bar.isDisposed()) {
+            EventManager.instance().unsubscribe( this );
+            return;
+        }
+    
+        for (ItemEvent ev : evs) {
+            ItemHandler handler = handlers.computeIfAbsent( ev.item(), item -> {
+                if (item instanceof GroupItem) {
+                    return new GroupItemHandler( (GroupItem)item );
+                }
+                else if (item instanceof ActionItem) {
+                    return new ActionItemHandler( (ActionItem)item );
+                }
+                else if (item instanceof RadioItem) {
+                    return new RadioItemHandler( (RadioItem)item );
+                }
+                else {
+                    throw new RuntimeException( "Unhandled item type: " + item );
+                }
+            });
+            handler.onItemChange( ev );
+        }
         bar.layout( true );
     }
-    
 
+
+    /**
+     * 
+     */
+    protected abstract class ItemHandler<I extends Item, C extends Control> {
+        
+        protected I                 item;
+        
+        protected C                 control;
+        
+        public ItemHandler( I item ) {
+            this.item = item;
+        }
+
+        public GroupItemHandler parent() {
+            return item.container() == MdToolbar2.this 
+                    ? rootGroupHandler
+                    : (GroupItemHandler)handlers.get( item.container() );
+        }
+        
+        protected abstract void onItemChange( ItemEvent ev );
+
+    }
+    
+    /**
+     * 
+     */
+    protected class GroupItemHandler
+            extends ItemHandler<GroupItem,Composite> {
+        
+        /** Single {@link RadioItemHandler}, or multiple Toggle. */
+        protected Set<ButtonItemHandler>    selected = new HashSet();
+        
+        public GroupItemHandler( GroupItem item ) {
+            super( item );
+        }
+
+        protected void onItemChange( ItemEvent ev ) {
+            if (control == null) {
+                Composite parent = item.container() != null ? parent().control : bar;
+                control = setVariant( tk.createComposite( parent ), CSS_TOOLBAR_GROUP );
+                control.setLayout( RowLayoutFactory.fillDefaults().spacing( 0 ).create() );
+                control.setData( "_handler_", this );
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    protected abstract class ButtonItemHandler<I extends Item>
+            extends ItemHandler<I,Button> {
+        
+        protected int               btnType = SWT.NONE;
+
+        public ButtonItemHandler( I item ) {
+            super( item );
+        }
+
+        protected void onItemChange( ItemEvent ev ) {
+            if (control == null) {
+                control = setVariant( tk.createButton( parent().control, null, btnType ), CSS_TOOLBAR_ITEM );
+                control.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
+                control.setData( "_handler_", this );
+            }
+            item.text.ifPresent( v -> control.setText( v ) );
+            item.tooltip.ifPresent( v -> control.setToolTipText( v ) );
+            item.icon.ifPresent( v -> control.setImage( v ) );
+        }
+    }
+    
+    /**
+     * 
+     */
+    protected class ActionItemHandler
+            extends ButtonItemHandler<ActionItem> {
+
+        public ActionItemHandler( ActionItem item ) {
+            super( item );
+            btnType = SWT.PUSH;
+        }
+
+        @Override
+        protected void onItemChange( ItemEvent ev ) {
+            // update UI
+            boolean initialized = control != null;
+            super.onItemChange( ev );
+            
+            if (!initialized) {
+                control.addSelectionListener( new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected( SelectionEvent sev ) {
+                        item.action.ifPresent( callback -> callback.accept( null ) );
+                    }
+                });
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    protected class RadioItemHandler
+            extends ButtonItemHandler<RadioItem> {
+
+        private AtomicBoolean         skipNextEvent = new AtomicBoolean();
+        
+        public RadioItemHandler( RadioItem item ) {
+            super( item );
+            btnType = SWT.TOGGLE;
+        }
+
+        @Override
+        protected void onItemChange( ItemEvent ev ) {
+            // update UI
+            boolean initialized = control != null;
+            super.onItemChange( ev );
+            control.setSelection( item.selected.get() );
+
+            if (!initialized) {
+                control.addSelectionListener( new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected( SelectionEvent sev ) {
+                        item.selected.set( ((Button)sev.widget).getSelection() );                        
+                    }
+                });
+            }
+            
+            // selection changed
+            if (ev.prop() == item.selected && !skipNextEvent.getAndSet( false )) {
+                
+                // selected
+                if (item.selected.get()) { //((Boolean)ev.newValue()) == true) {
+                    // deselect previous
+                    assert parent().selected.size() <= 1;
+                    parent().selected.stream().findAny().ifPresent( previous -> {
+                        ((RadioItemHandler)handlers.get( previous.item )).skipNextEvent.set( true );
+                        ((RadioItem)previous.item).selected.set( false );
+                        // we cannot wait for the event to do this
+                        ((RadioItem)previous.item).onUnselected.ifPresent( callback -> callback.accept( null ) );
+                        parent().selected.remove( previous );
+                    });
+                    
+                    //
+                    assert parent().selected.isEmpty();
+                    parent().selected.add( RadioItemHandler.this );
+                    //
+                    item.onSelected.ifPresent( callback -> callback.accept( null ) );
+                }
+                
+                // deselected
+                else {
+                    item.onUnselected.ifPresent( callback -> callback.accept( null ) );
+                    if (!parent().selected.remove( RadioItemHandler.this )) {
+                        throw new IllegalStateException( "..." );
+                    }
+                }
+            }
+        }
+    }
+    
+    
     @Override
     public void addItem( Item item ) {
         rootGroup.addItem( item );
     }
 
-
     @Override
     public List<Item> items() {
         return rootGroup.items();
     }
-
-
-    protected void renderGroup( Composite parent, GroupItem group ) {
-        // find Control of the group
-        Composite control = findControl( parent, group );
-        
-        // create if not yet present
-        if (control == null) {
-            control = setVariant( tk.createComposite( parent ), CSS_TOOLBAR_GROUP );
-            control.setLayout( RowLayoutFactory.fillDefaults().spacing( 3 ).create() );
-            control.setData( "_item_", group );
-        }
-        
-        // items
-        for (Item item : group.items()) {
-            renderItem( control, item, group );
-        }
-    }
-    
-    
-    protected void renderItem( Composite parent, Item item, GroupItem group ) {
-        // find Control of the group
-        Button btn = findControl( parent, item );
-        
-        // action
-        if (item instanceof ActionItem) {
-            if (btn == null) {
-                btn = createBtn( item, parent, SWT.PUSH );
-                btn.addSelectionListener( new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected( SelectionEvent ev ) {
-                        ((ActionItem)item).action.get().accept( ev );
-                    }
-                });
-            }
-            updateBtn( item, btn );
-        }
-
-        // toggle
-        else if (item instanceof ToggleItem) {
-            if (btn == null) {
-                btn = createBtn( item, parent, SWT.TOGGLE );
-                btn.addSelectionListener( new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected( SelectionEvent ev ) {
-                        (((Button)ev.widget).getSelection()
-                            ? ((ToggleItem)item).onSelected.get()
-                            : ((ToggleItem)item).onUnselected.get()).accept( ev );                            
-                    }
-                });
-            }
-            updateBtn( item, btn );
-        }
-
-        // radio
-        else if (item instanceof RadioItem) {
-            if (btn == null) {
-                btn = createBtn( item, parent, SWT.TOGGLE );
-                btn.addSelectionListener( new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected( SelectionEvent ev ) {
-                        Button _btn = (Button)ev.widget;
-                        Button currentSelection = selectedRadios.remove( group );
-                        // selected
-                        if (_btn.getSelection()) {
-                            if (currentSelection != null) {
-                                currentSelection.setSelection( false );
-                            }
-                            selectedRadios.put( group, _btn );
-                        }
-                        // action
-                        (_btn.getSelection()
-                                ? ((RadioItem)item).onSelected.get()
-                                : ((RadioItem)item).onUnselected.get()).accept( ev );                            
-                    }
-                });
-            }
-            updateBtn( item, btn );
-        }
-
-        // unknown
-        else {
-            throw new RuntimeException( "Unhandled ToolItem type: " + item );
-        }
-    }
-
-
-    protected Button createBtn( Item item, Composite parent, int style ) {
-        Button btn = setVariant( tk.createButton( parent, null, style ), CSS_TOOLBAR_ITEM );
-        btn.setData( "_item_", item );
-        btn.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
-        return btn;
-    }
-    
-    
-    protected void updateBtn( Item item, Button btn ) {
-        btn.setText( item.text.get() );
-        btn.setToolTipText( ((Item)item).tooltip.get() );
-        btn.setImage( ((Item)item).icon.get() );
-    }
-
-
-    protected <C extends Control> C findControl( Composite parent, Item item ) {
-        return (C)Arrays.stream( parent.getChildren() )
-                .filter( c -> c.getData( "_item_" ) == item )
-                .findAny().orElse( null );
-    }
-
 
     public Control getControl() {
         return bar;

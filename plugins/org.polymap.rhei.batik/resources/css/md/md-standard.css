@@ -1651,7 +1651,7 @@ Tree-RowOverlay:hover {
 Tree-RowOverlay:selected:unfocused,
 Tree-RowOverlay:selected {
   color: #4a4a4a;
-  background-color: #FFFEDB;
+  background-color: #FFFCCC;
   /*background-image: gradient(
     linear, left top, left bottom,
     from( #5882b5 ),
@@ -1942,7 +1942,7 @@ Text[MULTI][BORDER] {
 Text[BORDER]:focused,
 Text[MULTI][BORDER]:focused {
   border: 1px solid #599FE2;
-  background-color: #FFFEDB;
+  background-color: #FFFCCC;
   box-shadow: none;
 }
 
@@ -2044,14 +2044,14 @@ Table-RowOverlay:linesvisible:even:hover {
 Table-RowOverlay:selected,
 Table-RowOverlay:selected:unfocused {
   color: #4a4a4a;
-  background-color: #FFFEDB;
+  background-color: #FFFCCC;
 }
 
 /* line 65, ../../sass/md/_table.scss */
 Table-RowOverlay:linesvisible:even:selected,
 Table-RowOverlay:linesvisible:even:selected:unfocused {
   color: #4a4a4a;
-  background-color: #FFFEDB;
+  background-color: #FFFCCC;
 }
 
 /* line 71, ../../sass/md/_table.scss */
@@ -2478,9 +2478,10 @@ Button[TOGGLE].toolbar2-item {
   box-shadow: none;
   border-radius: 3px;
   border: none;
+  padding: 5px 10px;
 }
 
-/* line 37, ../../sass/md/_toolbar2.scss */
+/* line 38, ../../sass/md/_toolbar2.scss */
 Button[PUSH].toolbar2-item:hover,
 Button[TOGGLE].toolbar2-item:hover,
 Button[TOGGLE].toolbar2-item:hover:selected {
@@ -2490,14 +2491,14 @@ Button[TOGGLE].toolbar2-item:hover:selected {
   animation: hoverIn 400ms ease-in;
 }
 
-/* line 45, ../../sass/md/_toolbar2.scss */
+/* line 46, ../../sass/md/_toolbar2.scss */
 Button[PUSH].toolbar2-item:pressed,
 Button[TOGGLE].toolbar2-item:pressed,
 Button[TOGGLE].toolbar2-item:pressed:selected {
   border: 2px solid #599fe2;
 }
 
-/* line 50, ../../sass/md/_toolbar2.scss */
+/* line 51, ../../sass/md/_toolbar2.scss */
 Button[TOGGLE].toolbar2-item:selected {
   border-radius: 3px;
   border: 1px solid #d0d0d0;
@@ -2520,7 +2521,7 @@ Combo[BORDER] {
 Combo:focused,
 Combo[BORDER]:focused {
   border: 1px solid #599FE2;
-  background-color: #FFFEDB;
+  background-color: #FFFCCC;
   box-shadow: none;
 }
 

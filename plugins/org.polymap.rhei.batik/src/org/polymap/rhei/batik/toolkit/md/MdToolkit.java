@@ -158,19 +158,6 @@ public class MdToolkit
 
 
     /**
-     * Creates the main toolbar of the panel.
-     * 
-     * @param style 
-     * @see <a
-     *      href="http://www.google.com/design/spec/components/toolbars.html">Material
-     *      Design</a>
-     */
-    public MdToolbar createToolbar( String label, int... styles ) {
-        return new MdToolbar( this, panelPage.control, label, stylebits( styles ) );
-    }
-
-
-    /**
      * 
      *
      * @param parent
@@ -180,6 +167,8 @@ public class MdToolkit
      *        <li>SWT.BOTTOM - Toolbar on bottom, shadow at the top.</li>
      *        <li>SWT.FLAT|default - Flat style, no shadow</li>
      *        </ul>
+     * @see <a href="http://www.google.com/design/spec/components/toolbars.html">
+     *      Material Design</a>
      */
     public MdToolbar2 createToolbar( Composite parent, int... styles ) {
         return new MdToolbar2( parent, this, stylebits( styles ) );

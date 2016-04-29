@@ -47,6 +47,7 @@ import org.polymap.core.ui.UIUtils;
 
 /**
  * 
+ * @deprecated See {@link MdToolbar2}
  * @see <a href="http://www.google.com/design/spec/components/toolbars.html">Toolbars</a>
  * @see <a href="http://www.google.com/design/spec/layout/structure.html#structure-ui-regions">structuring UI region</a>
  * @author Joerg Reichert <joerg@mapzone.io>

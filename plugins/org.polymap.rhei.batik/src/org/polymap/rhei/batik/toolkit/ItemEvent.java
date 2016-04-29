@@ -15,6 +15,7 @@
 package org.polymap.rhei.batik.toolkit;
 
 import java.util.EventObject;
+import java.util.Objects;
 
 import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
@@ -23,13 +24,21 @@ import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
 
 /**
- * Thrown when a {@link Config} property of an item is changed. 
+ * Fired when a {@link Config} property of an {@link Item} is changed.
+ * 
+ * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class ItemEvent
         extends EventObject {
 
-    public ItemEvent( Item source ) {
+    private Config          prop;
+    
+    private Object          newValue;
+    
+    public ItemEvent( Item source, Config prop, Object newValue ) {
         super( source );
+        this.prop = prop;
+        this.newValue = newValue;
     }
 
     public <T extends Item> T item() {
@@ -41,6 +50,14 @@ public class ItemEvent
         return (Item)super.getSource();
     }
     
+    public Config prop() {
+        return prop;
+    }
+    
+    public <V> V newValue() {
+        return (V)newValue;
+    }
+
     /**
      * 
      */
@@ -55,8 +72,11 @@ public class ItemEvent
          */
         @Override
         public Object doSet( Object obj, Config prop, Object newValue ) {
-            Item item = prop.info().getHostObject();
-            EventManager.instance().syncPublish( new ItemEvent( item ) );
+            Object currentValue = prop.info().getRawValue();
+            if (!Objects.equals( currentValue, newValue )) {
+                Item item = prop.info().getHostObject();
+                EventManager.instance().publish( new ItemEvent( item, prop, newValue ) );
+            }
             return newValue;
         }
     }
