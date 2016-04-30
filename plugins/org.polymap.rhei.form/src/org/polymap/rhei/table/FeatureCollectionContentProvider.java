@@ -47,19 +47,23 @@ public class FeatureCollectionContentProvider
 
     @Override
     public Object[] getElements( Object input ) {
-        try {
+//        try {
             final Object[] result = new Object[ coll.size() ];
+            try {
             coll.accepts( new FeatureVisitor() {
                 int i = 0;
                 public void visit( Feature feature ) {
                     result[i++] = new FeatureTableElement( feature );
                 }
             }, new NullProgressListener() );
+            } catch (Exception e) {
+                log.error( e );
+            }
             return result;
-        }
-        catch (IOException e) {
-            throw new RuntimeException( e );
-        }
+//        }
+//        catch (IOException e) {
+//            throw new RuntimeException( e );
+//        }
     }
 
 
