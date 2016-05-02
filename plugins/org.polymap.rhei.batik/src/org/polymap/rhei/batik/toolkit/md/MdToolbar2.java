@@ -30,7 +30,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -44,7 +43,6 @@ import org.polymap.core.runtime.event.EventManager;
 import org.polymap.rhei.batik.toolkit.ActionItem;
 import org.polymap.rhei.batik.toolkit.GroupItem;
 import org.polymap.rhei.batik.toolkit.Item;
-import org.polymap.rhei.batik.toolkit.ItemContainer;
 import org.polymap.rhei.batik.toolkit.ItemEvent;
 import org.polymap.rhei.batik.toolkit.RadioItem;
 
@@ -54,7 +52,7 @@ import org.polymap.rhei.batik.toolkit.RadioItem;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class MdToolbar2
-        implements ItemContainer {
+        extends GroupItem {
 
     private static Log log = LogFactory.getLog( MdToolbar2.class );
     
@@ -86,14 +84,11 @@ public class MdToolbar2
 
     private MdToolkit               tk;
     
-    private GroupItem               rootGroup;
-    
-    private GroupItemHandler        rootGroupHandler;
-    
     private Map<Item,ItemHandler>   handlers = new HashMap();
 
 
     MdToolbar2( Composite parent, MdToolkit tk, int style ) {
+        super( null, "root" );
         this.tk = tk;
         
         String css = CSS_TOOLBAR;
@@ -106,22 +101,21 @@ public class MdToolbar2
         else if ((style & SWT.FLAT) > 0) {
             css = CSS_TOOLBAR;
         }
-        bar = setVariant( tk.createComposite( parent, style ), css );
-        bar.setLayout( new FillLayout() );
 
-        // rootGroup/Handler
-        rootGroup = new GroupItem( null, "root" );
         if ((style & SWT.RIGHT) > 0) {
             log.warn( "Aligment is not supported yet." );
-            rootGroup.align.set( Alignment.Right );
+            align.set( Alignment.Right );
         }
-        rootGroupHandler = new GroupItemHandler( rootGroup );
-        handlers.put( rootGroup, rootGroupHandler );
-        rootGroupHandler.onItemChange( null );
-        
-        // FIXME does not work for hierarchy of GroupItem
-        EventManager.instance().subscribe( this, ifType( ItemEvent.class, ev2 -> 
-                ev2.getSource().container() == MdToolbar2.this ) );
+
+        bar = setVariant( tk.createComposite( parent, style ), css );
+
+        EventManager.instance().subscribe( this, ifType( ItemEvent.class, ev -> 
+                // FIXME does not work for hierarchy of GroupItem
+                ev.getSource().container() == MdToolbar2.this || ev.getSource() == MdToolbar2.this) );
+       
+        ToolbarHandler toolbarHandler = new ToolbarHandler( this );
+        toolbarHandler.onItemChange( null );
+        handlers.put( this, toolbarHandler );        
     }
     
     
@@ -130,31 +124,40 @@ public class MdToolbar2
     }
     
     
-    @EventHandler( display=true, delay=100 )
+    @EventHandler( display=true, delay=30 )
     protected void onItemChange( List<ItemEvent> evs ) {
-        if (bar.isDisposed()) {
-            EventManager.instance().unsubscribe( this );
-            return;
+        if (!bar.isDisposed()) {
+            log.info( "onItemChange(): events: " + evs.size() );
+            for (ItemEvent ev : evs) {
+                onItemChange( ev );
+            }
+            bar.layout( true );
         }
-    
-        for (ItemEvent ev : evs) {
-            ItemHandler handler = handlers.computeIfAbsent( ev.item(), item -> {
-                if (item instanceof GroupItem) {
-                    return new GroupItemHandler( (GroupItem)item );
-                }
-                else if (item instanceof ActionItem) {
-                    return new ActionItemHandler( (ActionItem)item );
-                }
-                else if (item instanceof RadioItem) {
-                    return new RadioItemHandler( (RadioItem)item );
-                }
-                else {
-                    throw new RuntimeException( "Unhandled item type: " + item );
-                }
-            });
-            handler.onItemChange( ev );
+        else {
+            EventManager.instance().unsubscribe( MdToolbar2.this );
         }
-        bar.layout( true );
+    }
+
+
+    protected void onItemChange( ItemEvent ev ) {
+        ItemHandler handler = handlers.computeIfAbsent( ev.item(), item -> {
+            if (item instanceof MdToolbar2) {
+                return new ToolbarHandler( (MdToolbar2)item );
+            }
+            else if (item instanceof GroupItem) {
+                return new GroupItemHandler( (GroupItem)item );
+            }
+            else if (item instanceof ActionItem) {
+                return new ActionItemHandler( (ActionItem)item );
+            }
+            else if (item instanceof RadioItem) {
+                return new RadioItemHandler( (RadioItem)item );
+            }
+            else {
+                throw new RuntimeException( "Unhandled item type: " + item );
+            }
+        });
+        handler.onItemChange( ev );
     }
 
 
@@ -172,9 +175,8 @@ public class MdToolbar2
         }
 
         public GroupItemHandler parent() {
-            return item.container() == MdToolbar2.this 
-                    ? rootGroupHandler
-                    : (GroupItemHandler)handlers.get( item.container() );
+            assert item.container() != null : "This is the root container.";
+            return (GroupItemHandler)handlers.get( item.container() );
         }
         
         protected abstract void onItemChange( ItemEvent ev );
@@ -182,7 +184,25 @@ public class MdToolbar2
     }
     
     /**
-     * 
+     * Handles {@link MdToolbar2}.
+     */
+    protected class ToolbarHandler
+            extends GroupItemHandler {
+        
+        public ToolbarHandler( GroupItem item ) {
+            super( item );
+        }
+    
+        protected void onItemChange( ItemEvent ev ) {
+            if (control == null) {
+                control = bar;  //setVariant( tk.createComposite( bar ), CSS_TOOLBAR_GROUP );
+                control.setLayout( RowLayoutFactory.fillDefaults().spacing( 0 ).create() );
+            }
+        }
+    }
+
+    /**
+     * Handles {@link GroupItem}.
      */
     protected class GroupItemHandler
             extends ItemHandler<GroupItem,Composite> {
@@ -196,10 +216,8 @@ public class MdToolbar2
 
         protected void onItemChange( ItemEvent ev ) {
             if (control == null) {
-                Composite parent = item.container() != null ? parent().control : bar;
-                control = setVariant( tk.createComposite( parent ), CSS_TOOLBAR_GROUP );
+                control = setVariant( tk.createComposite( parent().control ), CSS_TOOLBAR_GROUP );
                 control.setLayout( RowLayoutFactory.fillDefaults().spacing( 0 ).create() );
-                control.setData( "_handler_", this );
             }
         }
     }
@@ -220,7 +238,6 @@ public class MdToolbar2
             if (control == null) {
                 control = setVariant( tk.createButton( parent().control, null, btnType ), CSS_TOOLBAR_ITEM );
                 control.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
-                control.setData( "_handler_", this );
             }
             item.text.ifPresent( v -> control.setText( v ) );
             item.tooltip.ifPresent( v -> control.setToolTipText( v ) );
@@ -319,16 +336,6 @@ public class MdToolbar2
     }
     
     
-    @Override
-    public void addItem( Item item ) {
-        rootGroup.addItem( item );
-    }
-
-    @Override
-    public List<Item> items() {
-        return rootGroup.items();
-    }
-
     public Control getControl() {
         return bar;
     }
