@@ -43,8 +43,11 @@ import org.polymap.core.ui.StatusDispatcher;
 import org.polymap.core.ui.UIUtils;
 
 /**
+ * Provides a simple dialog consisting of a title, an contents area and and action
+ * buttons at the bottom.
  * 
- * @see <a href="http://www.google.com/design/spec/components/dialogs.html">Material Design</a>
+ * @see <a href="http://www.google.com/design/spec/components/dialogs.html">Material
+ *      Design</a>
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class SimpleDialog
@@ -202,6 +205,15 @@ public class SimpleDialog
         composite.setLayout( new FillLayout( SWT.VERTICAL ) );
         contentsBuilder.accept( composite );
         return area;
+    }
+
+
+    @Override
+    protected Control createButtonBar( Composite parent ) {
+        // no buttonBar if no actions
+        return !actions.isEmpty()
+                ? super.createButtonBar( parent )
+                : null; //new Composite( parent, SWT.BORDER );
     }
 
 

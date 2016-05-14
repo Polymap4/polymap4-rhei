@@ -127,7 +127,7 @@ public class MdToolbar2
     @EventHandler( display=true, delay=30 )
     protected void onItemChange( List<ItemEvent> evs ) {
         if (!bar.isDisposed()) {
-            log.info( "onItemChange(): events: " + evs.size() );
+            //log.info( "onItemChange(): events: " + evs.size() );
             for (ItemEvent ev : evs) {
                 onItemChange( ev );
             }
