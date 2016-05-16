@@ -46,7 +46,7 @@ public class ListTreeContentProvider
 
     @Override
     public Object getParent( Object element ) {
-        throw new RuntimeException( "not yet implemented." );
+        return null;
     }
 
     @Override
