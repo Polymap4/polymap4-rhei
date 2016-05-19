@@ -109,6 +109,8 @@ public class DefaultToolkit
     
     protected FormColors                colors;
     
+    protected boolean                   closed;
+    
     
     public DefaultToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
         this.panelPath = panelPath;
@@ -121,17 +123,25 @@ public class DefaultToolkit
 
     @Override
     public void close() {
-        if (COLOR_SECTION_TITLE_BG.isInitialized()) {
-            COLOR_SECTION_TITLE_BG.get().dispose();
+        if (!isClosed()) {
+            if (COLOR_SECTION_TITLE_BG.isInitialized()) {
+                COLOR_SECTION_TITLE_BG.get().dispose();
+            }
+            if (COLOR_SECTION_TITLE_FG.isInitialized()) {
+                COLOR_SECTION_TITLE_FG.get().dispose();
+            }
+            if (COLOR_SECTION_TITLE_BORDER.isInitialized()) {
+                COLOR_SECTION_TITLE_BORDER.get().dispose();
+            }
         }
-        if (COLOR_SECTION_TITLE_FG.isInitialized()) {
-            COLOR_SECTION_TITLE_FG.get().dispose();
-        }
-        if (COLOR_SECTION_TITLE_BORDER.isInitialized()) {
-            COLOR_SECTION_TITLE_BORDER.get().dispose();
-        }
+        closed = true;
     }
 
+    @Override
+    public boolean isClosed() {
+        return closed || 
+                panelPage != null && panelPage.control != null && panelPage.control.isDisposed();
+    }
 
     @Override
     public Label createLabel( Composite parent, String text, int... styles ) {

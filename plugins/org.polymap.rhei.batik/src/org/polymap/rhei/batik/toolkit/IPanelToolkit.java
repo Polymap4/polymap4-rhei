@@ -41,6 +41,8 @@ public interface IPanelToolkit
 //    @Override
 //    public void close();
 
+    public boolean isClosed();
+    
     public <T extends Composite> T adapt( T composite );
 
     /**
