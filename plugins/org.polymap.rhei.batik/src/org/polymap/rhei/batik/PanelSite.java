@@ -14,10 +14,13 @@
  */
 package org.polymap.rhei.batik;
 
+import java.util.Objects;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.eclipse.swt.SWT;
+import com.google.common.base.Joiner;
+
 import org.eclipse.swt.graphics.Image;
 
 import org.polymap.core.runtime.config.Concern;
@@ -34,6 +37,7 @@ import org.polymap.core.runtime.event.EventManager;
 
 import org.polymap.rhei.batik.IPanelSite.PanelStatus;
 import org.polymap.rhei.batik.PanelChangeEvent.EventType;
+import org.polymap.rhei.batik.engine.PageStackLayout;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 
@@ -50,25 +54,6 @@ public abstract class PanelSite
     
     @Immutable
     public Config2<PanelSite,Integer>       stackPriority;
-    
-//    /**
-//     * Changes the status of the panel. {@link Status#OK_STATUS} signals that the
-//     * panel has valid state. If status is not valid then the given message is
-//     * displayed.
-//     * <p/>
-//     * Use status severity as follows:
-//     * <ul>
-//     * <li>{@link Status#OK_STATUS} : Everything is ok. No message.</li>
-//     * <li>{@link IStatus#OK} : An action has been complete successfully. Message gets displayed.</li>
-//     * <li>{@link IStatus#INFO} : ...</li>
-//     * <li>{@link IStatus#WARNING} : The user's attention is needed.</li>
-//     * <li>{@link IStatus#ERROR} : An error/exception occured. An</li>
-//     * </ul>
-//     */
-//    @Mandatory
-//    @Concern( FireEvent.class )
-//    @FireEventType( EventType.STATUS )
-//    public Config2<PanelSite,IStatus>       status;
     
     /**
      * The title of the page. Null specifies that the panel does not show up in
@@ -89,19 +74,66 @@ public abstract class PanelSite
     @FireEventType( EventType.TITLE )
     public Config2<PanelSite,Image>         icon;
 
+    /**
+     * Hints the application layouter about the preferred size of this panel. The
+     * layouter tries the give focused panels at least this width. A value of
+     * {@link Integer#MAX_VALUE} specifies that this panel will use all extra space
+     * that might be available.
+     * <p/>
+     * Set this in {@link IPanel#init()} or {@link IPanel#createContents(Composite)}.
+     * Setting or modifying later has no effect.
+     */
     @Mandatory
-    @DefaultInt( SWT.DEFAULT )
+    @DefaultInt( Integer.MAX_VALUE )
+    @Concern( NotNegative.class )
+    @Concern( PreferredWidthConcern.class )
     public Config2<PanelSite,Integer>       preferredWidth;
 
+    /**
+     * Hints the application layouter to make this panel not wider than the given
+     * number of pixels. The layouter uses this for pages that are ...
+     * <p/>
+     * Set this in {@link IPanel#init()} or {@link IPanel#createContents(Composite)}.
+     * Setting or modifying later has no effect.
+     */
     @Mandatory
-    @DefaultInt( SWT.DEFAULT )
+    @DefaultInt( Integer.MAX_VALUE )
+    @Concern( NotNegative.class )
+    @Concern( MaxWidthConcern.class )
     public Config2<PanelSite,Integer>       maxWidth;
 
+    /**
+     * Hints the application layouter to make this panel not smaller than the given
+     * number of pixels. The layouter uses this for pages that are not focused.
+     * <p/>
+     * Set this in {@link IPanel#init()} or {@link IPanel#createContents(Composite)}.
+     * Setting or modifying later has no effect.
+     */
     @Mandatory
-    @DefaultInt( SWT.DEFAULT )
+    @DefaultInt( PageStackLayout.DEFAULT_PAGE_MIN_WIDTH )
+    @Concern( NotNegative.class )
+    @Concern( MinWidthConcern.class )
     public Config2<PanelSite,Integer>       minWidth;
 
 
+    /**
+     * Sets the size constraints of the panel.
+     * <p/>
+     * Call this from {@link IPanel#init()} or
+     * {@link IPanel#createContents(Composite)}. Setting or modifying later has no
+     * effect.
+     *
+     * @param min The {@link #minWidth} of the panel.
+     * @param preferred The {@link #preferredWidth} of the panel.
+     * @param max The {@link #maxWidth} of the panel.
+     */
+    public PanelSite setSize( int min, int preferred, int max ) {
+        minWidth.set( min );
+        preferredWidth.set( preferred );
+        maxWidth.set( max );
+        return this;    
+    }
+    
     /**
      * The entiry path of the panel including the name of the panel as last segment.
      */
@@ -125,6 +157,75 @@ public abstract class PanelSite
     /**
      * 
      */
+    public static class MinWidthConcern
+            extends DefaultPropertyConcern<Integer> {
+
+        @Override
+        public Integer doSet( Object obj, Config<Integer> prop, Integer value ) {
+            PanelSite site = (PanelSite)obj;
+            check( value, site.preferredWidth.get(), 1, "minWidth", "preferredWidth" );                
+            check( value, site.maxWidth.get(), 1, "minWidth", "maxWidth" );                
+            return value;
+        }
+    }
+
+    
+    /**
+     * 
+     */
+    public static class MaxWidthConcern
+            extends DefaultPropertyConcern<Integer> {
+
+        @Override
+        public Integer doSet( Object obj, Config<Integer> prop, Integer value ) {
+            PanelSite site = (PanelSite)obj;
+            check( value, site.preferredWidth.get(), -1, "maxWidth", "preferredWidth" );                
+            check( value, site.minWidth.get(), -1, "maxWidth", "minWidth" );                
+            return value;
+        }
+    }
+
+    
+    /**
+     * 
+     */
+    public static class PreferredWidthConcern
+            extends DefaultPropertyConcern<Integer> {
+
+        @Override
+        public Integer doSet( Object obj, Config<Integer> prop, Integer value ) {
+            PanelSite site = (PanelSite)obj;
+            check( value, site.minWidth.get(), -1, "preferredWidth", "minWidth" );                
+            check( value, site.maxWidth.get(), 1, "preferredWidth", "maxWidth" );                
+            return value;
+        }
+    }
+
+    
+    /**
+     * 
+     */
+    public static class NotNegative
+            extends DefaultPropertyConcern<Integer> {
+
+        @Override
+        public Integer doSet( Object obj, Config<Integer> prop, Integer value ) {
+            return check( value, 0, -1, "max/min/preferredWidth", "0" );
+        }
+    }
+
+    
+    protected static Integer check( Integer v1, Integer v2, int falseExpected, String b1, String b2 ) {
+        if (v1.compareTo( v2 ) == falseExpected) {
+            String op = falseExpected < 0 ? "<" : ">";
+            throw new IllegalArgumentException( Joiner.on( " " ).join( "Illegal value:", b1, op, b2, "(", v1, op, v2, ")" ) );                
+        }
+        return v1;
+    }
+    
+    /**
+     * 
+     */
     public static class FireEvent
             extends DefaultPropertyConcern {
 
@@ -142,8 +243,10 @@ public abstract class PanelSite
             FireEventType a = info.getAnnotation( FireEventType.class );
             assert a != null : "Missing @FireEventType annotation!";
             
-            // XXX avoid race conditions; EventManager does not seem to always handle display events properly
-            EventManager.instance().syncPublish( new PanelChangeEvent( site, a.value(), newValue ) );
+            Object oldValue = info.getRawValue();
+            if (!Objects.equals( newValue, oldValue )) {
+                EventManager.instance().publish( new PanelChangeEvent( site, a.value(), newValue, oldValue ) );
+            }
             return newValue;
         }
     }

@@ -52,14 +52,13 @@ public interface IPanel {
     /**
      * This method is called before {@link #init(IPanelSite, IAppContext)} in order
      * to check if the panel wants to be displayed on top of the current panel in the
-     * given context. All {@link Context} properties are initialized when the method is
-     * called.
+     * given context. All {@link Context} properties are initialized when the method
+     * is called.
      * <p/>
-     * This method should be lightweight and should not initialize anything, except
-     * for the title and icon which is shown in the navigation bar.
+     * This method should be lightweight. It <b>must not initialize</b> anything,
+     * except for the title and icon which is shown in the navigation bar.
      * <p/>
-     * <h2>Examples:</h2>
-     * Check if the panel is right above the start panel:
+     * <h2>Examples:</h2> Check if the panel is right above the start panel:
      * 
      * <pre>
      * site.getPath().size() == 1;
@@ -68,9 +67,9 @@ public interface IPanel {
      * Check if parent is instance of particular type:
      * 
      * <pre>
-     * IPanel parent = getContext().getPanel( getSite().getPath().removeLast( 1 ) );
+     * IPanel parent = parentPanel(); //getContext().getPanel( getSite().getPath().removeLast( 1 ) );
      * if (parent instanceof ProjectPanel) {
-     *     getSite().setTitle( ... );
+     *     site().title.set( ... );
      *     return true;
      * }
      * return false;

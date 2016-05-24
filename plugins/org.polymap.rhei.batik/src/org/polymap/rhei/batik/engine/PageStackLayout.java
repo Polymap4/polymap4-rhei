@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,12 +14,9 @@
  */
 package org.polymap.rhei.batik.engine;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +25,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -68,7 +64,7 @@ public class PageStackLayout
 
     private static Log log = LogFactory.getLog( PageStackLayout.class );
 
-    public static final int         DEFAULT_PAGE_MIN_WIDTH = 300;
+    public static final int         DEFAULT_PAGE_MIN_WIDTH = 350;
     
     private final PageStack         pageStack;
 
@@ -76,8 +72,8 @@ public class PageStackLayout
     
     private Rectangle               cachedClientArea;
 
-    private Color                   white = new Color( UIUtils.sessionDisplay(), 0xff, 0xff, 0xff );
-    private Color                   grey = new Color( UIUtils.sessionDisplay(), 0xfb, 0xfb, 0xfb );
+    private Color                   white = UIUtils.getColor( 0xff, 0xff, 0xff );
+    private Color                   grey = UIUtils.getColor( 0xfb, 0xfb, 0xfb );
     
 
     PageStackLayout( PageStack pageStack, LayoutSupplier margins ) {
@@ -101,12 +97,16 @@ public class PageStackLayout
     protected void layout( Composite composite, boolean flushCache ) {
         assert pageStack == composite;
 
+        if (pageStack.getPages().isEmpty()) {
+            return;
+        }
+        
         Rectangle clientArea = pageStack.getClientArea();
         log.debug( "layout(): clientArea=" + clientArea );        
 
         Rectangle displayArea = composite.getDisplay().getBounds();
         if (clientArea.width > displayArea.width) {
-            log.info( "Invalid client area: " + clientArea + ", display width: " + displayArea.width + ", flushCache: " + flushCache );
+            log.debug( "Invalid client area: " + clientArea + ", display width: " + displayArea.width + ", flushCache: " + flushCache );
             return;
         }
         
@@ -120,94 +120,108 @@ public class PageStackLayout
         
         // available size
         int availWidth = clientArea.width - margins.getMarginLeft() - margins.getMarginRight();
-//        int availHeight = clientArea.height - margins.getMarginTop() + margins.getMarginBottom();
 
+        // top down sorted pages
         Collection<Page> pages = pageStack.getPages();
-        List<Page> sortedVisible = pages.stream()
-                .filter( page -> page.isVisible )
-                .sorted( Comparator.comparingInt( Page::getPriority ) )
+        List<Page> topDown = pages.stream()
+                .sorted( Comparator.comparing( page -> Integer.MAX_VALUE-page.priority ) )
                 .collect( Collectors.toList() );
 
-        // calc and make max pages visible: top down
-        List<Page> topDown = new ArrayList( sortedVisible );
-        Collections.reverse( topDown );
-
+        // 1: minimum width: max pages visible
         int filledWidth = 0;
-//        int greyStep = 5, grey = 0xff - greyStep;
-        
-        Page focusedPage = pageStack.getFocusedPage();
-        if (focusedPage == null && !topDown.isEmpty()) {
-            focusedPage = topDown.get( 0 );
-        }
-        boolean focusedPageSeen = false;
-        
+        boolean pageVisible = true;
         for (Page page : topDown) {
-            boolean pageVisible = false;
             page.isShown = false;
 
-            // focused page is the top most page shown
-            focusedPageSeen = focusedPageSeen || page == focusedPage;
-            if (focusedPageSeen) {
-                
-                if (filledWidth <= availWidth) {
-                    Point prefPageSize = page.preferredWidth > 0
-                            ? new Point( page.preferredWidth, Integer.MAX_VALUE )
-                            : page.control.computeSize( SWT.DEFAULT, Integer.MAX_VALUE );
-
-                    // limit: DEFAULT_PAGE_MIN_WIDTH < prefPageSize < clientArea.width
-                    int prefPageWidth = min( availWidth, max( prefPageSize.x, DEFAULT_PAGE_MIN_WIDTH ) );
-
-                    // right most is always displayed
-                    if (filledWidth == 0) {
+            if (pageVisible) {
+                // right most: always displayed; preferred width
+                if (filledWidth == 0) {
+                    int pageWidth = min( page.preferredWidth, availWidth );
+                    page.bounds = new Rectangle( 0, 0, pageWidth, clientArea.height );
+                    page.isShown = true;
+                    filledWidth = pageWidth;
+                }
+                // others: min width
+                else {
+                    int pageWidth = min( page.minWidth, availWidth );
+                    if (filledWidth + pageWidth + margins.getSpacing() <= availWidth) {
+                        page.bounds = new Rectangle( 0, 0, pageWidth, clientArea.height );
                         page.isShown = true;
-                        filledWidth = min( prefPageWidth, availWidth );
-//                        page.control.setBackground( white );
+                        filledWidth += pageWidth + margins.getSpacing();
                     }
-                    //
-                    else if (filledWidth + prefPageWidth <= availWidth) {
-                        page.isShown = true;
-                        filledWidth += prefPageWidth + margins.getSpacing();
-
-//                        page.control.setBackground( grey );
-//                        grey -= greyStep;
-                    }
-                    
-                    if (page.isShown) {
-                        // just save minPageSize for next step
-                        page.control.setBounds( 0, 0, prefPageWidth, prefPageSize.y );
-                        page.control.setVisible( pageVisible = true );
+                    else {
+                        pageVisible = false;
                     }
                 }
             }
-            // it is important to do this only on pages that are actually not visible;
-            // doing this in advance on top of the loop would remove focus from the page
-            if (!pageVisible) {
-                page.control.setVisible( false );
+        }
+
+        // 2: preferred width: distribute remaining (actually set bounds)
+        int panelX = availWidth - margins.getMarginRight();
+        int remainWidth = availWidth - filledWidth;
+        for (Page page : topDown) {
+            page.control.setVisible( page.isShown );
+            if (page.isShown) {
+                // does page want more width?
+                int preferred = min( page.preferredWidth, page.bounds.width + remainWidth );
+                if (preferred > page.bounds.width) {
+                    remainWidth -= (preferred - page.bounds.width);
+                    page.bounds.width = preferred;
+                }
+                page.bounds.x = panelX - page.bounds.width; 
+                page.control.setBounds( page.bounds );
+//                page.control.layout( true /*flushCache*/ );
+
+                panelX -= page.bounds.width + margins.getSpacing();
+            }
+        }
+
+        // 3: maximum: still space remaining
+        if (remainWidth > 0) {
+            panelX = availWidth - margins.getMarginRight();
+            for (Page page : topDown) {
+                if (page.isShown) {
+                    // does page want more width?
+                    int max = min( page.maxWidth, page.bounds.width + remainWidth );
+                    if (max > page.bounds.width) {
+                        remainWidth -= (max - page.bounds.width);
+                        page.bounds.width = max;
+                    }
+                    page.bounds.x = panelX - page.bounds.width; 
+                    page.control.setBounds( page.bounds );
+                    
+                    panelX -= page.bounds.width + margins.getSpacing();        
+                }
             }
         }
         
-        // actually set bounds: bottom up
-        int panelX = margins.getMarginLeft();
-        for (Page page : sortedVisible) {
-            if (page.control.isVisible()) {
-                Rectangle minSize = page.control.getBounds();
-                // all remaining width if topPage
-                int pageWidth = page == focusedPage 
-                        ? clientArea.width - panelX - margins.getMarginRight() 
-                        : minSize.width;
-                
-                page.control.setBounds( panelX, 0 /*margins.getMarginTop()*/, pageWidth, clientArea.height /*availHeight*/ );
-                page.control.layout( flushCache );
-                
-                if (page.control instanceof ScrolledComposite) {
-                    Point pageSize = page.control.computeSize( pageWidth, SWT.DEFAULT );
-                    ((ScrolledComposite)page.control).setMinHeight( pageSize.y );
+        // 4: over maximum: distribute remaining over all pages
+        if (remainWidth > 0) {
+            long delta = remainWidth / topDown.stream().filter( p -> p.isShown ).count();
+            panelX = availWidth - margins.getMarginRight();
+            for (Page page : topDown) {
+                if (page.isShown) {
+                    page.bounds.width += delta;
+                    
+                    page.bounds.x = panelX - page.bounds.width; 
+                    page.control.setBounds( page.bounds );
+                    
+                    panelX -= page.bounds.width + margins.getSpacing();        
                 }
-                
-                panelX += pageWidth + margins.getSpacing();
-                log.debug( "    page: " + page.control.getBounds() );                
             }
         }
+        
+        //
+        log.debug( "available: " + availWidth );
+        for (Page page : topDown) {
+            if (page.isShown) {
+                log.debug( "    panel width: " + page.bounds.width );
+            }
+            else {
+                log.debug( "    panel: invisible" );
+            }
+        }
+        
         pageStack.postUpdateLayout();
     }
     

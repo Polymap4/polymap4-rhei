@@ -132,13 +132,13 @@ public class ConstraintLayout
             }
             Rectangle displayArea = composite.getDisplay().getBounds();
             if (clientArea.width > displayArea.width) {
-                log.info( "Invalid client area: " + clientArea + ", display width: " + displayArea.width + ", flushCache: " + flushCache );
+                log.debug( "Invalid client area: " + clientArea + ", display width: " + displayArea.width + ", flushCache: " + flushCache );
                 return false;
             }
 
             log.debug( "LAYOUT: " + composite.hashCode() + " -> " + clientArea );
 
-            ISolver solver = new BestFirstOptimizer( 250, 100 );
+            ISolver solver = new BestFirstOptimizer( 50, 100 );
             solver.addGoal( new PriorityOnTopGoal( 1 ) );
             solver.addGoal( new MinOverallHeightGoal( 0 ) );
             solver.addGoal( new NeighborhoodGoal( 0 ) );

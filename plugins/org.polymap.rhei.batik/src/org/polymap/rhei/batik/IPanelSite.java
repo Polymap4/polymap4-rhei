@@ -41,8 +41,8 @@ public interface IPanelSite {
     public static enum PanelStatus {
         CREATED,
         INITIALIZED,
-        VISIBLE,
-        FOCUSED;
+        VISIBLE;
+        //FOCUSED;
         
         public boolean isOnOf( PanelStatus... a ) {
             return Arrays.asList( a ).contains( this );

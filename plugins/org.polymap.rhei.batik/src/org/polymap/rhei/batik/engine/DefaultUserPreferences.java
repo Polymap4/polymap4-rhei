@@ -35,11 +35,10 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.resource.ImageDescriptor;
 
-import org.eclipse.rap.rwt.graphics.Graphics;
-
 import org.polymap.core.runtime.i18n.IMessages;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
+import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.BatikApplication;
 import org.polymap.rhei.batik.BatikPlugin;
@@ -97,11 +96,11 @@ public class DefaultUserPreferences
             // #128: Link Benutzername entfernen? (https://polymap.org/mosaic/ticket/128)
             // XXX allow the app to controll the username link appearance and function
             usernameLnk.removeSelectionListener( usernameLnkListener );
-            usernameLnk.setForeground( Graphics.getColor( 0x30, 0x30, 0x30 ) );
+            usernameLnk.setForeground( UIUtils.getColor( 0x30, 0x30, 0x30 ) );
 
             if (username.toLowerCase().contains( "admin" )) {
                 usernameLnk.setText( "Administrator" );
-                usernameLnk.setForeground( Graphics.getColor( 0xff, 0x30, 0x30 ) );
+                usernameLnk.setForeground( UIUtils.getColor( 0xff, 0x30, 0x30 ) );
             }
         }
     }

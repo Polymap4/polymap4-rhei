@@ -51,7 +51,7 @@ public abstract class DefaultPanel
         assert this.site == null : "site is not null";
         assert this.context == null : "context is not null";
         this.site = site;
-        this.site2 = new PanelSiteImpl();
+        this.site2 = new PanelSiteFacade();
         this.context = context;
     }
 
@@ -160,7 +160,7 @@ public abstract class DefaultPanel
     /**
      *
      */
-    protected class PanelSiteImpl
+    protected class PanelSiteFacade
             implements IPanelSite {
 
         @Override

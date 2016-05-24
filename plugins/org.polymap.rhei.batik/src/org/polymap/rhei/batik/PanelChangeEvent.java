@@ -16,6 +16,9 @@ package org.polymap.rhei.batik;
 
 import java.util.Arrays;
 import java.util.EventObject;
+
+import com.google.common.base.Joiner;
+
 import org.polymap.rhei.batik.IPanelSite.PanelStatus;
 
 /**
@@ -50,10 +53,13 @@ public class PanelChangeEvent<V>
     
     private V               newValue;
     
-    public PanelChangeEvent( PanelSite source, EventType type, V newValue ) {
+    private V               oldValue;
+    
+    public PanelChangeEvent( PanelSite source, EventType type, V newValue, V oldValue ) {
         super( source );
         this.type = type;
         this.newValue = newValue;
+        this.oldValue = oldValue;
     }
 
     @Override
@@ -77,9 +83,16 @@ public class PanelChangeEvent<V>
     public <T> T getNewValue() {
         return (T)newValue;
     }
+    
+    public V getOldValue() {
+        return oldValue;
+    }
 
     public String toString() {
-        return getClass().getSimpleName() + "[source=" + source.getClass().getSimpleName() + ", type=" + type + "]";
+        return Joiner.on( "" ).useForNull( "null" ).join( getClass().getSimpleName(),
+                "[source=", getSource().path(), 
+                ", type=", type,
+                ", value=", newValue, "]" );
     }
 
 }

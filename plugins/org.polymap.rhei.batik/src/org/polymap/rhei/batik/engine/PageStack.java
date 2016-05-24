@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
@@ -42,19 +43,26 @@ public class PageStack<K>
      */
     public class Page {
         
+        public int          preferredWidth = SWT.DEFAULT;
+
+        public int          minWidth = SWT.DEFAULT;
+
+        public int          maxWidth = SWT.DEFAULT;
+        
         public K            key;
         
         public int          priority;
         
         /** The state that was requested from client code via API */
-        public boolean      isVisible = true;
+        //public boolean      isVisible = true;
         
         /** The actual visibility in the UI as calculated by the {@link PageStackLayout}. */
         public boolean      isShown;
         
         public Composite    control;
         
-        public int          preferredWidth = SWT.DEFAULT;
+        /** Actual bounds used during layout. */
+        public Rectangle    bounds;
 
         protected Page( Composite panel, int priority, K key ) {
             this.priority = priority;
@@ -62,13 +70,9 @@ public class PageStack<K>
             this.key = key;
         }
         
-        public int getPriority() {
-            return priority;
-        }
-        
         @Override
         public String toString() {
-            return "Page[key=" + key + ", priority=" + priority + ", visible=" + isVisible + ", shown=" + isShown + "]";
+            return "Page[key=" + key + ", priority=" + priority + ", shown=" + isShown + "]";
         }
     }
     
@@ -140,23 +144,14 @@ public class PageStack<K>
     }
 
 
-    public void setPageVisible( K key, boolean visible ) {
+    public void setPageWidth( K key, int min, int preferred, int max ) {
         Page page = getPage( key );
-        page.isVisible = visible;
-    }
-
-    
-    public void setPagePreferredWidth( K key, int preferredWidth ) {
-        Page page = getPage( key );
-        page.preferredWidth = preferredWidth;
+        page.preferredWidth = preferred;
+        page.minWidth = min;
+        page.maxWidth = max;
     }
 
 
-//    public void setFocusedPage( K key ) {
-//        focusedPage = getPage( key );
-//    }
-    
-    
     public Page getFocusedPage() {
         return focusedPage;
     }

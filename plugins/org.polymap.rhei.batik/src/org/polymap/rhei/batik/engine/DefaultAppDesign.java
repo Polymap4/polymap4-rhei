@@ -21,6 +21,8 @@ import static org.polymap.rhei.batik.IPanelSite.PanelStatus.INITIALIZED;
 import static org.polymap.rhei.batik.IPanelSite.PanelStatus.VISIBLE;
 import static org.polymap.rhei.batik.toolkit.md.MdAppDesign.dp;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -104,6 +106,9 @@ public class DefaultAppDesign
     protected DefaultLayoutSupplier     panelLayoutSettings = new DefaultLayoutSupplier();
  
     protected DefaultLayoutSupplier     appLayoutSettings = new DefaultLayoutSupplier();
+
+    private int                         pagePriorityCount;
+    
 
     @Override
     public void init() {
@@ -287,20 +292,8 @@ public class DefaultAppDesign
         title.setText( panel.site().title.orElse( "..." ) );
         title.setLayoutData( FormDataFactory.filled()/*.left( center, 0, Alignment.CENTER )*/.top( 0, 5 ).create() );
 
-//        FontData fontData = title.getFont().getFontData()[0];
-//        title.setFont( JFaceResources.getFontRegistry().getBold( fontData.getName() ) );
-        
         // scrolled
         ScrolledComposite scrolled = new ScrolledComposite( parent, SWT.NO_FOCUS|SWT.V_SCROLL );
-        scrolled.addControlListener( new ControlAdapter() {
-            @Override
-            public void controlResized( ControlEvent ev ) {
-                if (scrolled.getContent() != null) {
-                    Rectangle r = scrolled.getClientArea();
-                    scrolled.setMinSize( scrolled.getContent().computeSize( r.width, SWT.DEFAULT ) );
-                }
-            }
-        });
         scrolled.setLayoutData( FormDataFactory.filled().top( 0, dp( 54 ) ).create() );
         scrolled.setExpandVertical( true );
         scrolled.setExpandHorizontal( true );
@@ -324,6 +317,22 @@ public class DefaultAppDesign
 
         scrolled.setContent( panelParent );
         scrolled.layout();
+        
+        // adapt size/scrollbars
+        ControlAdapter resizeHandler = new ControlAdapter() {
+            @Override
+            public void controlResized( ControlEvent ev ) {
+                Rectangle clientArea = scrolled.getClientArea();
+                Point preferred = scrolled.getContent().computeSize( clientArea.width, SWT.DEFAULT );
+                // this also triggers the actual re-layout of the contents of the page
+                // after PageStackLayout did a re-layout
+                scrolled.setMinSize( preferred );
+                //((Composite)scrolled.getContent()).layout();
+            }
+        };
+        scrolled.addControlListener( resizeHandler );
+        // called if client sent font measurements
+        //scrolled.getContent().addControlListener( resizeHandler );
     }
     
     
@@ -470,65 +479,65 @@ public class DefaultAppDesign
     /** 
      * {@link EventType#LIFECYCLE} event.
      */
-    @EventHandler(display=true)
-    protected void panelChanged( PanelChangeEvent ev ) {
-        IPanel panel = ev.getPanel();
+    @EventHandler( display=true, delay=10 )
+    protected void panelChanged( List<PanelChangeEvent> evs ) {
+        log.debug( "events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
         
-        // lifecycle event
-        if (ev.getType() == EventType.LIFECYCLE) {
-            PanelPath pageId = ev.getSource().path();
-            PanelStatus panelStatus = (PanelStatus)ev.getNewValue();  //panel.getSite().getPanelStatus();
+        boolean layoutRefreshNeeded = false;
+        Set<PanelSite> updatePanelSites = new HashSet();
+        
+        for (PanelChangeEvent ev : evs) {
+            IPanel panel = ev.getPanel();
 
-            // update visibility of panel
-            if (panelsArea.hasPage( pageId ) && panelStatus != null) {
-                panelsArea.setPageVisible( pageId, panelStatus.ge( PanelStatus.VISIBLE ) );
-            }
-    
-            // focused
-            if (panelStatus == PanelStatus.FOCUSED) {
-                if (panelsArea.hasPage( pageId )) {
-                    panelsArea.setPageVisible( pageId, true );
-//                    panelsArea.setFocusedPage( pageId );
+            // lifecycle event
+            if (ev.getType() == EventType.LIFECYCLE) {
+                PanelPath pageId = ev.getSource().path();
+                PanelStatus newStatus = (PanelStatus)ev.getNewValue();
+                PanelStatus oldStatus = (PanelStatus)ev.getOldValue();
+
+                // visible
+                if (newStatus == PanelStatus.VISIBLE && oldStatus == PanelStatus.INITIALIZED) {
+                    if (!panelsArea.hasPage( pageId )) {
+                        // every new panel is created on top
+                        Composite page = panelsArea.createPage( pageId, pagePriorityCount++ );
+                        createPanelContents( panel, page );
+                        panelsArea.setPageWidth( pageId, ev.getSource().minWidth.get(), 
+                                ev.getSource().preferredWidth.get(), ev.getSource().maxWidth.get() );
+                        layoutRefreshNeeded = true;
+                    }
+
+                    String title = ev.getSource().title.orElse( "" );
+                    mainWindow.setText( title );        
+                    browserHistory.pushState( panel.id().id(), StringUtils.abbreviate( title, 25 ) );
                 }
-                else {
-                    Composite page = panelsArea.createPage( pageId,
-                            // every new panel is created on top
-                            (int)System.currentTimeMillis() );
-                    createPanelContents( panel, page );
-                    panelsArea.setPageVisible( pageId, true );
-                    panelsArea.setPagePreferredWidth( pageId, ev.getSource().preferredWidth.get() );
-//                    panelsArea.setFocusedPage( pageId );
-    
-//                    Point panelSize = page.computeSize( SWT.DEFAULT, SWT.DEFAULT );
-//                    panelsArea.setMinHeight( panelSize.y );
-                }
-    
-                String title = ev.getSource().title.orElse( "" );
-                mainWindow.setText( title );        
-                browserHistory.pushState( panel.id().id(), StringUtils.abbreviate( title, 25 ) );
-            }
-    
-            // disposed
-            else if (panelStatus == null) {
-                // not yet initialized panels have no page
-                if (panelsArea.hasPage( pageId )) {
-                    panelsArea.removePage( pageId );
+
+                // disposed
+                else if (newStatus == null) {
+                    // not yet initialized panels have no page
+                    if (panelsArea.hasPage( pageId )) {
+                        panelsArea.removePage( pageId );
+                        layoutRefreshNeeded = true;
+                    }
                 }
             }
 
-            delayedRefresh();            
+            // title or icon changed
+            else if (ev.getType() == EventType.TITLE) {
+                updatePanelSites.add( ev.getSource() );
+            }
         }
         
-        // title or icon changed
-        else if (ev.getType() == EventType.TITLE) {
-            updatePanelContents( ev.getSource() );
+        if (layoutRefreshNeeded) {
+            delayedRefresh();
+        }
+        for (PanelSite panelSite : updatePanelSites) {
+            updatePanelContents( panelSite );
         }
     }
 
 
     @Override
     public void delayedRefresh() {
-        
         updateMainWindowLayout();
         
         // XXX this forces the content send twice to the client (measureString: calculate text height)
@@ -536,19 +545,19 @@ public class DefaultAppDesign
           mainWindow.layout( true );
           panelsArea.reflow( true );
         
-        // FIXME HACK! force re-layout after font sizes are known (?)
-//        UIUtils.activateCallback( DefaultAppDesign.class.getName() );
-        mainWindow.getDisplay().timerExec( 1000, new Runnable() {
-            public void run() {
-                log.debug( "layout..." );
-
-                mainWindow.layout( true );
-                panelsArea.reflow( true );
-                //((Composite)scrolled.getCurrentPage()).layout();
-                
-//                UIUtils.deactivateCallback( DefaultAppDesign.class.getName() );
-            }
-        });
+//        // FIXME HACK! force re-layout after font sizes are known (?)
+////        UIUtils.activateCallback( DefaultAppDesign.class.getName() );
+//        mainWindow.getDisplay().timerExec( 1000, new Runnable() {
+//            public void run() {
+//                log.debug( "layout..." );
+//
+//                mainWindow.layout( true );
+//                panelsArea.reflow( true );
+//                //((Composite)scrolled.getCurrentPage()).layout();
+//                
+////                UIUtils.deactivateCallback( DefaultAppDesign.class.getName() );
+//            }
+//        });
     }
 
 

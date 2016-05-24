@@ -15,7 +15,6 @@
 package org.polymap.rhei.batik.engine;
 
 import static org.polymap.rhei.batik.IPanelSite.PanelStatus.CREATED;
-import static org.polymap.rhei.batik.IPanelSite.PanelStatus.FOCUSED;
 import static org.polymap.rhei.batik.IPanelSite.PanelStatus.INITIALIZED;
 import static org.polymap.rhei.batik.IPanelSite.PanelStatus.VISIBLE;
 
@@ -160,14 +159,7 @@ public class DefaultAppManager
 
     
     protected PanelSite getOrCreatePanelSite( PanelPath path, int stackPriority ) {
-        PanelSite result = panelSites.get( path );
-        if (result == null) {
-            result = new PanelSiteImpl( path, stackPriority );
-            if (panelSites.put( path, result ) != null) {
-                throw new IllegalStateException();
-            }
-        }
-        return result;
+        return panelSites.computeIfAbsent( path, key -> new PanelSiteImpl( path, stackPriority ) );
     }
     
     
@@ -206,11 +198,7 @@ public class DefaultAppManager
 
     protected StreamIterable<IPanel> wantToBeShown( PanelPath parentPath ) {
         // create, filter, init, add panels
-        return StreamIterable.of( 
-                BatikFactory.instance().allPanelExtensionPoints().stream()
-                // sort in order to initialize main panel context first
-//                .sorted( Collections.reverseOrder( Comparator.comparing( ep -> ep.stackPriority ) ) )
-                // initialize, then filter
+        return StreamIterable.of( BatikFactory.instance().allPanelExtensionPoints().stream()
                 .map( ep -> createPanel( ep, parentPath ) )
                 .filter( panel -> panel.beforeInit() ) );
     }
@@ -225,7 +213,7 @@ public class DefaultAppManager
         }
         else {
             P panel = (P)createPanel( parentPath, panelId );
-            raisePanelStatus( panel, PanelStatus.FOCUSED );
+            raisePanelStatus( panel, PanelStatus.VISIBLE );
             top = panel.site().path();
             return Optional.of( panel );
         }
@@ -280,7 +268,14 @@ public class DefaultAppManager
         if (panels.remove( panelPath ) == null) {
             throw new IllegalStateException( "No Panel exists at: " + panelPath );
         }
+        
+        // re-use the site for next panel; keep size settings made in beforeInit();
+        // settings things in beforeInit() is not allowed, however I'm not sure if
+        // site should be re-used anyway (maybe later holding any context), as it is
+        // done between #wantsToBeShown() and #createPanel()
+        // #5: Preferred panel width (http://github.com/Polymap4/polymap4-rhei/issues/issue/5)
         panelSites.remove( panelPath );
+        
         ((PanelSiteImpl)panel.site()).panelStatus.set( null );
         log.info( "    " + panels.values().toString() );
     }
@@ -303,8 +298,7 @@ public class DefaultAppManager
             top = parentPath;
 
             // raise top's panel status
-            IPanel panel = getPanel( top );
-            raisePanelStatus( panel, PanelStatus.FOCUSED );
+            raisePanelStatus( getPanel( top ), PanelStatus.VISIBLE );
             return true;
         }
         return false;
@@ -320,10 +314,6 @@ public class DefaultAppManager
         // make visible
         if (panel.site().panelStatus() == INITIALIZED && targetStatus.ge( VISIBLE )) {
             ((PanelSiteImpl)panel.site()).panelStatus.set( VISIBLE );
-        }
-        // make active
-        if (panel.site().panelStatus() == VISIBLE && targetStatus.ge( FOCUSED )) {
-            ((PanelSiteImpl)panel.site()).panelStatus.set( FOCUSED );
         }
     }
     
