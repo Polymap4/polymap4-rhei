@@ -127,11 +127,11 @@ public class MdToolbar2
     @EventHandler( display=true, delay=30 )
     protected void onItemChange( List<ItemEvent> evs ) {
         if (!bar.isDisposed()) {
-            //log.info( "onItemChange(): events: " + evs.size() );
             for (ItemEvent ev : evs) {
                 onItemChange( ev );
             }
-            bar.layout( true );
+            bar.layout();
+            bar.getParent().layout( true );
         }
         else {
             EventManager.instance().unsubscribe( MdToolbar2.this );
@@ -195,7 +195,7 @@ public class MdToolbar2
     
         protected void onItemChange( ItemEvent ev ) {
             if (control == null) {
-                control = bar;  //setVariant( tk.createComposite( bar ), CSS_TOOLBAR_GROUP );
+                control = bar;
                 control.setLayout( RowLayoutFactory.fillDefaults().spacing( 0 ).create() );
             }
         }
