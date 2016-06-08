@@ -2533,7 +2533,7 @@ Combo[BORDER]:disabled {
 
 /* line 25, ../../sass/md/_combo.scss */
 Combo-Button {
-  width: 30px;
+  width: 20px;
   cursor: default;
   border: none;
   border-left: none;
@@ -2779,4 +2779,89 @@ List-Item:even:selected {
 List-Item:even:selected:unfocused {
   color: #ffffff;
   background-image: gradient(linear, left top, left bottom, from(#b5b5b5), to(#818181));
+}
+
+/* Spinner default theme */
+/* line 3, ../../sass/md/_spinner.scss */
+Spinner,
+Spinner[BORDER] {
+  background-color: #ffffff;
+  background-image: none;
+  text-shadow: none;
+  box-shadow: none;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+}
+
+/* line 13, ../../sass/md/_spinner.scss */
+Spinner:focused,
+Spinner[BORDER]:focused {
+  border: 1px solid #599FE2;
+  background-color: #FFFCCC;
+  box-shadow: none;
+}
+
+/* line 20, ../../sass/md/_spinner.scss */
+Spinner:disabled,
+Spinner[BORDER]:disabled {
+  box-shadow: none;
+}
+
+/* line 25, ../../sass/md/_spinner.scss */
+Spinner-Field {
+  padding: 3px 6px 3px 6px;
+}
+
+/* line 29, ../../sass/md/_spinner.scss */
+Spinner-UpButton {
+  background-image: none;
+  background-color: transparent;
+  width: 20px;
+  border: none;
+  border-left: none;
+  border-radius: 0px;
+  cursor: default;
+}
+
+/* line 39, ../../sass/md/_spinner.scss */
+Spinner-UpButton:disabled {
+  background-image: none;
+  background-color: transparent;
+}
+
+/* line 44, ../../sass/md/_spinner.scss */
+Spinner-UpButton-Icon {
+  background-image: url(resources/icons/rap/png/normal/20//chevron-up.png);
+}
+
+/* line 48, ../../sass/md/_spinner.scss */
+Spinner-UpButton-Icon:hover {
+  background-image: url(resources/icons/rap/png/hover/20//chevron-up.png);
+}
+
+/* line 52, ../../sass/md/_spinner.scss */
+Spinner-DownButton {
+  background-image: none;
+  background-color: transparent;
+  width: 20px;
+  border: none;
+  border-left: none;
+  border-radius: 0px;
+  cursor: default;
+}
+
+/* line 62, ../../sass/md/_spinner.scss */
+Spinner-DownButton:disabled {
+  background-image: none;
+  background-color: transparent;
+}
+
+/* line 67, ../../sass/md/_spinner.scss */
+Spinner-DownButton-Icon {
+  background-image: url(resources/icons/rap/png/normal/20//chevron-down.png);
+}
+
+/* line 71, ../../sass/md/_spinner.scss */
+Spinner-DownButton-Icon:hover {
+  background-image: url(resources/icons/rap/png/hover/20//chevron-down.png);
 }
