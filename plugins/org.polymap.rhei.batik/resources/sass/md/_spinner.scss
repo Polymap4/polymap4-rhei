@@ -1,0 +1,73 @@
+/* Spinner default theme */
+
+Spinner,
+Spinner[BORDER] {
+  background-color: #ffffff;
+  background-image: none;
+  text-shadow: none;
+  box-shadow: none;
+  border: 1px solid $separator2;
+  border-radius: 2px;
+}
+
+Spinner:focused,
+Spinner[BORDER]:focused {
+  border: 1px solid $action-bg;
+  background-color: $selection-bg;
+  box-shadow: none;
+}
+
+Spinner:disabled,
+Spinner[BORDER]:disabled {
+  box-shadow: none;
+}
+
+Spinner-Field {
+  padding: 3px 6px 3px 6px;
+}
+
+Spinner-UpButton {
+  background-image: none;
+  background-color: transparent;
+  width: 20px;
+  border: none;
+  border-left: none;
+  border-radius: 0px;
+  cursor: default;
+}
+
+Spinner-UpButton:disabled {
+  background-image: none;
+  background-color: transparent;
+}
+
+Spinner-UpButton-Icon {
+  background-image: url( #{$icon-normal}/chevron-up.png );
+}
+
+Spinner-UpButton-Icon:hover {
+  background-image: url( #{$icon-hover}/chevron-up.png );
+}
+
+Spinner-DownButton {
+  background-image: none;
+  background-color: transparent;
+  width: 20px;
+  border: none;
+  border-left: none;
+  border-radius: 0px;
+  cursor: default;
+}
+
+Spinner-DownButton:disabled {
+  background-image: none;
+  background-color: transparent;
+}
+
+Spinner-DownButton-Icon {
+  background-image: url( #{$icon-normal}/chevron-down.png );
+}
+
+Spinner-DownButton-Icon:hover {
+  background-image: url( #{$icon-hover}/chevron-down.png );
+}
