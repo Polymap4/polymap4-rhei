@@ -37,6 +37,7 @@ import com.google.common.base.Joiner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.internal.widgets.MarkupValidator;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,6 +50,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
 import org.eclipse.ui.forms.FormColors;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.Section;
 
 import org.eclipse.rap.rwt.RWT;
@@ -364,6 +367,15 @@ public class DefaultToolkit
         result.setText( title );
         result.setExpanded( true );
 
+        result.addExpansionListener( new ExpansionAdapter() {
+            @Override
+            public void expansionStateChanged( ExpansionEvent ev ) {
+                // trigger resize handler of the ScrollableComposite of the panel
+                Point panelSize = panelPage.control.getSize();
+                panelPage.control.setSize( panelSize.x, panelSize.y+1 );
+            }
+        });
+        
         result.setMenu( parent.getMenu() );
 //        if (result.toggle != null) {
 //            section.toggle.setHoverDecorationColor(colors
