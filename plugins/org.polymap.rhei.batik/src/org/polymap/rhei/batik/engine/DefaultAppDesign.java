@@ -293,7 +293,7 @@ public class DefaultAppDesign
         title.setLayoutData( FormDataFactory.filled()/*.left( center, 0, Alignment.CENTER )*/.top( 0, 5 ).create() );
 
         // scrolled
-        ScrolledComposite scrolled = new ScrolledComposite( parent, SWT.NO_FOCUS|SWT.V_SCROLL );
+        ScrolledComposite scrolled = new ScrolledComposite( parent, SWT.NO_FOCUS | SWT.V_SCROLL );
         scrolled.setLayoutData( FormDataFactory.filled().top( 0, dp( 54 ) ).create() );
         scrolled.setExpandVertical( true );
         scrolled.setExpandHorizontal( true );
@@ -323,11 +323,13 @@ public class DefaultAppDesign
             @Override
             public void controlResized( ControlEvent ev ) {
                 Rectangle clientArea = scrolled.getClientArea();
-                Point preferred = scrolled.getContent().computeSize( clientArea.width, SWT.DEFAULT );
+                int scrollbarWidth = scrolled.getVerticalBar() != null ? scrolled.getVerticalBar().getSize().x : 0; 
+                Point preferred = scrolled.getContent().computeSize( clientArea.width-scrollbarWidth, SWT.DEFAULT );
                 // this also triggers the actual re-layout of the contents of the page
                 // after PageStackLayout did a re-layout
                 scrolled.setMinSize( preferred );
-                //((Composite)scrolled.getContent()).layout();
+
+                //((Composite)scrolled.getContent()).layout( true );
             }
         };
         scrolled.addControlListener( resizeHandler );
