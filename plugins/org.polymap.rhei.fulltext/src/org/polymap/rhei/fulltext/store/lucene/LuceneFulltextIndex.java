@@ -41,8 +41,6 @@ import org.apache.lucene.util.Version;
 
 import com.google.common.base.Function;
 
-import org.polymap.core.data.rs.lucene.GeometryValueCoder;
-
 import org.polymap.rhei.fulltext.FulltextIndex;
 import org.polymap.rhei.fulltext.update.UpdateableFulltextIndex;
 
@@ -81,7 +79,7 @@ public class LuceneFulltextIndex
         // StringValueCoder is *last*
         store.getValueCoders().addValueCoder( new StringValueCoder() );
         store.getValueCoders().addValueCoder( new AnalyzedStringValueCoder() );
-        store.getValueCoders().addValueCoder( new GeometryValueCoder() );
+//        store.getValueCoders().addValueCoder( new GeometryValueCoder() );
         
         analyzer = new LuceneAnalyzer( this );
         store.setAnalyzer( analyzer );

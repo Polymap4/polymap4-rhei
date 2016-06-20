@@ -14,12 +14,13 @@
  */
 package org.polymap.rhei.fulltext.model2;
 
-import static com.google.common.base.MoreObjects.firstNonNull;
+import static org.polymap.rhei.fulltext.model2.DuplicateHandler.CONCAT;
+import static org.polymap.rhei.fulltext.model2.FieldNameProvider.STANDARD;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
 
 import org.json.JSONObject;
@@ -28,13 +29,12 @@ import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-
-import org.eclipse.rap.rwt.RWT;
-
 import org.polymap.core.runtime.Lazy;
 import org.polymap.core.runtime.PlainLazyInit;
+import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.ConfigurationFactory;
+import org.polymap.core.runtime.config.DefaultBoolean;
+import org.polymap.core.runtime.config.Mandatory;
 
 import org.polymap.rhei.fulltext.FulltextIndex;
 import org.polymap.rhei.fulltext.indexing.FeatureTransformer;
@@ -51,84 +51,56 @@ import org.polymap.model2.runtime.PropertyInfo;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class EntityFeatureTransformer
-        extends CompositeStateVisitor
+        extends CompositeStateVisitor<RuntimeException>
         implements FeatureTransformer<Entity,JSONObject> {
 
     private static Log log = LogFactory.getLog( EntityFeatureTransformer.class );
 
     /**
-     * 
+     * The locale used for {@link NumberFormat} and {@link DateFormat}. Defaults to
+     * {@link Locale#getDefault()}.
      */
-    public interface DuplicateHandler extends Function<String[],String> { }
+    @Mandatory
+    public Config2<EntityFeatureTransformer,Locale>     locale;
     
     /**
-     * Always throws a {@link RuntimeException}. 
+     * True specifies that only Properties annotated as {@link Queryable} are
+     * indexed.
      */
-    public static final DuplicateHandler EXCEPTION = new DuplicateHandler() {
-        @Override
-        public String apply( String[] input ) {
-            throw new RuntimeException( "Duplicate values are not allowed: " + Arrays.asList( input ) );
-        }
-    };
-    
-    /**
-     * 
-     */
-    public static final DuplicateHandler CONCAT = new DuplicateHandler() {
-        @Override
-        public String apply( String[] input ) {
-            return Joiner.on( ' ' ).join( input );
-        }
-    };
-    
-    /**
-     * 
-     */
-    public interface FieldNameProvider extends Function<Property,String> { }
-    
-    public class StandardFieldNameProvider
-            implements FieldNameProvider {
-        @Override
-        public String apply( Property input ) {
-            return input.info().getName();
-        }
-    }
-    
-    // instance *******************************************
-    
-    private Lazy<NumberFormat>  nf = new PlainLazyInit( () -> NumberFormat.getInstance( firstNonNull( RWT.getLocale(), Locale.getDefault() ) ) );
-    
-    private Lazy<FastDateFormat> df = new PlainLazyInit( () -> FastDateFormat.getDateInstance( FastDateFormat.FULL, RWT.getLocale() ) );
-
-    private volatile JSONObject result;
-    
-    protected boolean           honorQueryableAnnotation = false;
+    @Mandatory
+    @DefaultBoolean( false )
+    public Config2<EntityFeatureTransformer,Boolean>    honorQueryableAnnotation;
     
     /**
      * By default this is {@link StandardFieldNameProvider}. Change this to affect
      * subsequent call of {@link #putValue(Property, String)}.
      */
-    public FieldNameProvider    fieldNameProvider = new StandardFieldNameProvider();
+    @Mandatory
+    public Config2<EntityFeatureTransformer,FieldNameProvider> fieldNameProvider;
     
     /**
      * By default this is set to {@link #CONCAT}. Change this to affect subsequent
      * calls of {@link #putValue(Property, String)}.
      */
-    public DuplicateHandler     duplicateHandler = CONCAT;
+    @Mandatory
+    public Config2<EntityFeatureTransformer,DuplicateHandler> duplicateHandler;
     
-    
-    /**
-     * True specifies that only Properties annotated as {@link Queryable} are
-     * indexed. (default: false)
-     * 
-     * @return this
-     */
-    public EntityFeatureTransformer setHonorQueryableAnnotation( boolean honorQueryableAnnotation ) {
-        this.honorQueryableAnnotation = honorQueryableAnnotation;
-        return this;
+
+    private Lazy<NumberFormat>          nf = new PlainLazyInit( () -> NumberFormat.getInstance( locale.get() ) );
+
+    private Lazy<FastDateFormat>        df = new PlainLazyInit( () -> FastDateFormat.getDateInstance( FastDateFormat.FULL, locale.get() ) );
+
+    private volatile JSONObject         result;
+
+
+    public EntityFeatureTransformer() {
+        ConfigurationFactory.inject( this );
+        fieldNameProvider.set( STANDARD );
+        duplicateHandler.set( CONCAT );
+        locale.set( Locale.getDefault() );
     }
-
-
+    
+    
     @Override
     public JSONObject apply( Entity entity ) {
         assert result == null : "Implementation is not multi-threaded currently.";
@@ -154,7 +126,7 @@ public class EntityFeatureTransformer
     @Override
     protected void visitProperty( Property prop ) {        
         PropertyInfo info = prop.info();
-        if (honorQueryableAnnotation && !info.isQueryable()) {
+        if (honorQueryableAnnotation.get() && !info.isQueryable()) {
             log.debug( "   skipping non @Queryable property: " + info.getName() );
             return;
         }
@@ -191,7 +163,7 @@ public class EntityFeatureTransformer
  
     
     protected void putValue( Property prop, String value ) {
-        String key = fieldNameProvider.apply( prop ); //prop.getInfo().getName() + "-" + propCount++;
+        String key = fieldNameProvider.get().apply( prop );
         putValue( key, value );
     }
 
@@ -199,7 +171,7 @@ public class EntityFeatureTransformer
     protected void putValue( String key, String value ) {
         String currentValue = result.optString( key );
         if (currentValue.length() > 0) {
-            value = duplicateHandler.apply( new String[] {currentValue,value} );
+            value = duplicateHandler.get().apply( new String[] {currentValue, value} );
         }
         result.put( key, value );
     }

@@ -14,6 +14,8 @@
  */
 package org.polymap.rhei.fulltext.model2;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.List;
 
 import org.json.JSONObject;
@@ -23,8 +25,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.Lists;
-
 import org.polymap.rhei.fulltext.FulltextIndex;
 import org.polymap.rhei.fulltext.indexing.FeatureTransformer;
 import org.polymap.rhei.fulltext.indexing.ToStringTransformer;
@@ -111,7 +111,9 @@ public class FulltextIndexer
     
     private UpdateableFulltextIndex             index;
     
-    private List<? extends FeatureTransformer>  transformers = Lists.newArrayList( new EntityFeatureTransformer(), new ToStringTransformer() );
+    private List<? extends FeatureTransformer>  transformers = newArrayList( 
+            new EntityFeatureTransformer(), 
+            new ToStringTransformer() );
     
     private Predicate<Entity>                   entityFilter;
     
