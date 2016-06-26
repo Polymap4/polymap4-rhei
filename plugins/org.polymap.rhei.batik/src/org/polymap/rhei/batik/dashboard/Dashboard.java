@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,10 +14,12 @@
  */
 package org.polymap.rhei.batik.dashboard;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import java.beans.PropertyChangeEvent;
 
@@ -67,6 +69,12 @@ public class Dashboard
     }
     
     
+//    public Dashboard( PanelSite panelSite, String id ) {
+//        this.panelSite = panelSite;
+//        this.id = id;
+//    }
+    
+    
     public void dispose() {
         dashlets.keySet().stream().forEach( dashlet -> dashlet.dispose() );
         dashlets.clear();
@@ -74,7 +82,7 @@ public class Dashboard
     
     
     public Dashboard addDashlet( IDashlet dashlet ) {
-        DashletSite site = new DashletSiteImpl();
+        DashletSite site = new DashletSiteImpl( dashlet );
         BatikApplication.instance().getContext().propagate( dashlet );
         dashlet.init( site );
         dashlets.put( dashlet, site );
@@ -82,6 +90,11 @@ public class Dashboard
     }
     
     
+    public Set<IDashlet> dashlets() {
+        return Collections.unmodifiableSet( dashlets.keySet() );
+    }
+
+
     public Composite createContents( Composite parent ) {
         IPanelToolkit tk = panelSite.toolkit();
         
@@ -117,11 +130,24 @@ public class Dashboard
     }
     
     
+    public boolean isSubmitable() {
+        return !dashlets.values().stream().filter( d -> !d.isSubmitable() ).findAny().isPresent();    
+    }
+    
+    
     /**
      * 
      */
     class DashletSiteImpl
             extends DashletSite {
+
+        private IDashlet            dashlet;
+        
+        private boolean             submitable = true;
+
+        public DashletSiteImpl( IDashlet dashlet ) {
+            this.dashlet = dashlet;
+        }
 
         @Override
         public IPanelSite panelSite() {
@@ -131,6 +157,17 @@ public class Dashboard
         @Override
         public IPanelToolkit toolkit() {
             return panelSite.toolkit();
+        }
+
+        @Override
+        public void enableSubmit( boolean enabled ) {
+            EventManager.instance().publish( 
+                    new SubmitStatusChangeEvent( dashlet, Dashboard.this, isSubmitable() ) );
+        }
+        
+        @Override
+        public boolean isSubmitable() {
+            return submitable;
         }
         
     }

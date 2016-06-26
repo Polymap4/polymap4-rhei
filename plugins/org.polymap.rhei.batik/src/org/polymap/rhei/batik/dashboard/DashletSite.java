@@ -40,7 +40,7 @@ public abstract class DashletSite
      * <p/>
      * Allow null to allow no header at all.
      */
-    @Concern(PropertyChangeSupport.class)
+    @Concern( PropertyChangeSupport.class )
     public Config<String>                 title;
 
     public Config<Boolean>                border;
@@ -55,5 +55,12 @@ public abstract class DashletSite
     public abstract IPanelSite panelSite();
     
     public abstract IPanelToolkit toolkit();
+    
+    /**
+     * Signals the panel that this {@link ISubmitableDashlet} can/not submit.
+     */
+    public abstract void enableSubmit( boolean enabled );
+
+    public abstract boolean isSubmitable();
     
 }
