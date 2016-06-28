@@ -109,13 +109,20 @@ public class SimpleDialog
      * Adds a 'Cancel' action to the button bar that just closes the dialog.
      */
     public SimpleDialog addCancelAction() {
-        return addAction( new Action( "CANCEL" ) {
+        return addCancelAction( "CANCEL" );
+    }
+
+    
+    /**
+     * Adds a 'Cancel' action to the button bar that just closes the dialog.
+     */
+    public SimpleDialog addCancelAction( String label ) {
+        return addAction( new Action( label ) {
             public void run() {
                 SimpleDialog.this.close( );
             }
-        });
+        });        
     }
-
 
     /**
      * Adds a 'No' action to the button bar that just closes the dialog.
@@ -148,14 +155,22 @@ public class SimpleDialog
 
 
     /**
+     * See {@link #addOkAction(String, Callable)}
+     */
+    public SimpleDialog addOkAction( Callable<Boolean> task ) {
+        return addOkAction( "OK", task );
+    }
+    
+    
+    /**
      * Adds a 'OK' action to the button bar that just closes the dialog.
      * 
      * @param task The task to perform when 'OK' is pressed. The dialog is closed
      *        afterwards if the task returns {@link Boolean#TRUE} or
      *        <code>null</code>. Otherwise it stays open.
      */
-    public SimpleDialog addOkAction( Callable<Boolean> task ) {
-        return addAction( new Action( "OK" ) {
+    public SimpleDialog addOkAction( String label, Callable<Boolean> task ) {
+        return addAction( new Action( label ) {
             public void run() {
                 try {
                     Boolean result = task.call();
