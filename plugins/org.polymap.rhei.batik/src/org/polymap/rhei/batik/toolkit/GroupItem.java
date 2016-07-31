@@ -29,21 +29,21 @@ import org.polymap.rhei.batik.toolkit.md.MdToolbar2.Alignment;
  * 
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class GroupItem
+public class GroupItem<T extends Item>
         extends Item
-        implements ItemContainer {
+        implements ItemContainer<T> {
 
     @Mandatory
     @Immutable
     @Concern( ItemEvent.Fire.class )
-    public Config2<GroupItem,String>      id;
+    public Config2<GroupItem,String>    id;
     
     /** Defaults to {@link Alignment#Left}. */
     @Mandatory
     @Concern( ItemEvent.Fire.class )
-    public Config2<GroupItem,Alignment>   align;
+    public Config2<GroupItem,Alignment> align;
     
-    private List<Item>                    items = new ArrayList();
+    private List<T>                     items = new ArrayList();
     
     
     public GroupItem( ItemContainer container, String id ) {
@@ -54,13 +54,14 @@ public class GroupItem
 
 
     @Override
-    public void addItem( Item item ) {
+    public GroupItem addItem( T item ) {
         items.add( item );
+        return this;
     }
 
 
     @Override
-    public List<Item> items() {
+    public List<T> items() {
         return Collections.unmodifiableList( items );
     }
     

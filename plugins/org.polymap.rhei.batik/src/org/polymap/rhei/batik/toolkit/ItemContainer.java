@@ -18,18 +18,18 @@ import java.util.List;
 
 /**
  * 
- *
+ * @param <T> The type of items which is allowed for this container.
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public interface ItemContainer {
+public interface ItemContainer<T extends Item> {
     
     /**
      * Internally add an item to this group. Client code should use item constructor.
      *
      * @param item
      */
-    public void addItem( Item item );
+    public ItemContainer addItem( T item );
 
-    public List<Item> items();
+    public List<T> items();
     
 }

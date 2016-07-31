@@ -191,4 +191,18 @@ public interface IPanelToolkit
     @SuppressWarnings("javadoc")
     public Snackbar createSnackbar( Snackbar.Appearance appearance, String message, Item... actions );
 
+    
+    /**
+     * Creates an {@link ActionText}. Like
+     * {@link #createText(Composite, String, int...)} but allows to add
+     * {@link TextActionItem}s to perform action, search or clear. One item is the
+     * default item which is performed when ENTER is pressed.
+     *
+     * @param parent
+     * @param defaultText
+     * @param styles
+     * @return Newly creates ActionText instance.
+     */
+    public ActionText createActionText( Composite parent, String defaultText, int... styles );
+
 }

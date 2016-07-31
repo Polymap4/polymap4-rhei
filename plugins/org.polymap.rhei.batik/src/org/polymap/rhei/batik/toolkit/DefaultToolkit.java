@@ -337,6 +337,13 @@ public class DefaultToolkit
     }
 
     @Override
+    public ActionText createActionText( Composite parent, String defaultText, int... styles ) {
+        ActionText result = new ActionText( parent, defaultText, styles );
+        adapt( result.getText(), true, true );
+        return result;
+    }
+
+    @Override
     public Composite createComposite( Composite parent, int... styles ) {
         boolean scrollable = ArrayUtils.contains( styles, SWT.V_SCROLL )
                 || ArrayUtils.contains( styles, SWT.H_SCROLL );
