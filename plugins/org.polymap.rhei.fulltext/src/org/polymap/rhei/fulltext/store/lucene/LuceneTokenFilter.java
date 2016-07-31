@@ -27,6 +27,7 @@ import org.polymap.rhei.fulltext.indexing.FulltextTokenFilter;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
+@SuppressWarnings( "deprecation" )
 public class LuceneTokenFilter
         extends TokenFilter {
 
