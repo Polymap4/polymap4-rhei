@@ -95,6 +95,10 @@ public class MdListViewer
 
     public Config<ActionProvider>      thirdSecondaryActionProvider;
 
+//    @Mandatory
+//    @DefaultBoolean( true )
+//    public Config<Boolean>             preserveSelection;
+
     private boolean                    customized = false;
 
     private boolean                    openListenerPresent;
@@ -373,5 +377,5 @@ public class MdListViewer
     public void setLabelProvider( IBaseLabelProvider labelProvider ) {
         throw new UnsupportedOperationException( "The Material Design list supports multiple lines of text, for example call #setFirstLineLabelProvider()." );
     }
-     
+
 }
