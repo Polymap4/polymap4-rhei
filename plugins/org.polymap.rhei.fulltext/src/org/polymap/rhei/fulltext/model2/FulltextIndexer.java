@@ -16,6 +16,7 @@ package org.polymap.rhei.fulltext.model2;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -25,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+
 import org.polymap.rhei.fulltext.FulltextIndex;
 import org.polymap.rhei.fulltext.indexing.FeatureTransformer;
 import org.polymap.rhei.fulltext.indexing.ToStringTransformer;
@@ -32,6 +34,9 @@ import org.polymap.rhei.fulltext.update.UpdateableFulltextIndex;
 import org.polymap.rhei.fulltext.update.UpdateableFulltextIndex.Updater;
 
 import org.polymap.model2.Entity;
+import org.polymap.model2.query.Expressions;
+import org.polymap.model2.query.Query;
+import org.polymap.model2.query.grammar.BooleanExpression;
 import org.polymap.model2.runtime.EntityRuntimeContext.EntityStatus;
 import org.polymap.model2.store.CloneCompositeStateSupport;
 import org.polymap.model2.store.CompositeState;
@@ -107,6 +112,44 @@ public class FulltextIndexer
     }
 
     
+    /**
+     * Creates a Model2 {@link Query} for the given fulltext query. Assumes that
+     * index is build using {@link EntityFeatureTransformer}.
+     * @throws Exception 
+     *
+     * @see FulltextIndex#search(String, int)
+     */
+    public static BooleanExpression query( FulltextIndex index, String queryString, int maxResults ) throws Exception {
+        Iterable<JSONObject> fulltextResults = index.search( queryString, maxResults );
+
+        List<BooleanExpression> ids = new ArrayList( 256 );
+        for (JSONObject record : fulltextResults) {
+            if (record.optString( FulltextIndex.FIELD_ID ).length() > 0) {
+                ids.add( Expressions.id( record.getString( FulltextIndex.FIELD_ID ) ) );
+            }
+            else {
+                log.warn( "No FIELD_ID in record: " + record );
+            }
+        }
+        log.info( "Fulltext result ids: " + ids );
+        
+        // query expression
+        if (ids.isEmpty()) {
+            return Expressions.FALSE;
+        }
+        else if (ids.size() == 1) {
+            return ids.get( 0 );
+        }
+        else if (ids.size() == 2) {
+            return Expressions.or( ids.get( 0 ), ids.get( 1 ) );
+        }
+        else {
+            BooleanExpression[] more = ids.subList( 2, ids.size() ).toArray( new BooleanExpression[ids.size()-2] );
+            return Expressions.or( ids.get( 0 ), ids.get( 1 ), more );
+        }
+    }
+    
+    
     // instance *******************************************
     
     private UpdateableFulltextIndex             index;
@@ -157,7 +200,15 @@ public class FulltextIndexer
                 : new IndexerUnitOfWork( suow );
     }
 
+    
+    /**
+     * See {@link #query(FulltextIndex, String, int)}. 
+     */
+    public BooleanExpression query( String queryString, int maxResults ) throws Exception {
+        return query( index, queryString, maxResults );
+    }
 
+    
     protected JSONObject transform( Entity feature ) {
         Object transformed = feature;
         for (FeatureTransformer transformer : transformers) {
