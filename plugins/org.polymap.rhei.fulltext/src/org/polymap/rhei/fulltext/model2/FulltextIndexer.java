@@ -236,10 +236,10 @@ public class FulltextIndexer
 
 
         @Override
-        public void prepareCommit( Iterable<Entity> loaded ) throws Exception {
+        public void prepareCommit( Iterable<Entity> modified ) throws Exception {
             // update fulltext index
             updater = index.prepareUpdate();
-            for (Entity entity : loaded) {
+            for (Entity entity : modified) {
                 if (entityFilter.apply( entity )) {
                     if (entity.status() == EntityStatus.CREATED) {
                         updater.store( transform( entity ), false );
@@ -253,7 +253,7 @@ public class FulltextIndexer
                 }
             }
             // call delegate
-            suow.prepareCommit( loaded );
+            suow.prepareCommit( modified );
         }
 
         
@@ -268,12 +268,12 @@ public class FulltextIndexer
 
 
         @Override
-        public void rollback() {
+        public void rollback( Iterable<Entity> modified ) {
             if (updater != null) {
                 updater.close();
                 updater = null;
             }
-            suow.rollback();
+            suow.rollback( modified );
         }
 
     }
