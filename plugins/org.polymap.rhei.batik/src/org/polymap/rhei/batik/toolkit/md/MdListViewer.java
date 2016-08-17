@@ -235,8 +235,8 @@ public class MdListViewer
                         }
                         if (expandable) {
                             cell.setImage( getExpandedState( cell.getElement() )
-                                    ? BatikPlugin.images().svgImage( "chevron-up.svg", SvgImageRegistryHelper.NORMAL24 )
-                                    : BatikPlugin.images().svgImage( "chevron-down.svg", SvgImageRegistryHelper.NORMAL24 ) );
+                                    ? BatikPlugin.images().svgImage( "close.svg", SvgImageRegistryHelper.DISABLED12 )
+                                    : BatikPlugin.images().svgImage( "chevron-down.svg", SvgImageRegistryHelper.DISABLED24 ) );
                         }
                         else {
                             cell.setImage( null );
