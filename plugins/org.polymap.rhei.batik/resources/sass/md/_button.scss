@@ -22,7 +22,8 @@ Button[TOGGLE],
 Button[PUSH][BORDER],
 Button[TOGGLE][BORDER],
 Button[PUSH][FLAT],
-Button[TOGGLE][FLAT] {
+Button[TOGGLE][FLAT],
+Button[RADIO] {
   font: $font-button;
   cursor: pointer;
 }
@@ -133,15 +134,21 @@ Button[CHECK],
 Button[RADIO] {
   padding: 3px 3px 3px 0;
   spacing: 7px;
+  color: $text-color;
 }
 
 Button[CHECK][BORDER],
 Button[RADIO][BORDER] {
-  cursor: default;
-  background-image: none;
   border: 1px solid #bdbdbd;
   border-radius: 2px;
 }
+
+Button[CHECK]:disabled,
+Button[RADIO]:disabled {
+  cursor: default;
+  color: $text-color-disabled;
+}
+
 
 /* Checkbox */
 Button-CheckIcon {
