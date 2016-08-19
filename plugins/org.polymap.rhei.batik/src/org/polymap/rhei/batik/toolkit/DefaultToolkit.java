@@ -474,24 +474,13 @@ public class DefaultToolkit
     }
 
 
-    /**
-     * Adapts a control to be used in a form that is associated with this toolkit.
-     * This involves adjusting colors and optionally adding handlers to ensure focus
-     * tracking and keyboard management.
-     *
-     * @param control a control to adapt
-     * @param trackFocus if <code>true</code>, form will be scrolled horizontally
-     *        and/or vertically if needed to ensure that the control is visible when
-     *        it gains focus. Set it to <code>false</code> if the control is not
-     *        capable of gaining focus.
-     * @param trackKeyboard if <code>true</code>, the control that is capable of
-     *        gaining focus will be tracked for certain keys that are important to
-     *        the underlying form (for example, PageUp, PageDown, ScrollUp,
-     *        ScrollDown etc.). Set it to <code>false</code> if the control is not
-     *        capable of gaining focus or these particular key event are already used
-     *        by the control.
-     */
-    public <T extends Control> T adapt( T control, boolean trackFocus, boolean trackKeyboard) {
+    @Override
+    public <T extends Control> T adapt( T control, boolean trackFocus, boolean trackKeyboard ) {
+        return _adapt( control, trackFocus, trackKeyboard );
+    }
+
+    
+    public static <T extends Control> T _adapt( T control, boolean trackFocus, boolean trackKeyboard) {
         UIUtils.setVariant( control, CSS_PREFIX );
 
         control.setData( RWT.MARKUP_ENABLED, Boolean.TRUE );
