@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.internal.widgets.MarkupValidator;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -40,6 +41,8 @@ import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.ScrolledPageBook;
 import org.eclipse.ui.forms.widgets.Section;
+
+import org.eclipse.rap.rwt.RWT;
 
 import org.polymap.core.ui.UIUtils;
 
@@ -124,6 +127,11 @@ public class FormEditorToolkit
 
     public Label createLabel( Composite parent, String text, int... styles ) {
         Label result = adapt( delegate.createLabel( parent, text, stylebits( styles ) /*| SWT.NO_FOCUS*/ ) );
+        
+        result.setData( RWT.MARKUP_ENABLED, Boolean.TRUE );
+        result.setData( RWT.TOOLTIP_MARKUP_ENABLED, Boolean.TRUE );
+        result.setData( MarkupValidator.MARKUP_VALIDATION_DISABLED, Boolean.TRUE );
+        
 //        result.setForeground( labelForeground );
         return result;
     }
