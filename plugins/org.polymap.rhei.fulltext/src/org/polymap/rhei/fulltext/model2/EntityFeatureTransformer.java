@@ -39,11 +39,12 @@ import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.rhei.fulltext.FulltextIndex;
 import org.polymap.rhei.fulltext.indexing.FeatureTransformer;
 
+import org.polymap.model2.CollectionProperty;
 import org.polymap.model2.Entity;
 import org.polymap.model2.Property;
+import org.polymap.model2.PropertyBase;
 import org.polymap.model2.Queryable;
 import org.polymap.model2.runtime.CompositeStateVisitor;
-import org.polymap.model2.runtime.PropertyInfo;
 
 /**
  * 
@@ -124,47 +125,31 @@ public class EntityFeatureTransformer
 
     
     @Override
-    protected void visitProperty( Property prop ) {        
-        PropertyInfo info = prop.info();
-        if (honorQueryableAnnotation.get() && !info.isQueryable()) {
-            log.debug( "   skipping non @Queryable property: " + info.getName() );
+    protected void visitProperty( Property prop ) {
+        if (honorQueryableAnnotation.get() && !prop.info().isQueryable()) {
+            log.debug( "   skipping non @Queryable property: " + prop.info().getName() );
             return;
         }
-        
-        // the hierarchy of propeties may contain properties with same simple name
-        Object value = prop.get();
+        putValue( prop, prop.get() );
+    }
 
-        // null
-        if (value == null) {
+    
+    
+    @Override
+    protected void visitCollectionProperty( CollectionProperty prop ) throws RuntimeException {
+        if (honorQueryableAnnotation.get() && !prop.info().isQueryable()) {
+            log.debug( "   skipping non @Queryable property: " + prop.info().getName() );
+            return;
         }
-        // Enum
-        else if (value.getClass().isEnum()) {
-            putValue( prop, value.toString() );
-        }
-        // Date
-        else if (Date.class.isAssignableFrom( value.getClass() )) {
-            putValue( prop, df.get().format( value ) );
-        }
-        // Number
-        else if (Number.class.isAssignableFrom( value.getClass() )) {
-            putValue( prop, nf.get().format( value ) );                    
-        }
-        // Boolean -> if true add prop name instead of 'true|false'
-        else if (value.getClass().equals( Boolean.class )) {
-            if (((Boolean)value).booleanValue()) {
-                putValue( prop, prop.info().getName() );
-            }
-        }
-        // String and other types
-        else {
-            putValue( prop, value.toString() );
+        for (Object value : prop) {
+            putValue( prop, value );            
         }
     }
- 
-    
-    protected void putValue( Property prop, String value ) {
+
+
+    protected void putValue( PropertyBase prop, Object value ) {
         String key = fieldNameProvider.get().apply( prop );
-        putValue( key, value );
+        putValue( key, toString( value, prop ) );
     }
 
 
@@ -174,6 +159,35 @@ public class EntityFeatureTransformer
             value = duplicateHandler.get().apply( new String[] {currentValue, value} );
         }
         result.put( key, value );
+    }
+
+
+    protected String toString( Object value, PropertyBase prop ) {
+        if (value == null) {
+            return null;
+        }
+        // Enum
+        else if (value.getClass().isEnum()) {
+            return value.toString();
+        }
+        // Date
+        else if (Date.class.isAssignableFrom( value.getClass() )) {
+            return df.get().format( value );
+        }
+        // Number
+        else if (Number.class.isAssignableFrom( value.getClass() )) {
+            return nf.get().format( value );                    
+        }
+        // Boolean -> if true add prop name instead of 'true|false'
+        else if (value.getClass().equals( Boolean.class )) {
+            return ((Boolean)value).booleanValue()
+                    ? prop.info().getName()
+                    : null;
+        }
+        // String and other types
+        else {
+            return value.toString();
+        }
     }
     
 }

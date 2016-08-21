@@ -17,6 +17,7 @@ package org.polymap.rhei.fulltext.model2;
 import com.google.common.base.Function;
 
 import org.polymap.model2.Property;
+import org.polymap.model2.PropertyBase;
 
 /**
  * Calculates the name of the fields in the index out of a given {@link Property}.
@@ -24,7 +25,8 @@ import org.polymap.model2.Property;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 @FunctionalInterface
-public interface FieldNameProvider extends Function<Property,String> {
+public interface FieldNameProvider 
+        extends Function<PropertyBase,String> {
     
     /**
      * Use the name of the {@link Property} as field name. 
