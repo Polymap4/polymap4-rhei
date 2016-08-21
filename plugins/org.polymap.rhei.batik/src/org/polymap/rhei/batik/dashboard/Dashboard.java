@@ -150,6 +150,12 @@ public class Dashboard
         }
 
         @Override
+        public DashletSite addConstraint( LayoutConstraint constraint ) {
+            constraints.get().add( constraint );
+            return this;
+        }
+
+        @Override
         public IPanelSite panelSite() {
             return panelSite;
         }

@@ -38,19 +38,28 @@ public abstract class DashletSite
     /**
      * The title of the dashlet.
      * <p/>
-     * Allow null to allow no header at all.
+     * Allows null to allow no header at all.
      */
     @Concern( PropertyChangeSupport.class )
     public Config<String>                 title;
 
     public Config<Boolean>                border;
     
+    /**
+     * List of layout constraints. Modify only in {@link IDashlet#init(DashletSite)}
+     * <b>before</b> {@link IDashlet#createContents(org.eclipse.swt.widgets.Composite)} is called.
+     */
     @Mandatory
     @Defaults
     public Config<List<LayoutConstraint>> constraints;
 
     @Defaults
     public Config<Boolean>                isExpandable;
+    
+    /**
+     * Shortcut to {@link #constraints}.
+     */
+    public abstract DashletSite addConstraint( LayoutConstraint constraint );
     
     public abstract IPanelSite panelSite();
     

@@ -130,7 +130,7 @@ public class EntityFeatureTransformer
             log.debug( "   skipping non @Queryable property: " + prop.info().getName() );
             return;
         }
-        putValue( prop, prop.get() );
+        prop.opt().ifPresent( v -> putValue( prop, v ) );
     }
 
     
