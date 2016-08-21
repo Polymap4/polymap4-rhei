@@ -1027,12 +1027,12 @@ Composite[BORDER].batik-panel-section-client {
   /* BORDER style just signals that the entiry section has a border;
      the client has no border but white background */
   border: none;
-  background-color: #ffffff;
+  background-color: #fafafa;
 }
 
 /* line 29, ../../sass/md/_batik_section.scss */
 Composite[BORDER].batik-panel-section {
-  background-color: #ffffff;
+  background-color: #fafafa;
   border-radius: 4px;
   border: 1px solid #ffffff;
   box-shadow: 0px 1px 2px #b0b0b0;
@@ -1064,7 +1064,7 @@ Label.batik-panel-section-separator {
 Label-SeparatorLine,
 Label-SeparatorLine.batik-panel-section-separator {
   background-image: none;
-  background-color: #d0d0d0;
+  background-color: #dddddd;
   /* ! */
   border: 0px solid #000000;
   width: 1px;
@@ -1855,7 +1855,7 @@ Text[MULTI] {
 /* line 22, ../../sass/md/_text.scss */
 Text[BORDER],
 Text[MULTI][BORDER] {
-  border: 1px solid #d0d0d0;
+  border: 1px solid #dddddd;
   border-radius: 3px;
   /*box-shadow: inset 0 0 1px #cdcdcd;*/
 }
@@ -2426,7 +2426,7 @@ Button[TOGGLE].toolbar2-item:pressed:selected {
 /* line 51, ../../sass/md/_toolbar2.scss */
 Button[TOGGLE].toolbar2-item:selected {
   border-radius: 3px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #dddddd;
   background-color: #e5e5e3;
 }
 
@@ -2438,7 +2438,7 @@ Combo[BORDER] {
   background-image: none;
   text-shadow: none;
   box-shadow: none;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #dddddd;
   border-radius: 3px;
 }
 
@@ -2492,7 +2492,7 @@ Combo-Button-Icon:hover {
 
 /* line 54, ../../sass/md/_combo.scss */
 Combo-List {
-  border: 1px solid #d0d0d0;
+  border: 1px solid #dddddd;
   box-shadow: 0 4px 8px #b0b0b0;
   border-radius: 3px;
   background-image: none;
@@ -2714,7 +2714,7 @@ Spinner[BORDER] {
   background-image: none;
   text-shadow: none;
   box-shadow: none;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #dddddd;
   border-radius: 3px;
 }
 

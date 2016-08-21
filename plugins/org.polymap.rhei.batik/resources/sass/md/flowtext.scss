@@ -30,7 +30,7 @@ a:hover {
   text-decoration: underline;
 }
 p {
-  color: $text-color;
+  color: lighten( $text-color, 15%);
   font-size: $font-size-body2 !important; 
   line-height: 18px;
   text-align: justify;
