@@ -67,6 +67,7 @@ import org.polymap.rhei.batik.PanelSite;
 import org.polymap.rhei.batik.app.IAppDesign;
 import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 import org.polymap.rhei.batik.engine.PageStack.Page;
+import org.polymap.rhei.batik.engine.PageStack.PanelSizeSupplier;
 import org.polymap.rhei.batik.toolkit.ConstraintLayout;
 import org.polymap.rhei.batik.toolkit.DefaultToolkit;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
@@ -478,10 +479,14 @@ public class DefaultAppDesign
     }
     
     
-    /** 
-     * {@link EventType#LIFECYCLE} event.
+    /**
+     * Handle {@link EventType#LIFECYCLE} events.
+     * <p/>
+     * If <b>delay</b> is to <b>short</b> then intermediate states, such as panel is
+     * closed before new panel gets opened, are displayed to the user. If it is to
+     * <b>long</b> then there might be an remarkable delay in UI response.
      */
-    @EventHandler( display=true, delay=10 )
+    @EventHandler( display=true, delay=50 )
     protected void panelChanged( List<PanelChangeEvent> evs ) {
         log.debug( "events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
         
@@ -501,10 +506,12 @@ public class DefaultAppDesign
                 if (newStatus == PanelStatus.VISIBLE && oldStatus == PanelStatus.INITIALIZED) {
                     if (!panelsArea.hasPage( pageId )) {
                         // every new panel is created on top
-                        Composite page = panelsArea.createPage( pageId, pagePriorityCount++ );
+                        Composite page = panelsArea.createPage( pageId, pagePriorityCount++, new PanelSizeSupplier() {
+                            @Override public int min() { return ev.getSource().minWidth.get(); }
+                            @Override public int max() { return ev.getSource().maxWidth.get(); }
+                            @Override public int preferred() { return ev.getSource().preferredWidth.get(); }
+                        });
                         createPanelContents( panel, page );
-                        panelsArea.setPageWidth( pageId, ev.getSource().minWidth.get(), 
-                                ev.getSource().preferredWidth.get(), ev.getSource().maxWidth.get() );
                         layoutRefreshNeeded = true;
                     }
 

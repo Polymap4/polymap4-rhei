@@ -81,7 +81,7 @@ public abstract class PanelSite
      * that might be available.
      * <p/>
      * Set this in {@link IPanel#init()} or {@link IPanel#createContents(Composite)}.
-     * Setting or modifying later has no effect.
+     * Setting or modifying later effects layout on next panel open/close.
      */
     @Mandatory
     @DefaultInt( Integer.MAX_VALUE )
@@ -94,7 +94,7 @@ public abstract class PanelSite
      * number of pixels. The layouter uses this for pages that are ...
      * <p/>
      * Set this in {@link IPanel#init()} or {@link IPanel#createContents(Composite)}.
-     * Setting or modifying later has no effect.
+     * Setting or modifying later effects layout on next panel open/close.
      */
     @Mandatory
     @DefaultInt( Integer.MAX_VALUE )
@@ -107,7 +107,7 @@ public abstract class PanelSite
      * number of pixels. The layouter uses this for pages that are not focused.
      * <p/>
      * Set this in {@link IPanel#init()} or {@link IPanel#createContents(Composite)}.
-     * Setting or modifying later has no effect.
+     * Setting or modifying later effects layout on next panel open/close.
      */
     @Mandatory
     @DefaultInt( PageStackLayout.DEFAULT_PAGE_MIN_WIDTH )

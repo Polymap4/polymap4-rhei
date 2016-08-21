@@ -43,37 +43,43 @@ public class PageStack<K>
      */
     public class Page {
         
-        public int          preferredWidth = SWT.DEFAULT;
-
-        public int          minWidth = SWT.DEFAULT;
-
-        public int          maxWidth = SWT.DEFAULT;
+        public PanelSizeSupplier    size;
         
-        public K            key;
+        public K                    key;
         
-        public int          priority;
-        
-        /** The state that was requested from client code via API */
-        //public boolean      isVisible = true;
+        public int                  priority;
         
         /** The actual visibility in the UI as calculated by the {@link PageStackLayout}. */
-        public boolean      isShown;
+        public boolean              isShown;
         
-        public Composite    control;
+        public Composite            control;
         
         /** Actual bounds used during layout. */
-        public Rectangle    bounds;
+        public Rectangle            bounds;
 
-        protected Page( Composite panel, int priority, K key ) {
+        protected Page( Composite panel, int priority, K key, PanelSizeSupplier sizeSupplier ) {
             this.priority = priority;
             this.control = panel;
             this.key = key;
+            this.size = sizeSupplier;
         }
         
         @Override
         public String toString() {
             return "Page[key=" + key + ", priority=" + priority + ", shown=" + isShown + "]";
         }
+    }
+
+    /** 
+     * 
+     */
+    interface PanelSizeSupplier {
+
+        int min();
+
+        int preferred();
+
+        int max();
     }
     
     
@@ -108,14 +114,14 @@ public class PageStack<K>
         return pages.values();
     }
 
-    
-    public Composite createPage( K key, int priority ) {
+    public Composite createPage( K key, int priority, PanelSizeSupplier sizeSupplier ) {
 //        ScrolledComposite scrolled = new ScrolledComposite( this, SWT.VERTICAL );
 //        scrolled.setExpandVertical( true );
 //        //scrolled.setExpandHorizontal( true );
 
         Composite content = new Composite( this, SWT.NONE );
-        if (pages.put( key, new Page( content, priority, key ) ) != null) {
+        Page newPage = new Page( content, priority, key, sizeSupplier );
+        if (pages.put( key, newPage ) != null) {
             throw new IllegalStateException( "Key already exists: " + key );
         }
 //        Composite content = new Composite( scrolled, SWT.NONE );
@@ -141,14 +147,6 @@ public class PageStack<K>
     
     public boolean hasPage( K key ) {
         return pages.containsKey( key );
-    }
-
-
-    public void setPageWidth( K key, int min, int preferred, int max ) {
-        Page page = getPage( key );
-        page.preferredWidth = preferred;
-        page.minWidth = min;
-        page.maxWidth = max;
     }
 
 

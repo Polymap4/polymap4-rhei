@@ -136,14 +136,14 @@ public class PageStackLayout
             if (pageVisible) {
                 // right most: always displayed; preferred width
                 if (filledWidth == 0) {
-                    int pageWidth = min( page.preferredWidth, availWidth );
+                    int pageWidth = min( page.size.preferred(), availWidth );
                     page.bounds = new Rectangle( 0, 0, pageWidth, clientArea.height );
                     page.isShown = true;
                     filledWidth = pageWidth;
                 }
                 // others: min width
                 else {
-                    int pageWidth = min( page.minWidth, availWidth );
+                    int pageWidth = min( page.size.min(), availWidth );
                     if (filledWidth + pageWidth + margins.getSpacing() <= availWidth) {
                         page.bounds = new Rectangle( 0, 0, pageWidth, clientArea.height );
                         page.isShown = true;
@@ -163,7 +163,7 @@ public class PageStackLayout
             page.control.setVisible( page.isShown );
             if (page.isShown) {
                 // does page want more width?
-                int preferred = min( page.preferredWidth, page.bounds.width + remainWidth );
+                int preferred = min( page.size.preferred(), page.bounds.width + remainWidth );
                 if (preferred > page.bounds.width) {
                     remainWidth -= (preferred - page.bounds.width);
                     page.bounds.width = preferred;
@@ -182,7 +182,7 @@ public class PageStackLayout
             for (Page page : topDown) {
                 if (page.isShown) {
                     // does page want more width?
-                    int max = min( page.maxWidth, page.bounds.width + remainWidth );
+                    int max = min( page.size.max(), page.bounds.width + remainWidth );
                     if (max > page.bounds.width) {
                         remainWidth -= (max - page.bounds.width);
                         page.bounds.width = max;
