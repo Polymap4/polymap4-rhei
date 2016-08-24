@@ -53,6 +53,7 @@ import org.polymap.rhei.form.IFormToolkit;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
+@SuppressWarnings( "deprecation" )
 public class JsonForm
         implements IFormPage {
 

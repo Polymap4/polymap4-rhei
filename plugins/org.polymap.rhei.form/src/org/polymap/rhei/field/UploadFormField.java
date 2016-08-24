@@ -408,10 +408,10 @@ public class UploadFormField
         @Override
         public boolean equals( Object obj ) {
             if (UploadedImage.class.isAssignableFrom( obj.getClass() )) {
-                String fileName = originalFileName();
+                String origFileName = originalFileName();
                 String otherName = ((UploadedImage)obj).originalFileName();
-                return (fileName == null && otherName == null)
-                        || (fileName != null && fileName.equals( otherName ));
+                return (origFileName == null && otherName == null)
+                        || (origFileName != null && origFileName.equals( otherName ));
             }
             return false;
         }

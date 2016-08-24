@@ -141,9 +141,9 @@ public class BetweenFormField
         layout.center = true;
         contents.setLayout( layout );
 
-        Control field1Control = field1.createControl( contents, toolkit );
+        field1.createControl( contents, toolkit );
         toolkit.createLabel( contents, "bis" );
-        Control field2Control = field2.createControl( contents, toolkit );
+        field2.createControl( contents, toolkit );
 
         contents.pack( true );
         return contents;
@@ -201,7 +201,7 @@ public class BetweenFormField
         if (newValue1 instanceof Comparable && newValue2 instanceof Comparable) {
             Comparable c1 = (Comparable)newValue1;
             Comparable c2 = (Comparable)newValue2;
-            if (c1.compareTo( c1 ) > 0) {
+            if (c1.compareTo( c2 ) > 0) {
                 newValue2 = newValue1;
             }
         }

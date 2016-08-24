@@ -44,13 +44,12 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
-import org.eclipse.rap.rwt.lifecycle.UICallBack;
-
 import org.polymap.core.data.Messages;
 import org.polymap.core.runtime.UIJob;
 import org.polymap.core.runtime.cache.Cache;
 import org.polymap.core.runtime.cache.CacheConfig;
 import org.polymap.core.ui.SelectionAdapter;
+import org.polymap.core.ui.UIUtils;
 
 /**
  * Feature content provider that performs sorting and filtering in a background Job.
@@ -312,7 +311,7 @@ public class DeferredFeatureContentProvider2
                     int chunkSize = 16;
                     List chunk = new ArrayList( chunkSize ); 
 
-                    for (int c=0; it.hasNext() && elementCache != null; c++) {
+                    while (it.hasNext() && elementCache != null) {
                         SimpleFeatureTableElement elm = new SimpleFeatureTableElement( it.next(), fs, elementCache );
                         chunk.add( elm );
 
@@ -358,7 +357,7 @@ public class DeferredFeatureContentProvider2
                 
                 display.asyncExec( new Runnable() {
                     public void run() {
-                        UICallBack.deactivate( UpdatorJob.class.getName() );
+                        UIUtils.deactivateCallback( UpdatorJob.class.getName() );
                         if (sortedElements == null) {
                             return;
                         }

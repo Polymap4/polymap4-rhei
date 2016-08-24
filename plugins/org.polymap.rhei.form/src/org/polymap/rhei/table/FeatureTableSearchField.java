@@ -38,12 +38,11 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.rap.rwt.graphics.Graphics;
-
 import org.polymap.core.data.DataPlugin;
 import org.polymap.core.runtime.UIJob;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
+import org.polymap.core.ui.UIUtils;
 
 /**
  *  A search text field for {@link FeatureTableViewer}.
@@ -76,8 +75,8 @@ public class FeatureTableSearchField
         container.setLayout( FormLayoutFactory.defaults().spacing( 5 ).create() );
 
         clearBtn = new Label( container, SWT.PUSH | SWT.SEARCH );
-        clearBtn.setToolTipText( "Zurï¿½cksetzen" );
-        clearBtn.setImage( DataPlugin.getDefault().imageForName( "icons/etool16/delete_edit.gif" ) );
+        clearBtn.setToolTipText( "Zurücksetzen" );
+        clearBtn.setImage( DataPlugin.images().image( "icons/etool16/delete_edit.gif" ) );
         clearBtn.setLayoutData( FormDataFactory.filled().top( 0, 5 ).right( 100, -5 ).left( -1 ).create() );
         clearBtn.addMouseListener( new MouseAdapter() {
             public void mouseUp( MouseEvent e ) {
@@ -92,7 +91,7 @@ public class FeatureTableSearchField
 
         searchTxt.setText( "Suchen..." );
         searchTxt.setToolTipText( "Suchbegriff: min. 3 Zeichen" );
-        searchTxt.setForeground( Graphics.getColor( 0xa0, 0xa0, 0xa0 ) );
+        searchTxt.setForeground( UIUtils.getColor( 0xa0, 0xa0, 0xa0 ) );
         searchTxt.addFocusListener( new FocusListener() {
             @Override
             public void focusLost( FocusEvent ev ) {
@@ -106,7 +105,7 @@ public class FeatureTableSearchField
             public void focusGained( FocusEvent ev ) {
                 if (searchTxt.getText().startsWith( "Suchen" )) {
                     searchTxt.setText( "" );
-                    searchTxt.setForeground( Graphics.getColor( 0x00, 0x00, 0x00 ) );
+                    searchTxt.setForeground( UIUtils.getColor( 0x00, 0x00, 0x00 ) );
                 }
             }
         });

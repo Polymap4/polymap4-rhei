@@ -56,6 +56,7 @@ import org.polymap.rap.updownload.upload.Upload;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
+@SuppressWarnings( "restriction" )
 public class FormEditorToolkit
         implements IFormToolkit {
 
