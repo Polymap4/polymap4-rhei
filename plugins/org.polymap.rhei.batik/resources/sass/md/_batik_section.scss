@@ -21,13 +21,13 @@ Composite[BORDER].batik-panel-section-client {
   /* BORDER style just signals that the entiry section has a border;
      the client has no border but white background */
   border: none;
-  background-color: rgb( 250, 250, 250 );
+  background-color: rgb( 250, 248, 248 );
 }
 
 Composite.batik-panel-section {
 }
 Composite[BORDER].batik-panel-section {
-  background-color: rgb( 250, 250, 250 );
+  background-color: rgb( 250, 248, 248 );
   border-radius: 4px;
   border: 1px solid #ffffff;
   box-shadow: 0px 1px 2px $shadow;
