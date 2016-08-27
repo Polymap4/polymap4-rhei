@@ -344,7 +344,7 @@ public class DefaultAppDesign
         if (panel.site().path().size() > 1) {
             Button closeBtn = UIUtils.setVariant( new Button( head, SWT.NO_FOCUS ), CSS_PANEL_HEADER );
             //closeBtn.setText( "x" );
-            closeBtn.setImage( BatikPlugin.images().svgImage( "close.svg", SvgImageRegistryHelper.WHITE24 ) );
+            closeBtn.setImage( BatikPlugin.images().svgImage( "arrow-left.svg", SvgImageRegistryHelper.WHITE24 ) );
             closeBtn.setToolTipText( "Close this panel" );
             closeBtn.setLayoutData( FormDataFactory.filled().clearRight().width( dp( 50 ) ).create() );
             closeBtn.addSelectionListener( new SelectionAdapter() {
