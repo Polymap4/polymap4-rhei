@@ -180,7 +180,7 @@ public class ContextPropertyInstance<T>
 
     @Override
     public String toString() {
-        return "ContextPropertyInstance[scope=" + scope + ", type=" + declaredType + "]";
+        return "ContextPropertyInstance[value=" + get() + ",scope=" + scope + ", type=" + declaredType + "]";
     }
     
 }

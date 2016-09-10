@@ -25,10 +25,14 @@ public interface ItemContainer<T extends Item> {
     
     /**
      * Internally add an item to this group. Client code should use item constructor.
-     *
-     * @param item
      */
-    public ItemContainer addItem( T item );
+    public boolean addItem( T item );
+
+    /**
+     * Internally remove an item to this group. Client code should use
+     * {@link Item#dispose()}.
+     */
+    public boolean removeItem( T item );
 
     public List<T> items();
     

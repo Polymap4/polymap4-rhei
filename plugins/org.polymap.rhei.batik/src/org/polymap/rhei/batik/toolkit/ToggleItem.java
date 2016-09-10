@@ -34,6 +34,7 @@ public class ToggleItem
      * Not yet implemented.
      */
     @Mandatory
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<ToggleItem,Boolean>                  selected;
 
@@ -41,12 +42,14 @@ public class ToggleItem
      * The action to be performed when the item is selected.
      */
     @Mandatory
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<ToggleItem,Consumer<SelectionEvent>> onSelected;
 
     /**
      * The action to be performed when the item is unselected.
      */
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<ToggleItem,Consumer<SelectionEvent>> onUnselected;
 

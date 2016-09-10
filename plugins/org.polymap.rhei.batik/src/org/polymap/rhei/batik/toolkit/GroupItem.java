@@ -35,11 +35,13 @@ public class GroupItem<T extends Item>
 
     @Mandatory
     @Immutable
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<GroupItem,String>    id;
     
     /** Defaults to {@link Alignment#Left}. */
     @Mandatory
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<GroupItem,Alignment> align;
     
@@ -54,9 +56,14 @@ public class GroupItem<T extends Item>
 
 
     @Override
-    public GroupItem addItem( T item ) {
-        items.add( item );
-        return this;
+    public boolean addItem( T item ) {
+        return items.add( item );
+    }
+
+
+    @Override
+    public boolean removeItem( T item ) {
+        return items.remove( item );
     }
 
 

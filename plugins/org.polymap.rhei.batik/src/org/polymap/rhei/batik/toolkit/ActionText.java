@@ -155,12 +155,18 @@ public class ActionText
     
     
     @Override
-    public ActionText addItem( TextActionItem action ) {
-        actions.add( action );
-        return this;
+    public boolean addItem( TextActionItem action ) {
+        return actions.add( action );
     }
 
     
+    @Override
+    public boolean removeItem( TextActionItem action ) {
+        // XXX Auto-generated method stub
+        throw new RuntimeException( "not yet implemented." );
+    }
+
+
     protected Optional<TextActionItem> defaultAction() {
         assert actions.stream().filter( a -> a.type.get().equals( Type.DEFAULT ) ).count() <= 1;
         return actions.stream().filter( a -> a.type.get().equals( Type.DEFAULT ) ).findAny();

@@ -64,6 +64,7 @@ public class TextActionItem
      */
     @Mandatory
     @Immutable
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<TextActionItem,Type>     type;
 

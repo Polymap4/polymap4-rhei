@@ -179,7 +179,11 @@ public class MdToolbar2
             return (GroupItemHandler)handlers.get( item.container() );
         }
         
-        protected abstract void onItemChange( ItemEvent ev );
+        protected void onItemChange( ItemEvent ev ) {
+            if (item.isDisposed()) {
+                handlers.remove( item );
+            }
+        }
 
     }
     
@@ -235,13 +239,23 @@ public class MdToolbar2
         }
 
         protected void onItemChange( ItemEvent ev ) {
-            if (control == null) {
-                control = setVariant( tk.createButton( parent().control, null, btnType ), CSS_TOOLBAR_ITEM );
-                control.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
+            super.onItemChange( ev );
+            
+            if (item.isDisposed()) {
+                if (control != null && !control.isDisposed()) {
+                    control.dispose();
+                    control = null;
+                }
             }
-            item.text.ifPresent( v -> control.setText( v ) );
-            item.tooltip.ifPresent( v -> control.setToolTipText( v ) );
-            item.icon.ifPresent( v -> control.setImage( v ) );
+            else {
+                if (control == null) {
+                    control = setVariant( tk.createButton( parent().control, null, btnType ), CSS_TOOLBAR_ITEM );
+                    control.setLayoutData( RowDataFactory.swtDefaults().hint( SWT.DEFAULT, 30 ).create() );
+                }
+                item.text.ifPresent( v -> control.setText( v ) );
+                item.tooltip.ifPresent( v -> control.setToolTipText( v ) );
+                item.icon.ifPresent( v -> control.setImage( v ) );
+            }
         }
     }
     
@@ -288,47 +302,50 @@ public class MdToolbar2
 
         @Override
         protected void onItemChange( ItemEvent ev ) {
-            // update UI
             boolean initialized = control != null;
             super.onItemChange( ev );
-            control.setSelection( item.selected.get() );
-
-            if (!initialized) {
-                control.addSelectionListener( new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected( SelectionEvent sev ) {
-                        item.selected.set( ((Button)sev.widget).getSelection() );                        
-                    }
-                });
-            }
             
-            // selection changed
-            if (ev.prop() == item.selected && !skipNextEvent.getAndSet( false )) {
-                
-                // selected
-                if (item.selected.get()) { //((Boolean)ev.newValue()) == true) {
-                    // deselect previous
-                    assert parent().selected.size() <= 1;
-                    parent().selected.stream().findAny().ifPresent( previous -> {
-                        ((RadioItemHandler)handlers.get( previous.item )).skipNextEvent.set( true );
-                        ((RadioItem)previous.item).selected.set( false );
-                        // we cannot wait for the event to do this
-                        ((RadioItem)previous.item).onUnselected.ifPresent( callback -> callback.accept( null ) );
-                        parent().selected.remove( previous );
+            if (!item.isDisposed()) {
+                // update UI
+                control.setSelection( item.selected.get() );
+
+                if (!initialized) {
+                    control.addSelectionListener( new SelectionAdapter() {
+                        @Override
+                        public void widgetSelected( SelectionEvent sev ) {
+                            item.selected.set( ((Button)sev.widget).getSelection() );                        
+                        }
                     });
-                    
-                    //
-                    assert parent().selected.isEmpty();
-                    parent().selected.add( RadioItemHandler.this );
-                    //
-                    item.onSelected.ifPresent( callback -> callback.accept( null ) );
                 }
-                
-                // deselected
-                else {
-                    item.onUnselected.ifPresent( callback -> callback.accept( null ) );
-                    if (!parent().selected.remove( RadioItemHandler.this )) {
-                        throw new IllegalStateException( "..." );
+
+                // selection changed
+                if (ev.prop() == item.selected && !skipNextEvent.getAndSet( false )) {
+
+                    // selected
+                    if (item.selected.get()) { //((Boolean)ev.newValue()) == true) {
+                        // deselect previous
+                        assert parent().selected.size() <= 1;
+                        parent().selected.stream().findAny().ifPresent( previous -> {
+                            ((RadioItemHandler)handlers.get( previous.item )).skipNextEvent.set( true );
+                            ((RadioItem)previous.item).selected.set( false );
+                            // we cannot wait for the event to do this
+                            ((RadioItem)previous.item).onUnselected.ifPresent( callback -> callback.accept( null ) );
+                            parent().selected.remove( previous );
+                        });
+
+                        //
+                        assert parent().selected.isEmpty();
+                        parent().selected.add( RadioItemHandler.this );
+                        //
+                        item.onSelected.ifPresent( callback -> callback.accept( null ) );
+                    }
+
+                    // deselected
+                    else {
+                        item.onUnselected.ifPresent( callback -> callback.accept( null ) );
+                        if (!parent().selected.remove( RadioItemHandler.this )) {
+                            throw new IllegalStateException( "..." );
+                        }
                     }
                 }
             }

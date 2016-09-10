@@ -38,6 +38,7 @@ public class ActionItem
      * The action to be performed when the item is pressed.
      */
     @Mandatory
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<ActionItem,Consumer<SelectionEvent>> action;
     

@@ -39,6 +39,7 @@ public class RadioItem
      */
     @Mandatory
     @DefaultBoolean( false )
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<RadioItem,Boolean>                   selected;
 
@@ -47,6 +48,7 @@ public class RadioItem
      * {@link #selected}).
      */
     @Mandatory
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<RadioItem,Consumer<SelectionEvent>>  onSelected;
 
@@ -54,6 +56,7 @@ public class RadioItem
      * This handler is called when this item is unselected (by UI or setting
      * {@link #selected}).
      */
+    @Concern( NotDisposed.class )
     @Concern( ItemEvent.Fire.class )
     public Config2<RadioItem,Consumer<SelectionEvent>>  onUnselected;
 
