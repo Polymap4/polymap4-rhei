@@ -124,6 +124,10 @@ public class DefaultPanelSection
         return client;
     }
 
+    @Override
+    public Control getTitleControl() {
+        return title;
+    }
 
     @Override
     public IPanelSection getParentPanel() {

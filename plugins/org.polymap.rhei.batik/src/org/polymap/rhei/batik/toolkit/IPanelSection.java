@@ -15,6 +15,7 @@
 package org.polymap.rhei.batik.toolkit;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * A panel section is the main layout component of the Atlas UI. It consists of a
@@ -46,45 +47,7 @@ public interface IPanelSection
     public String getTitle();
     
     public IPanelSection setTitle( String title );
-    
-    
-//    /**
-//     * 
-//     * <p/>
-//     * Calling this method with a number greater than <code>0</code> effectively
-//     * creates a new column.
-//     * 
-//     * @param num The number of the column, starting with <code>0</code>.
-//     * @return The column representation for the given column number.
-//     * @throws IllegalArgumentException If the the given column number is greater
-//     *         than the greatest column + 1.
-//     */
-//    public Column column( int num );
-//    
-//    /**
-//     * 
-//     */
-//    public abstract class Column
-//            implements ILayoutContainer {
-//        
-//        private List<LayoutConstraint>  constraints = new ArrayList();        
-//        
-//        /**
-//         * The container of this column. The returned {@link Composite} has a
-//         * {@link RowLayout} set with default settings for spacing and margins.
-//         */
-//        public abstract Composite getControl();
-//        
-//        /**
-//         * Effectively removes this column from the {@link IPanelSection}.
-//         */
-//        public abstract void dispose();
-//
-//        @Override
-//        public Column addConstraint( LayoutConstraint constraint ) {
-//            constraints.add( constraint );
-//            return this;
-//        }
-//    }
+
+    public Control getTitleControl();
     
 }

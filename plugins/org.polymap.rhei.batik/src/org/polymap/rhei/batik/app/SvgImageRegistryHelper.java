@@ -104,6 +104,16 @@ public class SvgImageRegistryHelper
     
     /** Normal image configuration used to create {@link #svgImage(String, String)}. */
     public final static String      OVR12_ACTION = "ovr12-action";
+
+    public static final RGB    COLOR_WHITE    = new RGB( 0xFF, 0xFF, 0xFF );
+
+    public static final RGB    COLOR_ACTION   = new RGB( 0x5A, 0xA9, 0xDD );
+
+    public static final RGB    COLOR_NORMAL   = new RGB( 0x84, 0xA4, 0xC1 );
+
+    public static final RGB    COLOR_DISABLED = new RGB( 0xb0, 0xb0, 0xb0 );
+
+    public static final RGB    COLOR_DANGER   = new RGB( 0xdf, 0x3e, 0x3e );  //0xFF, 0x61, 0x39 );
     
     /**
      * The quadrant of an overlay created by {@link SvgImageRegistryHelper#svgOverlayedImage(String, String, String, String, Quadrant)}.
@@ -148,23 +158,19 @@ public class SvgImageRegistryHelper
         }
         
         // default configs
-        RGB white = new RGB( 0xFF, 0xFF, 0xFF );
-        RGB action = new RGB( 0x5A, 0xA9, 0xDD );
-        RGB normal = new RGB( 0x84, 0xA4, 0xC1 );  //new RGB( 150, 150, 150 );
-        RGB disabled = new RGB( 0xb0, 0xb0, 0xb0 );
-        putConfig( NORMAL12, new ReplaceBlackSvgConfiguration( normal, 16 ) );
-        putConfig( NORMAL24, new ReplaceBlackSvgConfiguration( normal, 24 ) );
-        putConfig( NORMAL48, new ReplaceBlackSvgConfiguration( normal, 48 ) );
-        putConfig( ACTION48, new ReplaceBlackSvgConfiguration( action, 48 ) );
-        putConfig( ACTION24, new ReplaceBlackSvgConfiguration( action, 24 ) );
-        putConfig( ACTION12, new ReplaceBlackSvgConfiguration( action, 16 ) );
+        putConfig( NORMAL12, new ReplaceBlackSvgConfiguration( COLOR_NORMAL, 16 ) );
+        putConfig( NORMAL24, new ReplaceBlackSvgConfiguration( COLOR_NORMAL, 24 ) );
+        putConfig( NORMAL48, new ReplaceBlackSvgConfiguration( COLOR_NORMAL, 48 ) );
+        putConfig( ACTION48, new ReplaceBlackSvgConfiguration( COLOR_ACTION, 48 ) );
+        putConfig( ACTION24, new ReplaceBlackSvgConfiguration( COLOR_ACTION, 24 ) );
+        putConfig( ACTION12, new ReplaceBlackSvgConfiguration( COLOR_ACTION, 16 ) );
         putConfig( OK24, new ReplaceBlackSvgConfiguration( new RGB( 0x81, 0xCC, 0x39 ), 24 ) );
         putConfig( ALERT24, new ReplaceBlackSvgConfiguration( new RGB( 0xFF, 0xD2, 0x2C ), 24 ) );
-        putConfig( ERROR24, new ReplaceBlackSvgConfiguration( new RGB( 0xFF, 0x61, 0x39 ), 24 ) );
-        putConfig( WHITE24, new ReplaceBlackSvgConfiguration( white, 24 ) );
+        putConfig( ERROR24, new ReplaceBlackSvgConfiguration( COLOR_DANGER, 24 ) );
+        putConfig( WHITE24, new ReplaceBlackSvgConfiguration( COLOR_WHITE, 24 ) );
         putConfig( OVR12_ACTION, new ReplaceBlackSvgConfiguration( new RGB( 140, 240, 100 ), 16 ) );
-        putConfig( DISABLED24, new ReplaceBlackSvgConfiguration( disabled, 24 ) );
-        putConfig( DISABLED12, new ReplaceBlackSvgConfiguration( disabled, 16 ) );
+        putConfig( DISABLED24, new ReplaceBlackSvgConfiguration( COLOR_DISABLED, 24 ) );
+        putConfig( DISABLED12, new ReplaceBlackSvgConfiguration( COLOR_DISABLED, 16 ) );
     }
 
     

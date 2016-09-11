@@ -28,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
@@ -113,6 +114,8 @@ public class Dashboard
             int expandable = dashletSite.isExpandable.get() ? IPanelSection.EXPANDABLE : SWT.NONE;
             IPanelSection section = tk.createPanelSection( parent, title, border, expandable );
             
+            ((DashletSiteImpl)dashletSite).section = section;
+            
             List<LayoutConstraint> constraints = dashletSite.constraints.get();
             section.addConstraint( constraints.toArray( new LayoutConstraint[constraints.size()]) );
             
@@ -138,12 +141,14 @@ public class Dashboard
     /**
      * 
      */
-    class DashletSiteImpl
+    protected class DashletSiteImpl
             extends DashletSite {
 
         private IDashlet            dashlet;
         
         private boolean             submitable = true;
+
+        private IPanelSection       section;
 
         public DashletSiteImpl( IDashlet dashlet ) {
             this.dashlet = dashlet;
@@ -176,6 +181,11 @@ public class Dashboard
             return submitable;
         }
         
+        @Override
+        public Control getTitleControl() {
+            assert section != null : "getTitleControl() is available in createContents()";
+            return section.getTitleControl();
+        }
     }
     
 }

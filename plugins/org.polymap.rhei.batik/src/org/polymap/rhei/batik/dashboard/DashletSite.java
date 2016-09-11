@@ -16,6 +16,8 @@ package org.polymap.rhei.batik.dashboard;
 
 import java.util.List;
 
+import org.eclipse.swt.widgets.Control;
+
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.Defaults;
@@ -55,7 +57,7 @@ public abstract class DashletSite
 
     @Defaults
     public Config<Boolean>                isExpandable;
-    
+
     /**
      * Shortcut to {@link #constraints}.
      */
@@ -71,5 +73,7 @@ public abstract class DashletSite
     public abstract void enableSubmit( boolean enabled );
 
     public abstract boolean isSubmitable();
+
+    public abstract Control getTitleControl();
     
 }
