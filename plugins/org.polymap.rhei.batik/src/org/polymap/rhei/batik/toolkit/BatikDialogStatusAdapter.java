@@ -19,6 +19,8 @@ import static org.polymap.core.ui.FormDataFactory.on;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.google.common.base.Throwables;
+
 import org.eclipse.swt.widgets.Label;
 
 import org.eclipse.core.runtime.IStatus;
@@ -59,7 +61,9 @@ public class BatikDialogStatusAdapter
                         .fill().noBottom().width( 350 ).control();
 
                 if (status.getException() != null) {
-                    on( tk.createFlowText( parent, "**Reason**: " + status.getException().getMessage() ) )
+                    Throwable exc = status.getException();
+                    Throwable root = Throwables.getRootCause( exc );
+                    on( tk.createFlowText( parent, "**Reason**: " + root.getMessage() ) )
                             .fill().top( msg );
                 }
             });
