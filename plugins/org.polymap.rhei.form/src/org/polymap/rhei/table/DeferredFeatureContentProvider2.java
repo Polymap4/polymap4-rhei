@@ -126,6 +126,7 @@ public class DeferredFeatureContentProvider2
     }
 
 
+    @Override
     public synchronized void setSortOrder( Comparator sortOrder ) {
         while (updator != null) {
             updator.cancel();

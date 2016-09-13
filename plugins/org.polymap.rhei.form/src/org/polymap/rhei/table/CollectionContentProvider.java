@@ -17,6 +17,7 @@ package org.polymap.rhei.table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.geotools.feature.FeatureCollection;
 import org.opengis.feature.Feature;
@@ -97,6 +98,14 @@ public class CollectionContentProvider
 
         public String fid() {
             return feature.getIdentifier().getID();
+        }
+
+        @Override
+        public <T> Optional<T> unwrap( Class<T> targetClass ) {
+            if (targetClass.isAssignableFrom( feature.getClass() )) {
+                return Optional.of( (T)feature );
+            }
+            return super.unwrap( targetClass );
         }
 
     }

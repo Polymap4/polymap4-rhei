@@ -15,6 +15,8 @@
  */
 package org.polymap.rhei.table;
 
+import java.util.Optional;
+
 import java.io.IOException;
 
 import org.geotools.feature.FeatureCollection;
@@ -80,7 +82,6 @@ public class FeatureCollectionContentProvider
 
         private Feature         feature;
 
-
         protected FeatureTableElement( Feature feature ) {
             this.feature = feature;
         }
@@ -99,6 +100,14 @@ public class FeatureCollectionContentProvider
 
         public String fid() {
             return feature.getIdentifier().getID();
+        }
+
+        @Override
+        public <T> Optional<T> unwrap( Class<T> targetClass ) {
+            if (targetClass.isAssignableFrom( feature.getClass() )) {
+                return Optional.of( (T)feature );
+            }
+            return super.unwrap( targetClass );
         }
 
     }

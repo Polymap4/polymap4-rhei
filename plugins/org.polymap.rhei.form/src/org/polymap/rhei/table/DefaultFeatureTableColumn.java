@@ -365,7 +365,7 @@ public class DefaultFeatureTableColumn
 
         public String getText( Object element ) {
             return element == FeatureTableViewer.LOADING_ELEMENT
-                    ? "Laden..."
+                    ? "Loading..."
                     : delegate.getText( element );
         }
 

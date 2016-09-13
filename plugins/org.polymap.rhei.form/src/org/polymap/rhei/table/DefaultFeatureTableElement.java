@@ -14,6 +14,8 @@
  */
 package org.polymap.rhei.table;
 
+import java.util.Optional;
+
 /**
  * Provides default method implementations in order to support for feature selection
  * in table.
@@ -22,6 +24,11 @@ package org.polymap.rhei.table;
  */
 public abstract class DefaultFeatureTableElement
         implements IFeatureTableElement {
+
+    @Override
+    public <T> Optional<T> unwrap( Class<T> targetClass ) {
+        return Optional.empty();
+    }
 
     @Override
     public int hashCode() {

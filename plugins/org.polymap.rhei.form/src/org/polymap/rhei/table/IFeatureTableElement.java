@@ -15,6 +15,8 @@
  */
 package org.polymap.rhei.table;
 
+import java.util.Optional;
+
 import org.opengis.feature.Feature;
 
 import org.eclipse.jface.viewers.LabelProvider;
@@ -37,6 +39,9 @@ import org.polymap.rhei.table.DefaultFeatureTableColumn.DefaultCellLabelProvider
 public interface IFeatureTableElement {
 
     public String fid();
+    
+    
+    public <T> Optional<T> unwrap( Class<T> targetClass );
     
     
     /**

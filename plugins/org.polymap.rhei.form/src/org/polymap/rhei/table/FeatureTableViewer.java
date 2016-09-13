@@ -44,6 +44,7 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ILazyContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
@@ -54,6 +55,7 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 import org.polymap.core.runtime.ListenerList;
+import org.polymap.core.runtime.UIThreadExecutor;
 import org.polymap.core.ui.SelectionAdapter;
 import org.polymap.core.ui.UIUtils;
 
@@ -70,7 +72,7 @@ public class FeatureTableViewer
     /** Property type that is fired when the content of the viewer has changed. */
     public static final String              PROP_CONTENT_SIZE = "contentsize";
 
-    public static final Object              LOADING_ELEMENT = new Object();
+    public static final Object              LOADING_ELEMENT = "LOADING_ELEMENT";
 
     public static final Color               LOADING_FOREGROUND = UIUtils.getColor( 0xa0, 0xa0, 0xa0 );
     public static final Color               LOADING_BACKGROUND = UIUtils.getColor( 0xfa, 0xfb, 0xff );
@@ -275,6 +277,9 @@ public class FeatureTableViewer
                 updateSelection( sel );
             }
         }
+        else if (getContentProvider() instanceof ILazyContentProvider) {
+            throw new UnsupportedOperationException();
+        }
         else {
             ISelection sel = new StructuredSelection( search );
             setSelection( sel, reveal );
@@ -397,23 +402,20 @@ public class FeatureTableViewer
     }
 
     
-    protected void markTableLoading( final boolean loading ) {
-        Display display = getTable().getDisplay();
-        display.asyncExec( new Runnable() {
-            public void run() {
-                if (getTable().isDisposed()) {
-                    return;
-                }
-                if (loading) {
-                    getTable().setForeground( LOADING_FOREGROUND );
-                    getTable().setBackground( LOADING_BACKGROUND );
-//                    setBusy( true );
-                }
-                else {
-                    getTable().setForeground( foreground );
-                    getTable().setBackground( background );
-//                    setBusy( false );
-                }
+    public void markTableLoading( final boolean loading ) {
+        UIThreadExecutor.asyncFast( () -> {
+            if (getTable().isDisposed()) {
+                return;
+            }
+            if (loading) {
+                getTable().setForeground( LOADING_FOREGROUND );
+                getTable().setBackground( LOADING_BACKGROUND );
+                //                    setBusy( true );
+            }
+            else {
+                getTable().setForeground( foreground );
+                getTable().setBackground( background );
+                //                    setBusy( false );
             }
         });
     }
