@@ -17,7 +17,6 @@ package org.polymap.rhei.table;
 
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Optional;
 
 import org.opengis.feature.type.PropertyDescriptor;
 
@@ -164,8 +163,7 @@ public class DefaultFeatureTableColumn
     @Override
     public DefaultFeatureTableColumn sort( int dir ) {
         assert viewerColumn != null : "Add this column to the viewer before calling sort()!";
-        Comparator<IFeatureTableElement> comparator = newComparator( dir );
-        viewer.sortContent( comparator, dir, viewerColumn.getColumn() );
+        viewer.sortContent( this, dir );
         return this;
     }
     
@@ -215,8 +213,7 @@ public class DefaultFeatureTableColumn
                     else {
                         dir = SWT.DOWN;
                     }
-                    Comparator<IFeatureTableElement> comparator = newComparator( dir );
-                    viewer.sortContent( comparator, dir, selectedColumn );
+                    viewer.sortContent( DefaultFeatureTableColumn.this, dir );
                 }
             });
         }
@@ -236,44 +233,14 @@ public class DefaultFeatureTableColumn
     }
 
     
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * This default implementation returns a {@link DefaultColumnComparator}.
+     */
+    @Override
     public Comparator<IFeatureTableElement> newComparator( int sortDir ) {
-        Comparator<IFeatureTableElement> result = new Comparator<IFeatureTableElement>() {
-            
-            private String                  sortPropName = getName();
-            private ColumnLabelProvider     lp = getLabelProvider();
-            
-            @Override
-            public int compare( IFeatureTableElement elm1, IFeatureTableElement elm2 ) {
-                // the value from the elm or String from LabelProvider as fallback
-                Object value1 = Optional.ofNullable( elm1.getValue( sortPropName ) ).orElse( lp.getText( elm1 ) );
-                Object value2 = Optional.ofNullable( elm2.getValue( sortPropName ) ).orElse( lp.getText( elm2 ) );
-                
-                if (value1 == null && value2 == null) {
-                    return 0;
-                }
-                else if (value1 == null) {
-                    return -1;
-                }
-                else if (value2 == null) {
-                    return 1;
-                }
-                else if (!value1.getClass().equals( value2.getClass() )) {
-                    throw new RuntimeException( "Column type do not match: " + value1.getClass().getSimpleName() + " - " + value1.getClass().getSimpleName() );
-                }
-                else if (value1 instanceof String) {
-                    return ((String)value1).compareToIgnoreCase( (String)value2 );
-                }
-                else if (value1 instanceof Number) {
-                    return (int)(((Number)value1).doubleValue() - ((Number)value2).doubleValue());
-                }
-                else if (value1 instanceof Date) {
-                    return ((Date)value1).compareTo( (Date)value2 );
-                }
-                else {
-                    return value1.toString().compareTo( value2.toString() );
-                }
-            }
-        };
+        Comparator<IFeatureTableElement> result = new DefaultColumnComparator( this );
         return sortDir == SWT.UP ? result.reversed() : result;
     }
 

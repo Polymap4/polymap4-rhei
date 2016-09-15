@@ -14,8 +14,6 @@
  */
 package org.polymap.rhei.table;
 
-import java.util.Comparator;
-
 import org.eclipse.jface.viewers.ILazyContentProvider;
 
 /**
@@ -24,9 +22,10 @@ import org.eclipse.jface.viewers.ILazyContentProvider;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public interface IDeferredFeatureContentProvider
-        extends ILazyContentProvider {
+        extends ILazyContentProvider, ISortingContentProvider {
 
-    void setSortOrder( Comparator<IFeatureTableElement> comparator );
+    @Override
+    public void sortContent( IFeatureTableColumn column, int dir );
 
     int findElement( Object search );
 

@@ -306,8 +306,7 @@ public class FormFeatureTableColumn
                     else {
                         dir = SWT.DOWN;
                     }
-                    Comparator<IFeatureTableElement> comparator = newComparator( dir );
-                    viewer.sortContent( comparator, dir, selectedColumn );
+                    viewer.sortContent( FormFeatureTableColumn.this, dir );
                 }
             });
         }
@@ -379,8 +378,7 @@ public class FormFeatureTableColumn
     @Override
     public FormFeatureTableColumn sort( int dir ) {
         assert viewerColumn != null : "Add this column to the viewer before calling sort()!";
-        Comparator<IFeatureTableElement> comparator = newComparator( dir );
-        viewer.sortContent( comparator, dir, viewerColumn.getColumn() );
+        viewer.sortContent( FormFeatureTableColumn.this, dir );
         return this;
     }
 

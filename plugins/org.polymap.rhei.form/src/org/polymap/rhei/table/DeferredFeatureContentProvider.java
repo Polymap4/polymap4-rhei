@@ -92,9 +92,11 @@ class DeferredFeatureContentProvider
     }
 
     
-    public void setSortOrder( Comparator sortOrder ) {
-        this.sortedElements = new LazySortedCollection( sortOrder );
-        super.setSortOrder( sortOrder );
+    @Override
+    public void sortContent( IFeatureTableColumn column, int dir ) {
+        Comparator<IFeatureTableElement> comparator = column.newComparator( dir );
+        this.sortedElements = new LazySortedCollection( comparator );
+        super.setSortOrder( comparator );
     }
 
 

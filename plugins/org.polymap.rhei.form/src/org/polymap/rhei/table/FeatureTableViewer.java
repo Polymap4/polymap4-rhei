@@ -22,8 +22,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.geotools.data.FeatureSource;
-import org.geotools.feature.FeatureCollection;
-import org.opengis.filter.Filter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,8 +36,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -61,6 +57,15 @@ import org.polymap.core.ui.UIUtils;
 
 /**
  *
+ * <p/>
+ * Use of the following content providers:
+ * <ul>
+ * <li>{@link LazyFeatureContentProvider}: filter and sorting in backend {@link FeatureSource}</li>
+ * <li>{@link DeferredFeatureContentProvider2}: sorting in background thread via {@link Comparator}</li>
+ * <li>{@link FeatureCollectionContentProvider}: simple provider for small number of features </li>
+ * <li>{@link CollectionContentProvider}: simple provider for small number of features </li>
+ * <li></li>
+ * </ul>
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
@@ -204,12 +209,14 @@ public class FeatureTableViewer
      */
     @Override
     public void refresh() {
+        // FIXME ???
         super.refresh();
-        if (getContentProvider() instanceof DeferredFeatureContentProvider2) {
-            DeferredFeatureContentProvider2 provider = (DeferredFeatureContentProvider2)getContentProvider();
-            provider.inputChanged( this, null, null );
-            provider.setSortOrder( provider.getSortOrder() );
-        }        
+        
+//        if (getContentProvider() instanceof DeferredFeatureContentProvider2) {
+//            DeferredFeatureContentProvider2 provider = (DeferredFeatureContentProvider2)getContentProvider();
+//            provider.inputChanged( this, null, null );
+//            provider.sortContent( sor provider.getSortOrder() );
+//        }        
     }
     
     
@@ -307,43 +314,32 @@ public class FeatureTableViewer
     }
 
     
-    /**
-     * Set the content of this viewer. A {@link DeferredFeatureContentProvider} is
-     * used to fetch and sort the features.
-     * 
-     * @param fs
-     * @param filter
-     */
-    public void setContent( final FeatureSource fs, final Filter filter ) {
-        TableColumn sortColumn = getTable().getSortColumn();
-        int sortDir = SWT.DOWN;
-        if (sortColumn == null) {
-            sortColumn = getTable().getColumn( 0 );
-            getTable().setSortColumn( sortColumn );
-            getTable().setSortDirection( sortDir );
-        }
-        else {
-            sortDir = getTable().getSortDirection();
-        }
-        
-        String colName = (String)sortColumn.getData( "name" );
-        IFeatureTableColumn sortTableColumn = displayed.get( colName );
-
-        setContentProvider( new DeferredFeatureContentProvider2( 
-                this, fs, filter, sortTableColumn.newComparator( sortDir ), getFilters() ) );
-        setInput( fs );
-    }
-
-
-    public void setContent( FeatureCollection coll ) {
-        setContentProvider( new FeatureCollectionContentProvider( coll ) );
-        setInput( coll );
-    }
-
-
-    public void setContent( IFeatureContentProvider provider ) {
-        setContentProvider( provider );
-    }
+//    /**
+//     * Set the content of this viewer. A {@link DeferredFeatureContentProvider} is
+//     * used to fetch and sort the features.
+//     * 
+//     * @param fs
+//     * @param filter
+//     */
+//    public void setContent( final FeatureSource fs, final Filter filter ) {
+//        TableColumn sortColumn = getTable().getSortColumn();
+//        int sortDir = SWT.DOWN;
+//        if (sortColumn == null) {
+//            sortColumn = getTable().getColumn( 0 );
+//            getTable().setSortColumn( sortColumn );
+//            getTable().setSortDirection( sortDir );
+//        }
+//        else {
+//            sortDir = getTable().getSortDirection();
+//        }
+//        
+//        String colName = (String)sortColumn.getData( "name" );
+//        IFeatureTableColumn sortTableColumn = displayed.get( colName );
+//
+//        setContentProvider( new DeferredFeatureContentProvider2( 
+//                this, fs, filter, sortTableColumn, sortDir, getFilters() ) );
+//        setInput( fs );
+//    }
 
 
     public boolean addPropertyChangeListener( PropertyChangeListener listener ) {
@@ -379,25 +375,30 @@ public class FeatureTableViewer
     /**
      * Sorts the table entries by delegating the call to the content provider.
      * 
-     * @param comparator
-     * @param dir
+     * @param column The table column to sort.
+     * @param dir {@link SWT#UP}, {@link SWT#DOWN} or {@link SWT#NONE}
      * @param column
      */
-    public void sortContent( final Comparator<IFeatureTableElement> comparator, int dir, TableColumn column ) {
+    public void sortContent( IFeatureTableColumn column, int dir ) {
         IContentProvider contentProvider = getContentProvider();
-        // deferred
-        if (contentProvider instanceof IDeferredFeatureContentProvider) {
-            ((IDeferredFeatureContentProvider)contentProvider).setSortOrder( comparator );
+        
+        if (contentProvider == null) {
+            throw new IllegalStateException( "Call sortContent() after content provider is set.");
+        }
+        // ContentProvider
+        else if (contentProvider instanceof ISortingContentProvider) {
+            ((ISortingContentProvider)contentProvider).sortContent( column, dir );
         }
         // normal
         else {
+            Comparator<IFeatureTableElement> comparator = column.newComparator( dir );
             setComparator( new ViewerComparator( comparator ) {
                 public int compare( Viewer viewer, Object e1, Object e2 ) {
                     return comparator.compare( (IFeatureTableElement)e1, (IFeatureTableElement)e2 );
                 }
             });
         }
-        getTable().setSortColumn( column );
+        getTable().setSortColumn( column.getViewerColumn().getColumn() );
         getTable().setSortDirection( dir );
     }
 

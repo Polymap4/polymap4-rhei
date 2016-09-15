@@ -18,6 +18,7 @@ import java.util.Comparator;
 import org.eclipse.swt.SWT;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 
 /**
@@ -52,6 +53,14 @@ public interface IFeatureTableColumn {
     
     public TableViewerColumn getViewerColumn();
     
+    /**
+     * Creates a new {@link Comparable} for sorting this column via
+     * {@link FeatureTableViewer#sortContent(Comparator, int, TableColumn)}. Some {@link IContentProvider}s
+     * may do sorting by other means. In this case this method is not called then.
+     *
+     * @param sortDir {@link SWT#UP}, {@link SWT#DOWN} or {@link SWT#NONE}
+     * @return Newly created {@link Comparator} instance.
+     */
     public Comparator<IFeatureTableElement> newComparator( int sortDir );
 
     /**
