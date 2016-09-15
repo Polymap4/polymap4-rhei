@@ -45,20 +45,24 @@ import org.polymap.core.runtime.UIJob;
 import org.polymap.core.runtime.UIThreadExecutor;
 import org.polymap.core.runtime.cache.Cache;
 import org.polymap.core.runtime.cache.CacheConfig;
+import org.polymap.core.runtime.collect.Function;
 
 /**
  * Uses the backend {@link FeatureSource} for sorting. Elements are loaded in a
  * background job so that accessing the backend FeatureSource does not block the
  * display thread.
+ * <p/>
+ * Accepts {@link FeatureSource} and {@link FeatureCollection} inputs.
  *
- * @author Falko Br√§utigam
+ * @author Falko Br‰utigam
  */
 public class LazyFeatureContentProvider
         implements ILazyContentProvider, ISortingContentProvider {
 
     private static final Log log = LogFactory.getLog( LazyFeatureContentProvider.class );
     
-    private FeatureSource           fs;
+    /** Provides a {@link FeatureCollection} from different inputs. */
+    private Function<Query,FeatureCollection,IOException> fc;
     
     private Filter                  filter = Filter.INCLUDE;
     
@@ -87,13 +91,49 @@ public class LazyFeatureContentProvider
         if (newInput == null) {
             return;
         }
+        // FeatureSource
         else if (newInput instanceof FeatureSource) {
-            this.fs = (FeatureSource)newInput;
+            this.fc = query -> ((FeatureSource)newInput).getFeatures( query );
+        }
+        // FeatureCollection
+        else if (newInput instanceof FeatureCollection) {
+            this.fc = query -> {
+                if (query.getFilter().equals( Filter.INCLUDE )) {
+                    return (FeatureCollection)newInput;
+                }
+                else {
+                    FeatureCollection result = ((FeatureCollection)newInput).subCollection( query.getFilter() );
+                    SortBy[] sortBy = query.getSortBy();
+                    if (sortBy != null && sortBy.length > 1) {
+                        throw new UnsupportedOperationException( "GeoAPI FeatureSource can sort by multiple columns, however FeatrueCollection can not! :(");
+                    }
+                    else if (sortBy != null && sortBy.length > 0) {
+                        result.sort( sortBy[0] );
+                    }
+                    if (query.getStartIndex().intValue() > 0 || query.getMaxFeatures() < Query.DEFAULT_MAX) {
+                        throw new RuntimeException( "not yet..." );
+//                        DefaultFeatureCollection limited = new DefaultFeatureCollection();
+//                        try (
+//                            FeatureIterator it = result.features();
+//                        ){
+//                            for (int i=0; i<query.getStartIndex().intValue(); i++) {
+//                                throw new RuntimeException( "not yet..." );
+//                            }
+//                        }
+                    }
+                    return result;
+                }
+            };
         }
         else {
             throw new IllegalArgumentException( "Input is not a FeatureSource: " + newInput );
         }
         
+        refreshViewer();
+    }
+
+    
+    protected void refreshViewer() {
         cache.clear();
         viewer.setItemCount( 1 );
         viewer.replace( LOADING_ELEMENT, 0 );
@@ -101,7 +141,7 @@ public class LazyFeatureContentProvider
         new UIJob( "Size" ) {
             @Override
             protected void runWithException( IProgressMonitor monitor ) throws Exception {
-                int size = fs.getFeatures( filter ).size();
+                int size = fc.apply( new Query( null, filter ) ).size();
                 UIThreadExecutor.async( () -> {
                     if (!viewer.getControl().isDisposed()) {
                         viewer.setItemCount( size );
@@ -114,7 +154,7 @@ public class LazyFeatureContentProvider
         }.schedule();
     }
 
-
+    
     @Override
     public void dispose() {
     }
@@ -124,7 +164,7 @@ public class LazyFeatureContentProvider
         this.filter = newFilter;
 
         if (viewer != null) {
-            inputChanged( viewer, fs, fs );
+            refreshViewer();
         }
     }
     
@@ -159,7 +199,7 @@ public class LazyFeatureContentProvider
         }
         
         // search entire FeatureSource
-        FeatureCollection features = fs.getFeatures( query() );
+        FeatureCollection features = fc.apply( query() );
         try (
             FeatureIterator it = features.features();
         ){
@@ -220,22 +260,23 @@ public class LazyFeatureContentProvider
             Query query = query();
             query.setMaxFeatures( num );
             query.setStartIndex( index );
-            FeatureCollection features = fs.getFeatures( query );
-            UIThreadExecutor.async( () -> {
-                try (
-                    FeatureIterator it = features.features();
-                ){
-                    for (int i=0; i<num && it.hasNext(); i++) {
-                        SimpleFeature feature = (SimpleFeature)it.next();
-                        log.info( "Feature loaded: " + feature.getID() );
+            FeatureCollection features = fc.apply( query );
+            try (
+                FeatureIterator it = features.features();
+            ){
+                for (int i=0; i<num && it.hasNext(); i++) {
+                    SimpleFeature feature = (SimpleFeature)it.next();
+                    log.info( "Feature loaded: " + feature.getID() );
+                    int offset = i;
+                    UIThreadExecutor.async( () -> {
                         if (!viewer.getControl().isDisposed()) {
                             SimpleFeatureTableElement elm = new SimpleFeatureTableElement( feature );
-                            cache.putIfAbsent( index+i, elm );
-                            viewer.replace( elm, index+i );
+                            cache.putIfAbsent( index+offset, elm );
+                            viewer.replace( elm, index+offset );
                         }
-                    }
+                    });
                 }
-            });
+            }
         }
     }
 

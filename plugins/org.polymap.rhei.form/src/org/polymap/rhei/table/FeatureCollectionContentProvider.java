@@ -1,6 +1,6 @@
 /*
  * polymap.org
- * Copyright 2011, Falko Bräutigam, and other contributors as
+ * Copyright (C) 2011-2016, Falko Bräutigam, and other contributors as
  * indicated by the @authors tag. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
@@ -42,8 +42,9 @@ public class FeatureCollectionContentProvider
     private FeatureCollection           coll;
 
 
-    public FeatureCollectionContentProvider( FeatureCollection delegate ) {
-        this.coll = delegate;
+    @Override
+    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
+        this.coll = (FeatureCollection)newInput;
     }
 
 
@@ -69,10 +70,6 @@ public class FeatureCollectionContentProvider
     public void dispose() {
     }
 
-
-    @Override
-    public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
-    }
 
     /**
      *
