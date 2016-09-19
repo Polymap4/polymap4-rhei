@@ -16,6 +16,7 @@ package org.polymap.rhei.batik.toolkit;
 
 import static org.polymap.core.ui.FormDataFactory.on;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -63,7 +64,8 @@ public class BatikDialogStatusAdapter
                 if (status.getException() != null) {
                     Throwable exc = status.getException();
                     Throwable root = Throwables.getRootCause( exc );
-                    on( tk.createFlowText( parent, "**Reason**: " + root.getMessage() ) )
+                    String reason = StringUtils.abbreviate( root.getMessage(), 40 );
+                    on( tk.createFlowText( parent, "**Reason**: " + reason ) )
                             .fill().top( msg );
                 }
             });
