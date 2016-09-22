@@ -5,18 +5,22 @@ ScrollBar {
   background-image: none;
   border: none;
   border-radius: 0;
-  border: 2px solid inherit;
-  width: 8px;
+  border: 3px solid inherit;
+  width: 10px;
 }
 
 ScrollBar-Thumb {
-  background-color: lighten( $action-bg, 20% );  /*#d8d8d8;*/
-  border: none;  /*1px solid #e8e8e8;*/
+  background-color: $separator2;
+  border: none;
   border-radius: 15px;
-  /*background-image: url( resource/widget/rap/scrollbar/scrollbar-background.png );*/
   min-height: 20px;
 }
-
+ScrollBar-Thumb:hover {
+  background-color: lighten( $action-bg, 15% );
+}
+ScrollBar-Thumb:pressed {
+  background-color: lighten( $action-bg, 5% );
+}
 ScrollBar-UpButton,
 ScrollBar-DownButton {
   background-color: transparent;
