@@ -160,10 +160,7 @@ public class DefaultToolkit
         Label result = new Label( parent, stylebits( styles ) | SWT.WRAP ) {
             @Override
             public void setText( String _text ) {
-                // process markdown
-                LinkRenderer linkRenderer = new DelegatingLinkRenderer( this );
-                String processed = new PegDownProcessor().markdownToHtml( _text, linkRenderer );
-                super.setText( processed );
+                super.setText( markdownToHtml( _text, this ) );
             }
         };
         adapt( result, false, false );
@@ -174,6 +171,13 @@ public class DefaultToolkit
         return result;
     }
 
+    @Override
+    public String markdownToHtml( String markdown, Widget widget ) {
+        LinkRenderer linkRenderer = new DelegatingLinkRenderer( widget );
+        String processed = new PegDownProcessor().markdownToHtml( markdown, linkRenderer );
+        return processed;
+    }
+    
     @Override
     public Label createFlowText( Composite parent, String text, ILinkAction[] linkActions, int... styles ) {
         throw new RuntimeException( "not yet implemented" );

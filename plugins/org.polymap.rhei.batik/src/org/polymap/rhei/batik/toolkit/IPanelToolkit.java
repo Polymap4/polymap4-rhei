@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 
 import org.eclipse.ui.forms.widgets.Section;
 
@@ -107,6 +108,8 @@ public interface IPanelToolkit
      * @return The newly created control.
      */
     public Label createFlowText( Composite parent, String text, ILinkAction[] linkActions, int... styles );
+
+    public String markdownToHtml( String markdown, Widget widget );
 
     public Link createLink( Composite parent, String text, int... styles );
 
