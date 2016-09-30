@@ -25,6 +25,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+
+import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 
@@ -134,7 +142,24 @@ public class PageStack<K>
     public void removePage( K key ) {
         Page page = pages.remove( key );
         if (!page.control.isDisposed()) {
-            page.control.dispose();
+            page.control.moveAbove( null );
+            page.control.setVisible( false ); 
+            log.info( "remove: " + key );
+            
+            // dispose the control later to let the hide animation run properly;
+            // don't care about UI callback, just dispose on next request
+            new Job( "page.control.dispose()" ) {
+                private Display display = UIUtils.sessionDisplay();
+                private Composite control = page.control;
+                @Override
+                protected IStatus run( IProgressMonitor monitor ) {
+                    display.asyncExec( () -> {
+                        control.dispose();
+                        log.info( "disposed: " + key );
+                    });
+                    return Status.OK_STATUS;
+                }
+            }.schedule( 1000 );
         }
         page.control = null;
     }

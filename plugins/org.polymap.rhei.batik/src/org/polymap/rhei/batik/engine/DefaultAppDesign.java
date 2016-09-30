@@ -195,13 +195,6 @@ public class DefaultAppDesign
 
     protected Composite fillHeaderArea( Composite parent ) {
         return null;
-//        Composite result = new Composite( parent, SWT.NO_FOCUS | SWT.BORDER );
-//        UIUtils.setVariant( result, IAppDesign.CSS_HEADER );
-//        result.setLayout( FormLayoutFactory.defaults().margins( 0, 0 ).create() );
-//        Label l = new Label( result, SWT.NONE );
-//        UIUtils.setVariant( l, IAppDesign.CSS_HEADER );
-//        l.setText( "Batik Application" );
-//        return result;
     }
 
 
@@ -225,7 +218,7 @@ public class DefaultAppDesign
             protected void preUpdateLayout() {
                 previousShown = getPages().stream()
                         .filter( page -> page.isShown )
-                        .collect( Collectors.toSet() );
+                        .collect( Collectors.toSet() );                
                 log.debug( "previousShown: " + previousShown );
             }
             
@@ -277,7 +270,7 @@ public class DefaultAppDesign
     protected void createPanelContents( final IPanel panel, final Composite parent ) {
         // margins for shadow
         parent.setLayout( FormLayoutFactory.defaults()/*.margins( 1, 3, 0, 3 )*/.create() );
-        UIUtils.setVariant( parent, CSS_PANEL );
+        //UIUtils.setVariant( parent, CSS_PANEL );
         
         // head
         Composite head = setVariant( new Composite( parent, SWT.BORDER | SWT.NO_FOCUS ), CSS_PANEL_HEADER );
@@ -486,7 +479,7 @@ public class DefaultAppDesign
      * closed before new panel gets opened, are displayed to the user. If it is to
      * <b>long</b> then there might be an remarkable delay in UI response.
      */
-    @EventHandler( display=true, delay=50 )
+    @EventHandler( display=true, delay=75 )
     protected void panelChanged( List<PanelChangeEvent> evs ) {
         log.debug( "events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
         
@@ -505,12 +498,16 @@ public class DefaultAppDesign
                 // visible
                 if (newStatus == PanelStatus.VISIBLE && oldStatus == PanelStatus.INITIALIZED) {
                     if (!panelsArea.hasPage( pageId )) {
+                        // all current panels fly-out to the left
+                        panelsArea.getPages().stream().forEach( page -> UIUtils.setVariant( page.control, CSS_PANEL+"-left" ) );
+                        
                         // every new panel is created on top
                         Composite page = panelsArea.createPage( pageId, pagePriorityCount++, new PanelSizeSupplier() {
                             @Override public int min() { return ev.getSource().minWidth.get(); }
                             @Override public int max() { return ev.getSource().maxWidth.get(); }
                             @Override public int preferred() { return ev.getSource().preferredWidth.get(); }
                         });
+                        UIUtils.setVariant( page, CSS_PANEL+"-right" );
                         createPanelContents( panel, page );
                         layoutRefreshNeeded = true;
                     }
@@ -524,6 +521,9 @@ public class DefaultAppDesign
                 else if (newStatus == null) {
                     // not yet initialized panels have no page
                     if (panelsArea.hasPage( pageId )) {
+                        Page page = panelsArea.getPage( pageId );
+                        UIUtils.setVariant( page.control, CSS_PANEL+"-right" );
+                        log.info( "disposed: " + pageId );
                         panelsArea.removePage( pageId );
                         layoutRefreshNeeded = true;
                     }

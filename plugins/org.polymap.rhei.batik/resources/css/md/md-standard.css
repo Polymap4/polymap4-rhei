@@ -1157,20 +1157,27 @@ Composite[BORDER].atlas-panel {
 }
 
 /* line 26, ../../sass/md/_batik_panel.scss */
-Composite.atlas-panel,
-Composite[BORDER].atlas-panel,
-Composite.atlas-navi-switcher,
-Composite[BORDER].atlas-navi-switcher {
-  animation: fadeIn 300ms ease-in, fadeOut 300ms ease-out;
+Composite.atlas-panel-right,
+Composite[BORDER].atlas-panel-right {
+  padding: 1px 3px 0px 3px;
+  animation: flyInRight 250ms ease-out, flyOutRight 200ms ease-in;
 }
 
-/* line 33, ../../sass/md/_batik_panel.scss */
+/* line 31, ../../sass/md/_batik_panel.scss */
+Composite.atlas-panel-left,
+Composite[BORDER].atlas-panel-left {
+  padding: 1px 3px 0px 3px;
+  animation: flyInLeft 200ms ease-out, flyOutLeft 150ms ease-in;
+  /*animation: fadeIn 400ms ease-in, fadeOut 400ms ease-out;*/
+}
+
+/* line 38, ../../sass/md/_batik_panel.scss */
 Composite.atlas-panel-client {
   /* space for section shadow does not work here */
   /* padding: 5px 5px; */
 }
 
-/* line 38, ../../sass/md/_batik_panel.scss */
+/* line 43, ../../sass/md/_batik_panel.scss */
 Composite[BORDER].atlas-panel-header {
   border-radius: 2px;
   border: 0px solid #ffffff;
@@ -1179,7 +1186,7 @@ Composite[BORDER].atlas-panel-header {
   box-shadow: 0px 2px 3px #b0b0b0;
 }
 
-/* line 46, ../../sass/md/_batik_panel.scss */
+/* line 51, ../../sass/md/_batik_panel.scss */
 Button[PUSH].atlas-panel-header,
 Button[TOGGLE].atlas-panel-header {
   font: 15px "Roboto", "Noto", sans-serif;
@@ -1194,7 +1201,7 @@ Button[TOGGLE].atlas-panel-header {
   box-shadow: none;
 }
 
-/* line 60, ../../sass/md/_batik_panel.scss */
+/* line 65, ../../sass/md/_batik_panel.scss */
 Button[PUSH]:hover.atlas-panel-header,
 Button[TOGGLE]:hover.atlas-panel-header {
   color: #ffffff;
@@ -1202,7 +1209,7 @@ Button[TOGGLE]:hover.atlas-panel-header {
   background-color: #599fe2;
 }
 
-/* line 67, ../../sass/md/_batik_panel.scss */
+/* line 72, ../../sass/md/_batik_panel.scss */
 Label.atlas-panel-header {
   font: 16px "Roboto", "Noto", sans-serif;
   color: #ffffff;
@@ -2069,16 +2076,14 @@ ScrollBar-Thumb {
 /* line 18, ../../sass/md/_scrollbar.scss */
 ScrollBar-Thumb:hover {
   background-color: #9ac5ed;
-  border: 2px solid #9ac5ed;
 }
 
-/* line 22, ../../sass/md/_scrollbar.scss */
+/* line 21, ../../sass/md/_scrollbar.scss */
 ScrollBar-Thumb:pressed {
   background-color: #6face6;
-  border: 2px solid #6face6;
 }
 
-/* line 26, ../../sass/md/_scrollbar.scss */
+/* line 24, ../../sass/md/_scrollbar.scss */
 ScrollBar-UpButton,
 ScrollBar-DownButton {
   background-color: transparent;

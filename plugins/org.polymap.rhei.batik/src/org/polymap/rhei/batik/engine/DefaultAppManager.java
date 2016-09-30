@@ -276,8 +276,8 @@ public class DefaultAppManager
         // #5: Preferred panel width (http://github.com/Polymap4/polymap4-rhei/issues/issue/5)
         panelSites.remove( panelPath );
         
+        // throws event to be handled by DefaultAppDesign
         ((PanelSiteImpl)panel.site()).panelStatus.set( null );
-        log.info( "    " + panels.values().toString() );
     }
         
 
