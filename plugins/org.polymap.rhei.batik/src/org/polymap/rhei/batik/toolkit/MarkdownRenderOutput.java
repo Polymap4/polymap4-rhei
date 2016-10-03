@@ -26,4 +26,8 @@ public interface MarkdownRenderOutput {
     public void setTitle( String title );
 
     public void setText( String text );
+
+    public void setId( String id );
+
+    public void setClass( String clazz );
 }

@@ -189,7 +189,7 @@ public class DefaultToolkit
     protected static class PegDownRenderOutput
             implements MarkdownRenderOutput {
 
-        private String      url, text, title;
+        private String      url, text, title, id, clazz;
         
         @Override
         public void setUrl( String linkUrl ) {
@@ -206,10 +206,26 @@ public class DefaultToolkit
             this.text = text;
         }
         
+        @Override
+        public void setId( String id ) {
+            this.id = id;
+        }
+        
+        @Override
+        public void setClass( String clazz ) {
+            this.clazz = clazz;
+        }
+        
         public Rendering createRendering() {
             Rendering rendering = new Rendering( url, text );
             if (!StringUtils.isEmpty( title )) {
                 rendering.withAttribute( "title", FastEncoder.encode( title ) );
+            }
+            if (!StringUtils.isEmpty( id )) {
+                rendering.withAttribute( "id", FastEncoder.encode( id ) );
+            }
+            if (!StringUtils.isEmpty( clazz )) {
+                rendering.withAttribute( "class", FastEncoder.encode( clazz ) );
             }
             return rendering;
         }
