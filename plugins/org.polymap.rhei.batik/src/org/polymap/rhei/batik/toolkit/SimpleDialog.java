@@ -119,7 +119,7 @@ public class SimpleDialog
     public SimpleDialog addCancelAction( String label ) {
         return addAction( new Action( label ) {
             public void run() {
-                SimpleDialog.this.close( );
+                SimpleDialog.this.close();
             }
         });        
     }

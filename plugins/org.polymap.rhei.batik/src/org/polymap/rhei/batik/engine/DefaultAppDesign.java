@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -135,6 +134,15 @@ public class DefaultAppDesign
      */
     @Override
     public void navigated( BrowserNavigationEvent ev ) {
+//        new SimpleDialog()
+//                .setContents( parent -> {
+//                    new Label( parent, SWT.WRAP ).setText( "Browser navigation is not supported yet." );
+//                })
+//                .addOkAction( () -> { 
+//                    close(); return true; 
+//                })
+//                .open();
+        
         // XXX start is not always the name of the first panel, this causes the first panel
         // to created, disposed and created again
         log.info( "navigated: " + ev.getState() + " - NOT SUPPORTED CURRENTLY!" );
@@ -513,8 +521,8 @@ public class DefaultAppDesign
                     }
 
                     String title = ev.getSource().title.orElse( "" );
-                    mainWindow.setText( title );        
-                    browserHistory.pushState( panel.id().id(), StringUtils.abbreviate( title, 25 ) );
+                    mainWindow.setText( title );
+//                    browserHistory.pushState( panel.id().id(), "mapzone: " + StringUtils.abbreviate( title, 25 ) );
                 }
 
                 // disposed
