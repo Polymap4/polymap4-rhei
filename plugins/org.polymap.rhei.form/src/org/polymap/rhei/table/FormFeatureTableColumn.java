@@ -99,7 +99,7 @@ public class FormFeatureTableColumn
 
     private int                     weight = -1;
 
-    private int                     minimumWidth = -1;
+    private int                     minWidth = -1;
     
     private int                     align = -1;
     
@@ -176,13 +176,18 @@ public class FormFeatureTableColumn
 
     public FormFeatureTableColumn setWeight( int weight, int minimumWidth ) {
         this.weight = weight;
-        this.minimumWidth = minimumWidth;
+        this.minWidth = minimumWidth;
         return this;
     }
     
     @Override
     public int getWeight() {
         return weight;
+    }
+
+    @Override
+    public int getMinWidth() {
+        return minWidth;
     }
 
     public FormFeatureTableColumn setAlign( int align ) {
@@ -314,7 +319,7 @@ public class FormFeatureTableColumn
         TableLayout tableLayout = (TableLayout)viewer.getTable().getLayout();
 
         if (weight > -1) {
-            tableLayout.addColumnData( new ColumnWeightData( weight, minimumWidth, true ) );            
+            tableLayout.addColumnData( new ColumnWeightData( weight, minWidth, true ) );            
         }
         else if (String.class.isAssignableFrom( propBinding )) {
             tableLayout.addColumnData( new ColumnWeightData( 20, 120, true ) );

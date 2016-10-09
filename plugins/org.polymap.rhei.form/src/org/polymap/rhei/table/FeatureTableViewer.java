@@ -138,7 +138,12 @@ public class FeatureTableViewer
                     TableViewerColumn viewerColumn = column.getViewerColumn();
 
                     if (column.getWeight() > 0) {
+                        // weighted with
                         int width = ((area.width / sumWeight) * column.getWeight()) - 5;
+                        // min width
+                        if (column.getMinWidth() > 0) {
+                            width = Math.max( column.getMinWidth(), width );
+                        }
                         viewerColumn.getColumn().setWidth( width );
                     }
                     else {

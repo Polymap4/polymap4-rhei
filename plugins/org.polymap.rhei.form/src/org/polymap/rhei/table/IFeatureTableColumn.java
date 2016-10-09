@@ -71,4 +71,6 @@ public interface IFeatureTableColumn {
 
     public int getWeight();
 
+    public int getMinWidth();
+
 }

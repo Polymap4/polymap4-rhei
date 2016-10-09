@@ -66,7 +66,7 @@ public class DefaultFeatureTableColumn
 
     private int                     weight = -1;
 
-    private int                     minimumWidth = -1;
+    private int                     minWidth = -1;
     
     private ColumnLabelProvider     labelProvider = new DefaultCellLabelProvider();
     
@@ -78,7 +78,6 @@ public class DefaultFeatureTableColumn
 
 
     public DefaultFeatureTableColumn( PropertyDescriptor prop ) {
-        super();
         assert prop != null : "Argument is null.";
         this.prop = prop;
     }
@@ -115,15 +114,20 @@ public class DefaultFeatureTableColumn
         return this;
     }
 
-    public DefaultFeatureTableColumn setWeight( int weight, int minimumWidth) {
+    public DefaultFeatureTableColumn setWeight( int weight, int minimumWidth ) {
         this.weight = weight;
-        this.minimumWidth = minimumWidth;
+        this.minWidth = minimumWidth;
         return this;
     }
 
     @Override
     public int getWeight() {
         return weight;
+    }
+
+    @Override
+    public int getMinWidth() {
+        return minWidth;
     }
 
     public DefaultFeatureTableColumn setAlign( int align ) {
@@ -221,7 +225,7 @@ public class DefaultFeatureTableColumn
         TableLayout tableLayout = (TableLayout)viewer.getTable().getLayout();
 
         if (weight > -1) {
-            tableLayout.addColumnData( new ColumnWeightData( weight, minimumWidth, true ) );            
+            tableLayout.addColumnData( new ColumnWeightData( weight, minWidth, true ) );            
         }
         else if (String.class.isAssignableFrom( propBinding )) {
             tableLayout.addColumnData( new ColumnWeightData( 20, 120, true ) );
