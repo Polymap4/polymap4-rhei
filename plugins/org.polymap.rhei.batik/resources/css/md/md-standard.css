@@ -2350,7 +2350,13 @@ FileUpload[BORDER] {
   box-shadow: 0px 1px 2px #b0b0b0;
 }
 
-/* line 24, ../../sass/md/_upload.scss */
+/* Does not seem to work
+FileUpload[FLAT] {
+  color: $action-bg;
+  background-color: transparent;
+  box-shadow: none;
+}*/
+/* line 31, ../../sass/md/_upload.scss */
 FileUpload:disabled {
   cursor: default;
   color: #ffffff;
@@ -2358,18 +2364,18 @@ FileUpload:disabled {
   background-color: #C0C0C0;
 }
 
-/* line 31, ../../sass/md/_upload.scss */
+/* line 38, ../../sass/md/_upload.scss */
 FileUpload:hover {
   background-color: #2e86da;
   animation: hoverOut 400ms ease-out;
 }
 
-/* line 36, ../../sass/md/_upload.scss */
+/* line 43, ../../sass/md/_upload.scss */
 FileUpload:pressed {
   background-color: #206cb5;
 }
 
-/* line 40, ../../sass/md/_upload.scss */
+/* line 47, ../../sass/md/_upload.scss */
 FileUpload-FocusIndicator {
   background-color: transparent;
   border: 1px dotted #b8b8b8;

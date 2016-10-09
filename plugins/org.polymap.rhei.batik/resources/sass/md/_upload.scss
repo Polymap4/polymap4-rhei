@@ -21,6 +21,13 @@ FileUpload[BORDER] {  /* BORDER does not seem to be recognized */
   box-shadow: 0px 1px 2px $shadow;
 }
 
+/* Does not seem to work
+FileUpload[FLAT] {
+  color: $action-bg;
+  background-color: transparent;
+  box-shadow: none;
+}*/
+
 FileUpload:disabled {
   cursor: default;
   color: $action-disabled-fg;
