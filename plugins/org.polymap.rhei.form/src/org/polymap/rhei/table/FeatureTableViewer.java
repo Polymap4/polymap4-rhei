@@ -156,11 +156,15 @@ public class FeatureTableViewer
 
 
     public void dispose() {
-        listeners.clear();
-        listeners = null;
-        displayed.clear();
-        available.clear();
-        editors.clear();
+        if (!getTable().isDisposed()) {
+            getTable().dispose();
+            
+            listeners.clear();
+            listeners = null;
+            displayed.clear();
+            available.clear();
+            editors.clear();
+        }
     }
 
     
