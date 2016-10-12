@@ -24,6 +24,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 import org.eclipse.ui.forms.widgets.Section;
 
@@ -54,6 +55,18 @@ public class MdToolkit
     public MdToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
         super( panelPath, panelPage );
         assert panelPage != null;
+    }
+
+
+    /**
+     * Creates a new {@link Label}.
+     * <p/>
+     * {@link Label#setEnabled(boolean) Disabling} the label gives it a slightly
+     * grayed look. This can be used for longer description text.
+     */
+    @Override
+    public Label createLabel( Composite parent, String text, int... styles ) {
+        return super.createLabel( parent, text, styles );
     }
 
 

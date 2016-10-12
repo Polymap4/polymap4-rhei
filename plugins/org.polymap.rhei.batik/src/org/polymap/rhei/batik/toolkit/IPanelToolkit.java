@@ -66,7 +66,8 @@ public interface IPanelToolkit
     public <T extends Control> T adapt( T control, boolean trackFocus, boolean trackKeyboard );
 
     /**
-     *
+     * Creates a new {@link Label}.
+     * 
      * @see Label#Label(Composite, int)
      * @param parent
      * @param text

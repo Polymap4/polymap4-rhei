@@ -123,7 +123,7 @@ public class MdAppDesign
                 : resourceFactory.getFont( new FontData( FONT_FACE, 13, SWT.NORMAL ) ) );
         fonts.put( FontStyle.Body2, mobile
                 ? resourceFactory.getFont( new FontData( FONT_FACE, 14, SWT.BOLD ) )
-                : resourceFactory.getFont( new FontData( FONT_FACE, 13, SWT.BOLD ) ) );
+                : resourceFactory.getFont( new FontData( FONT_FACE, 14, SWT.BOLD ) ) );
         fonts.put( FontStyle.Subhead, mobile
                 ? resourceFactory.getFont( new FontData( FONT_FACE, 17, SWT.NORMAL ) )
                 : resourceFactory.getFont( new FontData( FONT_FACE, 15, SWT.NORMAL ) ) );

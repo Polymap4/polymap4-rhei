@@ -1189,7 +1189,7 @@ Composite[BORDER].atlas-panel-header {
 /* line 51, ../../sass/md/_batik_panel.scss */
 Button[PUSH].atlas-panel-header,
 Button[TOGGLE].atlas-panel-header {
-  font: 15px "Roboto", "Noto", sans-serif;
+  font: 14px "Roboto", "Noto", sans-serif;
   border-radius: 3px;
   padding: 0px 5px;
   spacing: 0px;
@@ -1295,7 +1295,7 @@ Button[TOGGLE][BORDER],
 Button[PUSH][FLAT],
 Button[TOGGLE][FLAT],
 Button[RADIO] {
-  font: 15px "Roboto", "Noto", sans-serif;
+  font: 14px "Roboto", "Noto", sans-serif;
   cursor: pointer;
 }
 
@@ -2133,7 +2133,7 @@ ToolBar[BORDER] {
 
 /* line 20, ../../sass/md/_toolbar.scss */
 ToolItem {
-  font: 15px "Roboto", "Noto", sans-serif;
+  font: 14px "Roboto", "Noto", sans-serif;
   color: inherit;
   background-color: #84b8ea;
   background-image: none;
@@ -2344,7 +2344,7 @@ FileUpload[BORDER] {
   opacity: 1;
   text-shadow: none;
   text-decoration: none;
-  font: 15px "Roboto", "Noto", sans-serif;
+  font: 14px "Roboto", "Noto", sans-serif;
   color: #ffffff;
   background-color: #599FE2;
   box-shadow: 0px 1px 2px #b0b0b0;
@@ -2585,7 +2585,7 @@ Composite.snackbar-fade {
 
 /* line 27, ../../sass/md/_snackbar.scss */
 Label.snackbar-message {
-  font: 15px "Roboto", "Noto", sans-serif;
+  font: 14px "Roboto", "Noto", sans-serif;
   color: #ffffff;
 }
 
