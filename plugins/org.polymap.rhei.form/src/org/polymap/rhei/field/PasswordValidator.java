@@ -56,11 +56,17 @@ public class PasswordValidator
     @DefaultInt(8)
     public Config2<PasswordValidator,Integer>   minLength;
 
+    /**
+     * The message to be send by {@link #validate(Object)} if given password is
+     * invalid. Default is created from current configuration if null.
+     */
+    public Config2<PasswordValidator,String>    msg;
+
     private Pattern                             pattern;
     
 
     /**
-     * Constraucts a new instance with default settings.
+     * Constructs a new instance with default settings.
      */
     public PasswordValidator() {
         pattern = Pattern.compile(
@@ -77,7 +83,15 @@ public class PasswordValidator
     @Override
     public String validate( Object fieldValue ) {
         Matcher matcher = pattern.matcher( fieldValue != null ? fieldValue.toString() : "_dontMatch_" );
-        return !matcher.matches() ? "Ein Passwort muss mindestens enthalten: eine Ziffer, einen Kleinbuchstaben, einen Groﬂbuchstaben und mindestens 8 Zeichen haben" : null; 
+        if (matcher.matches()) {
+            return null; 
+        }
+        else if (msg.isPresent()) {
+            return msg.get();
+        }
+        else {
+            return "Password is not valid";
+        }
     }
 
     @Override

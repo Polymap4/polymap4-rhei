@@ -17,6 +17,8 @@ package org.polymap.rhei.field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultString;
@@ -41,7 +43,7 @@ public class EMailAddressValidator
     
     @Override
     public String validate( Object fieldValue ) {
-        if (fieldValue == null || fieldValue.toString().length() == 0) {
+        if (StringUtils.isEmpty( fieldValue.toString() )) {
             return null;
         }
         else {
