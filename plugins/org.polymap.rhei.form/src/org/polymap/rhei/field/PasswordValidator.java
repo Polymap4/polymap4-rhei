@@ -17,6 +17,8 @@ package org.polymap.rhei.field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.polymap.core.runtime.Lazy;
+import org.polymap.core.runtime.PlainLazyInit;
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultBoolean;
@@ -62,14 +64,16 @@ public class PasswordValidator
      */
     public Config2<PasswordValidator,String>    msg;
 
-    private Pattern                             pattern;
+    private Lazy<Pattern>                       pattern;
     
 
     /**
      * Constructs a new instance with default settings.
      */
     public PasswordValidator() {
-        pattern = Pattern.compile(
+        // compile after configuration has been done
+        pattern = new PlainLazyInit( () -> {
+            return Pattern.compile(
                 "^" +   
                 (oneDigit.get()     ? "(?=.*[0-9])" : "") +
                 (oneLowerCase.get() ? "(?=.*[a-z])" : "") +
@@ -78,11 +82,12 @@ public class PasswordValidator
                 (noWhitespace.get() ? "(?=\\S+$)" : "") +
                 ".{" + minLength.get() + ",}" +
                 "$" );
+        });
     }
 
     @Override
     public String validate( Object fieldValue ) {
-        Matcher matcher = pattern.matcher( fieldValue != null ? fieldValue.toString() : "_dontMatch_" );
+        Matcher matcher = pattern.get().matcher( fieldValue != null ? fieldValue.toString() : "_dontMatch_" );
         if (matcher.matches()) {
             return null; 
         }
