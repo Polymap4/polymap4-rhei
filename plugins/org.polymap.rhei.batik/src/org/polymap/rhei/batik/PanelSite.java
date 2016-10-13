@@ -128,9 +128,12 @@ public abstract class PanelSite
      * @param max The {@link #maxWidth} of the panel.
      */
     public PanelSite setSize( int min, int preferred, int max ) {
-        minWidth.set( min );
-        preferredWidth.set( preferred );
-        maxWidth.set( max );
+        if (min > preferred || preferred > max) {
+            throw new IllegalArgumentException( "Illegal panel size: " + min + " <= " + preferred + " <= " + max );
+        }
+        minWidth.info().setRawValue( min );
+        preferredWidth.info().setRawValue( preferred );
+        maxWidth.info().setRawValue( max );
         return this;    
     }
     
