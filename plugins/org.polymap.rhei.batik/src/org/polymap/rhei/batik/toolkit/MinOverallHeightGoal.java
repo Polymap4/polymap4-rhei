@@ -40,16 +40,19 @@ class MinOverallHeightGoal
 
     private static final Random rand = new Random();
 
+    private int                 maxColumns;
+
     
-    public MinOverallHeightGoal( Comparable priority ) {
+    public MinOverallHeightGoal( int maxColumns, Comparable priority ) {
         super( priority );
+        this.maxColumns = maxColumns;
     }
 
     
     @Override
     public LayoutSolution optimize( LayoutSolution solution ) {
         // first idea: split column
-        if (solution.columns.size() == 1) {
+        if (solution.columns.size() < maxColumns) {
             LayoutColumn newColumn = solution.columns.get( 0 ).clone();
             newColumn.clear();
             solution.columns.add( newColumn );

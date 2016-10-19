@@ -83,7 +83,7 @@ public class ConstraintLayoutTest {
         // unbound queue configuration from ConstraintLayout
         BestFirstOptimizer solver = new BestFirstOptimizer( -1, -1 );
         solver.addGoal( new PriorityOnTopGoal( 0 ) );
-        solver.addGoal( new MinOverallHeightGoal( 0 ) );
+        solver.addGoal( new MinOverallHeightGoal( 2, 0 ) );
         solver.addGoal( new NeighborhoodGoal( 0 ) );
 
         Timer timer = new Timer();
@@ -98,7 +98,7 @@ public class ConstraintLayoutTest {
         // bound queue consiguration
         solver = new BestFirstOptimizer( -1, 1000 );
         solver.addGoal( new PriorityOnTopGoal( 0 ) );
-        solver.addGoal( new MinOverallHeightGoal( 0 ) );
+        solver.addGoal( new MinOverallHeightGoal( 2, 0 ) );
         solver.addGoal( new NeighborhoodGoal( 0 ) );
 
         timer.start();

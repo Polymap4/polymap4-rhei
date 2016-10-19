@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2013, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2013-2016, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -21,7 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.polymap.rhei.batik.engine.cp.ISolver;
-
+import org.polymap.rhei.batik.toolkit.NeighborhoodConstraint.Neighborhood;
 
 /**
  * Layout data to be used for child widgets of {@link ILayoutContainer}s such
@@ -68,34 +68,46 @@ public class ConstraintData {
         LayoutConstraint result = constraints.get( type );
         return (T)(result != null ? result : defaultValue);
     }
+
     
-    
-//    public Point computeSize( Control control, int wHint, int hHint, boolean flushCache ) {
-//        if (flushCache) {
-//            flushCache();
-//        }
-//        if (wHint == SWT.DEFAULT && hHint == SWT.DEFAULT) {
-//            if (defaultWidth == -1 || defaultHeight == -1) {
-//                Point size = control.computeSize( wHint, hHint, flushCache );
-//                defaultWidth = size.x;
-//                defaultHeight = size.y;
-//            }
-//            return new Point( defaultWidth, defaultHeight );
-//        }
-//        if (currentWidth == -1 || currentHeight == -1 || wHint != currentWhint || hHint != currentHhint) {
-//            Point size = control.computeSize( wHint, hHint, flushCache );
-//            currentWhint = wHint;
-//            currentHhint = hHint;
-//            currentWidth = size.x;
-//            currentHeight = size.y;
-//        }
-//        return new Point( currentWidth, currentHeight );
-//    }
-//    
-//    
-//    protected void flushCache () {
-//        defaultWidth = defaultHeight = -1;
-//        currentWidth = currentHeight = -1;
-//    }
+    /**
+     * Add {@link PriorityConstraint}.
+     */
+    public ConstraintData prio( int value ) {
+        add( new PriorityConstraint( value ) );
+        return this;
+    }
+
+    /**
+     * Add {@link MaxWidthConstraint}.
+     */
+    public ConstraintData maxWidth( int value ) {
+        add( new MaxWidthConstraint( value, 0 ) );
+        return this;
+    }
+
+    /**
+     * Add {@link MinWidthConstraint}.
+     */
+    public ConstraintData minWidth( int value ) {
+        add( new MinWidthConstraint( value, 0 ) );
+        return this;
+    }
+
+    /**
+     * Add {@link MinHeightConstraint}.
+     */
+    public ConstraintData minHeight( int value ) {
+        add( new MinHeightConstraint( value, 0 ) );
+        return this;
+    }
+
+    /**
+     * Add {@link NeighborhoodConstraint}.
+     */
+    public ConstraintData neighbor( Object control, Neighborhood type ) {
+        add( new NeighborhoodConstraint( control, type, 0 ) );
+        return this;
+    }
 
 }

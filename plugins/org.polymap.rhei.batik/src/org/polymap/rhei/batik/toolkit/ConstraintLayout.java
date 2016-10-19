@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2013, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2013-2016, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -47,6 +47,8 @@ public class ConstraintLayout
 
     private static Log log = LogFactory.getLog( ConstraintLayout.class );
 
+    private int                 maxColumns = 2;
+    
     private LayoutSupplier      margins;
     
     private LayoutSolution      solution;
@@ -56,16 +58,23 @@ public class ConstraintLayout
         this.margins = margins;
     }
 
-    
     public LayoutSupplier getMargins() {
         return margins;
     }
-
     
-    public void setMargins( LayoutSupplier margins ) {
+    public ConstraintLayout setMargins( LayoutSupplier margins ) {
         this.margins = margins;
+        return this;
     }
 
+    public int getMaxColumns() {
+        return maxColumns;
+    }
+    
+    public ConstraintLayout setMaxColumns( int maxColumns ) {
+        this.maxColumns = maxColumns;
+        return this;
+    }
 
     @Override
     protected void layout( Composite composite, boolean flushCache ) {
@@ -140,7 +149,7 @@ public class ConstraintLayout
 
             ISolver solver = new BestFirstOptimizer( 50, 100 );
             solver.addGoal( new PriorityOnTopGoal( 1 ) );
-            solver.addGoal( new MinOverallHeightGoal( 0 ) );
+            solver.addGoal( new MinOverallHeightGoal( maxColumns, 0 ) );
             solver.addGoal( new NeighborhoodGoal( 0 ) );
 
             for (Control child : composite.getChildren()) {

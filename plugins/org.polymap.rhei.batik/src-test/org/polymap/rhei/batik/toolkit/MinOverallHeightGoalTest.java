@@ -44,7 +44,7 @@ public class MinOverallHeightGoalTest {
                 new TestLayoutElement( "second", 100, 100, new PriorityConstraint( 0 ) ) ) );
         solution.justifyElements();
         
-        MinOverallHeightGoal goal = new MinOverallHeightGoal( 1 );
+        MinOverallHeightGoal goal = new MinOverallHeightGoal( 2, 1 );
         assertEquals( new PercentScore( 0 ), goal.score( solution ) );
         
         LayoutSolution optimized = goal.optimize( solution );
@@ -68,7 +68,7 @@ public class MinOverallHeightGoalTest {
                 new TestLayoutElement( "30", 30, 30, new PriorityConstraint( 0 ) ) ) );
         solution.justifyElements();
         
-        MinOverallHeightGoal goal = new MinOverallHeightGoal( 1 );
+        MinOverallHeightGoal goal = new MinOverallHeightGoal( 2, 1 );
         int i = 0;
         System.out.println( "Solution: " + goal.score( solution ) + " - " + solution );
         for (; solution != null && i<10; i++) {
