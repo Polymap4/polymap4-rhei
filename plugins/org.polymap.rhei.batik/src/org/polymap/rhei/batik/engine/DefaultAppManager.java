@@ -79,7 +79,7 @@ import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 public class DefaultAppManager
         implements IAppManager {
 
-    private static Log log = LogFactory.getLog( DefaultAppManager.class );
+    private static final Log log = LogFactory.getLog( DefaultAppManager.class );
 
     protected DefaultAppContext         context = new AppContext();
 
@@ -187,7 +187,7 @@ public class DefaultAppManager
                 .map( ep -> createPanel( ep, parentPath ) )
                 .filter( panel -> panel.id().equals( panelId ) )
                 .peek( panel -> {
-                        log.info( "CREATE panel: " + panel.site().path() );
+                        log.debug( "CREATE panel: " + panel.site().path() );
                         panels.put( panel.site().path(), panel );
                         ((PanelSiteImpl)panel.site()).panelStatus.set( PanelStatus.CREATED );
                 })
@@ -256,7 +256,7 @@ public class DefaultAppManager
     
     
     protected void disposePanel( IPanel panel ) {
-        log.info( "DISPOSE panel: " + panel.site().path() );
+        log.debug( "DISPOSE panel: " + panel.site().path() );
         try {
             panel.dispose();
             saveMemento();
