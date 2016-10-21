@@ -44,7 +44,7 @@ import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 public class PageStack<K>
         extends Composite {
 
-    private static Log log = LogFactory.getLog( PageStack.class );
+    private static final Log log = LogFactory.getLog( PageStack.class );
 
     /**
      * 
@@ -144,7 +144,7 @@ public class PageStack<K>
         if (!page.control.isDisposed()) {
             page.control.moveAbove( null );
             page.control.setVisible( false ); 
-            log.info( "remove: " + key );
+            log.debug( "remove: " + key );
             
             // dispose the control later to let the hide animation run properly;
             // don't care about UI callback, just dispose on next request
@@ -155,7 +155,7 @@ public class PageStack<K>
                 protected IStatus run( IProgressMonitor monitor ) {
                     display.asyncExec( () -> {
                         control.dispose();
-                        log.info( "disposed: " + key );
+                        log.debug( "disposed: " + key );
                     });
                     return Status.OK_STATUS;
                 }

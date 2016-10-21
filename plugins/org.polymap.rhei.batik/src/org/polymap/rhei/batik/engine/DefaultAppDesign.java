@@ -80,7 +80,7 @@ import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 public class DefaultAppDesign
         implements IAppDesign, BrowserNavigationListener {
 
-    private static Log log = LogFactory.getLog( DefaultAppDesign.class );
+    private static final Log log = LogFactory.getLog( DefaultAppDesign.class );
     
     public static final String          CSS_PANELS = "atlas-panels";
     public static final String          CSS_PANEL = "atlas-panel";
@@ -531,7 +531,7 @@ public class DefaultAppDesign
                     if (panelsArea.hasPage( pageId )) {
                         Page page = panelsArea.getPage( pageId );
                         UIUtils.setVariant( page.control, CSS_PANEL+"-right" );
-                        log.info( "disposed: " + pageId );
+                        log.debug( "disposed: " + pageId );
                         panelsArea.removePage( pageId );
                         layoutRefreshNeeded = true;
                     }
