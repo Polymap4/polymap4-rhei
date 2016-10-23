@@ -1523,9 +1523,15 @@ Button.batik-panel-fab {
   animation: fadeIn 700ms ease-in, fadeOut 500ms ease-out;
 }
 
-/* line 14, ../../sass/md/_fab.scss */
+/* line 15, ../../sass/md/_fab.scss */
 Button:hover.batik-panel-fab {
   background-color: #6eb02e;
+  box-shadow: 0px 2px 6px #8a8a8a;
+}
+
+/* line 20, ../../sass/md/_fab.scss */
+Button:pressed.batik-panel-fab {
+  box-shadow: 0px 1px 2px #8a8a8a;
 }
 
 /* Tree default theme */

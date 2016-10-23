@@ -11,8 +11,12 @@ Button.batik-panel-fab {
   /* geht nur für Composite? */
   animation: fadeIn 700ms ease-in, fadeOut 500ms ease-out;    
 }
+
 Button:hover.batik-panel-fab {
   background-color: $fab-hover;
+  box-shadow: 0px 2px 6px darken( $shadow, 15% );  
 }
+
 Button:pressed.batik-panel-fab {
+    box-shadow: 0px 1px 2px darken( $shadow, 15% );
 }
