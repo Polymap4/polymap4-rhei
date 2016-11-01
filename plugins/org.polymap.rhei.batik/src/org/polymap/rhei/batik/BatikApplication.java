@@ -157,17 +157,23 @@ public class BatikApplication
     protected void initUICallback() {
         UIUtils.activateCallback( BatikApplication.class.getSimpleName() );
         ServerPushManager serverPush = ServerPushManager.getInstance();
-        serverPush.setRequestCheckInterval( 10000 );
+        serverPush.setRequestCheckInterval( 30000 );
         
+        // Adds a runnable every 30s; this causes the UI callback request to be woken up
+        // and returning to the client; this re-news the request and prevents intermediate
+        // proxies (nginx = 60s timeout) to simple close the request and get us in trouble
+        //
+        // Besides the periodic request keeps the HTTP session open as long as the browser
+        // windows is open; we have very short HTTP session timeouts that close session short
+        // after browser stops those UI callback pings
         new UIJob( "ReleaseBlockedRequest" ) {
             @Override
             protected void runWithException( IProgressMonitor monitor ) throws Exception {
-                if (serverPush.isCallBackRequestBlocked()) {
-                    log.info( getName() );
-                    serverPush.releaseBlockedRequest();
-                }
-                schedule( 10000 );
+                display.asyncExec( () -> {
+                    //System.out.print( "." );                
+                });
+                schedule( 30000 );
             }
-        }.schedule( 10000 );
+        }.schedule( 30000 );
     }
 }
