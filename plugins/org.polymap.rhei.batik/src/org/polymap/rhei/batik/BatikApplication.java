@@ -163,17 +163,21 @@ public class BatikApplication
         // and returning to the client; this re-news the request and prevents intermediate
         // proxies (nginx = 60s timeout) to simple close the request and get us in trouble
         //
-        // Besides the periodic request keeps the HTTP session open as long as the browser
+        // Besides, the periodic request keeps the HTTP session open as long as the browser
         // windows is open; we have very short HTTP session timeouts that close session short
         // after browser stops those UI callback pings
-        new UIJob( "ReleaseBlockedRequest" ) {
+        UIJob job = new UIJob( "ReleaseBlockedRequest" ) {
             @Override
             protected void runWithException( IProgressMonitor monitor ) throws Exception {
-                display.asyncExec( () -> {
-                    //System.out.print( "." );                
-                });
-                schedule( 30000 );
+                if (!display.isDisposed()) {
+                    display.asyncExec( () -> {
+                        //System.out.print( "." );                
+                    });
+                    schedule( 30000 );
+                }
             }
-        }.schedule( 30000 );
+        };
+        job.setSystem( true );
+        job.schedule( 30000 );
     }
 }
