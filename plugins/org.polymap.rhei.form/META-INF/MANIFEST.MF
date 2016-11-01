@@ -10,9 +10,9 @@ Require-Bundle: org.eclipse.core.resources,
  org.eclipse.rap.rwt;bundle-version="2.3.0";visibility:=reexport,
  org.eclipse.rap.ui;bundle-version="2.3.0";visibility:=reexport,
  org.eclipse.rap.ui.forms;bundle-version="2.3.0";visibility:=reexport,
- org.polymap.core;bundle-version="3.0.0";visibility:=reexport,
- org.polymap.core.data;bundle-version="3.0.0";visibility:=reexport,
- org.polymap.rap.updownload
+ org.polymap.core;bundle-version="4.0.0";visibility:=reexport,
+ org.polymap.core.data;bundle-version="4.0.0",
+ org.polymap.rap.updownload;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin

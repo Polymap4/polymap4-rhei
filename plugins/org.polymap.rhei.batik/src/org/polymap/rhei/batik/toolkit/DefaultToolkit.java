@@ -158,10 +158,30 @@ public class DefaultToolkit
     @Override
     public Label createFlowText( Composite parent, String text, int... styles ) {
         Label result = new Label( parent, stylebits( styles ) | SWT.WRAP ) {
+//            private String callbackId;
             @Override
             public void setText( String _text ) {
-                super.setText( markdownToHtml( _text, this ) );
+                String html = markdownToHtml( _text, this );
+                super.setText( html );
+                
+                // LinkActionServiceHandler cannot trigger UIThread events, so this ensures that
+                // there is a UI callback active; However, this leads to activate UICallbacks almost
+                // all the time; commented out in favour of a simple timeout handled by BatikApplication 
+
+//                if (html.contains( "<a " )) {
+//                    callbackId = "FlowText-" + hashCode();
+//                    UIUtils.activateCallback( callbackId );
+//                    log.warn( "ACTIVATE: " + callbackId );
+//                }
             }
+
+//            @Override
+//            public void dispose() {
+//                super.dispose();
+//                if (callbackId != null) {
+//                    UIUtils.deactivateCallback( callbackId );                    
+//                }
+//            }            
         };
         adapt( result, false, false );
 

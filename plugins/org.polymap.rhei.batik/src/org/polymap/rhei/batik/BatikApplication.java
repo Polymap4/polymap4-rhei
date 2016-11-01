@@ -1,6 +1,6 @@
 /*
  * polymap.org
- * Copyright (C) 2013, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2013-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -25,8 +25,11 @@ import org.eclipse.swt.widgets.Shell;
 
 import org.eclipse.ui.PlatformUI;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.rap.rwt.application.EntryPoint;
+import org.eclipse.rap.rwt.internal.serverpush.ServerPushManager;
 
+import org.polymap.core.runtime.UIJob;
 import org.polymap.core.ui.StatusDispatcher;
 import org.polymap.core.ui.UIUtils;
 
@@ -39,6 +42,7 @@ import org.polymap.rhei.batik.engine.BatikFactory;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
+@SuppressWarnings( "restriction" )
 public class BatikApplication
         implements EntryPoint {
 
@@ -107,6 +111,8 @@ public class BatikApplication
     public int createUI() {
         display = new Display();  // PlatformUI.createDisplay();
 
+        initUICallback();
+        
         instances.put( display, this );
         log.info( "Display DPI: " + display.getDPI().x + "x" + display.getDPI().y );
 
@@ -143,5 +149,25 @@ public class BatikApplication
         display.dispose();
         return PlatformUI.RETURN_OK;
     }
-
+    
+    /**
+     * Initializes the UI callback behaviour for this session. Called from
+     * {@link #createUI()}.
+     */
+    protected void initUICallback() {
+        UIUtils.activateCallback( BatikApplication.class.getSimpleName() );
+        ServerPushManager serverPush = ServerPushManager.getInstance();
+        serverPush.setRequestCheckInterval( 10000 );
+        
+        new UIJob( "ReleaseBlockedRequest" ) {
+            @Override
+            protected void runWithException( IProgressMonitor monitor ) throws Exception {
+                if (serverPush.isCallBackRequestBlocked()) {
+                    log.info( getName() );
+                    serverPush.releaseBlockedRequest();
+                }
+                schedule( 10000 );
+            }
+        }.schedule( 10000 );
+    }
 }
