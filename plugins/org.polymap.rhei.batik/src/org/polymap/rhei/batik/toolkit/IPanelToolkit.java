@@ -16,6 +16,7 @@ package org.polymap.rhei.batik.toolkit;
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -135,6 +136,8 @@ public interface IPanelToolkit
         result.setLayout( layout );
         return result;
     }
+
+    public ScrolledComposite createScrolledComposite( Composite parent, int... styles );
 
     public Section createSection( Composite parent, String title, int... styles );
 

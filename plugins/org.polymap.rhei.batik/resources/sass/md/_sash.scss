@@ -1,0 +1,26 @@
+
+/* Sash default theme */
+
+Sash {
+  border: none;
+  border-radius: 15px;
+  background-image: none;
+  background-color: transparent;
+}
+
+Sash[BORDER] {
+  border: 1px solid #bdbdbd;
+}
+
+Sash:hover {
+  background-color: lighten( $action-bg, 15% );
+}
+
+Sash-Handle:horizontal {
+  background-image: url( resources/icons/sash-handle-horizontal.png );
+}
+
+Sash-Handle:vertical {
+  background-image: url( resources/icons/sash-handle-vertical.png );
+}
+

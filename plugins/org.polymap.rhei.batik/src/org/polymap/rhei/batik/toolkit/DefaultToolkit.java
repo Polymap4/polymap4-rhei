@@ -14,6 +14,8 @@
  */
 package org.polymap.rhei.batik.toolkit;
 
+import static org.apache.commons.lang3.ArrayUtils.contains;
+
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
@@ -36,8 +38,11 @@ import com.google.common.base.Joiner;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.widgets.MarkupValidator;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
@@ -385,25 +390,35 @@ public class DefaultToolkit
 
     @Override
     public Composite createComposite( Composite parent, int... styles ) {
-        boolean scrollable = ArrayUtils.contains( styles, SWT.V_SCROLL )
-                || ArrayUtils.contains( styles, SWT.H_SCROLL );
-        
-        Composite result = null;
-        if (scrollable) { 
-            result = new ScrolledComposite( parent, stylebits( styles ) );
-            ((ScrolledComposite)result).setExpandHorizontal( true );
-            ((ScrolledComposite)result).setExpandVertical( true );
-            
-            Composite content = createComposite( result );
-            ((ScrolledComposite)result).setContent( content );
-            
-            result.setLayout( new FillLayout() );
-        }
-        else {
-            result = new Composite( parent, stylebits( styles ) );
-            result.setLayout( new FillLayout( SWT.HORIZONTAL ) );
-        }
+        assert !contains( styles, SWT.V_SCROLL ) && !contains( styles, SWT.H_SCROLL ) : "Use createScrolledComposite()!";        
+        Composite result = new Composite( parent, stylebits( styles ) );
+        result.setLayout( new FillLayout( SWT.HORIZONTAL ) );
         return adapt( result );
+    }
+
+    
+    @Override
+    public ScrolledComposite createScrolledComposite( Composite parent, int... styles ) {
+        assert contains( styles, SWT.V_SCROLL ) || contains( styles, SWT.H_SCROLL );
+        
+        ScrolledComposite scrolled = new ScrolledComposite( parent, stylebits( styles ) );
+        scrolled.setExpandHorizontal( true );
+        scrolled.setExpandVertical( true );
+
+        Composite body = createComposite( scrolled );
+        body.setLayout( new FillLayout( SWT.VERTICAL ) );
+        scrolled.setContent( body );
+
+        scrolled.addControlListener( new ControlAdapter() {
+            @Override
+            public void controlResized( ControlEvent ev ) {
+                Rectangle clientArea = scrolled.getClientArea();
+                int scrollbarWidth = scrolled.getVerticalBar() != null ? scrolled.getVerticalBar().getSize().x : 0; 
+                Point preferred = scrolled.getContent().computeSize( clientArea.width-scrollbarWidth, SWT.DEFAULT );
+                scrolled.setMinSize( preferred );
+            }
+        });
+        return adapt( scrolled );
     }
 
     

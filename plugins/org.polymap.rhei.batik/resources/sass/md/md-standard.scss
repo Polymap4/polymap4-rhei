@@ -642,30 +642,6 @@ ExpandItem-Button:expanded:hover {
   background-image: url( resource/widget/rap/expanditem/expanditem-collapse-hover.png );
 }
 
-/* Sash default theme */
-
-Sash {
-  border: none;
-  background-image: none;
-  background-color: transparent;
-}
-
-Sash[BORDER] {
-  border: 1px solid #bdbdbd;
-}
-
-Sash:hover {
-  background-color: #e5e5e5;
-}
-
-Sash-Handle:horizontal {
-  background-image: url( resource/widget/rap/sash/sash-handle-horizontal.png );
-}
-
-Sash-Handle:vertical {
-  background-image: url( resource/widget/rap/sash/sash-handle-vertical.png );
-}
-
 /* Slider default theme */
 
 Slider {
@@ -910,3 +886,4 @@ Shell.jface_contentProposalPopup, Shell.jface_infoPopupDialog {
 @import "tooltip";
 @import "list";
 @import "spinner";
+@import "sash";

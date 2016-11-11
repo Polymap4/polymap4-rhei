@@ -51,6 +51,10 @@ public abstract class Memento
         return Optional.ofNullable( getFloat( key ) );    
     }
     
+    public Optional<Integer> optInteger( String key ) {
+        return Optional.ofNullable( getInteger( key ) );    
+    }
+    
     public Optional<String> optString( String key ) {
         return Optional.ofNullable( getString( key ) );    
     }
