@@ -22,7 +22,9 @@ import org.eclipse.core.runtime.jobs.Job;
 
 import org.polymap.core.runtime.event.EventManager;
 
+import org.polymap.rhei.field.HorizontalFieldLayout;
 import org.polymap.rhei.field.IFormField;
+import org.polymap.rhei.field.IFormFieldLayout;
 import org.polymap.rhei.field.IFormFieldListener;
 
 /**
@@ -124,5 +126,15 @@ public interface IBasePageSite {
      *        <code>null</code>.
      */
     public void reload( IProgressMonitor monitor ) throws Exception;
+
+    /**
+     * Sets the default layout for all form fields. Defaults to:
+     * {@link HorizontalFieldLayout} width adaptive label width depending on overall
+     * display width.
+     * 
+     * @see HorizontalFieldLayout
+     * @see VerticalFieldLayout
+     */
+    public void setDefaultFieldLayout( IFormFieldLayout layout );
 
 }

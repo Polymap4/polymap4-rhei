@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -29,10 +29,13 @@ import org.polymap.core.runtime.config.DefaultBoolean;
 
 import org.polymap.rhei.field.CheckboxFormField;
 import org.polymap.rhei.field.DateTimeFormField;
+import org.polymap.rhei.field.HorizontalFieldLayout;
 import org.polymap.rhei.field.IFormField;
+import org.polymap.rhei.field.IFormFieldLayout;
 import org.polymap.rhei.field.IFormFieldValidator;
 import org.polymap.rhei.field.NumberValidator;
 import org.polymap.rhei.field.StringFormField;
+import org.polymap.rhei.field.VerticalFieldLayout;
 
 /**
  * 
@@ -42,7 +45,7 @@ import org.polymap.rhei.field.StringFormField;
 public abstract class FieldBuilder
         extends Configurable {
 
-    private static Log log = LogFactory.getLog( FieldBuilder.class );
+    private static final Log log = LogFactory.getLog( FieldBuilder.class );
 
     /** The parent to create the field for. If not set the page body is used. */
     public Config2<FieldBuilder,Composite>          parent;
@@ -55,11 +58,22 @@ public abstract class FieldBuilder
     
     public Config2<FieldBuilder,IFormFieldValidator> validator;
     
+    /**
+     * Set the field layout, overriding the
+     * {@link IFormPageSite#setDefaultFieldLayout(IFormFieldLayout) default layout}
+     * of the containing page.
+     * 
+     * @see HorizontalFieldLayout
+     * @see HorizontalFieldLayout#NO_LABEL
+     * @see VerticalFieldLayout
+     */
+    public Config2<FieldBuilder,IFormFieldLayout>   layout;
+
     @DefaultBoolean( true )
     public Config2<FieldBuilder,Boolean>            fieldEnabled;
 
     public Config2<FieldBuilder,Object>             layoutData;
-
+    
     
     protected abstract Class<?> propBinding();
     

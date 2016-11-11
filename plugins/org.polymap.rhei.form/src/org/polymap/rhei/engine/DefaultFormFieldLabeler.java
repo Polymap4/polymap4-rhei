@@ -50,23 +50,8 @@ public class DefaultFormFieldLabeler
     private Font                orig;
     
     
-    /**
-     * Use the field name as labelStr. 
-     */
-    public DefaultFormFieldLabeler( int maxWidth ) {
-        this.maxWidth = maxWidth;
-    }
-
-    
-    public DefaultFormFieldLabeler( int maxWidth, String label ) {
-        if (label != null && label.equals( NO_LABEL )) {
-            this.labelStr = label;
-            this.maxWidth = 0;
-        }
-        else {
-            this.labelStr = label;
-            this.maxWidth = maxWidth;
-        }
+    public DefaultFormFieldLabeler( String label ) {
+        this.labelStr = label;
     }
 
     
@@ -81,13 +66,7 @@ public class DefaultFormFieldLabeler
 
     
     public Control createControl( Composite parent, IFormToolkit toolkit ) {
-        String text = labelStr;
-        if (labelStr == null) {
-            text = StringUtils.capitalize( site.getFieldName() );
-        }
-        else if (NO_LABEL.equals( labelStr )) {
-            text = null;
-        }
+        String text = labelStr == null ? StringUtils.capitalize( site.getFieldName() ) : labelStr;
         
         label = toolkit.createLabel( parent, text, SWT.WRAP );
         // label.setFont( JFaceResources.getFontRegistry().getBold( JFaceResources.DEFAULT_FONT ) );
@@ -114,13 +93,13 @@ public class DefaultFormFieldLabeler
     }
     
     
-    public void setMaxWidth( int maxWidth ) {
-        this.maxWidth = maxWidth;
-    }
-
-    
-    public int getMaxWidth() {
-        return maxWidth;
-    }
+//    public void setMaxWidth( int maxWidth ) {
+//        this.maxWidth = maxWidth;
+//    }
+//
+//    
+//    public int getMaxWidth() {
+//        return maxWidth;
+//    }
 
 }

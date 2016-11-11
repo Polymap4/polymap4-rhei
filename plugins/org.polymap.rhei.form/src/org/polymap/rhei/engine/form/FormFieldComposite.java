@@ -20,6 +20,7 @@ import org.opengis.feature.Property;
 import org.polymap.rhei.field.IFormField;
 import org.polymap.rhei.field.IFormFieldDecorator;
 import org.polymap.rhei.field.IFormFieldLabel;
+import org.polymap.rhei.field.IFormFieldLayout;
 import org.polymap.rhei.field.IFormFieldValidator;
 import org.polymap.rhei.form.IFormPageSite;
 import org.polymap.rhei.form.IFormToolkit;
@@ -37,8 +38,9 @@ public class FormFieldComposite
 
     public FormFieldComposite( Object editor, IFormPageSite pageSite, 
             IFormToolkit toolkit, Property prop, IFormField field,
-            IFormFieldLabel labeler, IFormFieldDecorator decorator, IFormFieldValidator validator ) {
-        super( editor, pageSite, toolkit, field, labeler, decorator, validator );
+            IFormFieldLabel labeler, IFormFieldDecorator decorator, IFormFieldValidator validator,
+            IFormFieldLayout layouter) {
+        super( editor, pageSite, toolkit, field, labeler, decorator, validator, layouter );
         this.prop = prop;
     }
     

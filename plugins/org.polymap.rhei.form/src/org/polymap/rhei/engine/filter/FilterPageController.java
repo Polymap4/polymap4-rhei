@@ -128,9 +128,10 @@ public abstract class FilterPageController
                         getToolkit(), 
                         propName, propType, 
                         field.get(),
-                        new DefaultFormFieldLabeler( labelWidth.get(), label.get() ), 
+                        new DefaultFormFieldLabeler( label.get() ), 
                         new DefaultFormFieldDecorator(), 
-                        validator.orElse( new NullValidator() ) );
+                        validator.orElse( new NullValidator() ),
+                        layout.orElse( defaultFieldLayout ) );
                 
                 fields.put( result.getFieldName(), result );
 

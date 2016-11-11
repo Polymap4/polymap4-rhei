@@ -26,7 +26,7 @@ import org.polymap.core.ui.ColumnLayoutFactory;
 
 import org.polymap.rhei.batik.IPanelSite;
 import org.polymap.rhei.field.EMailAddressValidator;
-import org.polymap.rhei.field.IFormFieldLabel;
+import org.polymap.rhei.field.HorizontalFieldLayout;
 import org.polymap.rhei.field.NotEmptyValidator;
 import org.polymap.rhei.field.PicklistFormField;
 import org.polymap.rhei.field.Validators;
@@ -86,7 +86,8 @@ public class PersonForm
 
         prop = person.firstname();
         site.newFormField( new PropertyAdapter( prop ) )
-                .label.put( IFormFieldLabel.NO_LABEL ).create();
+                .layout.put( HorizontalFieldLayout.NO_LABEL )
+                .create();
         
         prop = person.name();
         site.newFormField( new PropertyAdapter( prop ) )

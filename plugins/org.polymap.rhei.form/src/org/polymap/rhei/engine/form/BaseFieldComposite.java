@@ -15,22 +15,21 @@
  */
 package org.polymap.rhei.engine.form;
 
-import static org.polymap.core.ui.FormDataFactory.on;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import org.polymap.core.runtime.event.EventFilter;
 import org.polymap.core.runtime.event.EventManager;
-import org.polymap.core.ui.FormDataFactory.Alignment;
-
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormField;
 import org.polymap.rhei.field.IFormFieldDecorator;
 import org.polymap.rhei.field.IFormFieldLabel;
+import org.polymap.rhei.field.IFormFieldLayout;
+import org.polymap.rhei.field.IFormFieldLayout.Part;
 import org.polymap.rhei.field.IFormFieldListener;
 import org.polymap.rhei.field.IFormFieldSite;
 import org.polymap.rhei.field.IFormFieldValidator;
@@ -63,6 +62,8 @@ public abstract class BaseFieldComposite
     
     protected IFormFieldLabel         labeler;
     
+    protected IFormFieldLayout        layouter;
+    
     /** The validator set by the client code or the {@link NullValidator}. */
     protected IFormFieldValidator     validator;
     
@@ -77,7 +78,8 @@ public abstract class BaseFieldComposite
 
     public BaseFieldComposite( Object editor, IBasePageSite pageSite, 
             IFormToolkit toolkit, IFormField field,
-            IFormFieldLabel labeler, IFormFieldDecorator decorator, IFormFieldValidator validator ) {
+            IFormFieldLabel labeler, IFormFieldDecorator decorator, IFormFieldValidator validator,
+            IFormFieldLayout layouter ) {
         this.editor = editor;
         this.pageSite = pageSite;
         this.toolkit = toolkit;
@@ -85,25 +87,24 @@ public abstract class BaseFieldComposite
         this.labeler = labeler;
         this.decorator = decorator;
         this.validator = validator;
+        this.layouter = layouter;
     }
     
     
     public void createComposite( Composite result, int style ) {
-        result.setLayout( new FormLayout() );
-        
+        Map<Part,Control> parts = new HashMap();
+
         labeler.init( this );
-        Control labelControl = labeler.createControl( result, toolkit );
+        parts.put( Part.Label, labeler.createControl( result, toolkit ) );
         
         field.init( this );
-        Control fieldControl = field.createControl( result, toolkit );
+        parts.put( Part.Field, field.createControl( result, toolkit ) );
         
         decorator.init( this );
-        Control decoControl = decorator.createControl( result, toolkit );
-
-        on( labelControl ).top( fieldControl, 0, Alignment.CENTER).width( labeler.getMaxWidth() );
-        on( fieldControl ).top( 0 ).left( labelControl, 5 ).right( 100, -19 ).width( 50 );
-        on( decoControl ).top( fieldControl, 0, Alignment.CENTER ).left( fieldControl, 0 ).right( 100 );
+        parts.put( Part.Decorator, decorator.createControl( result, toolkit ) );
         
+        layouter.createLayout( result, parts );
+
 //        // focus listener
 //        addChangeListener( new IFormFieldListener() {
 //            Color defaultBg = result.getBackground();
@@ -117,7 +118,6 @@ public abstract class BaseFieldComposite
 //            }
 //        });
         
-        result.pack( true );
     }
 
 

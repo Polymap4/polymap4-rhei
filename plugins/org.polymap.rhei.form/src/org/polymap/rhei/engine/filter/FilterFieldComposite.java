@@ -21,6 +21,7 @@ import org.polymap.rhei.engine.form.BaseFieldComposite;
 import org.polymap.rhei.field.IFormField;
 import org.polymap.rhei.field.IFormFieldDecorator;
 import org.polymap.rhei.field.IFormFieldLabel;
+import org.polymap.rhei.field.IFormFieldLayout;
 import org.polymap.rhei.field.IFormFieldSite;
 import org.polymap.rhei.field.IFormFieldValidator;
 import org.polymap.rhei.filter.IFilterPageSite;
@@ -49,8 +50,8 @@ public class FilterFieldComposite
     public FilterFieldComposite( Object editor, IFilterPageSite pageSite, 
             IFormToolkit toolkit, String propName, Class<?> propType,
             IFormField field, IFormFieldLabel labeler, IFormFieldDecorator decorator,
-            IFormFieldValidator validator ) {
-        super( editor, pageSite, toolkit, field, labeler, decorator, validator );
+            IFormFieldValidator validator, IFormFieldLayout layout ) {
+        super( editor, pageSite, toolkit, field, labeler, decorator, validator, layout );
         this.propName = propName;
         this.propType = propType;
     }

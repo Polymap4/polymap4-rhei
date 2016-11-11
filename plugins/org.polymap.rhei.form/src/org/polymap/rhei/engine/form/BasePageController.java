@@ -23,16 +23,14 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
-import org.polymap.core.runtime.config.Check;
-import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.ConfigurationFactory;
-import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.NumberRangeValidator;
 import org.polymap.core.runtime.event.EventManager;
 import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.field.FormFieldEvent;
+import org.polymap.rhei.field.HorizontalFieldLayout;
 import org.polymap.rhei.field.IFormField;
+import org.polymap.rhei.field.IFormFieldLayout;
 import org.polymap.rhei.field.IFormFieldListener;
 import org.polymap.rhei.form.IBasePageSite;
 
@@ -53,27 +51,29 @@ public abstract class BasePageController<FC extends BaseFieldComposite>
 
     private volatile boolean                blockEvents;
     
-    /** Default is calculated dependent on display width between 110 and 150. */
-    @Mandatory
-    @Check( value=NumberRangeValidator.class, args={"0","1000"} )
-    public Config2<BasePageController,Integer> labelWidth;
+//    /** Default is calculated dependent on display width between 110 and 150. */
+//    @Mandatory
+//    @Check( value=NumberRangeValidator.class, args={"0","1000"} )
+//    public Config2<BasePageController,Integer> labelWidth;
+    
+    /** Defaults to: {@link HorizontalFieldLayout} */
+    protected IFormFieldLayout              defaultFieldLayout;
 
     
     public BasePageController() {
         ConfigurationFactory.inject( this );
         
-        // label width
+        // label width: minimum 110 + 10px per 100 pixel display width
         double displayWidth = UIUtils.sessionDisplay().getBounds().width;
-        // minimum 110
         double width = 110;
-        // plus 10px per 100 pixel display width
         if (displayWidth > 1000) {
             width += (displayWidth - 1000) * 0.1;
         }
         // but not more than 160 :)
         width = Math.min( 150, width );
         log.info( "labelWidth: " + width );
-        labelWidth.set( (int)width );
+        
+        defaultFieldLayout = new HorizontalFieldLayout().labelWidth.put( (int)width );
     }
     
 
@@ -187,4 +187,10 @@ public abstract class BasePageController<FC extends BaseFieldComposite>
         doLoad( monitor != null ? monitor : new NullProgressMonitor() );            
     }
     
+    
+    @Override
+    public void setDefaultFieldLayout( IFormFieldLayout layout ) {
+        this.defaultFieldLayout = layout;
+    }
+
 }

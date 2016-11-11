@@ -24,7 +24,7 @@ import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
 
 import org.polymap.rhei.batik.IPanelSite;
-import org.polymap.rhei.field.IFormFieldLabel;
+import org.polymap.rhei.field.HorizontalFieldLayout;
 import org.polymap.rhei.field.NotEmptyValidator;
 import org.polymap.rhei.form.DefaultFormPage;
 import org.polymap.rhei.form.IFormPageSite;
@@ -83,7 +83,7 @@ public class AddressForm
         prop = address.number();
         _site.newFormField( new PropertyAdapter( prop ) )
                 .parent.put( str )
-                .label.put( IFormFieldLabel.NO_LABEL )
+                .layout.put( HorizontalFieldLayout.NO_LABEL )
                 .validator.put( new NotEmptyValidator() )
                 .create()
                 .setLayoutData( FormDataFactory.filled().left( field ).create() );
@@ -105,7 +105,7 @@ public class AddressForm
         prop = address.city();
         _site.newFormField( new PropertyAdapter( prop ) )
                 .parent.put( city )
-                .label.put( IFormFieldLabel.NO_LABEL )
+                .layout.put( HorizontalFieldLayout.NO_LABEL )
                 .validator.put( new NotEmptyValidator() )
                 .create()
                 .setLayoutData( FormDataFactory.filled().left( field ).create() );

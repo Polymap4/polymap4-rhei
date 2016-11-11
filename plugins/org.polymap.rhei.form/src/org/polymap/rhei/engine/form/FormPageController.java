@@ -129,6 +129,7 @@ public abstract class FormPageController
     
     // IFormPageSite ****************************
     
+    
     @Override
     public FieldBuilder newFormField( Property property ) {
         return new FieldBuilder() {
@@ -144,9 +145,10 @@ public abstract class FormPageController
                         getToolkit(), 
                         property, 
                         field.get(),
-                        new DefaultFormFieldLabeler( labelWidth.get(), label.get() ), 
+                        new DefaultFormFieldLabeler( label.get() ), 
                         new DefaultFormFieldDecorator(), 
-                        validator.orElse( new NullValidator() ) );
+                        validator.orElse( new NullValidator() ),
+                        layout.orElse( defaultFieldLayout ) );
                 
                 fields.put( result.getFieldName(), result );
 
