@@ -26,9 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.widgets.Widget;
-
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -348,11 +345,6 @@ public class MdListViewer
     @Override
     public void expandToLevel( Object elementOrTreePath, int level ) {
         log.info( "EXPAND: " + elementOrTreePath );
-        
-        Widget widget = internalGetWidgetToSelect( elementOrTreePath );
-        ((TreeItem)widget).setBackground( UIUtils.getColor( 0xea, 0xea, 0xea ) );
-        //((TreeItem)widget).setForeground( UIUtils.getColor(  0x5A, 0xA9, 0xDD ) );
-        
         super.expandToLevel( elementOrTreePath, level );
         update( elementOrTreePath, null );  // update chevron icon state
     }

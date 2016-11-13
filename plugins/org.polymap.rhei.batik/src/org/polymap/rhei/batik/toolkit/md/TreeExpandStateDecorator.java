@@ -100,7 +100,7 @@ public class TreeExpandStateDecorator
         }
 
         HSLColor bg = bgColor
-                .map( color -> new HSLColor( color).adjustLuminance( 35 ).adjustSaturation( -100 ) )
+                .map( color -> new HSLColor( color).adjustLuminance( 34 ).adjustSaturation( -100 ) )
                 .orElse( new HSLColor( viewer.getTree().getBackground() ) );
 
         if (expanded) {
