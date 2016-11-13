@@ -106,7 +106,7 @@ public class SvgImageRegistryHelper
     public final static String      OVR12_ACTION = "ovr12-action";
 
     public static final RGB    COLOR_WHITE    = new RGB( 0xFF, 0xFF, 0xFF );
-    public static final RGB    COLOR_ACTION   = new RGB( 0x5A, 0xA9, 0xDD );
+    public static final RGB    COLOR_ACTION   = new RGB( 0x5A, 0xA9, 0xDD );  // XXX different in _standard.scss!?
     public static final RGB    COLOR_NORMAL   = new RGB( 0x84, 0xA4, 0xC1 );
     public static final RGB    COLOR_DISABLED = new RGB( 0xb0, 0xb0, 0xb0 );
     public static final RGB    COLOR_DANGER   = new RGB( 0xdf, 0x3e, 0x3e );  //0xFF, 0x61, 0x39 );

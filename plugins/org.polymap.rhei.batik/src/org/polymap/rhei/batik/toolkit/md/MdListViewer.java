@@ -19,6 +19,16 @@ import static org.polymap.rhei.batik.toolkit.md.dp.dp;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
+
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -37,15 +47,10 @@ import org.eclipse.rap.rwt.template.ImageCell;
 import org.eclipse.rap.rwt.template.Template;
 import org.eclipse.rap.rwt.template.TextCell;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Item;
-
 import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.ConfigurationFactory;
+import org.polymap.core.runtime.config.DefaultBoolean;
+import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.BatikPlugin;
@@ -62,7 +67,7 @@ import org.polymap.rhei.batik.toolkit.md.MdAppDesign.FontStyle;
 public class MdListViewer
         extends TreeViewer {
 
-    private static Log log = LogFactory.getLog( MdListViewer.class );
+    private static final Log log = LogFactory.getLog( MdListViewer.class );
     
     public static final String      CELL_ICON = "icon";
     public static final String      CELL_FIRSTLINE = "firstLine";
@@ -95,9 +100,10 @@ public class MdListViewer
 
     public Config<ActionProvider>      thirdSecondaryActionProvider;
 
-//    @Mandatory
-//    @DefaultBoolean( true )
-//    public Config<Boolean>             preserveSelection;
+    /** Make grid lines visible. See {@link Tree#setLinesVisible(boolean)}. */
+    @Mandatory
+    @DefaultBoolean( true )
+    public Config<Boolean>             linesVisible;
 
     private boolean                    customized = false;
 
@@ -140,11 +146,14 @@ public class MdListViewer
     }
 
 
+    /**
+     * 
+     */
     protected void customizeTree() {
         if (!customized) {
             customized = true;
             
-            getTree().setLinesVisible( true );
+            getTree().setLinesVisible( linesVisible.get() );
             
             Template template = new Template();
 
@@ -259,11 +268,9 @@ public class MdListViewer
                     // expand
                     if (CELL_EXPAND.equals( ev.text )) {
                         if (!getExpanded( (Item)ev.item )) {
-                            log.info( "EXPAND: " + elm );
                             expandToLevel( elm, 1 );
                         }
                         else {
-                            log.info( "COLLAPSE: " + elm );
                             collapseToLevel( elm, 1 );
                         }
                     }
@@ -337,14 +344,22 @@ public class MdListViewer
         return this;
     }
 
+
     @Override
-    public void expandToLevel(Object elementOrTreePath, int level) {
+    public void expandToLevel( Object elementOrTreePath, int level ) {
+        log.info( "EXPAND: " + elementOrTreePath );
+        
+        Widget widget = internalGetWidgetToSelect( elementOrTreePath );
+        ((TreeItem)widget).setBackground( UIUtils.getColor( 0xea, 0xea, 0xea ) );
+        //((TreeItem)widget).setForeground( UIUtils.getColor(  0x5A, 0xA9, 0xDD ) );
+        
         super.expandToLevel( elementOrTreePath, level );
         update( elementOrTreePath, null );  // update chevron icon state
     }
     
     @Override
-    public void collapseToLevel(Object elementOrTreePath, int level) {
+    public void collapseToLevel( Object elementOrTreePath, int level ) {
+        log.info( "COLLAPSE: " + elementOrTreePath );
         super.collapseToLevel( elementOrTreePath, level );
         update( elementOrTreePath, null );  // update chevron icon state
     }
