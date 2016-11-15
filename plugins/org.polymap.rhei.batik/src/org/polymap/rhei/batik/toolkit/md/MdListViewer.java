@@ -334,8 +334,7 @@ public class MdListViewer
     public MdListViewer toggleItemExpand( Object elm ) {
         if (!getExpandedState( elm )) {
             expandToLevel( elm, 1 );
-        }
-        else {
+        } else {
             collapseToLevel( elm, 1 );
         }
         return this;
