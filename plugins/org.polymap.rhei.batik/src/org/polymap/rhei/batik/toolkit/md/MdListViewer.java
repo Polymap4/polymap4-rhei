@@ -174,7 +174,7 @@ public class MdListViewer
                 //cell.setSelectable( openListenerPresent );
                 cell.setFont( MdAppDesign.font( FontStyle.Subhead ) );
                 
-                tileHeight = dp( 48 );
+                tileHeight = dp( 50 );
             }
             // second line
             if (secondLineLabelProvider.isPresent()) {
@@ -183,11 +183,11 @@ public class MdListViewer
 
                 TextCell cell = new TextCell( template );
                 cell.setName( CELL_SECONDLINE );
-                cell.setLeft( left.pix() ).setRight( 50 ).setTop( dp( 39 ).pix() ).setHeight( 15 );
+                cell.setLeft( left.pix() ).setRight( 50 ).setTop( dp( 37 ).pix() ).setHeight( 16 );
                 cell.setBindingIndex( colCount++ );
                 cell.setForeground( UIUtils.getColor( 150, 150, 150 ) );
 
-                tileHeight = dp( 72 );
+                tileHeight = dp( 75 );
             }
             // third line
             if (thirdLineLabelProvider.isPresent()) {

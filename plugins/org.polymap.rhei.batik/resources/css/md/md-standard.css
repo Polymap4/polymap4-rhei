@@ -1709,76 +1709,75 @@ Tree-Indent:line {
 
 /* line 194, ../../sass/md/_tree.scss */
 Tree-Indent:first {
-  width: 10px;
   background-image: none;
 }
 
-/* line 199, ../../sass/md/_tree.scss */
+/* line 198, ../../sass/md/_tree.scss */
 Tree-Indent:first:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 203, ../../sass/md/_tree.scss */
+/* line 202, ../../sass/md/_tree.scss */
 Tree-Indent:first:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 207, ../../sass/md/_tree.scss */
+/* line 206, ../../sass/md/_tree.scss */
 Tree-Indent:first:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 211, ../../sass/md/_tree.scss */
+/* line 210, ../../sass/md/_tree.scss */
 Tree-Indent:first:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
 
-/* line 215, ../../sass/md/_tree.scss */
+/* line 214, ../../sass/md/_tree.scss */
 Tree-Indent:last {
   background-image: none;
 }
 
-/* line 219, ../../sass/md/_tree.scss */
+/* line 218, ../../sass/md/_tree.scss */
 Tree-Indent:last:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 223, ../../sass/md/_tree.scss */
+/* line 222, ../../sass/md/_tree.scss */
 Tree-Indent:last:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 227, ../../sass/md/_tree.scss */
+/* line 226, ../../sass/md/_tree.scss */
 Tree-Indent:last:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 231, ../../sass/md/_tree.scss */
+/* line 230, ../../sass/md/_tree.scss */
 Tree-Indent:last:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
 
-/* line 235, ../../sass/md/_tree.scss */
+/* line 234, ../../sass/md/_tree.scss */
 Tree-Indent:first:last {
   background-image: none;
 }
 
-/* line 239, ../../sass/md/_tree.scss */
+/* line 238, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 243, ../../sass/md/_tree.scss */
+/* line 242, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 247, ../../sass/md/_tree.scss */
+/* line 246, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 251, ../../sass/md/_tree.scss */
+/* line 250, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
@@ -2386,12 +2385,12 @@ Composite.toolbar2, Composite.toolbar2-top, Composite.toolbar2-bottom {
 
 /* line 19, ../../sass/md/_toolbar2.scss */
 Composite.toolbar2-top {
-  box-shadow: 0px 1px 4px #b0b0b0;
+  box-shadow: 0px 1px 2px #b0b0b0;
 }
 
 /* line 23, ../../sass/md/_toolbar2.scss */
 Composite.toolbar2-bottom {
-  box-shadow: 0px -1px 4px #b0b0b0;
+  box-shadow: 0px -1px 2px #b0b0b0;
 }
 
 /* line 28, ../../sass/md/_toolbar2.scss */
