@@ -90,7 +90,7 @@ public class MdToolkit
 
 
     /**
-     * Creates a default Floating Action Button with "check" icon and
+     * Creates a default Floating Action Button with default "check" icon and
      * position TOP|RIGHT.
      * 
      * @see #createFab(Image, int)
@@ -100,7 +100,23 @@ public class MdToolkit
      */
     @SuppressWarnings("javadoc")
     public Button createFab() {
-        return createFab( BatikPlugin.images().svgImage( "check.svg", SvgImageRegistryHelper.WHITE24 ), SWT.TOP|SWT.RIGHT );
+        return createFab( SWT.TOP|SWT.RIGHT );
+    }
+    
+    
+    /**
+     * Creates a default Floating Action Button with default "check" icon.
+     * 
+     * @param position A combination of {@link SWT#TOP}, {@link SWT#BOTTOM},
+     *        {@link SWT#LEFT} and {@link SWT#RIGHT}.
+     * @see #createFab(Image, int)
+     * @see <a
+     *      href="http://www.google.com/design/spec/components/buttons-floating-action-button.html">Material
+     *      Design</a>.
+     */
+    @SuppressWarnings("javadoc")
+    public Button createFab( int position ) {
+        return createFab( BatikPlugin.images().svgImage( "check.svg", SvgImageRegistryHelper.WHITE24 ), position );
     }
     
     
