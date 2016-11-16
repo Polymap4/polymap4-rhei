@@ -1022,7 +1022,7 @@ Label.batik-panel-section-title {
 
 /* line 44, ../../sass/md/_batik_section.scss */
 Label.batik-panel-section-title-expandable {
-  /*  color: $link-color;*/
+  /* color: $link-color; */
   font: 22px "Roboto", "Noto", sans-serif;
   border: none;
   cursor: pointer;
