@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -19,13 +19,14 @@ import java.util.List;
 import org.eclipse.swt.widgets.Control;
 
 import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.Defaults;
 import org.polymap.core.runtime.config.Mandatory;
-import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.PropertyChangeSupport;
 
 import org.polymap.rhei.batik.IPanelSite;
+import org.polymap.rhei.batik.toolkit.IPanelSection;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.LayoutConstraint;
 
@@ -43,9 +44,10 @@ public abstract class DashletSite
      * Allows null to allow no header at all.
      */
     @Concern( PropertyChangeSupport.class )
-    public Config<String>                 title;
+    public Config2<DashletSite,String>      title;
 
-    public Config<Boolean>                border;
+    /** Uninitialized specifies that {@link Dashboard#defaultBorder} is used. */
+    public Config2<DashletSite,Boolean>     border;
     
     /**
      * List of layout constraints. Modify only in {@link IDashlet#init(DashletSite)}
@@ -53,10 +55,10 @@ public abstract class DashletSite
      */
     @Mandatory
     @Defaults
-    public Config<List<LayoutConstraint>> constraints;
+    public Config2<DashletSite,List<LayoutConstraint>> constraints;
 
-    @Defaults
-    public Config<Boolean>                isExpandable;
+    /** Uninitialized specifies that {@link Dashboard#defaultExpandable} is used. */
+    public Config2<DashletSite,Boolean>     expandable;
 
     /**
      * Shortcut to {@link #constraints}.
@@ -74,6 +76,12 @@ public abstract class DashletSite
 
     public abstract boolean isSubmitable();
 
+    public abstract IPanelSection getPanelSection();
+
     public abstract Control getTitleControl();
+
+    public abstract boolean isExpanded();
+
+    public abstract DashletSite setExpanded( boolean expanded );
     
 }

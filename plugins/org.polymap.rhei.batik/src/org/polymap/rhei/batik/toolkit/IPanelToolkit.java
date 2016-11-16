@@ -148,7 +148,7 @@ public interface IPanelToolkit
      * 
      * @param parent
      * @param title The heading of this section, or null if no heading.
-     * @param styles One of the {@link IPanelSection} constants, or {@link SWT#BORDER} .
+     * @param styles {@link IPanelSection#EXPANDABLE}, {@link SWT#BORDER}.
      * @return Newly created viewer instance.
      */
     public IPanelSection createPanelSection( Composite parent, String title, int... styles );

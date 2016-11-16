@@ -34,11 +34,18 @@ Composite[BORDER].batik-panel-section {
   /* XXX space for shadow; does not work; see DefaultAddDesign.createPanelContents() for fix */
   /*margin: 2px 3px 4px 3px; */
   padding: 5px 8px;
+  /*animation: slideIn 300ms ease-out, slideOut 300ms ease-in;*/   
 }
 
 Label.batik-panel-section-title {
   font: 22px $font;
   border: none;
+}
+Label.batik-panel-section-title-expandable {
+/*  color: $link-color;*/
+  font: 22px $font;
+  border: none;
+  cursor: pointer;
 }
 Label:disabled.batik-panel-section-title {
   opacity: 0.3;

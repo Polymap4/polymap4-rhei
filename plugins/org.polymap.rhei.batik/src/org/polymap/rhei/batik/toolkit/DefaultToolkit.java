@@ -83,6 +83,7 @@ public class DefaultToolkit
     public static final String  CSS_PREFIX = "batik-panel";
     public static final String  CSS_SECTION = CSS_PREFIX + "-section";
     public static final String  CSS_SECTION_TITLE = CSS_PREFIX + "-section-title";
+    public static final String  CSS_SECTION_TITLE_EXPANDABLE = CSS_PREFIX + "-section-title-expandable";
     public static final String  CSS_SECTION_SEPARATOR = CSS_PREFIX + "-section-separator";
     public static final String  CSS_SECTION_CLIENT = CSS_PREFIX + "-section-client";
     
@@ -478,7 +479,7 @@ public class DefaultToolkit
     
     @Override
     public IPanelSection createPanelSection( Composite parent, String title, int... styles ) {
-        DefaultPanelSection result = new DefaultPanelSection( this, parent, styles );
+        PanelSection result = new PanelSection( this, parent, styles );
         if (title != null) {
             result.setTitle( title );
         }

@@ -14,11 +14,12 @@
  */
 package org.polymap.rhei.batik.toolkit;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * A panel section is the main layout component of the Atlas UI. It consists of a
+ * A panel section is the main layout component of the Batik UI. It consists of a
  * title and a body. The body can contain plain widgets or sub-sections. The child
  * elements are layouted in a column by default. The layout can be controlled via
  * constraints (see {@link Column#addConstraint(LayoutConstraint)}).
@@ -28,8 +29,8 @@ import org.eclipse.swt.widgets.Control;
 public interface IPanelSection
         extends ILayoutContainer, ILayoutElement {
 
-    /** Style constant: make an IPanelSection expandable */
-    public static final int         EXPANDABLE = 1;
+    /** Style constant: make an IPanelSection expandable ({@link SWT#TOGGLE}). */
+    public static final int         EXPANDABLE = SWT.TOGGLE;
     
     public IPanelSection getParentPanel();
     
@@ -40,6 +41,14 @@ public interface IPanelSection
      */
     public int getLevel();
     
+    /**
+     * Expand/collapse this section.
+     * <p/>
+     * This method can also be used to {@link Composite#layout()} all necessary
+     * parents after client content of this section has been created and/or modified.
+     *
+     * @param expanded The new expansion state.
+     */
     public IPanelSection setExpanded( boolean expanded );
     
     public boolean isExpanded();

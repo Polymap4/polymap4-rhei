@@ -14,11 +14,15 @@
  */
 package org.polymap.rhei.batik.dashboard;
 
+import static org.polymap.core.runtime.event.TypeEventFilter.ifType;
+import static org.polymap.rhei.batik.toolkit.IPanelSection.EXPANDABLE;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 
 import java.beans.PropertyChangeEvent;
@@ -30,13 +34,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import org.eclipse.ui.forms.events.ExpansionEvent;
+
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultBoolean;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
-
 import org.polymap.rhei.batik.BatikApplication;
 import org.polymap.rhei.batik.IPanelSite;
 import org.polymap.rhei.batik.toolkit.IPanelSection;
@@ -51,18 +56,30 @@ import org.polymap.rhei.batik.toolkit.LayoutConstraint;
 public class Dashboard
         extends Configurable {
 
-    private static Log log = LogFactory.getLog( Dashboard.class );
+    private static final Log log = LogFactory.getLog( Dashboard.class );
 
+    /**
+     * The default border setting used for all dashlets with no
+     * {@link DashletSite#border} set.
+     */
     @Mandatory
     @DefaultBoolean( true )
     public Config2<Dashboard,Boolean>       defaultBorder;
+    
+    /**
+     * The default expandable setting used for all dashlets with no
+     * {@link DashletSite#expandable} set.
+     */
+    @Mandatory
+    @DefaultBoolean( false )
+    public Config2<Dashboard,Boolean>       defaultExpandable;
     
     private String                          id;
     
     private IPanelSite                      panelSite;
     
-    private Map<IDashlet,DashletSite>       dashlets = new HashMap();
-
+    private Map<IDashlet,DashletSiteImpl>   dashlets = new HashMap();
+    
     
     public Dashboard( IPanelSite panelSite, String id ) {
         this.panelSite = panelSite;
@@ -70,65 +87,104 @@ public class Dashboard
     }
     
     
-//    public Dashboard( PanelSite panelSite, String id ) {
-//        this.panelSite = panelSite;
-//        this.id = id;
-//    }
-    
-    
     public void dispose() {
+        EventManager.instance().unsubscribe( this );
         dashlets.keySet().stream().forEach( dashlet -> dashlet.dispose() );
-        dashlets.clear();
+        dashlets = null;
+    }
+    
+    
+    public boolean isDisposed() {
+        return dashlets == null;
     }
     
     
     public Dashboard addDashlet( IDashlet dashlet ) {
-        DashletSite site = new DashletSiteImpl( dashlet );
+        assert !isDisposed();
+        DashletSiteImpl site = new DashletSiteImpl( dashlet );
         BatikApplication.instance().getContext().propagate( dashlet );
-        dashlet.init( site );
         dashlets.put( dashlet, site );
+        dashlet.init( site );
         return this;
     }
     
     
     public Set<IDashlet> dashlets() {
+        assert !isDisposed();
         return Collections.unmodifiableSet( dashlets.keySet() );
     }
 
-
+    
     public Composite createContents( Composite parent ) {
+        assert !isDisposed();
         IPanelToolkit tk = panelSite.toolkit();
         
-        for (Entry<IDashlet,DashletSite> entry : dashlets.entrySet()) {
-            DashletSite dashletSite = entry.getValue();
+        for (Entry<IDashlet,DashletSiteImpl> entry : dashlets.entrySet()) {
+            DashletSiteImpl dashletSite = entry.getValue();
             IDashlet dashlet = entry.getKey();
-
-            // listen to changes of the site made by the dashlet
-            EventManager.instance().subscribe( this, ev -> ev.getSource() == dashletSite );
-            
+    
             String title = dashletSite.title.get();
-            int border = defaultBorder.get() ? SWT.BORDER : SWT.NONE;
-            if (dashletSite.border.get() != null) {
-                border = dashletSite.border.get() ? SWT.BORDER : SWT.NONE;
-            }
-            int expandable = dashletSite.isExpandable.get() ? IPanelSection.EXPANDABLE : SWT.NONE;
+            int border = dashletSite.border.orElse( defaultBorder ) ? SWT.BORDER : SWT.NONE;
+            int expandable = dashletSite.expandable.orElse( defaultExpandable ) ? EXPANDABLE : SWT.NONE;
             IPanelSection section = tk.createPanelSection( parent, title, border, expandable );
             
-            ((DashletSiteImpl)dashletSite).section = section;
+            dashletSite.panelSection = Optional.of( section );
             
             List<LayoutConstraint> constraints = dashletSite.constraints.get();
             section.addConstraint( constraints.toArray( new LayoutConstraint[constraints.size()]) );
             
-            dashlet.createContents( section.getBody() );
-        }        
+            setExpanded( dashlet, dashletSite.isExpanded() );
+        }
+    
+        // listen to changes of the site made by the dashlet
+        EventManager.instance().subscribe( this, ifType( PropertyChangeEvent.class, ev -> 
+                dashlets.values().contains( ev.getSource() ) ) );
+        
+        EventManager.instance().subscribe( this, ifType( ExpansionEvent.class, ev -> true ) );
+        
         return parent;
+    }
+
+
+    public Dashboard setExpanded( IDashlet dashlet, boolean expanded ) {
+        assert !isDisposed();
+        DashletSiteImpl dashletSite = dashlets.get( dashlet );
+
+        dashletSite.setExpanded( expanded );
+
+        dashletSite.panelSection.ifPresent( panelSection -> {
+            if (expanded && panelSection.getBody().getChildren().length == 0) {
+                dashlet.createContents( panelSection.getBody() );
+            }
+            panelSection.setExpanded( expanded );
+        });
+        return this;
+    }
+
+    
+    public boolean isExpanded( IDashlet dashlet ) {
+        assert !isDisposed();
+        DashletSiteImpl dashletSite = dashlets.get( dashlet );
+        return dashletSite.isExpanded();
+    }
+
+    
+    @EventHandler( display=true )
+    protected void onSectionExpansion( ExpansionEvent ev ) {
+        if (!isDisposed()) {
+            dashlets.values().stream()
+                    .filter( site -> site.panelSection.get() == ev.getSource() )
+                    .findAny().ifPresent( dashletSite -> dashletSite.setExpanded( ev.getState() ) );
+        }        
     }
     
     
     @EventHandler
-    protected void sitePropertyChanged( PropertyChangeEvent ev ) {
-        if (ev.getPropertyName().equals( "title" )) {
-           log.warn( "!!! Dashlet TITLE changed! !!!" );    
+    protected void onSitePropertyChange( PropertyChangeEvent ev ) {
+        if (!isDisposed()) {
+            if (ev.getPropertyName().equals( "title" )) {
+                log.warn( "!!! Dashlet TITLE changed! !!!" );    
+            }
         }
     }
     
@@ -144,11 +200,14 @@ public class Dashboard
     protected class DashletSiteImpl
             extends DashletSite {
 
-        private IDashlet            dashlet;
+        private IDashlet                dashlet;
         
-        private boolean             submitable = true;
+        private boolean                 submitable = true;
 
-        private IPanelSection       section;
+        /** Not there before {@link Dashboard#createContents(Composite)}. */
+        private Optional<IPanelSection> panelSection = Optional.empty();
+        
+        private boolean                 expanded = true;
 
         public DashletSiteImpl( IDashlet dashlet ) {
             this.dashlet = dashlet;
@@ -183,8 +242,28 @@ public class Dashboard
         
         @Override
         public Control getTitleControl() {
-            assert section != null : "getTitleControl() is available in createContents()";
-            return section.getTitleControl();
+            assert panelSection.isPresent() : "getTitleControl() is not available in createContents()";
+            return panelSection.get().getTitleControl();
+        }
+        
+        @Override
+        public IPanelSection getPanelSection() {
+            assert panelSection.isPresent() : "getPanelSection() is not available in createContents()";
+            return panelSection.get();
+        }
+        
+        @Override
+        public boolean isExpanded() {
+            return expanded;
+        }
+
+        @Override
+        public DashletSite setExpanded( boolean expanded ) {
+            if (this.expanded != expanded) {
+                this.expanded = expanded;
+                Dashboard.this.setExpanded( dashlet, expanded );
+            }
+            return this;
         }
     }
     

@@ -95,5 +95,11 @@ public class BatikFormDashlet
         title.ifPresent( value -> site.title.set( value ) );
         site.constraints.set( constraints.get() );
     }
+
+
+    @Override
+    public DashletSite site() {
+        return dashletSite;
+    }
     
 }

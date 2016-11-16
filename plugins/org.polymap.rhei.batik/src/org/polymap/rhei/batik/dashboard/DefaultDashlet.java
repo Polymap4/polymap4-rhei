@@ -16,6 +16,7 @@ package org.polymap.rhei.batik.dashboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.polymap.rhei.batik.toolkit.LayoutConstraint;
 
@@ -30,11 +31,14 @@ public abstract class DefaultDashlet
     protected DashletSite           dashletSite;
     
     private List<LayoutConstraint>  constraints = new ArrayList();
+    
+    private Optional<Boolean>       startExpanded = Optional.empty();
 
     
     @Override
     public void init( DashletSite site ) {
         this.dashletSite = site;
+        startExpanded.ifPresent( expanded -> this.dashletSite.setExpanded( expanded ) );
         constraints.forEach( c -> site.constraints.get().add( c ) );
     }
 
@@ -44,6 +48,15 @@ public abstract class DefaultDashlet
     }
 
 
+    @Override
+    public DashletSite site() {
+        return dashletSite;
+    }
+
+    
+    /**
+     * Deprecated! Use {@link #site()} instead.
+     */
     protected DashletSite getSite() {
         return dashletSite;
     }
@@ -53,6 +66,17 @@ public abstract class DefaultDashlet
         constraints.add( constraint );
         if (dashletSite != null) {
             dashletSite.constraints.get().add( constraint );
+        }
+        return this;
+    }
+
+
+    public DefaultDashlet setExpanded( boolean expanded ) {
+        if (dashletSite != null) {
+            dashletSite.setExpanded( expanded );
+        }
+        else {
+            startExpanded = Optional.of( expanded );
         }
         return this;
     }

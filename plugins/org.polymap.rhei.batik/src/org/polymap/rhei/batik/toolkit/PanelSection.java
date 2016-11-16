@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2013, Polymap GmbH. All rights reserved.
+ * Copyright (C) 2013-2016, Polymap GmbH. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -14,6 +14,9 @@
  */
 package org.polymap.rhei.batik.toolkit;
 
+import static org.polymap.rhei.batik.app.SvgImageRegistryHelper.DISABLED12;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,14 +24,22 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.forms.events.ExpansionEvent;
 
 import org.eclipse.rap.rwt.RWT;
 
+import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.Configurable;
+import org.polymap.core.runtime.config.DefaultBoolean;
+import org.polymap.core.runtime.config.Mandatory;
+import org.polymap.core.runtime.event.EventManager;
 import org.polymap.core.ui.FormDataFactory;
+import org.polymap.core.ui.FormDataFactory.Alignment;
 import org.polymap.core.ui.FormLayoutFactory;
 import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.BatikApplication;
+import org.polymap.rhei.batik.BatikPlugin;
 import org.polymap.rhei.batik.app.IAppDesign;
 
 /**
@@ -36,23 +47,34 @@ import org.polymap.rhei.batik.app.IAppDesign;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public class DefaultPanelSection
+public class PanelSection
+        extends Configurable
         implements IPanelSection {
 
-    private static Log log = LogFactory.getLog( DefaultPanelSection.class );
+    private static final Log log = LogFactory.getLog( PanelSection.class );
     
-    private int                     level;
-
-    private Composite               control;
+    @Mandatory
+    @DefaultBoolean( true )
+    public Config2<PanelSection,Boolean> expandable;
     
-    private Label                   title;
+    private int                 level;
 
-    private Composite               client;
+    private Composite           control;
+    
+    private Composite           titleParent;
+    
+    private Label               title;
 
-    private Label                   sep;
+    private Composite           client;
+
+    private Label               sep;
+    
+    private boolean             expanded = true;
+
+    private Label               chevron;
 
     
-    public DefaultPanelSection( DefaultToolkit tk, Composite parent, int[] styles ) {
+    public PanelSection( DefaultToolkit tk, Composite parent, int[] styles ) {
         control = new Composite( parent, SWT.NO_FOCUS | tk.stylebits( styles ) );
         UIUtils.setVariant( control, DefaultToolkit.CSS_SECTION  );
         control.setData( "panelSection", this );
@@ -63,8 +85,18 @@ public class DefaultPanelSection
         title = new Label( control, SWT.NO_FOCUS );
         UIUtils.setVariant( title, DefaultToolkit.CSS_SECTION_TITLE  );
         title.setData( RWT.MARKUP_ENABLED, Boolean.TRUE );
-        FormDataFactory.filled().bottom( -1 ).height( 26 ).applyTo( title );
+        FormDataFactory.on( title ).fill().noBottom().height( 26 );
         title.setVisible( false );
+        title.addListener( SWT.MouseUp, e -> toggleExpanded() );
+        
+        if (ArrayUtils.contains( styles, EXPANDABLE )) {
+            UIUtils.setVariant( title, DefaultToolkit.CSS_SECTION_TITLE_EXPANDABLE );
+            chevron = new Label( control, SWT.NO_FOCUS );
+            chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED12 ) );
+            FormDataFactory.on( chevron ).top( title, 2, Alignment.CENTER ).left( 0 );
+            FormDataFactory.on( title ).left( chevron );
+            chevron.addListener( SWT.MouseUp, e -> toggleExpanded() );
+        }
         
         // separator
         sep = new Label( control, SWT.NO_FOCUS | SWT.SEPARATOR | SWT.HORIZONTAL );
@@ -73,8 +105,7 @@ public class DefaultPanelSection
         sep.setVisible( false );
         sep.moveBelow( title );
 
-        // client
-        // border style signals CSS that the section has a border
+        // client; border style signals CSS that the section has a border
         client = tk.adapt( new Composite( control, SWT.NO_FOCUS | tk.styleHas( styles, SWT.BORDER ) ) );
         UIUtils.setVariant( client, DefaultToolkit.CSS_SECTION_CLIENT );
         FormDataFactory.filled().top( sep ).applyTo( client );
@@ -152,24 +183,54 @@ public class DefaultPanelSection
     }
 
     @Override
-    public IPanelSection setTitle( String txt ) {
-        if (txt != null) {
-            title.setText( txt );
+    public IPanelSection setTitle( String s ) {
+        if (s != null) {
+            title.setText( s );
         }
-        title.setVisible( txt != null );
+        title.setVisible( s != null );
         if (sep != null) {
-            sep.setVisible( txt != null );
+            sep.setVisible( s != null );
         }
         return this;
     }
 
     @Override
     public boolean isExpanded() {
-        return true;
+        return expanded;
     }
 
     @Override
     public IPanelSection setExpanded( boolean expanded ) {
+        if (this.expanded != expanded) {
+            if (expanded) {
+                client.setVisible( true );
+                sep.setVisible( true );
+                //Point sepSize = sep.computeSize( control.getSize().x, SWT.DEFAULT );
+                sep.setLayoutData( FormDataFactory.filled().top( title ).noBottom().create() );
+                client.setLayoutData( FormDataFactory.filled().top( sep ).create() );
+            }
+            else {
+                client.setVisible( false );
+                sep.setVisible( false );
+                sep.setLayoutData( FormDataFactory.on( sep ).top( title ).height( 0 ).create() );
+                client.setLayoutData( FormDataFactory.on( client ).top( sep ).height( 0 ).create() );
+            }
+            chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED12 ) );
+            
+            ExpansionEvent ev = new ExpansionEvent( PanelSection.this, expanded );
+            EventManager.instance().publish( ev );
+            this.expanded = expanded;
+        }
+        
+        // layout data even if expanded state has not changed; Dashboard uses this
+        // after content has been created
+        control.layout();
+        control.getParent().layout();
+        return this;
+    }
+    
+    public IPanelSection toggleExpanded() {
+        setExpanded( !expanded );
         return this;
     }
     
