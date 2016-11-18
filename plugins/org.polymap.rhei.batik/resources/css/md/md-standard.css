@@ -1499,7 +1499,7 @@ Button.batik-panel-fab {
   spacing: 3px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
   background-color: #81CC39;
-  border: 1px solid #7cc733;
+  border: 1px solid #7dc934;
   color: #ffffff;
   /* geht nur für Composite? */
   animation: fadeIn 700ms ease-in, fadeOut 500ms ease-out;
@@ -1508,13 +1508,19 @@ Button.batik-panel-fab {
 /* line 15, ../../sass/md/_fab.scss */
 Button:hover.batik-panel-fab {
   background-color: #6eb02e;
-  border: 1px solid #69a82c;
+  border: 1px solid #6aaa2c;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* line 21, ../../sass/md/_fab.scss */
 Button:pressed.batik-panel-fab {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* line 24, ../../sass/md/_fab.scss */
+Button:disabled.batik-panel-fab {
+  border: 1px solid #C0C0C0;
+  background-color: #C0C0C0;
 }
 
 /* Tree default theme */

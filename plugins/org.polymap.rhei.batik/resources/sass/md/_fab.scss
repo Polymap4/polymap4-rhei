@@ -6,7 +6,7 @@ Button.batik-panel-fab {
   spacing: 3px;
   box-shadow: 0px 2px 6px $shadow;
   background-color: $fab-bg;  
-  border: 1px solid darken( $fab-bg, 2% );
+  border: 1px solid darken( $fab-bg, 1.5% );
   color: $fab-fg;
   /* geht nur für Composite? */
   animation: fadeIn 700ms ease-in, fadeOut 500ms ease-out;    
@@ -14,10 +14,14 @@ Button.batik-panel-fab {
 
 Button:hover.batik-panel-fab {
   background-color: $fab-hover;
-  border: 1px solid darken( $fab-hover, 2% );
+  border: 1px solid darken( $fab-hover, 1.5% );
   box-shadow: 0px 2px 6px darken( $shadow, 15% );  
 }
 
 Button:pressed.batik-panel-fab {
     box-shadow: 0px 1px 2px darken( $shadow, 15% );
+}
+Button:disabled.batik-panel-fab {
+  border: 1px solid $action-disabled-bg;
+  background-color: $action-disabled-bg;
 }
