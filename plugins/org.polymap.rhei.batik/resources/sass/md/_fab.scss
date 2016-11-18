@@ -1,12 +1,12 @@
 /* Floating Action Button theme */
 
 Button.batik-panel-fab {
-  border: none;
   border-radius: 30px;
   padding: 5px 15px;
   spacing: 3px;
   box-shadow: 0px 2px 6px $shadow;
-  background-color: $fab-bg;
+  background-color: $fab-bg;  
+  border: 1px solid darken( $fab-bg, 2% );
   color: $fab-fg;
   /* geht nur für Composite? */
   animation: fadeIn 700ms ease-in, fadeOut 500ms ease-out;    
@@ -14,6 +14,7 @@ Button.batik-panel-fab {
 
 Button:hover.batik-panel-fab {
   background-color: $fab-hover;
+  border: 1px solid darken( $fab-hover, 2% );
   box-shadow: 0px 2px 6px darken( $shadow, 15% );  
 }
 

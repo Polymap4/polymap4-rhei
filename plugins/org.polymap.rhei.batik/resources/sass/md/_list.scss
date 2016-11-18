@@ -22,7 +22,7 @@ List-Item {
 List-Item:hover,
 List-Item:even:hover {
   color: darken( $text-color, 20% );
-  background-color: lighten( $action-bg, 32% );
+  background-color: darken( #ffffff, 10% );  /*$separator1;*/
 }
 
 List-Item:selected {
@@ -47,7 +47,7 @@ List-Item:selected:unfocused {
 }
 
 List-Item:even {
-  background-color: #f5f5f3;
+  background-color: darken( #ffffff, 5% );  /*$separator1;*/
 }
 
 List-Item:even:selected {

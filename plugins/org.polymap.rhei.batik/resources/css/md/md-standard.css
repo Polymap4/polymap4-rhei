@@ -36,6 +36,7 @@
  */
 /* Selected lines of list, trees and tables */
 /*lighten( $action-bg, 30% );*/
+/*#b0b0b0;*/
 /* Light separator color for tree/table lines, header underline. */
 /* Dark separator used for borders and section separator. */
 /**********************************************************
@@ -1007,7 +1008,7 @@ Composite[BORDER].batik-panel-section {
   background-color: #faf8f8;
   border-radius: 4px;
   border: 1px solid #ffffff;
-  box-shadow: 0px 1px 2px #b0b0b0;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   /* XXX space for shadow; does not work; see DefaultAddDesign.createPanelContents() for fix */
   /*margin: 2px 3px 4px 3px; */
   padding: 5px 8px;
@@ -1161,10 +1162,10 @@ Composite.atlas-panel-client {
 /* line 43, ../../sass/md/_batik_panel.scss */
 Composite[BORDER].atlas-panel-header {
   border-radius: 2px;
-  border: 0px solid #ffffff;
-  /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
+  border: 1px solid #7eb4e8;
   background-color: #84b8ea;
-  box-shadow: 0px 2px 3px #b0b0b0;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
 }
 
 /* line 51, ../../sass/md/_batik_panel.scss */
@@ -1288,7 +1289,7 @@ Button[PUSH][BORDER],
 Button[TOGGLE][BORDER] {
   color: #ffffff;
   background-color: #599FE2;
-  box-shadow: 0px 1px 2px #b0b0b0;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* flat button */
@@ -1347,7 +1348,7 @@ Button[ARROW]:hover,
 Button[PUSH]:hover,
 Button[TOGGLE]:hover {
   background-color: #2e86da;
-  box-shadow: 0px 1px 2px #8a8a8a;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   animation: hoverOut 400ms ease-out;
 }
 
@@ -1493,12 +1494,12 @@ Button-FocusIndicator[CHECK], Button-FocusIndicator[RADIO] {
 /* Floating Action Button theme */
 /* line 3, ../../sass/md/_fab.scss */
 Button.batik-panel-fab {
-  border: none;
   border-radius: 30px;
   padding: 5px 15px;
   spacing: 3px;
-  box-shadow: 0px 2px 6px #b0b0b0;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
   background-color: #81CC39;
+  border: 1px solid #7cc733;
   color: #ffffff;
   /* geht nur für Composite? */
   animation: fadeIn 700ms ease-in, fadeOut 500ms ease-out;
@@ -1507,12 +1508,13 @@ Button.batik-panel-fab {
 /* line 15, ../../sass/md/_fab.scss */
 Button:hover.batik-panel-fab {
   background-color: #6eb02e;
-  box-shadow: 0px 2px 6px #8a8a8a;
+  border: 1px solid #69a82c;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* line 20, ../../sass/md/_fab.scss */
+/* line 21, ../../sass/md/_fab.scss */
 Button:pressed.batik-panel-fab {
-  box-shadow: 0px 1px 2px #8a8a8a;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Tree default theme */
@@ -1556,15 +1558,11 @@ Tree-RowOverlay {
 /* line 36, ../../sass/md/_tree.scss */
 Tree-RowOverlay:hover {
   color: #4a4a4a;
-  background-color: #e8e8e8;
-  /*background-image: gradient(
-    linear, left top, left bottom,
-    from( #ebebeb ),
-    to( #d5d5d5 )
-  );*/
+  background-color: rgba(0, 0, 0, 0.05);
+  /*$separator1;*/
 }
 
-/* line 46, ../../sass/md/_tree.scss */
+/* line 41, ../../sass/md/_tree.scss */
 Tree-RowOverlay:selected:unfocused,
 Tree-RowOverlay:selected {
   color: #4a4a4a;
@@ -1616,7 +1614,7 @@ Tree-RowOverlay:linesvisible:even:selected:unfocused {
   );
 }
 */
-/* line 99, ../../sass/md/_tree.scss */
+/* line 94, ../../sass/md/_tree.scss */
 TreeColumn {
   color: inherit;
   background-color: #f0f0f0;
@@ -1626,39 +1624,39 @@ TreeColumn {
   text-shadow: none;
 }
 
-/* line 112, ../../sass/md/_tree.scss */
+/* line 107, ../../sass/md/_tree.scss */
 TreeColumn:hover {
   background-image: gradient(linear, left top, left bottom, from(#e4e4e4), to(#f9f9f9));
 }
 
-/* line 120, ../../sass/md/_tree.scss */
+/* line 115, ../../sass/md/_tree.scss */
 TreeColumn-SortIndicator {
   background-image: none;
 }
 
-/* line 124, ../../sass/md/_tree.scss */
+/* line 119, ../../sass/md/_tree.scss */
 TreeColumn-SortIndicator:up {
   background-image: url(resource/widget/rap/column/sort-indicator-up.png);
 }
 
-/* line 128, ../../sass/md/_tree.scss */
+/* line 123, ../../sass/md/_tree.scss */
 TreeColumn-SortIndicator:down {
   background-image: url(resource/widget/rap/column/sort-indicator-down.png);
 }
 
-/* line 132, ../../sass/md/_tree.scss */
+/* line 127, ../../sass/md/_tree.scss */
 Tree-Cell {
   spacing: 3px;
   padding: 5px 3px 5px 3px;
 }
 
-/* line 137, ../../sass/md/_tree.scss */
+/* line 132, ../../sass/md/_tree.scss */
 Tree-GridLine,
 Tree-GridLine:vertical:rowtemplate {
   color: transparent;
 }
 
-/* line 142, ../../sass/md/_tree.scss */
+/* line 137, ../../sass/md/_tree.scss */
 Tree-GridLine:vertical,
 Tree-GridLine:header,
 Tree-GridLine:horizontal:rowtemplate {
@@ -1685,108 +1683,108 @@ Tree-Checkbox:checked:grayed {
 Tree-Checkbox:checked:grayed:hover {
   background-image: url( resource/widget/rap/button/check-grayed-hover.png );
 }*/
-/* line 169, ../../sass/md/_tree.scss */
+/* line 164, ../../sass/md/_tree.scss */
 Tree-Indent {
   width: 0px;
   background-image: none;
 }
 
-/* line 174, ../../sass/md/_tree.scss */
+/* line 169, ../../sass/md/_tree.scss */
 Tree-Indent:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 178, ../../sass/md/_tree.scss */
+/* line 173, ../../sass/md/_tree.scss */
 Tree-Indent:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 182, ../../sass/md/_tree.scss */
+/* line 177, ../../sass/md/_tree.scss */
 Tree-Indent:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 186, ../../sass/md/_tree.scss */
+/* line 181, ../../sass/md/_tree.scss */
 Tree-Indent:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
 
-/* line 190, ../../sass/md/_tree.scss */
+/* line 185, ../../sass/md/_tree.scss */
 Tree-Indent:line {
   background-image: none;
 }
 
-/* line 194, ../../sass/md/_tree.scss */
+/* line 189, ../../sass/md/_tree.scss */
 Tree-Indent:first {
   background-image: none;
 }
 
-/* line 198, ../../sass/md/_tree.scss */
+/* line 193, ../../sass/md/_tree.scss */
 Tree-Indent:first:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 202, ../../sass/md/_tree.scss */
+/* line 197, ../../sass/md/_tree.scss */
 Tree-Indent:first:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 206, ../../sass/md/_tree.scss */
+/* line 201, ../../sass/md/_tree.scss */
 Tree-Indent:first:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 210, ../../sass/md/_tree.scss */
+/* line 205, ../../sass/md/_tree.scss */
 Tree-Indent:first:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
 
-/* line 214, ../../sass/md/_tree.scss */
+/* line 209, ../../sass/md/_tree.scss */
 Tree-Indent:last {
   background-image: none;
 }
 
-/* line 218, ../../sass/md/_tree.scss */
+/* line 213, ../../sass/md/_tree.scss */
 Tree-Indent:last:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 222, ../../sass/md/_tree.scss */
+/* line 217, ../../sass/md/_tree.scss */
 Tree-Indent:last:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 226, ../../sass/md/_tree.scss */
+/* line 221, ../../sass/md/_tree.scss */
 Tree-Indent:last:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 230, ../../sass/md/_tree.scss */
+/* line 225, ../../sass/md/_tree.scss */
 Tree-Indent:last:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
 
-/* line 234, ../../sass/md/_tree.scss */
+/* line 229, ../../sass/md/_tree.scss */
 Tree-Indent:first:last {
   background-image: none;
 }
 
-/* line 238, ../../sass/md/_tree.scss */
+/* line 233, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:collapsed {
   background-image: url(resource/widget/rap/tree/tree-collapsed.png);
 }
 
-/* line 242, ../../sass/md/_tree.scss */
+/* line 237, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:collapsed:hover {
   background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
 }
 
-/* line 246, ../../sass/md/_tree.scss */
+/* line 241, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:expanded {
   background-image: url(resource/widget/rap/tree/tree-expanded.png);
 }
 
-/* line 250, ../../sass/md/_tree.scss */
+/* line 245, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:expanded:hover {
   background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
 }
@@ -1906,7 +1904,7 @@ Table[BORDER] {
   background-color: #ffffff;
   border-radius: 4px;
   border: 1px solid #ffffff;
-  box-shadow: 0px 1px 2px #b0b0b0;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   /* XXX space for shadow; does not work; see DefaultAddDesign.createPanelContents() for fix */
   /*margin: 2px 3px 4px 3px; */
   padding: 3px 3px;
@@ -2104,7 +2102,7 @@ ScrollBar-DownButton[VERTICAL] {
 ToolBar {
   color: #ffffff;
   background-color: #84b8ea;
-  box-shadow: 0px 2px 3px #b0b0b0;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
   border-radius: 2px;
   padding: 0px;
   spacing: 0;
@@ -2188,14 +2186,14 @@ Shell {
 /* line 16, ../../sass/md/_shell.scss */
 Shell[TITLE], Shell[BORDER] {
   border: none;
-  box-shadow: 0 10px 24px #7d7d7d;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
   /* darken shadow because displayOverlay is already dark. */
 }
 
 /* line 21, ../../sass/md/_shell.scss */
 Shell[BORDER]:inactive, Shell[TITLE]:inactive {
   border: none;
-  box-shadow: 0 5px 10px #b0b0b0;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* line 26, ../../sass/md/_shell.scss */
@@ -2209,8 +2207,8 @@ Shell:maximized, Shell:maximized:inactive {
 Shell-DisplayOverlay {
   animation: fadeIn 200ms linear, fadeOut 200ms ease-out;
   background-image: none;
-  background-color: #808080;
-  opacity: 0.4;
+  background-color: #000000;
+  opacity: 0.18;
 }
 
 /* Shell titlebar */
@@ -2335,7 +2333,7 @@ FileUpload[BORDER] {
   font: 14px "Roboto", "Noto", sans-serif;
   color: #ffffff;
   background-color: #599FE2;
-  box-shadow: 0px 1px 2px #b0b0b0;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Does not seem to work
@@ -2394,12 +2392,12 @@ Composite.toolbar2, Composite.toolbar2-top, Composite.toolbar2-bottom {
 
 /* line 19, ../../sass/md/_toolbar2.scss */
 Composite.toolbar2-top {
-  box-shadow: 0px 1px 2px #b0b0b0;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* line 23, ../../sass/md/_toolbar2.scss */
 Composite.toolbar2-bottom {
-  box-shadow: 0px -1px 2px #b0b0b0;
+  box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* line 28, ../../sass/md/_toolbar2.scss */
@@ -2501,7 +2499,7 @@ Combo-Button-Icon:hover {
 /* line 54, ../../sass/md/_combo.scss */
 Combo-List {
   border: 1px solid #dddddd;
-  box-shadow: 0 4px 8px #b0b0b0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   background-image: none;
   background-color: #ffffff;
@@ -2548,7 +2546,7 @@ Combo-FocusIndicator {
 /* line 3, ../../sass/md/_snackbar.scss */
 Composite.snackbar-fly {
   background-color: #323232;
-  box-shadow: 0px -1px 2px #b0b0b0;
+  box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   padding: 0px;
   spacing: 0;
@@ -2561,7 +2559,7 @@ Composite.snackbar-fly {
 /* line 15, ../../sass/md/_snackbar.scss */
 Composite.snackbar-fade {
   background-color: #323232;
-  box-shadow: 0px 0px 4px #646464;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   padding: 0px;
   spacing: 0;
@@ -2587,7 +2585,7 @@ Widget-ToolTip {
   color: #ffffff;
   opacity: 1;
   animation: fadeIn 150ms ease-in, fadeOut 150ms ease-in;
-  box-shadow: 0px 1px 3px #646464;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -2679,7 +2677,8 @@ List-Item {
 List-Item:hover,
 List-Item:even:hover {
   color: #171717;
-  background-color: #e4effa;
+  background-color: #e6e6e6;
+  /*$separator1;*/
 }
 
 /* line 28, ../../sass/md/_list.scss */
@@ -2699,7 +2698,8 @@ List-Item:selected:unfocused {
 
 /* line 49, ../../sass/md/_list.scss */
 List-Item:even {
-  background-color: #f5f5f3;
+  background-color: #f2f2f2;
+  /*$separator1;*/
 }
 
 /* line 53, ../../sass/md/_list.scss */

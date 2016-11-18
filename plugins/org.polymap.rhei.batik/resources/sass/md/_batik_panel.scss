@@ -42,10 +42,10 @@ Composite.atlas-panel-client {
 
 Composite[BORDER].atlas-panel-header {
   border-radius: 2px;
-  border: 0px solid #ffffff;
-  /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
+  border: 1px solid darken( $header-bg, 1.5%);
   background-color: $header-bg;
   box-shadow: 0px 2px 3px $shadow;
+  /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
 }
 
 Button[PUSH].atlas-panel-header,

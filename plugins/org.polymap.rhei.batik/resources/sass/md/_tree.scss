@@ -35,12 +35,7 @@ Tree-RowOverlay {
 
 Tree-RowOverlay:hover {
   color: $text-color;
-  background-color: $separator1;
-  /*background-image: gradient(
-    linear, left top, left bottom,
-    from( #ebebeb ),
-    to( #d5d5d5 )
-  );*/
+  background-color: rgba( 0, 0, 0, 0.05 );  /*$separator1;*/
 }
 
 Tree-RowOverlay:selected:unfocused,
