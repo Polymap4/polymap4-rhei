@@ -160,6 +160,10 @@ public class Dashboard
                 dashlet.createContents( panelSection.getBody() );
             }
             panelSection.setExpanded( expanded );
+            
+            dashletSite.title.ifPresent( title -> {
+                panelSection.setTitle( title + (expanded ? "" : " ...") );
+            });
         });
         return this;
     }

@@ -87,10 +87,11 @@ public class PanelSection
         title.setData( RWT.MARKUP_ENABLED, Boolean.TRUE );
         FormDataFactory.on( title ).fill().noBottom().height( 26 );
         title.setVisible( false );
-        title.addListener( SWT.MouseUp, e -> toggleExpanded() );
         
         if (ArrayUtils.contains( styles, EXPANDABLE )) {
             UIUtils.setVariant( title, DefaultToolkit.CSS_SECTION_TITLE_EXPANDABLE );
+            title.addListener( SWT.MouseUp, e -> toggleExpanded() );
+            
             chevron = new Label( control, SWT.NO_FOCUS );
             chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED12 ) );
             FormDataFactory.on( chevron ).top( title, 2, Alignment.CENTER ).left( 0 );
