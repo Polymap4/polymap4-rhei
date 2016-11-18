@@ -71,10 +71,21 @@ public abstract class DashletSite
     
     /**
      * Signals the panel that this {@link ISubmitableDashlet} can/not submit.
+     * 
+     * @param dirty Specifies that there is submitable content.
+     * @param valid Specifies that the submitable content is valid and ready to submit.
      */
-    public abstract void enableSubmit( boolean enabled );
+    public abstract void enableSubmit( boolean dirty, boolean valid );
 
-    public abstract boolean isSubmitable();
+    /**
+     * The submit state controlled by the dashlet via {@link #enableSubmit(boolean, boolean)}.
+     */
+    public abstract boolean isDirty();
+
+    /**
+     * The submit state controlled by the dashlet via {@link #enableSubmit(boolean, boolean)}.
+     */
+    public abstract boolean isValid();
 
     public abstract IPanelSection getPanelSection();
 

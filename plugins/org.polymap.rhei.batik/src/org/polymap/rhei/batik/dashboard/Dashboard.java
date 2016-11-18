@@ -36,12 +36,15 @@ import org.eclipse.swt.widgets.Control;
 
 import org.eclipse.ui.forms.events.ExpansionEvent;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultBoolean;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
+
 import org.polymap.rhei.batik.BatikApplication;
 import org.polymap.rhei.batik.IPanelSite;
 import org.polymap.rhei.batik.toolkit.IPanelSection;
@@ -189,8 +192,43 @@ public class Dashboard
     }
     
     
-    public boolean isSubmitable() {
-        return !dashlets.values().stream().filter( d -> !d.isSubmitable() ).findAny().isPresent();    
+    /**
+     * True if any of the {@link ISubmitableDashlet}s is is dirty.
+     */
+    public boolean isDirty() {
+        for (IDashlet dashlet : dashlets.keySet()) {
+            if (dashlet instanceof ISubmitableDashlet && dashlet.site().isDirty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    /**
+     * True if all of the {@link ISubmitableDashlet}s are valid.
+     */
+    public boolean isValid() {
+        for (IDashlet dashlet : dashlets.keySet()) {
+            if (dashlet instanceof ISubmitableDashlet && !dashlet.site().isValid()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    public void submit( IProgressMonitor monitor ) throws Exception {
+        for (IDashlet dashlet : dashlets.keySet()) {
+            if (dashlet instanceof ISubmitableDashlet) {
+                assert dashlet.site().isValid();
+                if (dashlet.site().isDirty()) {
+                    ((ISubmitableDashlet)dashlet).submit( monitor );
+                
+                    ((DashletSiteImpl)dashlet.site()).enableSubmit( false, true );
+                }
+            }
+        }
     }
     
     
@@ -202,7 +240,7 @@ public class Dashboard
 
         private IDashlet                dashlet;
         
-        private boolean                 submitable = true;
+        private boolean                 dirty, valid = true;
 
         /** Not there before {@link Dashboard#createContents(Composite)}. */
         private Optional<IPanelSection> panelSection = Optional.empty();
@@ -230,16 +268,24 @@ public class Dashboard
         }
 
         @Override
-        public void enableSubmit( boolean enabled ) {
-            EventManager.instance().publish( 
-                    new SubmitStatusChangeEvent( dashlet, Dashboard.this, isSubmitable() ) );
+        @SuppressWarnings( "hiding" )
+        public void enableSubmit( boolean dirty, boolean valid ) {
+            assert dashlet instanceof ISubmitableDashlet;
+            this.dirty = dirty;
+            this.valid = valid;
+            EventManager.instance().publish( new SubmitStatusChangeEvent( dashlet, Dashboard.this, dirty, valid ) );
         }
         
         @Override
-        public boolean isSubmitable() {
-            return submitable;
+        public boolean isDirty() {
+            return dirty;
         }
-        
+
+        @Override
+        public boolean isValid() {
+            return valid;
+        }
+
         @Override
         public Control getTitleControl() {
             assert panelSection.isPresent() : "getTitleControl() is not available in createContents()";

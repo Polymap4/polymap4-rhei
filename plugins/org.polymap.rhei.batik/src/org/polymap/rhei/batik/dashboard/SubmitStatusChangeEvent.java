@@ -26,12 +26,13 @@ public class SubmitStatusChangeEvent
 
     private Dashboard               dashboard;
     
-    private boolean                 submitable;
+    private boolean                 dirty, valid;
 
-    public SubmitStatusChangeEvent( IDashlet dashlet, Dashboard dashboard, boolean submitable ) {
+    public SubmitStatusChangeEvent( IDashlet dashlet, Dashboard dashboard, boolean dirty, boolean valid ) {
         super( dashlet );
         this.dashboard = dashboard;
-        this.submitable = submitable;
+        this.dirty = dirty;
+        this.valid = valid;
     }
 
     @Override
@@ -41,10 +42,6 @@ public class SubmitStatusChangeEvent
     
     public Dashboard getDashboard() {
         return dashboard;
-    }
-    
-    public boolean getsSubmitable() {
-        return submitable;
     }
     
 }
