@@ -17,6 +17,7 @@ package org.polymap.rhei.batik.contribution;
 import java.util.function.Predicate;
 
 import org.polymap.rhei.batik.IPanel;
+import org.polymap.rhei.batik.dashboard.Dashboard;
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2;
 
 /**
@@ -66,6 +67,25 @@ public abstract class ContributionHandler<T, C extends IContributionProvider>
         @Override
         public boolean handle( IContributionSite site, IToolbarContribution contrib, MdToolbar2 target ) {
             contrib.fillToolbar( site, target );
+            return true;
+        }
+    }
+
+    
+    /**
+     * 
+     */
+    public static class DashboardHandler
+            extends ContributionHandler<Dashboard, IDashboardContribution> {
+
+        @Override
+        public boolean test( Dashboard target ) {
+            return target instanceof Dashboard;
+        }
+
+        @Override
+        public boolean handle( IContributionSite site, IDashboardContribution contrib, Dashboard target ) {
+            contrib.fillDashboard( site, target );
             return true;
         }
     }

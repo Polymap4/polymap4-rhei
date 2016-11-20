@@ -103,7 +103,7 @@ public abstract class DefaultPanel
                 }
             }
         }
-        throw new IllegalStateException( "This class does not provide a static member of type PanelIdentifier!" );
+        throw new IllegalStateException( "This class does not provide a static member of type PanelIdentifier: " + getClass() );
     }
 
 

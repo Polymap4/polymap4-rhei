@@ -22,9 +22,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.polymap.core.runtime.session.SessionContext;
 import org.polymap.core.runtime.session.SessionSingleton;
 
@@ -42,11 +39,10 @@ import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 public class ContributionManager
         extends SessionSingleton {
 
-    private static Log log = LogFactory.getLog( ContributionManager.class );
-    
     private static final ContributionHandler[]          handlers = { 
             new ContributionHandler.PanelFabHandler(),
-            new ContributionHandler.ToolbarHandler() };
+            new ContributionHandler.ToolbarHandler(),
+            new ContributionHandler.DashboardHandler() };
     
     private static List<ContributionProviderExtension>  staticSuppliers = new CopyOnWriteArrayList();
     

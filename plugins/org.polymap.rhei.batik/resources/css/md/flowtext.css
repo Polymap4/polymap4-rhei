@@ -31,6 +31,7 @@
 /**********************************************************
  * Colors
  */
+/*#5a9cbd;*/
 /* Selected lines of list, trees and tables */
 /*lighten( $action-bg, 30% );*/
 /*#b0b0b0;*/
@@ -46,18 +47,23 @@
 /* line 22, ../../sass/md/flowtext.scss */
 a {
   /*color: #50D225; */
-  color: #5a9cbd;
+  color: #4c85bc;
   text-decoration: none;
 }
 
 /* line 27, ../../sass/md/flowtext.scss */
+a.button {
+  font-size: 14px !important;
+}
+
+/* line 30, ../../sass/md/flowtext.scss */
 a:hover {
   /*color: #9999FF;*/
   /*color: #69FF37;*/
   text-decoration: underline;
 }
 
-/* line 32, ../../sass/md/flowtext.scss */
+/* line 35, ../../sass/md/flowtext.scss */
 p {
   color: #707070;
   font-size: 14px !important;
@@ -66,7 +72,7 @@ p {
   margin: 10px 0 10px 0;
 }
 
-/* line 39, ../../sass/md/flowtext.scss */
+/* line 42, ../../sass/md/flowtext.scss */
 ul {
   color: #4a4a4a;
   font-size: 13px;
@@ -74,35 +80,35 @@ ul {
   padding-left: 30px;
 }
 
-/* line 45, ../../sass/md/flowtext.scss */
+/* line 48, ../../sass/md/flowtext.scss */
 h1 {
   font-size: 24px;
   font-weight: normal;
   margin: 30px 0 8px 0;
 }
 
-/* line 50, ../../sass/md/flowtext.scss */
+/* line 53, ../../sass/md/flowtext.scss */
 h2 {
   font-size: 20px;
   font-weight: normal;
   margin: 15px 0 10px 0;
 }
 
-/* line 55, ../../sass/md/flowtext.scss */
+/* line 58, ../../sass/md/flowtext.scss */
 h3 {
   font-size: 18px;
   font-weight: bold;
   margin: 10px 0 3px 0;
 }
 
-/* line 60, ../../sass/md/flowtext.scss */
+/* line 63, ../../sass/md/flowtext.scss */
 h4 {
   font-size: 14px;
   font-weight: medium;
   margin: 5px 0 0px 0;
 }
 
-/* line 65, ../../sass/md/flowtext.scss */
+/* line 68, ../../sass/md/flowtext.scss */
 hr {
   height: 0px;
   border: none;

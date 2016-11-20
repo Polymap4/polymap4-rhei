@@ -208,40 +208,6 @@ Group-Label {
   text-shadow: none;
 }
 
-/* Link default theme */
-
-Link {
-  color: #4a4a4a;
-  background-color: #ffffff;
-  background-image: none;
-  background-repeat: repeat;
-  background-position: left top;
-  text-shadow: none;
-}
-
-Link[BORDER] {
-  border: 1px solid #bdbdbd;
-}
-
-Link-Hyperlink {
-  color: $link-color;
-  text-shadow: none;
-  text-decoration: none;
-}
-
-Link-Hyperlink:disabled {
-  color: #959595;
-}
-
-Link-Hyperlink:hover {
-  text-decoration: underline;
-}
-
-Link-Hyperlink:hover:disabled {
-  color: #959595;
-  text-decoration: none;
-}
-
 /* Menu default theme */
 
 Menu {
@@ -886,3 +852,4 @@ Shell.jface_contentProposalPopup, Shell.jface_infoPopupDialog {
 @import "list";
 @import "spinner";
 @import "sash";
+@import "link";

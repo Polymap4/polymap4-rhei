@@ -1,0 +1,34 @@
+
+/* Link default theme */
+
+Link {
+  color: $link-color;
+  background-color: #ffffff;
+  background-image: none;
+  background-repeat: repeat;
+  background-position: left top;
+  text-shadow: none;
+}
+
+Link[BORDER] {
+  border: 1px solid #bdbdbd;
+}
+
+Link-Hyperlink {
+  color: $link-color;
+  text-shadow: none;
+  text-decoration: none;
+}
+
+Link-Hyperlink:disabled {
+  color: #959595;
+}
+
+Link-Hyperlink:hover {
+  text-decoration: underline;
+}
+
+Link-Hyperlink:hover:disabled {
+  color: #959595;
+  text-decoration: none;
+}

@@ -24,6 +24,9 @@ a {
   color: $link-color;
   text-decoration: none;
 }
+a.button {
+  font-size: $font-size-body2 !important; 
+}
 a:hover {
   /*color: #9999FF;*/
   /*color: #69FF37;*/

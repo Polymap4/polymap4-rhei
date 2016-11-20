@@ -87,7 +87,7 @@ public class DefaultToolkit
     public static final String  CSS_SECTION_SEPARATOR = CSS_PREFIX + "-section-separator";
     public static final String  CSS_SECTION_CLIENT = CSS_PREFIX + "-section-client";
     
-    public final Lazy<Color>    COLOR_SECTION_TITLE_FG = new LockedLazyInit( () -> new Color( null, 0x41, 0x83, 0xa6 ) );
+    public final Lazy<Color>    COLOR_SECTION_TITLE_FG = new LockedLazyInit( () -> new Color( null, 0x4c, 0x85, 0xbc ) );
     public final Lazy<Color>    COLOR_SECTION_TITLE_BG = new LockedLazyInit( () -> new Color( null, 0xbc, 0xe1, 0xf4 ) );
     public final Lazy<Color>    COLOR_SECTION_TITLE_BORDER = new LockedLazyInit( () -> new Color( null, 0x80, 0x80, 0xa0 ) );
 
@@ -461,6 +461,7 @@ public class DefaultToolkit
 //        FontData[] defaultFont = parent.getFont().getFontData();
 //        FontData bold = new FontData(defaultFont[0].getName(), defaultFont[0].getHeight(), SWT.BOLD);
 //        result.setFont( Graphics.getFont( bold ) );
+        
         result.setTitleBarForeground( COLOR_SECTION_TITLE_FG.get() );
         result.setTitleBarBackground( COLOR_SECTION_TITLE_BG.get() );
         result.setTitleBarBorderColor( COLOR_SECTION_TITLE_BORDER.get() );

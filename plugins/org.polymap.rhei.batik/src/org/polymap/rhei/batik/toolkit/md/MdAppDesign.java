@@ -65,7 +65,7 @@ public class MdAppDesign
      *      "http://www.google.com/design/spec/style/typography.html#typography-styles"
      *      >Typography</a>
      */
-    enum FontStyle {
+    public enum FontStyle {
         Body1, Body2, Subhead    
     }
     

@@ -31,7 +31,7 @@ import org.polymap.core.runtime.config.DefaultString;
  */
 public class EMailAddressValidator
         extends Configurable
-        implements IFormFieldValidator {
+        implements IFormFieldValidator<String,String> {
 
     public static final Pattern pattern = Pattern.compile( "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE );
     
@@ -42,23 +42,23 @@ public class EMailAddressValidator
     public Config2<EMailAddressValidator,String>    msg;
     
     @Override
-    public String validate( Object fieldValue ) {
-        if (StringUtils.isEmpty( fieldValue.toString() )) {
+    public String validate( String fieldValue ) {
+        if (StringUtils.isEmpty( fieldValue )) {
             return null;
         }
         else {
-            Matcher matcher = pattern.matcher( fieldValue.toString() );
+            Matcher matcher = pattern.matcher( fieldValue );
             return !matcher.matches() ? msg.get() /*+ fieldValue*/ : null;
         }
     }
 
     @Override
-    public Object transform2Model( Object fieldValue ) throws Exception {
+    public String transform2Model( String fieldValue ) throws Exception {
         return fieldValue;
     }
 
     @Override
-    public Object transform2Field( Object modelValue ) throws Exception {
+    public String transform2Field( String modelValue ) throws Exception {
         return modelValue;
     }
     
