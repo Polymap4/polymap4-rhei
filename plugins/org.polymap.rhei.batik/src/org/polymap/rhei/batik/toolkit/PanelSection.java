@@ -89,6 +89,7 @@ public class PanelSection
         title.setVisible( false );
         
         if (ArrayUtils.contains( styles, EXPANDABLE )) {
+            UIUtils.setVariant( control, DefaultToolkit.CSS_SECTION_EXPANDABLE  );
             UIUtils.setVariant( title, DefaultToolkit.CSS_SECTION_TITLE_EXPANDABLE );
             title.addListener( SWT.MouseUp, e -> toggleExpanded() );
             

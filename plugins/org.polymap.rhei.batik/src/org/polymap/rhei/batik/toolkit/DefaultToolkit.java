@@ -82,6 +82,7 @@ public class DefaultToolkit
 
     public static final String  CSS_PREFIX = "batik-panel";
     public static final String  CSS_SECTION = CSS_PREFIX + "-section";
+    public static final String  CSS_SECTION_EXPANDABLE = CSS_SECTION + "-expandable";
     public static final String  CSS_SECTION_TITLE = CSS_PREFIX + "-section-title";
     public static final String  CSS_SECTION_TITLE_EXPANDABLE = CSS_PREFIX + "-section-title-expandable";
     public static final String  CSS_SECTION_SEPARATOR = CSS_PREFIX + "-section-separator";

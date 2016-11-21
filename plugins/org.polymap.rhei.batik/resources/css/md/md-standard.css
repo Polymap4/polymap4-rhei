@@ -977,13 +977,23 @@ Composite[BORDER].batik-panel-section {
   /*animation: slideIn 300ms ease-out, slideOut 300ms ease-in;*/
 }
 
-/* line 40, ../../sass/md/_batik_section.scss */
+/* line 39, ../../sass/md/_batik_section.scss */
+Composite[BORDER].batik-panel-section-expandable {
+  background-color: #faf8f8;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 5px 8px;
+  animation: slideIn 300ms ease-out, slideOut 300ms ease-in;
+}
+
+/* line 48, ../../sass/md/_batik_section.scss */
 Label.batik-panel-section-title {
   font: 22px "Roboto", "Noto", sans-serif;
   border: none;
 }
 
-/* line 44, ../../sass/md/_batik_section.scss */
+/* line 52, ../../sass/md/_batik_section.scss */
 Label.batik-panel-section-title-expandable {
   /* color: $link-color; */
   font: 22px "Roboto", "Noto", sans-serif;
@@ -991,12 +1001,12 @@ Label.batik-panel-section-title-expandable {
   cursor: pointer;
 }
 
-/* line 50, ../../sass/md/_batik_section.scss */
+/* line 58, ../../sass/md/_batik_section.scss */
 Label:disabled.batik-panel-section-title {
   opacity: 0.3;
 }
 
-/* line 53, ../../sass/md/_batik_section.scss */
+/* line 61, ../../sass/md/_batik_section.scss */
 Label[SEPARATOR],
 Label[SEPARATOR].batik-panel-section-separator,
 Label.batik-panel-section-separator {
@@ -1004,7 +1014,7 @@ Label.batik-panel-section-separator {
   color: #f8f8f8;
 }
 
-/* line 59, ../../sass/md/_batik_section.scss */
+/* line 67, ../../sass/md/_batik_section.scss */
 Label-SeparatorLine,
 Label-SeparatorLine.batik-panel-section-separator {
   background-image: none;
