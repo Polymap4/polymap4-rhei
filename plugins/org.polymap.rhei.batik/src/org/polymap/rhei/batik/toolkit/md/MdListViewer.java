@@ -290,7 +290,7 @@ public class MdListViewer
             super.addSelectionChangedListener( new ISelectionChangedListener() {
                 @Override
                 public void selectionChanged( SelectionChangedEvent ev ) {
-                    log.info( "selection: " + ev );
+                    log.debug( "selection: " + ev );
                 }
             });
 
@@ -343,14 +343,14 @@ public class MdListViewer
 
     @Override
     public void expandToLevel( Object elementOrTreePath, int level ) {
-        log.info( "EXPAND: " + elementOrTreePath );
+        log.debug( "EXPAND: " + elementOrTreePath );
         super.expandToLevel( elementOrTreePath, level );
         update( elementOrTreePath, null );  // update chevron icon state
     }
     
     @Override
     public void collapseToLevel( Object elementOrTreePath, int level ) {
-        log.info( "COLLAPSE: " + elementOrTreePath );
+        log.debug( "COLLAPSE: " + elementOrTreePath );
         super.collapseToLevel( elementOrTreePath, level );
         update( elementOrTreePath, null );  // update chevron icon state
     }

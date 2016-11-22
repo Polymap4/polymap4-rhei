@@ -42,7 +42,7 @@ import org.polymap.rhei.form.IBasePageSite;
 public abstract class BasePageController<FC extends BaseFieldComposite>
         implements IBasePageSite {
     
-    private static Log log = LogFactory.getLog( BasePageController.class );
+    private static final Log log = LogFactory.getLog( BasePageController.class );
 
     protected Map<String,FC>                fields = new HashMap( 64 );
     
@@ -71,7 +71,7 @@ public abstract class BasePageController<FC extends BaseFieldComposite>
         }
         // but not more than 160 :)
         width = Math.min( 150, width );
-        log.info( "labelWidth: " + width );
+        log.debug( "labelWidth: " + width );
         
         defaultFieldLayout = new HorizontalFieldLayout().labelWidth.put( (int)width );
     }
