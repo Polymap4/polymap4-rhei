@@ -44,6 +44,14 @@ ul {
   font-size: $font-size-body1;
   margin: 3px 0 3px 0;
   padding-left: 30px;
+  line-height: 1.3em;
+}
+ol {
+  color: $text-color;
+  font-size: $font-size-body1;
+  margin: 3px 0 3px 0;
+  padding-left: 30px;
+  line-height: 1.3em;
 }
 h1 {
   font-size: $font-size-headline;
