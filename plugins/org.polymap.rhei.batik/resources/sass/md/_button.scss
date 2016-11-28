@@ -94,7 +94,7 @@ Button[ARROW]:hover,
 Button[PUSH]:hover,
 Button[TOGGLE]:hover {
   background-color: darken( $action-bg, 10% );
-  box-shadow: 0px 1px 2px darken( $shadow, 15% );
+  box-shadow: 0px 1px 2px opacify( $shadow, 0.1 );
   animation: hoverOut 400ms ease-out;
 }
 

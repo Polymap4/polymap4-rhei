@@ -15,7 +15,7 @@ Shell {
 
 Shell[TITLE], Shell[BORDER] {
   border: none;
-  box-shadow: 0 10px 24px darken( $shadow, 20% );  /* darken shadow because displayOverlay is already dark. */
+  box-shadow: 0 10px 24px opacify( $shadow, 0.1 );  /* darken shadow because displayOverlay is already dark. */
 }
 
 Shell[BORDER]:inactive, Shell[TITLE]:inactive {

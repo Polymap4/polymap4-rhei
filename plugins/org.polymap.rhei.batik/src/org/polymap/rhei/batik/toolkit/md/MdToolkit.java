@@ -139,9 +139,9 @@ public class MdToolkit
         result.moveAbove( null );
         UIUtils.setVariant( result, CSS_FAB );
         
-        int marginTop = dp( 72 );
+        int marginTop = dp( 78 );
         int margin = dp( 40 );
-        int size = dp( 72 );
+        int size = dp( 78 );
 
         FormDataFactory layout = on( result ).width( size ).height( size );
         

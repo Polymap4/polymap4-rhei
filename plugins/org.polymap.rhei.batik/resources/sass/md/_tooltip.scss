@@ -8,7 +8,7 @@ Widget-ToolTip {
   color: $tooltip-fg;
   opacity: 1;
   animation: fadeIn 150ms ease-in, fadeOut 150ms ease-in;
-  box-shadow: 0px 1px 3px darken( $shadow, 30% );
+  box-shadow: 0px 1px 3px opacify( $shadow, 0.1 );
   text-align: center;
 }
 
