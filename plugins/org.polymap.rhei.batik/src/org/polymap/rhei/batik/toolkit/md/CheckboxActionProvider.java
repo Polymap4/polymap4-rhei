@@ -42,7 +42,7 @@ public abstract class CheckboxActionProvider
 
     private Image                   unselectedImage = BatikPlugin.images().svgImage( "checkbox-blank-outline.svg", NORMAL24 );
 
-    protected Map<Object,Boolean>   selected = new HashMap( 32 );
+    private Map<Object,Boolean>     selected = new HashMap( 32 );
     
     
     public CheckboxActionProvider() {
@@ -67,9 +67,18 @@ public abstract class CheckboxActionProvider
     
     protected abstract boolean initSelection( MdListViewer viewer, Object elm );
 
-    protected abstract void onSelectionChange( MdListViewer viewer, Object elm );
+    protected abstract void onSelection( MdListViewer viewer, Object elm, @SuppressWarnings( "hiding" ) boolean selected );
     
     
+    @Override
+    public void update( ViewerCell cell ) {
+        if (!selected.containsKey( cell.getElement() )) {
+            selected.put( cell.getElement(), initSelection( null, cell.getElement() ) );
+        }
+        cell.setImage( selected.get( cell.getElement() ) ? selectedImage : unselectedImage );
+    }
+
+
     /**
      * This default implementation updates the {@link #isSelected()} state and
      * the image according to this new state. Override
@@ -78,16 +87,7 @@ public abstract class CheckboxActionProvider
     public void perform( MdListViewer viewer, Object elm ) {
         selected.put( elm, !selected.get( elm ) );
         viewer.update( elm, null );
-        onSelectionChange( viewer, elm );
-    }
-
-
-    @Override
-    public void update( ViewerCell cell ) {
-        if (!selected.containsKey( cell.getElement() )) {
-            selected.put( cell.getElement(), initSelection( null, cell.getElement() ) );
-        }
-        cell.setImage( selected.get( cell.getElement() ) ? selectedImage : unselectedImage );
+        onSelection( viewer, elm, isSelected( elm ) );
     }
     
 }

@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright 2013, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2013-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -17,7 +17,9 @@ package org.polymap.rhei.batik;
 import java.util.EventObject;
 
 /**
- * 
+ * Fired when a {@link Context} property is accessed.
+ * <p/>
+ * Register via {@link Context#addListener(Object, EventFilter...)}.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
@@ -35,9 +37,13 @@ public class PropertyAccessEvent
     
     private TYPE            type;
     
-    public PropertyAccessEvent( Context source, TYPE type ) {
+    private Object          newValue, oldValue;
+    
+    public PropertyAccessEvent( Context source, TYPE type, Object newValue, Object oldValue ) {
         super( source );
         this.type = type;
+        this.newValue = newValue;
+        this.oldValue = oldValue;
     }
 
     @Override
@@ -47,6 +53,14 @@ public class PropertyAccessEvent
 
     public TYPE getType() {
         return type;
+    }
+
+    public Object getNewValue() {
+        return newValue;
+    }
+    
+    public Object getOldValue() {
+        return oldValue;
     }
     
 }

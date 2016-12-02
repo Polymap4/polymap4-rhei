@@ -135,13 +135,13 @@ public class ContextPropertyInstance<T>
 
     
     @Override
-    public T set( T value ) {
-        if (value == null && isMandatory.get()) {
+    public T set( T newValue ) {
+        if (newValue == null && isMandatory.get()) {
             throw new IllegalArgumentException( "@Context field is @Mandatory: " + field );
         }
-        T result = context.setPropertyValue( this, value );
-        EventManager.instance().publish( new PropertyAccessEvent( this, TYPE.SET ) );
-        return result;
+        T previous = context.setPropertyValue( this, newValue );
+        EventManager.instance().publish( new PropertyAccessEvent( this, TYPE.SET, newValue, previous ) );
+        return previous;
     }
 
     
@@ -152,7 +152,7 @@ public class ContextPropertyInstance<T>
         }
         boolean updated = context.compareAndSetPropertyValue( this, expect, update );
         if (updated) {
-            EventManager.instance().publish( new PropertyAccessEvent( this, TYPE.SET ) );
+            EventManager.instance().publish( new PropertyAccessEvent( this, TYPE.SET, update, expect ) );
             return true;
         }
         else {

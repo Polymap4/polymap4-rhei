@@ -43,6 +43,12 @@ public interface Context<T> {
     
     public T getOrWait( int time, TimeUnit unit );
     
+    /**
+     * Set this property to a new value.
+     *
+     * @param value The new value
+     * @return The previous value, or null if the properties was not set previously.
+     */
     public T set( T value );
     
     

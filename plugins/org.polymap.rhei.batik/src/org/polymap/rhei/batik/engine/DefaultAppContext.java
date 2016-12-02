@@ -1,6 +1,6 @@
 /*
  * polymap.org
- * Copyright 2013, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2013-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -86,7 +86,13 @@ public abstract class DefaultAppContext
         }
     }
     
-
+    /**
+     * 
+     *
+     * @param prop
+     * @param value The new value.
+     * @return The previous value.
+     */
     public <T> T setPropertyValue( Context<T> prop, T value ) {
         try {
             propertiesLock.writeLock().lock();
