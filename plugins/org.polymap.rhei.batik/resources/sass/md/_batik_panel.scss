@@ -67,10 +67,11 @@ Button[TOGGLE]:hover.atlas-panel-header {
   color: #ffffff;
   border: none;
   background-color: darken( $header-bg, 10% );
+  box-shadow: none;
 }
 
 Label.atlas-panel-header {
   font: 16px $font;
   color: $header-fg;
-  /*text-shadow: 1px 1px 0px #ffffff;*/
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
 }

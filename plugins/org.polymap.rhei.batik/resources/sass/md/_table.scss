@@ -27,7 +27,8 @@ TableColumn {
   padding: 4px 10px 4px 10px;
   background-image: none;
   border-bottom: 1px solid #cacfd2;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: none;
+  font: normal bold $font-size-body1 $font; 
 }
 TableColumn:hover {
   background-color: darken( $column-bg, 10% );

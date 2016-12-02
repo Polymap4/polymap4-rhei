@@ -15,7 +15,6 @@
 package org.polymap.rhei.batik.engine;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
@@ -28,6 +27,7 @@ import org.polymap.core.runtime.PlainLazyInit;
 import org.polymap.core.runtime.Timer;
 import org.polymap.core.runtime.event.EventFilter;
 import org.polymap.core.runtime.event.EventManager;
+import org.polymap.core.runtime.event.TypeEventFilter;
 
 import org.polymap.rhei.batik.Context;
 import org.polymap.rhei.batik.Mandatory;
@@ -79,6 +79,19 @@ public class ContextPropertyInstance<T>
     }
 
     
+    @Override
+    public boolean equals( Object obj ) {
+        if (obj instanceof ContextPropertyInstance) {
+            ContextPropertyInstance rhs = (ContextPropertyInstance)obj;
+            return getScope().equals( rhs.getScope() ) 
+                    && getDeclaredType().equals( rhs.getDeclaredType() );
+        }
+        else {
+            return false;
+        }
+    }
+
+
     @Override
     public boolean isPresent() {
         return context.getPropertyValue( this ) != null;
@@ -161,16 +174,13 @@ public class ContextPropertyInstance<T>
 
     
     @Override
-    public void addListener( Object annotated, final EventFilter... filters ) {
-        EventManager.instance().subscribe( annotated, new EventFilter<PropertyAccessEvent>() {
-            public boolean apply( PropertyAccessEvent input ) {
-                Context src = input.getSource();
-                List<EventFilter<PropertyAccessEvent>> l = Arrays.asList( (EventFilter<PropertyAccessEvent>[])filters );
-                return src.getDeclaredType().equals( getDeclaredType() )
-                        && src.getScope().equals( getScope() )
-                        && l.stream().allMatch( filter -> filter.apply( input ) );
-            }
-        });
+    public void addListener( Object annotated, final EventFilter<PropertyAccessEvent>... filters ) {
+        EventManager.instance().subscribe( annotated, TypeEventFilter.isType( PropertyAccessEvent.class, ev -> {
+            Context src = ev.getSource();
+            return src.getDeclaredType().equals( getDeclaredType() )
+                    && src.getScope().equals( getScope() )
+                    && Arrays.stream( filters ).allMatch( filter -> filter.apply( ev ) );
+        }));
     }
 
     @Override

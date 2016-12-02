@@ -66,7 +66,7 @@ public class MdAppDesign
      *      >Typography</a>
      */
     public enum FontStyle {
-        Body1, Body2, Subhead    
+        Body1, Body2, Subhead, Title
     }
     
     
@@ -127,6 +127,9 @@ public class MdAppDesign
         fonts.put( FontStyle.Subhead, mobile
                 ? resourceFactory.getFont( new FontData( FONT_FACE, 17, SWT.NORMAL ) )
                 : resourceFactory.getFont( new FontData( FONT_FACE, 15, SWT.NORMAL ) ) );
+        fonts.put( FontStyle.Title, mobile
+                ? resourceFactory.getFont( new FontData( FONT_FACE, 20, SWT.NORMAL ) )
+                : resourceFactory.getFont( new FontData( FONT_FACE, 20, SWT.NORMAL ) ) );
 
         return result;
     }

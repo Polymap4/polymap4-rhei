@@ -1161,13 +1161,14 @@ Button[TOGGLE]:hover.atlas-panel-header {
   color: #ffffff;
   border: none;
   background-color: #599fe2;
+  box-shadow: none;
 }
 
-/* line 72, ../../sass/md/_batik_panel.scss */
+/* line 73, ../../sass/md/_batik_panel.scss */
 Label.atlas-panel-header {
   font: 16px "Roboto", "Noto", sans-serif;
   color: #ffffff;
-  /*text-shadow: 1px 1px 0px #ffffff;*/
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
 }
 
 /* line 24, ../../sass/md/_batik.scss */
@@ -1894,16 +1895,17 @@ TableColumn {
   padding: 4px 10px 4px 10px;
   background-image: none;
   border-bottom: 1px solid #cacfd2;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: none;
+  font: normal bold 13px "Roboto", "Noto", sans-serif;
 }
 
-/* line 32, ../../sass/md/_table.scss */
+/* line 33, ../../sass/md/_table.scss */
 TableColumn:hover {
   background-color: #ccccc9;
   animation: hoverOut 400ms ease-out;
 }
 
-/* line 37, ../../sass/md/_table.scss */
+/* line 38, ../../sass/md/_table.scss */
 TableItem,
 TableItem:linesvisible:even:rowtemplate {
   background-color: transparent;
@@ -1914,75 +1916,75 @@ TableItem:linesvisible:even:rowtemplate {
   border-bottom: 1px solid #e8e8e8;
 }
 
-/* line 46, ../../sass/md/_table.scss */
+/* line 47, ../../sass/md/_table.scss */
 TableItem:linesvisible:even {
   /*background-color: #f5f5f3;*/
 }
 
-/* line 50, ../../sass/md/_table.scss */
+/* line 51, ../../sass/md/_table.scss */
 Table-RowOverlay {
   background-color: transparent;
   color: inherit;
   background-image: none;
 }
 
-/* line 55, ../../sass/md/_table.scss */
+/* line 56, ../../sass/md/_table.scss */
 Table-RowOverlay:hover,
 Table-RowOverlay:linesvisible:even:hover {
   color: #171717;
   background-color: #e4effa;
 }
 
-/* line 60, ../../sass/md/_table.scss */
+/* line 61, ../../sass/md/_table.scss */
 Table-RowOverlay:selected,
 Table-RowOverlay:selected:unfocused {
   color: #4a4a4a;
   background-color: #FFFCCC;
 }
 
-/* line 65, ../../sass/md/_table.scss */
+/* line 66, ../../sass/md/_table.scss */
 Table-RowOverlay:linesvisible:even:selected,
 Table-RowOverlay:linesvisible:even:selected:unfocused {
   color: #4a4a4a;
   background-color: #FFFCCC;
 }
 
-/* line 71, ../../sass/md/_table.scss */
+/* line 72, ../../sass/md/_table.scss */
 TableColumn-SortIndicator {
   background-image: none;
 }
 
-/* line 74, ../../sass/md/_table.scss */
+/* line 75, ../../sass/md/_table.scss */
 TableColumn-SortIndicator:up {
   background-image: url(resource/widget/rap/column/sort-indicator-up.png);
 }
 
-/* line 78, ../../sass/md/_table.scss */
+/* line 79, ../../sass/md/_table.scss */
 TableColumn-SortIndicator:down {
   background-image: url(resource/widget/rap/column/sort-indicator-down.png);
 }
 
-/* line 82, ../../sass/md/_table.scss */
+/* line 83, ../../sass/md/_table.scss */
 Table-Cell {
   spacing: 3px;
   padding: 4px 10px 4px 10px;
 }
 
-/* line 87, ../../sass/md/_table.scss */
+/* line 88, ../../sass/md/_table.scss */
 Table-GridLine,
 Table-GridLine:vertical,
 Table-GridLine:vertical:rowtemplate {
   color: transparent;
 }
 
-/* line 93, ../../sass/md/_table.scss */
+/* line 94, ../../sass/md/_table.scss */
 Table-GridLine:header,
 Table-GridLine:horizontal,
 Table-GridLine:horizontal:rowtemplate {
   color: #edf1f3;
 }
 
-/* line 99, ../../sass/md/_table.scss */
+/* line 100, ../../sass/md/_table.scss */
 Table-Checkbox {
   /*
   For backward compatibility we have to keep the width property.
@@ -1993,27 +1995,27 @@ Table-Checkbox {
   background-image: url(resource/widget/rap/button/check-unselected.png);
 }
 
-/* line 109, ../../sass/md/_table.scss */
+/* line 110, ../../sass/md/_table.scss */
 Table-Checkbox:hover {
   background-image: url(resource/widget/rap/button/check-unselected-hover.png);
 }
 
-/* line 113, ../../sass/md/_table.scss */
+/* line 114, ../../sass/md/_table.scss */
 Table-Checkbox:checked {
   background-image: url(resource/widget/rap/button/check-selected.png);
 }
 
-/* line 117, ../../sass/md/_table.scss */
+/* line 118, ../../sass/md/_table.scss */
 Table-Checkbox:checked:hover {
   background-image: url(resource/widget/rap/button/check-selected-hover.png);
 }
 
-/* line 121, ../../sass/md/_table.scss */
+/* line 122, ../../sass/md/_table.scss */
 Table-Checkbox:checked:grayed {
   background-image: url(resource/widget/rap/button/check-grayed.png);
 }
 
-/* line 125, ../../sass/md/_table.scss */
+/* line 126, ../../sass/md/_table.scss */
 Table-Checkbox:checked:grayed:hover {
   background-image: url(resource/widget/rap/button/check-grayed-hover.png);
 }
