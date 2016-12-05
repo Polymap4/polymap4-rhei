@@ -25,6 +25,6 @@ public interface HelpAwarePanel {
      * The path to a article in the {@link ContentProvider CMS} containing the help text
      * of this panel.
      */
-    public String cmsPath();
+    public String helpCmsPath();
     
 }
