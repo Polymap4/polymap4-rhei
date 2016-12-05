@@ -17,9 +17,6 @@ package org.polymap.rhei.batik.toolkit.md;
 import static org.polymap.core.ui.FormDataFactory.on;
 import static org.polymap.rhei.batik.toolkit.md.MdAppDesign.dp;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
@@ -28,12 +25,12 @@ import org.eclipse.swt.widgets.Label;
 
 import org.eclipse.ui.forms.widgets.Section;
 
+import org.polymap.core.runtime.i18n.IMessages;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.UIUtils;
 
-import org.polymap.rhei.batik.BatikPlugin;
+import org.polymap.rhei.batik.Messages;
 import org.polymap.rhei.batik.PanelPath;
-import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 import org.polymap.rhei.batik.engine.PageStack;
 import org.polymap.rhei.batik.toolkit.DefaultToolkit;
 import org.polymap.rhei.batik.toolkit.SimpleDialog;
@@ -47,9 +44,10 @@ import org.polymap.rhei.batik.toolkit.md.MdAppDesign.FontStyle;
 public class MdToolkit
         extends DefaultToolkit {
 
-    private static Log log = LogFactory.getLog( MdToolkit.class );
 
-    public static final String        CSS_FAB = CSS_PREFIX + "-fab";
+    public static final IMessages   i18n = Messages.forPrefix( "MdToolkit" );
+    
+    public static final String      CSS_FAB = CSS_PREFIX + "-fab";
 
 
     public MdToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
@@ -93,7 +91,7 @@ public class MdToolkit
      * Creates a default Floating Action Button with default "check" icon and
      * position TOP|RIGHT.
      * 
-     * @see #createFab(Image, int)
+     * @see #createFab(String, Image, int)
      * @see <a
      *      href="http://www.google.com/design/spec/components/buttons-floating-action-button.html">Material
      *      Design</a>.
@@ -101,6 +99,34 @@ public class MdToolkit
     @SuppressWarnings("javadoc")
     public Button createFab() {
         return createFab( SWT.TOP|SWT.RIGHT );
+    }
+    
+    
+    /**
+     * Creates a default Floating Action Button with the given icon.
+     * 
+     * @see #createFab(String, Image, int)
+     * @see <a
+     *      href="http://www.google.com/design/spec/components/buttons-floating-action-button.html">Material
+     *      Design</a>.
+     */
+    @SuppressWarnings("javadoc")
+    public Button createFab( Image icon ) {
+        return createFab( null, icon, SWT.TOP|SWT.RIGHT );
+    }
+    
+    
+    /**
+     * Creates a default Floating Action Button with the given text.
+     * 
+     * @see #createFab(String, Image, int)
+     * @see <a
+     *      href="http://www.google.com/design/spec/components/buttons-floating-action-button.html">Material
+     *      Design</a>.
+     */
+    @SuppressWarnings("javadoc")
+    public Button createFab( String text ) {
+        return createFab( text, null, SWT.TOP|SWT.RIGHT );
     }
     
     
@@ -116,7 +142,7 @@ public class MdToolkit
      */
     @SuppressWarnings("javadoc")
     public Button createFab( int position ) {
-        return createFab( BatikPlugin.images().svgImage( "check.svg", SvgImageRegistryHelper.WHITE24 ), position );
+        return createFab( i18n.get( "fab" ), null /*BatikPlugin.images().svgImage( "check.svg", SvgImageRegistryHelper.WHITE24 )*/, position );
     }
     
     
@@ -131,11 +157,18 @@ public class MdToolkit
      *      Design</a>.
      */
     @SuppressWarnings("javadoc")
-    public Button createFab( Image icon, int position ) {
+    public Button createFab( String text, Image icon, int position ) {
         assert (position & ~SWT.TOP & ~SWT.BOTTOM & ~SWT.LEFT & ~SWT.RIGHT) == 0 : "position param is not valid: " + position;
         
         Button result = createButton( panelPage.control, "", SWT.PUSH );
-        result.setImage( icon );
+        assert text == null || icon == null : "Icon *and* text is not allowed for FAB!";
+        if (icon != null) {
+            result.setImage( icon );
+        }
+        else if (text != null) {
+            result.setText( text );
+            result.setFont( MdAppDesign.font( FontStyle.Body2 ) );
+        }
         result.moveAbove( null );
         UIUtils.setVariant( result, CSS_FAB );
         
