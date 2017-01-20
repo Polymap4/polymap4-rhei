@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2014, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -47,7 +47,7 @@ import org.polymap.rhei.fulltext.FulltextIndex;
 public class Feature2JsonTransformer
         implements FeatureTransformer<Feature,JSONObject> {
 
-    private static Log log = LogFactory.getLog( Feature2JsonTransformer.class );
+    private static final Log log = LogFactory.getLog( Feature2JsonTransformer.class );
 
 //    private ILayer                  layer;
 
@@ -61,8 +61,7 @@ public class Feature2JsonTransformer
     public JSONObject apply( Feature input ) {
         JSONObject result = new JSONObject();
         
-        // fid
-        result.put( FIELD_ID, input.getIdentifier().getID() );
+        init( result, input );
         
         // properties
         for (Property prop : input.getProperties()) {
@@ -72,20 +71,7 @@ public class Feature2JsonTransformer
             if (propName.equalsIgnoreCase( FIELD_TITLE )) {
                 propName = FIELD_TITLE;
             }
-            // null value
-            if (propValue == null) {
-                propValue = JSONObject.NULL;
-            }
-            // Geometry
-            else if (propValue instanceof Geometry) {
-                propName = FIELD_GEOM;
-                CoordinateReferenceSystem crs = input.getDefaultGeometryProperty().getType().getCoordinateReferenceSystem();
-                result.put( FIELD_SRS, Geometries.srs( crs ) );
-            }
-//            // ommit empty title
-//            propValue = propName == FIELD_TITLE && 
-            
-            result.put( propName, propValue );
+            addValue( propName, propValue, result, input );
         }
         
         // categories
@@ -101,6 +87,26 @@ public class Feature2JsonTransformer
 //        }
         result.put( FIELD_CATEGORIES, categories.toString() );
         return result;
+    }
+
+    
+    protected void init( JSONObject result, Feature feature ) {
+        result.put( FIELD_ID, feature.getIdentifier().getID() );
+    }
+    
+    
+    protected void addValue( String name, Object value, JSONObject result, Feature feature ) {
+        // null value
+        if (value == null) {
+            value = JSONObject.NULL;
+        }
+        // Geometry
+        else if (value instanceof Geometry) {
+            name = FIELD_GEOM;
+            CoordinateReferenceSystem crs = feature.getDefaultGeometryProperty().getType().getCoordinateReferenceSystem();
+            result.put( FIELD_SRS, Geometries.srs( crs ) );
+        }
+        result.put( name, value );        
     }
     
 }

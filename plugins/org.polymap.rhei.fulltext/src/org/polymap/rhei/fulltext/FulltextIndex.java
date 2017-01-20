@@ -35,7 +35,6 @@ public interface FulltextIndex {
     public static final String      FIELD_GEOM = "_geom_";
     public static final String      FIELD_SRS = "_srs_";
 
-
     public abstract void close();
     
     public abstract boolean isClosed();

@@ -58,12 +58,13 @@ public class LuceneFulltextIndex
         extends UpdateableFulltextIndex
         implements FulltextIndex {
 
-    private static Log log = LogFactory.getLog( LuceneFulltextIndex.class );
+    private static final Log log = LogFactory.getLog( LuceneFulltextIndex.class );
 
     /** The Lucene version we are using. */
     public final static Version     LUCENE_VERSION = Version.LUCENE_36;
 
     public final static String      FIELD_ANALYZED = "_analyzed_";
+    public final static char        FIELD_DELIM_ANALYZED = ' ';
     
     protected LuceneRecordStore     store;
 
@@ -83,6 +84,11 @@ public class LuceneFulltextIndex
         
         analyzer = new LuceneAnalyzer( this );
         store.setAnalyzer( analyzer );
+    }
+
+
+    public LuceneRecordStore store() {
+        return store;
     }
 
 

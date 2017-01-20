@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2014, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2014-2016, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -37,7 +37,7 @@ import org.eclipse.jface.util.Geometry;
 public class ToStringTransformer
         implements FeatureTransformer<JSONObject,JSONObject> {
 
-    private static Log log = LogFactory.getLog( ToStringTransformer.class );
+    private static final Log log = LogFactory.getLog( ToStringTransformer.class );
 
     private NumberFormat        inf = NumberFormat.getInstance( Locale.GERMANY );
     

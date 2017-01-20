@@ -51,7 +51,7 @@
             <dependency groupId="rome" artifactId="rome" version="0.9" />
             <dependency groupId="org.geonames" artifactId="georss-rome" version="0.9.8" />
             
-			<dependency groupId="org.json" artifactId="json" version="20131018" />
+			<!--dependency groupId="org.json" artifactId="json" version="20141113" /-->
 
             <dependency groupId="commons-collections" artifactId="commons-collections" version="3" scope="provided" />
             <dependency groupId="commons-lang" artifactId="commons-collections" version="2" scope="provided" />

@@ -16,6 +16,7 @@ package org.polymap.rhei.fulltext.store.lucene;
 
 import static org.polymap.rhei.fulltext.FulltextIndex.FIELD_ID;
 import static org.polymap.rhei.fulltext.FulltextIndex.FIELD_SRS;
+import static org.polymap.rhei.fulltext.store.lucene.LuceneFulltextIndex.FIELD_DELIM_ANALYZED;
 
 import org.json.JSONObject;
 
@@ -65,7 +66,7 @@ class LuceneUpdater
             record = store.newRecord( fid );
         }
         
-        StringBuilder buf = new StringBuilder( 256 );
+        StringBuilder analyzed = new StringBuilder( 256 );
         for (Object key : feature.keySet()) {
             Object value = feature.get( (String)key );
             // no value
@@ -76,7 +77,7 @@ class LuceneUpdater
             else if (value instanceof String ) {
                 record.put( (String)key, value );
                 if (key != FIELD_ID && key != FIELD_SRS) {
-                    buf.append( value ).append( ' ' );
+                    analyzed.append( value ).append( FIELD_DELIM_ANALYZED );
                 }
             }
             // Geometry
@@ -87,7 +88,7 @@ class LuceneUpdater
                 throw new RuntimeException( "Feature is not simple. Property: " + key + " = " + value );
             }
         }
-        record.put( LuceneFulltextIndex.FIELD_ANALYZED, buf.toString() );
+        record.put( LuceneFulltextIndex.FIELD_ANALYZED, analyzed.toString() );
         
         updator.store( record );
     }

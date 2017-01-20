@@ -7,7 +7,7 @@ Bundle-Activator: org.polymap.rhei.fulltext.FulltextPlugin
 Bundle-Vendor: polymap.org
 Require-Bundle: org.eclipse.rap.rwt;bundle-version="2.3.1",
  org.eclipse.rap.ui;bundle-version="2.3.1",
- org.polymap.core;bundle-version="4.0.0",
+ org.polymap.core;bundle-version="4.0.0";visibility:=reexport,
  org.polymap.core.recordstore;bundle-version="4.0.0",
  org.polymap.core.data;bundle-version="4.0.0",
  org.polymap.model2;bundle-version="3.0.0";resolution:=optional,
@@ -16,8 +16,7 @@ Require-Bundle: org.eclipse.rap.rwt;bundle-version="2.3.1",
  org.junit;bundle-version="4.11.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.json,
- org.polymap.rhei.fulltext,
+Export-Package: org.polymap.rhei.fulltext,
  org.polymap.rhei.fulltext.address,
  org.polymap.rhei.fulltext.indexing,
  org.polymap.rhei.fulltext.model2,
@@ -28,5 +27,4 @@ Export-Package: org.json,
 Bundle-ClassPath: lib/jdom-1.0.jar,
  lib/rome-0.9.jar,
  lib/georss-rome-0.9.8.jar,
- lib/json-20131018.jar,
  .

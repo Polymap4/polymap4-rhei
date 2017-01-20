@@ -28,11 +28,6 @@ import org.polymap.core.security.UserPrincipal;
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-/**
- * 
- *
- * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
- */
 public class SessionHolder { 
 
     private String                          serviceContextName;
