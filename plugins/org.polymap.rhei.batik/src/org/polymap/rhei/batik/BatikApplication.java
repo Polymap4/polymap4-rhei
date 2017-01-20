@@ -14,8 +14,11 @@
  */
 package org.polymap.rhei.batik;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,6 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.application.EntryPoint;
 import org.eclipse.rap.rwt.internal.serverpush.ServerPushManager;
 
@@ -47,8 +51,7 @@ public class BatikApplication
         implements EntryPoint {
 
     private static final Log log = LogFactory.getLog( BatikApplication.class );
-
-
+    
     /**
      * @deprecated Use {@link UIUtils} instead.
      */
@@ -75,15 +78,25 @@ public class BatikApplication
         return UIUtils.shellToParentOn();
     }
 
-    private static Map<Display,BatikApplication> instances = new ConcurrentHashMap();
-    
     /**
      * The instance of the current thread/session.
      */
     public static BatikApplication instance() {
-        return instances.get( UIUtils.sessionDisplay() );
+        return ((BatikApplicationDisplay)UIUtils.sessionDisplay()).getApplication();
     }
 
+    /**
+     * 
+     */
+    protected class BatikApplicationDisplay
+            extends Display {
+    
+        public BatikApplication getApplication() {
+            return BatikApplication.this;
+        }
+    }
+    
+    
     // instance *******************************************
 
     private Display                     display;
@@ -93,6 +106,8 @@ public class BatikApplication
     private IAppManager                 appManager;
 
     private IAppDesign                  appDesign;
+    
+    private Map<String,String[]>        initRequestParams = new HashMap();
 
 
     public IAppManager getAppManager() {
@@ -107,13 +122,31 @@ public class BatikApplication
         return appDesign;
     }
 
+    public Map<String,String[]> getInitRequestParameters() {
+        return Collections.unmodifiableMap( initRequestParams );
+    }
+    
+    public Optional<String> getInitRequestParameter( String name ) {
+        String[] value = initRequestParams.get( name );
+        if (value == null) {
+            return Optional.empty();
+        }
+        else if (value.length > 1) {
+            throw new IllegalStateException( "More than one init request paramater: " + Arrays.asList( value ) );
+        }
+        else {
+            return Optional.of( value[0] );
+        }
+    }
+    
     @Override
     public int createUI() {
-        display = new Display();  // PlatformUI.createDisplay();
+        display = new BatikApplicationDisplay(); // PlatformUI.createDisplay();
 
+        initRequestParams.putAll( RWT.getRequest().getParameterMap() );
+        
         initUICallback();
         
-        instances.put( display, this );
         log.info( "Display DPI: " + display.getDPI().x + "x" + display.getDPI().y );
 
         appManager = BatikFactory.instance().createAppManager();
@@ -145,7 +178,6 @@ public class BatikApplication
             appManager.close();
         }
 
-        instances.remove( display );
         display.dispose();
         return PlatformUI.RETURN_OK;
     }

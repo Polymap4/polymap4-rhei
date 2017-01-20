@@ -17,9 +17,6 @@ package org.polymap.rhei.batik.toolkit;
 import static org.polymap.core.ui.FormDataFactory.on;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.google.common.base.Throwables;
 
 import org.eclipse.swt.widgets.Label;
@@ -39,8 +36,6 @@ import org.polymap.core.ui.StatusDispatcher.Style;
  */
 public class BatikDialogStatusAdapter
         implements Adapter {
-
-    private static Log log = LogFactory.getLog( BatikDialogStatusAdapter.class );
 
     private static final DefaultToolkit    tk = new DefaultToolkit( null, null );
     

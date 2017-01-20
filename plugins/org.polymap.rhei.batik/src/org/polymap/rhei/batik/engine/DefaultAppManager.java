@@ -48,7 +48,6 @@ import org.eclipse.ui.XMLMemento;
 import org.eclipse.core.runtime.IPath;
 import org.polymap.core.runtime.Lazy;
 import org.polymap.core.runtime.PlainLazyInit;
-import org.polymap.core.runtime.StreamIterable;
 import org.polymap.core.runtime.UIThreadExecutor;
 import org.polymap.core.runtime.config.Concern;
 import org.polymap.core.runtime.config.Config2;
@@ -59,6 +58,7 @@ import org.polymap.rhei.batik.BatikPlugin;
 import org.polymap.rhei.batik.FireEventType;
 import org.polymap.rhei.batik.IAppContext;
 import org.polymap.rhei.batik.IPanel;
+import org.polymap.rhei.batik.IPanelFilter;
 import org.polymap.rhei.batik.IPanelSite.PanelStatus;
 import org.polymap.rhei.batik.Memento;
 import org.polymap.rhei.batik.PanelChangeEvent.EventType;
@@ -67,7 +67,7 @@ import org.polymap.rhei.batik.PanelPath;
 import org.polymap.rhei.batik.PanelSite;
 import org.polymap.rhei.batik.app.IAppDesign;
 import org.polymap.rhei.batik.app.IAppManager;
-import org.polymap.rhei.batik.engine.BatikFactory.PanelExtensionPoint;
+import org.polymap.rhei.batik.engine.BatikFactory.PanelExtension;
 import org.polymap.rhei.batik.toolkit.IPanelToolkit;
 import org.polymap.rhei.batik.toolkit.LayoutSupplier;
 
@@ -163,7 +163,7 @@ public class DefaultAppManager
     }
     
     
-    protected IPanel createPanel( PanelExtensionPoint ep, PanelPath parentPath ) {
+    protected IPanel createPanel( PanelExtension ep, PanelPath parentPath ) {
         try {
             IPanel panel = ep.createPanel();
             new PanelContextInjector( panel, context ).run();
@@ -183,24 +183,32 @@ public class DefaultAppManager
     
     
     protected IPanel createPanel( PanelPath parentPath, PanelIdentifier panelId ) {
-        return BatikFactory.instance().allPanelExtensionPoints().stream()
-                .map( ep -> createPanel( ep, parentPath ) )
-                .filter( panel -> panel.id().equals( panelId ) )
-                .peek( panel -> {
-                        log.debug( "CREATE panel: " + panel.site().path() );
-                        panels.put( panel.site().path(), panel );
-                        ((PanelSiteImpl)panel.site()).panelStatus.set( PanelStatus.CREATED );
-                })
-                .findFirst()
-                .orElseThrow( () -> new IllegalStateException( "No such panel: " + panelId ) );
+        IPanelFilter filters = BatikFactory.instance().allPanelFilters();
+        for (PanelExtension ext : BatikFactory.instance().allPanelExtensions()) {
+            IPanel panel = createPanel( ext, parentPath );
+            if (panel.id().equals( panelId )
+                    && filters.apply( panel )) {
+                log.debug( "CREATE panel: " + panel.site().path() );
+                panels.put( panel.site().path(), panel );
+                ((PanelSiteImpl)panel.site()).panelStatus.set( PanelStatus.CREATED );
+                return panel;
+            }
+        }
+        throw new IllegalStateException( "No such panel: " + panelId );
     }
 
 
-    protected StreamIterable<IPanel> wantToBeShown( PanelPath parentPath ) {
-        // create, filter, init, add panels
-        return StreamIterable.of( BatikFactory.instance().allPanelExtensionPoints().stream()
-                .map( ep -> createPanel( ep, parentPath ) )
-                .filter( panel -> panel.beforeInit() ) );
+    protected Iterable<IPanel> wantToBeShown( PanelPath parentPath ) {
+        List<IPanel> result = new ArrayList();
+        IPanelFilter filters = BatikFactory.instance().allPanelFilters();
+        for (PanelExtension ext : BatikFactory.instance().allPanelExtensions()) {
+            IPanel panel = createPanel( ext, parentPath );
+            if (filters.apply( panel )
+                   && panel.beforeInit()) {
+                result.add( panel );
+            }
+        }
+        return result;
     }
 
     

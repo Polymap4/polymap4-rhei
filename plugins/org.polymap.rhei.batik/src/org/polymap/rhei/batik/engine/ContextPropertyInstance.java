@@ -52,7 +52,16 @@ public class ContextPropertyInstance<T>
      */
     private Lazy<Class<?>>      declaredType = new PlainLazyInit( () -> {
         Type ftype = field.getGenericType();
-        return ((ParameterizedType)ftype).getActualTypeArguments()[0];
+        Type result = ((ParameterizedType)ftype).getActualTypeArguments()[0];
+        if (result instanceof ParameterizedType) {
+            return ((ParameterizedType)result).getRawType();
+        }
+        else if (result instanceof Class) {
+            return result;
+        }
+        else {
+            throw new IllegalStateException( "Unhandled type: " + result );
+        }
     });
 
     /**

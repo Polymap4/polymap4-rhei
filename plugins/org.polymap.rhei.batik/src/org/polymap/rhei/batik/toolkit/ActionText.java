@@ -256,9 +256,19 @@ public class ActionText
     }
 
 
+    /**
+     * Returnes the {@link Text} widget.
+     * <p/>
+     * Do <b>not</b> use this to get the text value as this may contain the label of the
+     * default action, use {@link #getTextText()} instead.
+     */
     public Text getText() {
         return text;
     }
 
+
+    public String getTextText() {
+        return modified ? text.getText() : "";
+    }
 
 }

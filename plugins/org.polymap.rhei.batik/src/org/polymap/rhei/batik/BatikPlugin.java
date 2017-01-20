@@ -98,11 +98,11 @@ public class BatikPlugin
                 return new NullProgressMonitor() {
                     @Override
                     public void beginTask( String name, int totalWork ) {
-                        log.info( "[PROGRESS] " + name + " started" );
+                        log.info( "[PROGRESS] '" + name + "' started" );
                     }
                     @Override
                     public void subTask( String name ) {
-                        log.info( "[PROGRESS] " + name + " started" );
+                        log.info( "[PROGRESS] subtask '" + name + "' started" );
                     }
                     @Override
                     public void worked( int work ) {
@@ -110,7 +110,7 @@ public class BatikPlugin
                     }
                     @Override
                     public void done() {
-                        System.out.println( "done." );
+                        log.info( "[PROGRESS] '" + job.getName() + "' done" );
                     }
                 };
             }
