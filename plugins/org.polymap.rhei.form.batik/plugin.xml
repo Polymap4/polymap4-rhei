@@ -5,10 +5,6 @@
          point="org.eclipse.rap.ui.themes">
       <themeContribution
             file="resources/css/batik-form.css"
-            themeId="org.polymap.rhei.batik.theme">
-      </themeContribution>
-      <themeContribution
-            file="resources/css/batik-form.css"
             themeId="org.polymap.rhei.batik.materialDesign">
       </themeContribution>
    </extension>
