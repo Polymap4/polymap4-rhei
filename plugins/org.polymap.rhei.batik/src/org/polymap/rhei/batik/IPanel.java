@@ -98,11 +98,18 @@ public interface IPanel {
      * This method is called before {@link #dispose()} in order to check if the panel
      * can be closed. This method should be lightweight and should not dispose
      * anything.
+     * <p/>
+     * Implementing methods should check super method.
      *
      * @return False specifies that this panel does not want to be closed.
      */
     public boolean beforeDispose();
     
+    /**
+     * Dispose this panel and release any resources associated with it.
+     * <p/>
+     * Implementing methods always should call super. 
+     */
     public void dispose();
     
     public boolean isDisposed();
