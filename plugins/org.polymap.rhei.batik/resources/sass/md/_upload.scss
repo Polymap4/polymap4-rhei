@@ -10,15 +10,21 @@ FileUpload[BORDER] {  /* BORDER does not seem to be recognized */
   border-radius: 3px;
   padding: 5px 15px;
   spacing: 3px;
-  cursor: default;
+  cursor: pointer;
   animation: none;
   opacity: 1;
   text-shadow: none;
   text-decoration: none;
   font: $font-button;
+  /*
   color: $action-fg;
   background-color: $action-bg;
   box-shadow: 0px 1px 2px $shadow;
+  */
+  /* FLAT */
+  color: $action-bg;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 /* Does not seem to work
@@ -36,12 +42,15 @@ FileUpload:disabled {
 }
 
 FileUpload:hover {
-  background-color: darken( $action-bg, 10% );
+  cursor: pointer;
+  color: darken( $action-bg, 10% );
+  background-color: darken( #f3f3f3, 5% );
+  /*background-color: darken( $action-bg, 10% );*/
   animation: hoverOut 400ms ease-out;
 }
 
 FileUpload:pressed {
-  background-color: darken( $action-bg, 20% );
+  background-color: darken( $action-bg, 0% );
 }
 
 FileUpload-FocusIndicator {

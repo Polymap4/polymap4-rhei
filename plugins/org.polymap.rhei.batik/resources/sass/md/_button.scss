@@ -28,6 +28,10 @@ Button[RADIO] {
   cursor: pointer;
 }
 
+Button[BORDER] {
+  border: 1px solid $separator2;
+}
+
 /* w/o border: Raised button */
 Button[PUSH],
 Button[TOGGLE],
