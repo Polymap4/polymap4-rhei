@@ -40,6 +40,7 @@ public class ContributionManager
         extends SessionSingleton {
 
     private static final ContributionHandler[]          handlers = { 
+            new ContributionHandler.PanelHandler(),
             new ContributionHandler.PanelFabHandler(),
             new ContributionHandler.ToolbarHandler(),
             new ContributionHandler.DashboardHandler() };

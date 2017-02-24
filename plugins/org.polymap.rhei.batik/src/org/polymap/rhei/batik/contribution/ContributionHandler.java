@@ -16,6 +16,8 @@ package org.polymap.rhei.batik.contribution;
 
 import java.util.function.Predicate;
 
+import org.eclipse.swt.widgets.Composite;
+
 import org.polymap.rhei.batik.IPanel;
 import org.polymap.rhei.batik.dashboard.Dashboard;
 import org.polymap.rhei.batik.toolkit.md.MdToolbar2;
@@ -34,6 +36,25 @@ public abstract class ContributionHandler<T, C extends IContributionProvider>
     public abstract boolean handle( IContributionSite site, C contrib, T target );
 
 
+    /**
+     * 
+     */
+    public static class PanelHandler
+            extends ContributionHandler<Composite, IPanelContribution> {
+
+        @Override
+        public boolean test( Composite target ) {
+            return target instanceof Composite;
+        }
+
+        @Override
+        public boolean handle( IContributionSite site, IPanelContribution contrib, Composite target ) {
+            contrib.fillPanel( site, target );
+            return true;
+        }
+    }
+
+    
     /**
      * 
      */
