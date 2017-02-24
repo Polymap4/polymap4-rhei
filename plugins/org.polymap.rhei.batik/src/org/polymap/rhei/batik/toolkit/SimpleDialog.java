@@ -80,6 +80,10 @@ public class SimpleDialog
         ConfigurationFactory.inject( this );
     }
 
+    public int openAndBlock() {
+        setBlockOnOpen( true );
+        return open();
+    }
     
     /**
      * Sets the content of this dialog. The parent {@link Composite} has
