@@ -23,13 +23,14 @@ Label[BORDER] {
   border-radius: 2px;
 }
 
+/* see batik_section.scss
 Label-SeparatorLine {
   background-image: none;
   background-color: transparent;
-  border: 1px solid #a4a4a4;
+  border: 1px solid $separator1;
   border-radius: 0px;
   width: 2px;
-}
+}*/
 
 Label-SeparatorLine[SHADOW_IN] {
   border: 1px inset;

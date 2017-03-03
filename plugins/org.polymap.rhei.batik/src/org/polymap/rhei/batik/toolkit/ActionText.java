@@ -29,6 +29,8 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Button;
@@ -104,17 +106,26 @@ public class ActionText
         text.addFocusListener( this );
 
         text.addKeyListener( new KeyAdapter() {
+            @Override
             public void keyReleased( KeyEvent ev ) {
                 if (ev.keyCode == SWT.Selection && performOnEnter.get()) {
                     defaultAction().ifPresent( item -> item.action.get().accept( null ) );
                 }
             }
         });
-//        text.addModifyListener( new ModifyListener() {
-//            @Override
-//            public void modifyText( ModifyEvent ev ) {
-//            }
-//        });
+        text.addModifyListener( new ModifyListener() {
+            @Override
+            public void modifyText( ModifyEvent ev ) {
+                if (!performOnEnter.get() /*&& defaultAction().isPresent()*/) {
+                    String v = text.getText();
+                    text.getDisplay().timerExec( performDelayMillis.get(), () -> {
+                        if (!text.isDisposed() && text.getText().equals( v )) {
+                            defaultAction().get().action.get().accept( null );
+                        }
+                    });
+                }
+            }
+        });
 
         EventManager.instance().subscribe( this, ifType( ItemEvent.class, ev -> 
                 // FIXME does not work for hierarchy of GroupItem
@@ -143,6 +154,7 @@ public class ActionText
 //            clearBtn.setVisible( false );
 //        }
     }
+    
     
     @Override
     public void focusGained( FocusEvent ev ) {

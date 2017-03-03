@@ -904,21 +904,20 @@ Label[BORDER] {
   border-radius: 2px;
 }
 
-/* line 26, ../../sass/md/_label.scss */
+/* see batik_section.scss
 Label-SeparatorLine {
   background-image: none;
   background-color: transparent;
-  border: 1px solid #a4a4a4;
+  border: 1px solid $separator1;
   border-radius: 0px;
   width: 2px;
-}
-
-/* line 34, ../../sass/md/_label.scss */
+}*/
+/* line 35, ../../sass/md/_label.scss */
 Label-SeparatorLine[SHADOW_IN] {
   border: 1px inset;
 }
 
-/* line 38, ../../sass/md/_label.scss */
+/* line 39, ../../sass/md/_label.scss */
 Label-SeparatorLine[SHADOW_OUT] {
   border: 1px outset;
 }
@@ -1010,8 +1009,8 @@ Label:disabled.batik-panel-section-title {
 Label[SEPARATOR],
 Label[SEPARATOR].batik-panel-section-separator,
 Label.batik-panel-section-separator {
-  background-color: #303030;
-  color: #f8f8f8;
+  background-color: separator2;
+  color: transparent;
 }
 
 /* line 67, ../../sass/md/_batik_section.scss */
