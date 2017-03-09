@@ -14,6 +14,7 @@
  */
 package org.polymap.rhei.batik.app;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -53,5 +54,7 @@ public interface IAppDesign
     public Shell createMainWindow( Display display );
 
     public void delayedRefresh();
+
+    public Composite panelParent( PanelPath top );
 
 }

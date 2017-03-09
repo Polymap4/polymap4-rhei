@@ -26,11 +26,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 
 import org.polymap.core.runtime.UIThreadExecutor;
+import org.polymap.core.runtime.config.Concern;
+import org.polymap.core.runtime.config.Config;
 import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultInt;
+import org.polymap.core.runtime.config.DefaultPropertyConcern;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
@@ -77,16 +81,24 @@ public class Snackbar
     
     /** The message to display in the Snackbar. */
     @Mandatory
+    @Concern( UpdateMessageConcern.class )
     public Config2<Snackbar,String>       message;
     
     @Mandatory
     public Config2<Snackbar,Item[]>       actions;
 
     private Composite                     control;
+
+    private Label                         messageLabel;
     
     
     public Snackbar( IPanelToolkit tk, Composite parent ) {
         UIThreadExecutor.async( () -> createContents( tk, parent ) );
+    }
+    
+    
+    public boolean isDisposed() {
+        return control != null && control.isDisposed();    
     }
     
     
@@ -99,6 +111,7 @@ public class Snackbar
         int height = MdAppDesign.dp( 80 );
         
         control = tk.createComposite( parent );
+        control.setLayout( FormLayoutFactory.defaults().margins( height/2, (height-17)/2 ).spacing( 8 ).create() );
         control.moveAbove( null );
         
         // appearance
@@ -115,11 +128,9 @@ public class Snackbar
             throw new RuntimeException( "Unhandled Appearance type: " + appearance.get() );
         }
         
-        // layout
-        control.setLayout( FormLayoutFactory.defaults().margins( height/2, (height-17)/2 ).spacing( 8 ).create() );
-        
         // message
-        on( setVariant( tk.createLabel( control, message.get() ), "snackbar-message" ) )
+        messageLabel = tk.createLabel( control, message.get() );
+        on( setVariant( messageLabel, "snackbar-message" ) )
                 .fill().noRight().height( height );
         
         // actions
@@ -162,4 +173,22 @@ public class Snackbar
         });
     }
 
+
+    /**
+     * 
+     */
+    public static class UpdateMessageConcern
+            extends DefaultPropertyConcern<String> {
+
+        @Override
+        public String doSet( Object obj, Config prop, String value ) {
+            Snackbar snackbar = (Snackbar)obj;
+            if (snackbar.messageLabel != null && !snackbar.messageLabel.isDisposed()) {
+                snackbar.messageLabel.setText( value );
+                snackbar.messageLabel.getParent().layout( true );
+            }
+            return value;
+        }
+    }
+    
 }

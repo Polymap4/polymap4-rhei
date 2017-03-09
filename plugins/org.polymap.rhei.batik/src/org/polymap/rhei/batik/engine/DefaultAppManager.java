@@ -46,6 +46,7 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.XMLMemento;
 
 import org.eclipse.core.runtime.IPath;
+
 import org.polymap.core.runtime.Lazy;
 import org.polymap.core.runtime.PlainLazyInit;
 import org.polymap.core.runtime.UIThreadExecutor;
@@ -151,7 +152,12 @@ public class DefaultAppManager
         return panels.values().stream().filter( filter ).collect( Collectors.toList() );
     }
 
+    
+    public PanelPath topPanel() {
+        return top;
+    }
 
+    
     @Override
     public IAppContext getContext() {
         return context;

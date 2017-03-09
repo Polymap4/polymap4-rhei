@@ -21,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -33,6 +34,7 @@ import org.polymap.core.runtime.config.DefaultBoolean;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.ui.FormDataFactory;
 import org.polymap.core.ui.FormLayoutFactory;
+import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.BatikPlugin;
 
@@ -64,9 +66,13 @@ public class TextProgressMonitor
     
     private boolean         canceled;
     
+    private Display         display;
+    
     
     public TextProgressMonitor() {
         ConfigurationFactory.inject( this );
+        display = UIUtils.sessionDisplay();
+        assert display != null : "Must be called from UI thread.";
     }
 
     public Composite createContents( Composite parent ) {

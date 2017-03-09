@@ -28,12 +28,10 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.statushandlers.StatusManager.INotificationListener;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.ProgressProvider;
 
+import org.polymap.rhei.batik.app.BatikProgressProvider;
 import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 
 /**
@@ -92,29 +90,7 @@ public class BatikPlugin
         });
 
         // ProgressProvider        
-        Job.getJobManager().setProgressProvider( new ProgressProvider() {
-            @Override
-            public IProgressMonitor createMonitor( Job job ) {
-                return new NullProgressMonitor() {
-                    @Override
-                    public void beginTask( String name, int totalWork ) {
-                        log.info( "[PROGRESS] '" + name + "' started" );
-                    }
-                    @Override
-                    public void subTask( String name ) {
-                        log.info( "[PROGRESS] subtask '" + name + "' started" );
-                    }
-                    @Override
-                    public void worked( int work ) {
-                        System.out.print( "." );
-                    }
-                    @Override
-                    public void done() {
-                        log.info( "[PROGRESS] '" + job.getName() + "' done" );
-                    }
-                };
-            }
-        });
+        Job.getJobManager().setProgressProvider( new BatikProgressProvider() );
         
         // register HTTP resource
         httpServiceTracker = new ServiceTracker( context, HttpService.class.getName(), null ) {

@@ -577,6 +577,12 @@ public class DefaultAppDesign
 //        });
     }
 
+    
+    @Override
+    public Composite panelParent( PanelPath path ) {
+        return panelsArea.getPage( path ).control;
+    }
+
 
     /**
      * 
