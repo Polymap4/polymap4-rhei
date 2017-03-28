@@ -261,7 +261,10 @@ public class BetweenFormField
         public void setErrorMessage( String msg ) {
             delegate.setErrorMessage( msg );
         }
-        
+
+        public Control getFieldControl() {
+            return delegate.getFieldControl();
+        }
     }
     
 }

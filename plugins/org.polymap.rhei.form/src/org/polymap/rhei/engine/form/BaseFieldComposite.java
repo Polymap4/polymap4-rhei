@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Control;
 
 import org.polymap.core.runtime.event.EventFilter;
 import org.polymap.core.runtime.event.EventManager;
+
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormField;
 import org.polymap.rhei.field.IFormFieldDecorator;
@@ -75,6 +76,8 @@ public abstract class BaseFieldComposite
     /** Error message set by {@link #setErrorMessage(String)} */
     protected String                  externalErrorMsg;
 
+    protected Map<Part,Control>       parts;
+    
 
     public BaseFieldComposite( Object editor, IBasePageSite pageSite, 
             IFormToolkit toolkit, IFormField field,
@@ -92,7 +95,7 @@ public abstract class BaseFieldComposite
     
     
     public void createComposite( Composite result, int style ) {
-        Map<Part,Control> parts = new HashMap();
+        parts = new HashMap();
 
         labeler.init( this );
         parts.put( Part.Label, labeler.createControl( result, toolkit ) );
@@ -251,4 +254,10 @@ public abstract class BaseFieldComposite
         externalErrorMsg = msg;
     }
 
+
+    @Override
+    public Control getFieldControl() {
+        return parts.get( Part.Field );
+    }
+    
 }

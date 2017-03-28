@@ -68,6 +68,7 @@ public class FormEditorToolkit
     public static final Color   backgroundFocused = UIUtils.getColor( 0xF0, 0xF0, 0xFF );
     public static final Color   labelForeground = UIUtils.getColor( 0x70, 0x70, 0x70 );
     public static final Color   labelForegroundFocused = UIUtils.getColor( 0x00, 0x00, 0x00 );
+    public static final Color   invalid = UIUtils.getColor( 201, 27, 12 );  //see SvgImageRegistryHelper
     
     
     private FormToolkit         delegate;

@@ -14,6 +14,10 @@
  */
 package org.polymap.rhei.field;
 
+import org.eclipse.swt.widgets.Control;
+
+import org.eclipse.ui.forms.editor.FormEditor;
+
 import org.polymap.rhei.form.IFormToolkit;
 
 /**
@@ -78,4 +82,5 @@ public interface IFormFieldSite {
 
     public void setErrorMessage( String msg );
     
+    public Control getFieldControl();
 }

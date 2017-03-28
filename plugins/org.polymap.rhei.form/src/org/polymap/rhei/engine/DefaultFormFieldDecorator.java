@@ -18,14 +18,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 
 import org.polymap.rhei.RheiFormPlugin;
+import org.polymap.rhei.engine.form.FormEditorToolkit;
 import org.polymap.rhei.field.FormFieldEvent;
 import org.polymap.rhei.field.IFormFieldDecorator;
 import org.polymap.rhei.field.IFormFieldListener;
@@ -46,9 +49,13 @@ public class DefaultFormFieldDecorator
     
     private IFormFieldSite      site;
     
-    private Label              label;
+    private Label               label;
     
     private boolean             dirty, focus, invalid;
+    
+    private Color               origForeground;
+
+    private String              origTooltip;
 
 
     static {
@@ -93,12 +100,24 @@ public class DefaultFormFieldDecorator
     
     protected void updateUI() {
         if (!label.isDisposed()) {
+            origForeground = origForeground == null ? site.getFieldControl().getForeground() : origForeground;
+            origTooltip = origTooltip == null ? site.getFieldControl().getToolTipText() : origTooltip;
+            
+            // invalid
             if (invalid) {
                 label.setImage( invalidImage );
-                label.setToolTipText( invalid ? site.getErrorMessage() : "" );
+                label.setToolTipText( site.getErrorMessage() );
+                site.getFieldControl().setToolTipText( site.getErrorMessage() );
+                // don't display red cursor without text
+                if (site.getFieldControl() instanceof Text && ((Text)site.getFieldControl()).getText().length()>0) {
+                    site.getFieldControl().setForeground( FormEditorToolkit.invalid );
+                }
             }
+            // dirty
             else if (dirty) {
                 label.setImage( dirtyImage );
+                site.getFieldControl().setForeground( origForeground );
+                site.getFieldControl().setToolTipText( origTooltip );
                 try {
                     String tooltip = "Eingabe ist korrekt.";
                     Object origValue = site.getFieldValue();
@@ -115,6 +134,8 @@ public class DefaultFormFieldDecorator
             else {
                 label.setImage( null );
                 label.setToolTipText( "" );
+                site.getFieldControl().setForeground( origForeground );
+                site.getFieldControl().setToolTipText( origTooltip );
             }
         }
     }

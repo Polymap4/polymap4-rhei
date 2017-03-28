@@ -15,6 +15,7 @@
 package org.polymap.rhei.table;
 
 import java.util.Objects;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -274,6 +275,11 @@ class FormEditingSupport
             @Override
             public void setErrorMessage( String msg ) {
                 externalErrorMsg = msg;
+            }
+
+            @Override
+            public Control getFieldControl() {
+                return control;
             }
         }
     }
