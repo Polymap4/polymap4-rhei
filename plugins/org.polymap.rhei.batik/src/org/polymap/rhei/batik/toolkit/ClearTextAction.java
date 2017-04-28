@@ -31,6 +31,7 @@ public class ClearTextAction
         tooltip.set( "Clear text" );
         action.set( ev -> {
             atext.getText().setText( "" );
+            atext.defaultAction().ifPresent( item -> item.action.get().accept( null ) );
         });
     }
 

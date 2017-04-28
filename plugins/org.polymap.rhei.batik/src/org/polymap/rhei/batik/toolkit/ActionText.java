@@ -47,6 +47,7 @@ import org.polymap.core.runtime.config.NumberRangeValidator;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
 import org.polymap.core.ui.FormDataFactory;
+import org.polymap.core.ui.FormDataFactory.Alignment;
 import org.polymap.core.ui.FormLayoutFactory;
 import org.polymap.core.ui.UIUtils;
 
@@ -199,7 +200,7 @@ public class ActionText
         Label lastBtn = null;
         for (TextActionItem action : actions) {
             Label btn = createActionBtn( action );
-            FormDataFactory layout = FormDataFactory.on( btn ).top( 0, 6 ).right( 100, -8 ).noLeft();
+            FormDataFactory layout = FormDataFactory.on( btn ).top( text, 0, Alignment.CENTER ).right( 100, -8 ).noLeft();
             if (lastBtn != null) {
                 layout.right( lastBtn, -2 );
             }
@@ -239,7 +240,6 @@ public class ActionText
 //        actions.put( action, activation );
 //        return this;
 //    }
-//    
 //
 //    /**
 //     * Like {@link #addAction(ActionItem)} but makes this action the action to be
@@ -252,7 +252,6 @@ public class ActionText
 //        this.defaultAction = action;
 //        return this;
 //    }
-//    
 //
 //    /**
 //     * Updates the UI after another action has been performed.
