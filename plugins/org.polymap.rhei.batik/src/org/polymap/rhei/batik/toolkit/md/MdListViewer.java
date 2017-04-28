@@ -16,8 +16,13 @@ package org.polymap.rhei.batik.toolkit.md;
 
 import static org.polymap.rhei.batik.toolkit.md.dp.dp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.google.common.collect.Lists;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -26,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Tree;
+
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -35,6 +41,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -330,17 +337,61 @@ public class MdListViewer
         return actionCount;
     }
 
-    
-    public MdListViewer toggleItemExpand( Object elm ) {
-        if (!getExpandedState( elm )) {
-            expandToLevel( elm, 1 );
+
+    /**
+     * 
+     *
+     * @param elementOtTreePath
+     * @return this
+     * @see #collapseAllNotInPathOf(Object)
+     */
+    public MdListViewer toggleItemExpand( Object elementOtTreePath ) {
+        if (!getExpandedState( elementOtTreePath )) {
+            expandToLevel( elementOtTreePath, 1 );
         } else {
-            collapseToLevel( elm, 1 );
+            collapseToLevel( elementOtTreePath, 1 );
         }
         return this;
     }
 
+   
+    /**
+     * Collapses all currently expanded ancestors that are outside the path of the
+     * given element. This allows to mutual exclusively expand nodes.
+     * <pre>
+     *     viewer.collapseAllNotInPathOf( elm );
+     *     viewer.toggleItemExpand( elm );
+     * </pre>
+     * 
+     * @param elementOrTreePath
+     * @return this
+     */
+    public MdListViewer collapseAllNotInPathOf( Object elementOrTreePath ) {
+        TreePath path = elementOrTreePath instanceof TreePath
+                ? (TreePath)elementOrTreePath 
+                : getTreePathFromItem( (Item)findItem( elementOrTreePath ) );
+        
+        List<TreePath> expandedPaths = Lists.newArrayList( getExpandedTreePaths() );
+        for (int i=0; i < path.getSegmentCount(); i++) {
+            for (TreePath expanded : new ArrayList<TreePath>( expandedPaths )) {
+                if (expanded.getSegmentCount()-1 < i) {
+                    expandedPaths.remove( expanded );
+                }
+                else {
+                    Object s1 = expanded.getSegment( i );
+                    Object s2 = path.getSegment( i );
+                    if (!s1.equals( s2 )) {
+                        collapseToLevel( s1, 1 );
+                        expandedPaths.remove( expanded );
+                    }
+                }
+            }
 
+        }
+        return this;
+    }
+
+    
     @Override
     public void expandToLevel( Object elementOrTreePath, int level ) {
         log.debug( "EXPAND: " + elementOrTreePath );

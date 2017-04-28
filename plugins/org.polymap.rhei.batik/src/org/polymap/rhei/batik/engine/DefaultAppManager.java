@@ -366,7 +366,7 @@ public class DefaultAppManager
         }
 
         @Override
-        public <P extends IPanel> Optional<P> openPanel( final PanelPath panelPath, final PanelIdentifier panelId ) {
+        public <P extends IPanel> Optional<P> openPanel( PanelPath panelPath, PanelIdentifier panelId ) {
             return DefaultAppManager.this.openPanel( panelPath, panelId );
         }
 

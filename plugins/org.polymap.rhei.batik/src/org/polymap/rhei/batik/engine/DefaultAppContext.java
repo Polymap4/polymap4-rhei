@@ -20,9 +20,6 @@ import java.util.Objects;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.polymap.core.runtime.event.EventFilter;
 import org.polymap.core.runtime.event.EventManager;
 
@@ -37,8 +34,6 @@ import org.polymap.rhei.batik.IAppContext;
  */
 public abstract class DefaultAppContext
         implements IAppContext {
-
-    private static Log log = LogFactory.getLog( DefaultAppContext.class );
 
     /**
      * 
