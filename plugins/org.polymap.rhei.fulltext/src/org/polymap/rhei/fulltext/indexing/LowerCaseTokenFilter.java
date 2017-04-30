@@ -17,8 +17,11 @@ package org.polymap.rhei.fulltext.indexing;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.LowerCaseFilter;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+
+import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.ConfigurationFactory;
+import org.polymap.core.runtime.config.DefaultBoolean;
 
 import org.polymap.rhei.fulltext.FulltextIndex;
 import org.polymap.rhei.fulltext.QueryDecorator;
@@ -35,6 +38,13 @@ public class LowerCaseTokenFilter
         implements FulltextTokenFilter {
 
     /**
+     * For german real language text it is likely to search for nouns which start
+     * with an upper case letter.
+     */
+    @DefaultBoolean( true )
+    public Config2<LowerCaseTokenFilter,Boolean> capitalizeProposals;
+    
+    /**
      * Ctor for {@link FulltextTokenFilter}.
      */
     public LowerCaseTokenFilter() {
@@ -46,6 +56,7 @@ public class LowerCaseTokenFilter
      */
     public LowerCaseTokenFilter( FulltextIndex next ) {
         super( next );
+        ConfigurationFactory.inject( this );
     }
 
 
@@ -61,11 +72,9 @@ public class LowerCaseTokenFilter
 
             Iterable<String> results = next.propose( query, maxResults, field );
 
-            return Iterables.transform( results, new Function<String,String>() {
-                public String apply( String input ) {
-                    return StringUtils.capitalize( input );
-                }
-            });
+            return capitalizeProposals.get()
+                    ? Iterables.transform( results, s -> StringUtils.capitalize( s ) )
+                    : results;
         }
     }
 

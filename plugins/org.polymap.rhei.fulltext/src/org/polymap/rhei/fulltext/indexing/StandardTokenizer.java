@@ -17,7 +17,8 @@ package org.polymap.rhei.fulltext.indexing;
 import org.polymap.rhei.fulltext.update.UpdateableFulltextIndex;
 
 /**
- * Use whitespace and special chars (.,;:-\\/@"'()[]{}) as token delimiter.
+ * {@link Character#isLowerCase(int)} || {@link Character#isUpperCase(int)} ||
+ * {@link Character#isDigit(int)} || {@link Character#isTitleCase(char)}.
  * 
  * @see UpdateableFulltextIndex
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
@@ -27,31 +28,36 @@ public class StandardTokenizer
 
     @Override
     public boolean isTokenChar( int c ) {
-        switch (c) {
-            case ' '    : return false;   
-            case '\t'   : return false;
-            case '\r'   : return false;
-            case '\n'   : return false;
-            case '.'    : return false;
-            case ','    : return false;
-            case ';'    : return false;
-            case ':'    : return false;
-            case '-'    : return false;
-            case '\\'   : return false;
-            case '/'    : return false;
-            case '@'    : return false;
-            case '"'    : return false;
-            case '\''   : return false;
-            case '{'    : return false;
-            case '}'    : return false;
-            case '['    : return false;
-            case ']'    : return false;
-            // http://polymap.org/atlas/ticket/77
-            case '('    : return false;
-            case ')'    : return false;
-            
-            default     : return true;
-        }
+        return Character.isLowerCase( c )
+                || Character.isUpperCase( c )
+                || Character.isDigit( c )
+                || Character.isTitleCase( c );
+        
+//        switch (c) {
+//            case ' '    : return false;   
+//            case '\t'   : return false;
+//            case '\r'   : return false;
+//            case '\n'   : return false;
+//            case '.'    : return false;
+//            case ','    : return false;
+//            case ';'    : return false;
+//            case ':'    : return false;
+//            case '-'    : return false;
+//            case '\\'   : return false;
+//            case '/'    : return false;
+//            case '@'    : return false;
+//            case '"'    : return false;
+//            case '\''   : return false;
+//            case '{'    : return false;
+//            case '}'    : return false;
+//            case '['    : return false;
+//            case ']'    : return false;
+//            // http://polymap.org/atlas/ticket/77
+//            case '('    : return false;
+//            case ')'    : return false;
+//            
+//            default     : return true;
+//        }
     }
     
 }
