@@ -90,7 +90,7 @@ public abstract class RadioboxActionProvider
     
     @Override
     public void update( ViewerCell cell ) {
-        cell.setImage( selection == cell.getElement() ? selectedImage.get() : unselectedImage.get() );
+        cell.setImage( isSelected( cell.getElement() ) ? selectedImage.get() : unselectedImage.get() );
     }
 
 
