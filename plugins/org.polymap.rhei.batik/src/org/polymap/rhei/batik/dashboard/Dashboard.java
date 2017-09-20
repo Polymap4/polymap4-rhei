@@ -17,6 +17,7 @@ package org.polymap.rhei.batik.dashboard;
 import static org.polymap.core.runtime.event.TypeEventFilter.ifType;
 import static org.polymap.rhei.batik.toolkit.IPanelSection.EXPANDABLE;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +84,8 @@ public class Dashboard
     
     private Map<IDashlet,DashletSiteImpl>   dashlets = new HashMap();
     
+    private boolean                         isAccordion;
+    
     
     public Dashboard( IPanelSite panelSite, String id ) {
         this.panelSite = panelSite;
@@ -135,7 +138,10 @@ public class Dashboard
             
             List<LayoutConstraint> constraints = dashletSite.constraints.get();
             section.addConstraint( constraints.toArray( new LayoutConstraint[constraints.size()]) );
-            
+
+            // changes after createContents() have no effect and should fail fast
+            dashletSite.constraints = null;
+
             setExpanded( dashlet, dashletSite.isExpanded() );
         }
     
@@ -144,7 +150,9 @@ public class Dashboard
                 dashlets.values().contains( ev.getSource() ) ) );
         
         EventManager.instance().subscribe( this, ifType( ExpansionEvent.class, ev -> true ) );
-        
+//        EventManager.instance().subscribe( this, ifType( ExpansionEvent.class, ev -> 
+//                dashlets().stream().anyMatch( d -> d.site().getPanelSection() == ev.getSource() ) ) );
+
         return parent;
     }
 
@@ -182,9 +190,17 @@ public class Dashboard
             dashlets.values().stream()
                     .filter( site -> site.panelSection.get() == ev.getSource() )
                     .findAny().ifPresent( dashletSite -> dashletSite.setExpanded( ev.getState() ) );
-        }        
+         
+            if (isAccordion && ev.getState() ) {
+                for (IDashlet dashlet : dashlets()) {
+                    if (dashlet.site().isExpanded() && dashlet.site().getPanelSection() != ev.getSource()) {
+                        dashlet.site().setExpanded( false );
+                    }
+                }
+            }
+        }
     }
-    
+
     
     @EventHandler
     protected void onSitePropertyChange( PropertyChangeEvent ev ) {
@@ -256,8 +272,8 @@ public class Dashboard
         }
 
         @Override
-        public DashletSite addConstraint( LayoutConstraint constraint ) {
-            constraints.get().add( constraint );
+        public DashletSite addConstraint( LayoutConstraint... constraint ) {
+            constraints.get().addAll( Arrays.asList( constraint ) );
             return this;
         }
 

@@ -24,6 +24,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+
 import org.eclipse.ui.forms.events.ExpansionEvent;
 
 import org.eclipse.rap.rwt.RWT;
@@ -132,6 +133,13 @@ public class PanelSection
             control.setLayoutData( new ConstraintData() );
         }
         ((ConstraintData)control.getLayoutData()).add( constraints );
+        return this;
+    }
+
+    
+    @Override
+    public ILayoutElement setLayoutData( Object data ) {
+        control.setLayoutData( data );
         return this;
     }
 

@@ -31,7 +31,7 @@ public interface ILayoutElement {
      * Adds the given contraints to the LayoutData ({@link ConstraintData}) of this
      * element. This is a shortcut of:
      * <pre>
-     * ((ConstraintData)getControl().getLayout()).addConstraint(constraints)
+     *   ((ConstraintData)control.getLayoutData()).add( constraints );
      * </pre>
      * 
      * @param constraints
@@ -39,4 +39,5 @@ public interface ILayoutElement {
      */
     public ILayoutElement addConstraint( LayoutConstraint... constraints );
 
+    public ILayoutElement setLayoutData( Object data );
 }

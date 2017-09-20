@@ -63,7 +63,7 @@ public abstract class DashletSite
     /**
      * Shortcut to {@link #constraints}.
      */
-    public abstract DashletSite addConstraint( LayoutConstraint constraint );
+    public abstract DashletSite addConstraint( LayoutConstraint... constraint );
     
     public abstract IPanelSite panelSite();
     

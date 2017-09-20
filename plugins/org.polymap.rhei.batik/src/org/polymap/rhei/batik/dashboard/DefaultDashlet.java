@@ -15,6 +15,7 @@
 package org.polymap.rhei.batik.dashboard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +39,8 @@ public abstract class DefaultDashlet
     @Override
     public void init( DashletSite site ) {
         this.dashletSite = site;
-        startExpanded.ifPresent( expanded -> this.dashletSite.setExpanded( expanded ) );
-        constraints.forEach( c -> site.constraints.get().add( c ) );
+        startExpanded.ifPresent( expanded -> dashletSite.setExpanded( expanded ) );
+        constraints.forEach( c -> dashletSite.addConstraint( c ) );
     }
 
     
@@ -62,10 +63,10 @@ public abstract class DefaultDashlet
     }
     
     
-    public DefaultDashlet addConstraint( LayoutConstraint constraint ) {
-        constraints.add( constraint );
+    public DefaultDashlet addConstraint( LayoutConstraint... constraint ) {
+        constraints.addAll( Arrays.asList( constraint ) );
         if (dashletSite != null) {
-            dashletSite.constraints.get().add( constraint );
+            dashletSite.addConstraint( constraint );
         }
         return this;
     }

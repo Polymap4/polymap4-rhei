@@ -17,9 +17,6 @@ package org.polymap.rhei.batik.toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import org.polymap.rhei.batik.engine.cp.ISolver;
 import org.polymap.rhei.batik.toolkit.NeighborhoodConstraint.Neighborhood;
 
@@ -30,9 +27,23 @@ import org.polymap.rhei.batik.toolkit.NeighborhoodConstraint.Neighborhood;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class ConstraintData {
-
-    private static Log log = LogFactory.getLog( ConstraintData.class );
     
+    // factory ********************************************
+    
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    public static class Builder
+            extends LayoutConstraintBuilder<Builder> {
+
+        public ConstraintData get() {
+            return constraints; 
+        }
+    }
+    
+    // instance *******************************************
+
     protected int                   defaultWidth = -1, defaultHeight = -1;
 
     protected int                   currentWhint, currentHhint, currentWidth = -1, currentHeight = -1;
