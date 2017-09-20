@@ -174,7 +174,7 @@ public class MdToolkit
         
         int marginTop = dp( 78 );
         int margin = dp( 40 );
-        int size = dp( 78 );
+        int size = dp( 98 );
 
         FormDataFactory layout = on( result ).width( size ).height( size );
         

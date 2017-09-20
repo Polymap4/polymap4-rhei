@@ -222,6 +222,8 @@ public class DefaultAppManager
      * Provides the default logic for opening a panel.
      */
     protected <P extends IPanel> Optional<P> openPanel( PanelPath parentPath, PanelIdentifier panelId ) {
+        assert parentPath != null : "parentPath must not be null";
+        assert panelId != null : "panelId must not be null";
         if (!disposePanels( parentPath )) {
             return Optional.empty();
         }
@@ -363,6 +365,11 @@ public class DefaultAppManager
         @Override
         public void addPreferencesAction( IAction action ) {
             log.warn( "addPreferencesAction(): not implemented yet." );
+        }
+
+        @Override
+        public PanelPath topPanel() {
+            return DefaultAppManager.this.topPanel();
         }
 
         @Override

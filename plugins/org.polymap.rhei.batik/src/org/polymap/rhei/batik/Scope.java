@@ -20,7 +20,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Denotes the scope of a {@link Context}.
+ * Denotes the scope of a {@link Context} property.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */

@@ -140,7 +140,7 @@ public class BatikProgressProvider
             log.info( LOG_PREFIX + name + " - beginTask: " );
             this.taskName = name;
             this.total = totalWork;
-            update( true );
+            update( false );
         }
 
         @Override
@@ -166,7 +166,7 @@ public class BatikProgressProvider
             log.info( LOG_PREFIX + taskName + " - done." );
             this.worked = this.total;
             this.subTaskName = "done";
-            update( !snackbarEverSeen );
+            update( false /*snackbarEverSeen*/ );
         }
 
         @Override

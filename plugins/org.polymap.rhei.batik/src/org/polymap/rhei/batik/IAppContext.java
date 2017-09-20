@@ -45,7 +45,8 @@ public interface IAppContext {
     public void setUserName( String username );
     
     public void addPreferencesAction( IAction action );
-    
+
+    public PanelPath topPanel();
     
     /**
      * Opens the panel with the given <code>panelId</code> as a child of the given
