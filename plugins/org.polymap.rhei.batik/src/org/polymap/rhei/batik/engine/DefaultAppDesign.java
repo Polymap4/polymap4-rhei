@@ -23,6 +23,7 @@ import static org.polymap.rhei.batik.toolkit.md.MdAppDesign.dp;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -579,8 +580,15 @@ public class DefaultAppDesign
 
     
     @Override
-    public Composite panelParent( PanelPath path ) {
-        return panelsArea.getPage( path ).control;
+    public Optional<Composite> panelParent( PanelPath path ) {
+        try {
+            PageStack<PanelPath>.Page page = panelsArea.getPage( path );
+            return page != null ? Optional.of( page.control ) : Optional.empty();
+        }
+        catch (RuntimeException e) {
+            log.warn( "", e );
+            return null;
+        }
     }
 
 

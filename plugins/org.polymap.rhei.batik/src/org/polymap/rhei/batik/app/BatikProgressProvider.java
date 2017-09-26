@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.jobs.ProgressProvider;
 
 import org.polymap.core.runtime.Timer;
 import org.polymap.core.runtime.UIJob;
+import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.batik.BatikApplication;
 import org.polymap.rhei.batik.PanelPath;
@@ -119,7 +120,8 @@ public class BatikProgressProvider
 
                         //BatikApplication.instance().getAppDesign()
                         PanelPath top = ((DefaultAppManager)BatikApplication.instance().getAppManager()).topPanel();
-                        Composite topParent = BatikApplication.instance().getAppDesign().panelParent( top );
+                        Composite topParent = BatikApplication.instance().getAppDesign().panelParent( top )
+                                .orElse( UIUtils.shellToParentOn() );
                         
                         snackbar = new Snackbar( tk, topParent /*UIUtils.shellToParentOn()*/ )
                                 .hideTimeout.put( 4 )
