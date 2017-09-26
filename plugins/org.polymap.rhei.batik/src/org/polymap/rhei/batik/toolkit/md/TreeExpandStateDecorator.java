@@ -60,7 +60,7 @@ public class TreeExpandStateDecorator
      * hierarchy level.
      */
     @Mandatory
-    @DefaultFloat( 50f )
+    @DefaultFloat( 35f )
     public Config2<TreeExpandStateDecorator,Float> saturationDelta;
     
     /**

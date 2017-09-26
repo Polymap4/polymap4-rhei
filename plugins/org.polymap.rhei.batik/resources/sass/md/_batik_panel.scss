@@ -31,7 +31,7 @@ Composite[BORDER].atlas-panel-right {
 Composite.atlas-panel-left,
 Composite[BORDER].atlas-panel-left {
   padding: 1px 3px 0px 3px;
-  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-in;   
+  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-out;   
   /*animation: fadeIn 400ms ease-in, fadeOut 400ms ease-out;*/
 }
 

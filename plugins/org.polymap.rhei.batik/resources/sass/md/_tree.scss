@@ -5,6 +5,7 @@ Tree {
   background-color: inherit;
   border: none;
   color: $text-color;
+  cursor: pointer;
 }
 
 Tree[BORDER] {
@@ -162,24 +163,25 @@ Tree-Checkbox:checked:grayed:hover {
 }*/
 
 Tree-Indent {
-  width: 0px;
+  width: 12px;
   background-image: none;
+  cursor: pointer;
 }
 
 Tree-Indent:collapsed {
-  background-image: url( resource/widget/rap/tree/tree-collapsed.png );
+  background-image: url( #{$icon-normal}/chevron-right.png );
 }
 
 Tree-Indent:collapsed:hover {
-  background-image: url( resource/widget/rap/tree/tree-collapsed-hover.png );
+  background-image: url( #{$icon-hover}/chevron-right.png );
 }
 
 Tree-Indent:expanded {
-  background-image: url( resource/widget/rap/tree/tree-expanded.png );
+  background-image: url( #{$icon-normal}/chevron-down.png );
 }
 
 Tree-Indent:expanded:hover {
-  background-image: url( resource/widget/rap/tree/tree-expanded-hover.png );
+  background-image: url( #{$icon-hover}/chevron-down.png );
 }
 
 Tree-Indent:line {
@@ -191,19 +193,19 @@ Tree-Indent:first {
 }
 
 Tree-Indent:first:collapsed {
-  background-image: url( resource/widget/rap/tree/tree-collapsed.png );
+  background-image: url( #{$icon-normal}/chevron-right.png );
 }
 
 Tree-Indent:first:collapsed:hover {
-  background-image: url( resource/widget/rap/tree/tree-collapsed-hover.png );
+  background-image: url( #{$icon-hover}/chevron-right.png );
 }
 
 Tree-Indent:first:expanded {
-  background-image: url( resource/widget/rap/tree/tree-expanded.png );
+  background-image: url( #{$icon-normal}/chevron-down.png );
 }
 
 Tree-Indent:first:expanded:hover {
-  background-image: url( resource/widget/rap/tree/tree-expanded-hover.png );
+  background-image: url( #{$icon-hover}/chevron-down.png );
 }
 
 Tree-Indent:last {
@@ -211,19 +213,19 @@ Tree-Indent:last {
 }
 
 Tree-Indent:last:collapsed {
-  background-image: url( resource/widget/rap/tree/tree-collapsed.png );
+  background-image: url( #{$icon-normal}/chevron-right.png );
 }
 
 Tree-Indent:last:collapsed:hover {
-  background-image: url( resource/widget/rap/tree/tree-collapsed-hover.png );
+  background-image: url( #{$icon-hover}/chevron-right.png );
 }
 
 Tree-Indent:last:expanded {
-  background-image: url( resource/widget/rap/tree/tree-expanded.png );
+  background-image: url( #{$icon-normal}/chevron-down.png );
 }
 
 Tree-Indent:last:expanded:hover {
-  background-image: url( resource/widget/rap/tree/tree-expanded-hover.png );
+  background-image: url( #{$icon-hover}/chevron-down.png );
 }
 
 Tree-Indent:first:last {
@@ -231,17 +233,17 @@ Tree-Indent:first:last {
 }
 
 Tree-Indent:first:last:collapsed {
-  background-image: url( resource/widget/rap/tree/tree-collapsed.png );
+  background-image: url( #{$icon-normal}/chevron-right.png );
 }
 
 Tree-Indent:first:last:collapsed:hover {
-  background-image: url( resource/widget/rap/tree/tree-collapsed-hover.png );
+  background-image: url( #{$icon-hover}/chevron-right.png );
 }
 
 Tree-Indent:first:last:expanded {
-  background-image: url( resource/widget/rap/tree/tree-expanded.png );
+  background-image: url( #{$icon-normal}/chevron-down.png );
 }
 
 Tree-Indent:first:last:expanded:hover {
-  background-image: url( resource/widget/rap/tree/tree-expanded-hover.png );
+  background-image: url( #{$icon-hover}/chevron-down.png );
 }

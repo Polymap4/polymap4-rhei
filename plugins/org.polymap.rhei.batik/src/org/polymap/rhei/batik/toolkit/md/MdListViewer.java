@@ -37,14 +37,12 @@ import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
-import org.eclipse.jface.viewers.ViewerCell;
 
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.template.ImageCell;
@@ -57,8 +55,6 @@ import org.polymap.core.runtime.config.DefaultBoolean;
 import org.polymap.core.runtime.config.Mandatory;
 import org.polymap.core.ui.UIUtils;
 
-import org.polymap.rhei.batik.BatikPlugin;
-import org.polymap.rhei.batik.app.SvgImageRegistryHelper;
 import org.polymap.rhei.batik.toolkit.md.MdAppDesign.FontStyle;
 
 /**
@@ -213,7 +209,7 @@ public class MdListViewer
 
                 ImageCell cell = new ImageCell( template );
                 cell.setName( CELL_ICON );
-                cell.setLeft( 0 ).setWidth( dp( 56 ).pix() )
+                cell.setLeft( 1 ).setWidth( dp( 56 ).pix() )
                         .setTop( 0 ).setHeight( tileHeight.pix() )
                         .setVerticalAlignment( SWT.CENTER ).setHorizontalAlignment( SWT.CENTER );
                 cell.setBindingIndex( colCount++ );
@@ -235,34 +231,34 @@ public class MdListViewer
                         .setBindingIndex( colCount++ );
             }
 
-            // expand
-            TreeViewerColumn col = new TreeViewerColumn( this, SWT.NONE );
-            col.setLabelProvider( new CellLabelProvider() {
-                @Override
-                public void update( ViewerCell cell ) {
-                    if (cell.getElement() != null) {
-                        IContentProvider contentProvider = MdListViewer.this.getContentProvider();
-                        boolean expandable = true;
-                        if (contentProvider instanceof ITreeContentProvider) {
-                            expandable = ((ITreeContentProvider)contentProvider).hasChildren( cell.getElement() );
-                        }
-                        if (expandable) {
-                            cell.setImage( getExpandedState( cell.getElement() )
-                                    ? BatikPlugin.images().svgImage( "close.svg", SvgImageRegistryHelper.DISABLED12 )
-                                    : BatikPlugin.images().svgImage( "chevron-down.svg", SvgImageRegistryHelper.DISABLED24 ) );
-                        }
-                        else {
-                            cell.setImage( null );
-                        }
-                    }
-                }
-            });
-            ImageCell cell = new ImageCell( template );
-            cell.setName( CELL_EXPAND );
-            cell.setRight( 1 ).setWidth( dp( 56 ).pix() ).setTop( 0 ).setHeight( tileHeight.pix() )
-                    .setVerticalAlignment( SWT.CENTER ).setHorizontalAlignment( SWT.CENTER );
-            cell.setBindingIndex( colCount++ );
-            cell.setSelectable( true );
+//            // expand
+//            TreeViewerColumn col = new TreeViewerColumn( this, SWT.NONE );
+//            col.setLabelProvider( new CellLabelProvider() {
+//                @Override
+//                public void update( ViewerCell cell ) {
+//                    if (cell.getElement() != null) {
+//                        IContentProvider contentProvider = MdListViewer.this.getContentProvider();
+//                        boolean expandable = true;
+//                        if (contentProvider instanceof ITreeContentProvider) {
+//                            expandable = ((ITreeContentProvider)contentProvider).hasChildren( cell.getElement() );
+//                        }
+//                        if (expandable) {
+//                            cell.setImage( getExpandedState( cell.getElement() )
+//                                    ? BatikPlugin.images().svgImage( "close.svg", SvgImageRegistryHelper.DISABLED12 )
+//                                    : BatikPlugin.images().svgImage( "chevron-down.svg", SvgImageRegistryHelper.DISABLED24 ) );
+//                        }
+//                        else {
+//                            cell.setImage( null );
+//                        }
+//                    }
+//                }
+//            });
+//            ImageCell cell = new ImageCell( template );
+//            cell.setName( CELL_EXPAND );
+//            cell.setRight( 1 ).setWidth( dp( 56 ).pix() ).setTop( 0 ).setHeight( tileHeight.pix() )
+//                    .setVerticalAlignment( SWT.CENTER ).setHorizontalAlignment( SWT.CENTER );
+//            cell.setBindingIndex( colCount++ );
+//            cell.setSelectable( true );
     
             //
             getTree().addSelectionListener( new SelectionAdapter() {

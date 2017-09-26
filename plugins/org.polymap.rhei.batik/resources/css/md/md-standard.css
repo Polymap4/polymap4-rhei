@@ -1009,7 +1009,7 @@ Label:disabled.batik-panel-section-title {
 Label[SEPARATOR],
 Label[SEPARATOR].batik-panel-section-separator,
 Label.batik-panel-section-separator {
-  background-color: separator2;
+  background-color: #dddddd;
   color: transparent;
 }
 
@@ -1120,7 +1120,7 @@ Composite[BORDER].atlas-panel-right {
 Composite.atlas-panel-left,
 Composite[BORDER].atlas-panel-left {
   padding: 1px 3px 0px 3px;
-  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-in;
+  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-out;
   /*animation: fadeIn 400ms ease-in, fadeOut 400ms ease-out;*/
 }
 
@@ -1506,14 +1506,15 @@ Tree {
   background-color: inherit;
   border: none;
   color: #4a4a4a;
+  cursor: pointer;
 }
 
-/* line 10, ../../sass/md/_tree.scss */
+/* line 11, ../../sass/md/_tree.scss */
 Tree[BORDER] {
   border: 1px solid #e8e8e8;
 }
 
-/* line 14, ../../sass/md/_tree.scss */
+/* line 15, ../../sass/md/_tree.scss */
 TreeItem,
 TreeItem:linesvisible:even:rowtemplate {
   background-color: transparent;
@@ -1523,7 +1524,7 @@ TreeItem:linesvisible:even:rowtemplate {
   background-image: none;
 }
 
-/* line 23, ../../sass/md/_tree.scss */
+/* line 24, ../../sass/md/_tree.scss */
 TreeItem:linesvisible:even {
   background-color: #f0f0f0;
   color: inherit;
@@ -1531,21 +1532,21 @@ TreeItem:linesvisible:even {
 }
 
 /* RowOverlay = MdListViewer? */
-/* line 30, ../../sass/md/_tree.scss */
+/* line 31, ../../sass/md/_tree.scss */
 Tree-RowOverlay {
   background-color: transparent;
   color: inherit;
   background-image: none;
 }
 
-/* line 36, ../../sass/md/_tree.scss */
+/* line 37, ../../sass/md/_tree.scss */
 Tree-RowOverlay:hover {
   color: #4a4a4a;
   background-color: rgba(0, 0, 0, 0.05);
   /*$separator1;*/
 }
 
-/* line 41, ../../sass/md/_tree.scss */
+/* line 42, ../../sass/md/_tree.scss */
 Tree-RowOverlay:selected:unfocused,
 Tree-RowOverlay:selected {
   color: #4a4a4a;
@@ -1597,7 +1598,7 @@ Tree-RowOverlay:linesvisible:even:selected:unfocused {
   );
 }
 */
-/* line 94, ../../sass/md/_tree.scss */
+/* line 95, ../../sass/md/_tree.scss */
 TreeColumn {
   color: inherit;
   background-color: #f0f0f0;
@@ -1607,39 +1608,39 @@ TreeColumn {
   text-shadow: none;
 }
 
-/* line 107, ../../sass/md/_tree.scss */
+/* line 108, ../../sass/md/_tree.scss */
 TreeColumn:hover {
   background-image: gradient(linear, left top, left bottom, from(#e4e4e4), to(#f9f9f9));
 }
 
-/* line 115, ../../sass/md/_tree.scss */
+/* line 116, ../../sass/md/_tree.scss */
 TreeColumn-SortIndicator {
   background-image: none;
 }
 
-/* line 119, ../../sass/md/_tree.scss */
+/* line 120, ../../sass/md/_tree.scss */
 TreeColumn-SortIndicator:up {
   background-image: url(resource/widget/rap/column/sort-indicator-up.png);
 }
 
-/* line 123, ../../sass/md/_tree.scss */
+/* line 124, ../../sass/md/_tree.scss */
 TreeColumn-SortIndicator:down {
   background-image: url(resource/widget/rap/column/sort-indicator-down.png);
 }
 
-/* line 127, ../../sass/md/_tree.scss */
+/* line 128, ../../sass/md/_tree.scss */
 Tree-Cell {
   spacing: 3px;
   padding: 5px 3px 5px 3px;
 }
 
-/* line 132, ../../sass/md/_tree.scss */
+/* line 133, ../../sass/md/_tree.scss */
 Tree-GridLine,
 Tree-GridLine:vertical:rowtemplate {
   color: transparent;
 }
 
-/* line 137, ../../sass/md/_tree.scss */
+/* line 138, ../../sass/md/_tree.scss */
 Tree-GridLine:vertical,
 Tree-GridLine:header,
 Tree-GridLine:horizontal:rowtemplate {
@@ -1666,110 +1667,111 @@ Tree-Checkbox:checked:grayed {
 Tree-Checkbox:checked:grayed:hover {
   background-image: url( resource/widget/rap/button/check-grayed-hover.png );
 }*/
-/* line 164, ../../sass/md/_tree.scss */
+/* line 165, ../../sass/md/_tree.scss */
 Tree-Indent {
-  width: 0px;
+  width: 12px;
   background-image: none;
+  cursor: pointer;
 }
 
-/* line 169, ../../sass/md/_tree.scss */
+/* line 171, ../../sass/md/_tree.scss */
 Tree-Indent:collapsed {
-  background-image: url(resource/widget/rap/tree/tree-collapsed.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-right.png);
 }
 
-/* line 173, ../../sass/md/_tree.scss */
+/* line 175, ../../sass/md/_tree.scss */
 Tree-Indent:collapsed:hover {
-  background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-right.png);
 }
 
-/* line 177, ../../sass/md/_tree.scss */
+/* line 179, ../../sass/md/_tree.scss */
 Tree-Indent:expanded {
-  background-image: url(resource/widget/rap/tree/tree-expanded.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-down.png);
 }
 
-/* line 181, ../../sass/md/_tree.scss */
+/* line 183, ../../sass/md/_tree.scss */
 Tree-Indent:expanded:hover {
-  background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-down.png);
 }
 
-/* line 185, ../../sass/md/_tree.scss */
+/* line 187, ../../sass/md/_tree.scss */
 Tree-Indent:line {
   background-image: none;
 }
 
-/* line 189, ../../sass/md/_tree.scss */
+/* line 191, ../../sass/md/_tree.scss */
 Tree-Indent:first {
   background-image: none;
 }
 
-/* line 193, ../../sass/md/_tree.scss */
+/* line 195, ../../sass/md/_tree.scss */
 Tree-Indent:first:collapsed {
-  background-image: url(resource/widget/rap/tree/tree-collapsed.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-right.png);
 }
 
-/* line 197, ../../sass/md/_tree.scss */
+/* line 199, ../../sass/md/_tree.scss */
 Tree-Indent:first:collapsed:hover {
-  background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-right.png);
 }
 
-/* line 201, ../../sass/md/_tree.scss */
+/* line 203, ../../sass/md/_tree.scss */
 Tree-Indent:first:expanded {
-  background-image: url(resource/widget/rap/tree/tree-expanded.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-down.png);
 }
 
-/* line 205, ../../sass/md/_tree.scss */
+/* line 207, ../../sass/md/_tree.scss */
 Tree-Indent:first:expanded:hover {
-  background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-down.png);
 }
 
-/* line 209, ../../sass/md/_tree.scss */
+/* line 211, ../../sass/md/_tree.scss */
 Tree-Indent:last {
   background-image: none;
 }
 
-/* line 213, ../../sass/md/_tree.scss */
+/* line 215, ../../sass/md/_tree.scss */
 Tree-Indent:last:collapsed {
-  background-image: url(resource/widget/rap/tree/tree-collapsed.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-right.png);
 }
 
-/* line 217, ../../sass/md/_tree.scss */
+/* line 219, ../../sass/md/_tree.scss */
 Tree-Indent:last:collapsed:hover {
-  background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-right.png);
 }
 
-/* line 221, ../../sass/md/_tree.scss */
+/* line 223, ../../sass/md/_tree.scss */
 Tree-Indent:last:expanded {
-  background-image: url(resource/widget/rap/tree/tree-expanded.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-down.png);
 }
 
-/* line 225, ../../sass/md/_tree.scss */
+/* line 227, ../../sass/md/_tree.scss */
 Tree-Indent:last:expanded:hover {
-  background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-down.png);
 }
 
-/* line 229, ../../sass/md/_tree.scss */
+/* line 231, ../../sass/md/_tree.scss */
 Tree-Indent:first:last {
   background-image: none;
 }
 
-/* line 233, ../../sass/md/_tree.scss */
+/* line 235, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:collapsed {
-  background-image: url(resource/widget/rap/tree/tree-collapsed.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-right.png);
 }
 
-/* line 237, ../../sass/md/_tree.scss */
+/* line 239, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:collapsed:hover {
-  background-image: url(resource/widget/rap/tree/tree-collapsed-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-right.png);
 }
 
-/* line 241, ../../sass/md/_tree.scss */
+/* line 243, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:expanded {
-  background-image: url(resource/widget/rap/tree/tree-expanded.png);
+  background-image: url(resources/icons/rap/png/normal/20//chevron-down.png);
 }
 
-/* line 245, ../../sass/md/_tree.scss */
+/* line 247, ../../sass/md/_tree.scss */
 Tree-Indent:first:last:expanded:hover {
-  background-image: url(resource/widget/rap/tree/tree-expanded-hover.png);
+  background-image: url(resources/icons/rap/png/hover/20//chevron-down.png);
 }
 
 /* line 1, ../../sass/md/_messages.scss */

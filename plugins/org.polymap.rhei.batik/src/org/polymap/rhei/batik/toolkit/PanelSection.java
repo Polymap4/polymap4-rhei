@@ -14,7 +14,7 @@
  */
 package org.polymap.rhei.batik.toolkit;
 
-import static org.polymap.rhei.batik.app.SvgImageRegistryHelper.DISABLED12;
+import static org.polymap.rhei.batik.app.SvgImageRegistryHelper.DISABLED24;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
@@ -95,7 +95,7 @@ public class PanelSection
             title.addListener( SWT.MouseUp, e -> toggleExpanded() );
             
             chevron = new Label( control, SWT.NO_FOCUS );
-            chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED12 ) );
+            chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED24 ) );
             FormDataFactory.on( chevron ).top( title, 2, Alignment.CENTER ).left( 0 );
             FormDataFactory.on( title ).left( chevron );
             chevron.addListener( SWT.MouseUp, e -> toggleExpanded() );
@@ -225,7 +225,7 @@ public class PanelSection
                 sep.setLayoutData( FormDataFactory.on( sep ).top( title ).height( 0 ).create() );
                 client.setLayoutData( FormDataFactory.on( client ).top( sep ).height( 0 ).create() );
             }
-            chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED12 ) );
+            chevron.setImage( BatikPlugin.images().svgImage( expanded ? "chevron-down.svg" : "chevron-right.svg", DISABLED24 ) );
             
             ExpansionEvent ev = new ExpansionEvent( PanelSection.this, expanded );
             EventManager.instance().publish( ev );
