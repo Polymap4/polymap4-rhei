@@ -26,12 +26,12 @@ Composite[BORDER].atlas-panel {
 Composite.atlas-panel-right,
 Composite[BORDER].atlas-panel-right {
   padding: 1px 3px 0px 3px;
-  animation: flyInRight 250ms ease-out, flyOutRight 200ms ease-in;   
+  animation: flyInRight 500ms ease-out, fadeOut 500ms ease-in;   
 }
 Composite.atlas-panel-left,
 Composite[BORDER].atlas-panel-left {
   padding: 1px 3px 0px 3px;
-  animation: flyInLeft 200ms ease-out, flyOutLeft 150ms ease-in;   
+  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-in;   
   /*animation: fadeIn 400ms ease-in, fadeOut 400ms ease-out;*/
 }
 
