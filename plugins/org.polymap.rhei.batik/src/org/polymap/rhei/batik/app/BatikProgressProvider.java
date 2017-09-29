@@ -14,7 +14,8 @@
  */
 package org.polymap.rhei.batik.app;
 
-import org.apache.commons.lang3.StringUtils;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -82,7 +83,7 @@ public class BatikProgressProvider
         private Job                 job;
         
         /** If ever contributed to the snackbar -> show 'done' message. */
-        private boolean             snackbarEverSeen;
+        private boolean             snackbarEverSeen = false;
 
 
         public BatikProgressMonitor( Job job ) {
@@ -101,7 +102,7 @@ public class BatikProgressProvider
                 ((UIJob)job).getDisplay().asyncExec( () -> {
                     StringBuilder msg = new StringBuilder( 128 )
                             .append( taskName )
-                            .append( !StringUtils.isBlank( subTaskName ) ? (" - "+subTaskName) : "" )
+                            .append( !isBlank( subTaskName ) ? (" - "+subTaskName) : "" )
                             .append( " ..." );
                     
                     if (total != UNKNOWN) {
@@ -128,11 +129,11 @@ public class BatikProgressProvider
                                 .appearance.put( Appearance.FlyIn )
                                 .message.put( msg.toString() )
                                 .actions.put( new Item[] {stopAction} );
+                        snackbarEverSeen = true;
                     }
                     else {
                         snackbar.message.set( msg.toString() );
                     }
-                    snackbarEverSeen = true;
                 });
             }
         }
@@ -142,7 +143,7 @@ public class BatikProgressProvider
             log.info( LOG_PREFIX + name + " - beginTask: " );
             this.taskName = name;
             this.total = totalWork;
-            update( false );
+            update( true );
         }
 
         @Override
@@ -165,10 +166,10 @@ public class BatikProgressProvider
 
         @Override
         public void done() {
-            log.info( LOG_PREFIX + taskName + " - done." );
+            log.info( LOG_PREFIX + taskName + " - done. (" + snackbarEverSeen + ")" );
             this.worked = this.total;
             this.subTaskName = "done";
-            update( false /*snackbarEverSeen*/ );
+            update( !snackbarEverSeen );
         }
 
         @Override
