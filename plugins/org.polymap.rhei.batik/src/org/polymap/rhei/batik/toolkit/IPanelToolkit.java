@@ -141,6 +141,14 @@ public interface IPanelToolkit
 
     public Section createSection( Composite parent, String title, int... styles );
 
+    /**
+     * 
+     * @see TextProposalDecorator
+     * @param parent
+     * @param defaultText The default text, or null.
+     * @param styles
+     * @return Newly created {@link Text} widget.
+     */
     public Text createText( Composite parent, String defaultText, int... styles );
 
     /**
@@ -205,6 +213,7 @@ public interface IPanelToolkit
      * {@link TextActionItem}s to perform action, search or clear. One item is the
      * default item which is performed when ENTER is pressed.
      *
+     * @see TextProposalDecorator
      * @param parent
      * @param defaultText
      * @param styles

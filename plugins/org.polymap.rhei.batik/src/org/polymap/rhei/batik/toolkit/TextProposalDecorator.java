@@ -147,6 +147,11 @@ public abstract class TextProposalDecorator
         });
     }    
 
+    
+    public XContentProposalAdapter proposalAdapter() {
+        return proposal;
+    }
+
 
     /**
      * Supplies the proposals. Called from within an {@link UIJob}.
@@ -210,7 +215,7 @@ public abstract class TextProposalDecorator
     /**
      * Expose some protected methods.
      */
-    class XContentProposalAdapter
+    public static class XContentProposalAdapter
             extends ContentProposalAdapter {
 
         public XContentProposalAdapter( Control control, IControlContentAdapter controlContentAdapter,
