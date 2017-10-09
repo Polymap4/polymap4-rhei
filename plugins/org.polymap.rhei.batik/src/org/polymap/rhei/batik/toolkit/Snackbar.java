@@ -76,7 +76,7 @@ public class Snackbar
     
     /** The timeout before the snackbar disappears. */
     @Mandatory
-    @DefaultInt( 5 )
+    @DefaultInt( 7 )
     public Config2<Snackbar,Integer>      hideTimeout;
     
     /** The message to display in the Snackbar. */

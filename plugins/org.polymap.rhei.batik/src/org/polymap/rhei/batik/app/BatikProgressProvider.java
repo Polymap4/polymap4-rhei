@@ -102,12 +102,12 @@ public class BatikProgressProvider
                 ((UIJob)job).getDisplay().asyncExec( () -> {
                     StringBuilder msg = new StringBuilder( 128 )
                             .append( taskName )
-                            .append( !isBlank( subTaskName ) ? (" - "+subTaskName) : "" )
-                            .append( " ..." );
+                            .append( !isBlank( subTaskName ) ? (" - " + subTaskName) : "" )
+                            .append( worked != total ? " ..." : "" );
                     
                     if (total != UNKNOWN) {
                         double percent = 100d / total * worked;
-                        msg.append( " " ).append( (int)percent ).append( "%" );
+                        msg.append( " (" ).append( (int)percent ).append( "%)" );
                     }
                     
                     if (snackbar == null || snackbar.isDisposed()) {
@@ -125,7 +125,7 @@ public class BatikProgressProvider
                                 .orElse( UIUtils.shellToParentOn() );
                         
                         snackbar = new Snackbar( tk, topParent /*UIUtils.shellToParentOn()*/ )
-                                .hideTimeout.put( 4 )
+                                //.hideTimeout.put( 4 )
                                 .appearance.put( Appearance.FlyIn )
                                 .message.put( msg.toString() )
                                 .actions.put( new Item[] {stopAction} );
@@ -168,7 +168,7 @@ public class BatikProgressProvider
         public void done() {
             log.info( LOG_PREFIX + taskName + " - done. (" + snackbarEverSeen + ")" );
             this.worked = this.total;
-            this.subTaskName = "done";
+            this.subTaskName = "done.";
             update( !snackbarEverSeen );
         }
 

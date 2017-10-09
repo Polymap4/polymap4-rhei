@@ -131,17 +131,16 @@ public abstract class TextProposalDecorator
 
         control.addModifyListener( new ModifyListener() {
             public void modifyText( ModifyEvent ev ) {
-                // close popup: visual feedback for user that key has been recognized;
-                // also, otherwise proposal would check in the current entries
-                proposalProvider.setProposals( new String[0] );
-                // proposal.closeProposalPopup();
-
                 currentSearchTxtValue = control.getText();
                 if (currentSearchTxtValue.length() < 1) {
                     proposalProvider.setProposals( new String[0] );
                 }
                 else {
                     new ProposalJob().schedule( activationDelayMillis.get() );
+
+                    // close popup: visual feedback for user that key has been recognized;
+                    // also, otherwise proposal would check in the current entries
+                    proposalProvider.setProposals( new String[] {} );
                 }
             }
         });
@@ -172,7 +171,7 @@ public abstract class TextProposalDecorator
         private String      value = control.getText();
         
         public ProposalJob() {
-            super( "Fulltext proposal" );
+            super( "Proposals" );
         }
 
         @Override
@@ -198,6 +197,7 @@ public abstract class TextProposalDecorator
                     return;
                 }
 
+                proposal.closeProposalPopup();
                 proposalProvider.setProposals( results );
 
                 if (results.length > 0 && !results[0].equals( value )) {
@@ -224,12 +224,12 @@ public abstract class TextProposalDecorator
         }
 
         @Override
-        protected void closeProposalPopup() {
+        public void closeProposalPopup() {
             super.closeProposalPopup();
         }
 
         @Override
-        protected void openProposalPopup() {
+        public void openProposalPopup() {
             super.openProposalPopup();
         }
         
