@@ -95,7 +95,14 @@ public class PasswordValidator
             return msg.get();
         }
         else {
-            return "Password is not valid";
+            return "Password is not valid. "
+                    + "At least " + minLength.get() + "chars"
+                    + (oneDigit.get() ? ", one numeral" : "")
+                    + (oneUpperCase.get() ? ", one uppercase letter" : "")
+                    //+ (oneLowerCase.get() ? ", one lowercase letter" : "")
+                    + (oneSpecial.get() ? ", one special character (@#$%^&+=)" : "")
+                    + (noWhitespace.get() ? ", no whitespaces" : "")
+                    + ".";
         }
     }
 

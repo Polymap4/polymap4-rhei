@@ -18,14 +18,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolTip;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+
+import org.polymap.core.ui.UIUtils;
 
 import org.polymap.rhei.RheiFormPlugin;
 import org.polymap.rhei.engine.form.FormEditorToolkit;
@@ -90,6 +95,18 @@ public class DefaultFormFieldDecorator
         label.setBackground( parent.getBackground() );
         label.pack();
         
+//        label.setCursor( new Cursor( label.getDisplay(), SWT.CURSOR_HAND ) );
+        label.addMouseListener( new MouseAdapter() {
+            @Override
+            public void mouseUp( MouseEvent ev ) {
+                if (invalid) {
+                    ToolTip tooltip = new ToolTip( UIUtils.shellToParentOn(), SWT.BALLOON );
+                    tooltip.setText( site.getErrorMessage() );
+                    tooltip.setVisible( true );
+                }
+            }            
+        });
+        
         this.invalid = site.getErrorMessage() != null;
         updateUI();
         
@@ -107,7 +124,6 @@ public class DefaultFormFieldDecorator
             if (invalid) {
                 label.setImage( invalidImage );
                 label.setToolTipText( site.getErrorMessage() );
-                site.getFieldControl().setToolTipText( site.getErrorMessage() );
                 // don't display red cursor without text
                 if (site.getFieldControl() instanceof Text && ((Text)site.getFieldControl()).getText().length()>0) {
                     site.getFieldControl().setForeground( FormEditorToolkit.invalid );
