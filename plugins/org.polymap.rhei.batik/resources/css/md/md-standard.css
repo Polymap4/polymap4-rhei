@@ -120,8 +120,8 @@ Composite {
 
 /* line 95, ../../sass/md/md-standard.scss */
 Composite[BORDER] {
-  border: 1px solid #bdbdbd;
-  border-radius: 2px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
 }
 
 /* DropDown default theme */

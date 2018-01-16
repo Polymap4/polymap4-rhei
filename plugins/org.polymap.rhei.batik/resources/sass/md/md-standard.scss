@@ -93,8 +93,8 @@ Composite {
 }
 
 Composite[BORDER] {
-  border: 1px solid #bdbdbd;
-  border-radius: 2px;
+  border: 1px solid $separator2;
+  border-radius: 3px;
 }
 
 /* DropDown default theme */
