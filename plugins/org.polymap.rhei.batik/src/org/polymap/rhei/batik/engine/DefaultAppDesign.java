@@ -448,7 +448,8 @@ public class DefaultAppDesign
         int marginsWidth = -1;
         int spacing = -1;
         if (displayArea.width < 500) {
-            marginsWidth = spacing = dp( 12 );
+            marginsWidth = 0;
+            spacing = dp( 12 );
         }
         else if (displayArea.width < 1366) { // many current notebook displays?
             marginsWidth = spacing = dp( 24 );
