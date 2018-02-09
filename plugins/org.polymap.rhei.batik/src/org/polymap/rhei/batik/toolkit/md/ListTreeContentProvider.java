@@ -24,8 +24,8 @@ import org.polymap.core.runtime.StreamIterable;
 
 /**
  * A content provider for use with {@link MdListViewer} that provides no hierarchy,
- * just a single list of elements. Supports {@link Collection} and array of elements
- * as input.
+ * just a single list of elements. Supports {@link Collection}, {@link Iterable} or
+ * array of elements as input.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */

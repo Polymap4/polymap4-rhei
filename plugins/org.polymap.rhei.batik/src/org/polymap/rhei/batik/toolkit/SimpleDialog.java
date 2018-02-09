@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
@@ -141,6 +142,25 @@ public class SimpleDialog
 
 
     /**
+     * Adds a 'No' action to the button bar that performs the given task and closes
+     * the dialog afterwards.
+     */
+    public SimpleDialog addNoAction( Consumer<Action> task ) {
+        return addAction( new Action( "No" ) {
+            public void run() {
+                try {
+                    task.accept( this );
+                    SimpleDialog.this.close( );
+                }
+                catch (Exception e) {
+                    StatusDispatcher.handleError( "Unable to perform task.", e );
+                }
+            }
+        });
+    }
+
+
+    /**
      * Adds a 'Yes' action to the button bar that just closes the dialog.
      */
     public SimpleDialog addYesAction( Consumer<Action> task ) {
@@ -197,10 +217,11 @@ public class SimpleDialog
         // center
         centerOn.ifPresent( parent -> {
             Shell shell = getShell();
-            Rectangle bounds = parent.getBounds ();
-            Rectangle rect = shell.getBounds ();
-            int x = bounds.x + (bounds.width - rect.width) / 2 ;
-            int y = bounds.y + (bounds.height - rect.height) / 2 ;
+            Rectangle bounds = parent.getBounds();
+            Point pos = parent.toDisplay( 0, 0 );
+            Rectangle rect = shell.getBounds();
+            int x = pos.x + (bounds.width - rect.width) / 2 ;
+            int y = pos.y + (bounds.height - rect.height) / 2 ;
             shell.setLocation( x, y );
         });
     }
