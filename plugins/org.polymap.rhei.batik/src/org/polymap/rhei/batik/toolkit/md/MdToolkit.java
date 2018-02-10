@@ -44,12 +44,11 @@ import org.polymap.rhei.batik.toolkit.md.MdAppDesign.FontStyle;
 public class MdToolkit
         extends DefaultToolkit {
 
-
     public static final IMessages   i18n = Messages.forPrefix( "MdToolkit" );
     
     public static final String      CSS_FAB = CSS_PREFIX + "-fab";
 
-
+    
     public MdToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
         super( panelPath, panelPage );
         assert panelPage != null;

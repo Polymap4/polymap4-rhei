@@ -31,8 +31,6 @@ import org.pegdown.ast.WikiLinkNode;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.google.common.base.Joiner;
 
@@ -78,8 +76,6 @@ import org.polymap.rhei.batik.engine.PageStack;
 public class DefaultToolkit
         implements IPanelToolkit {
 
-    private static Log log = LogFactory.getLog( DefaultToolkit.class );
-
     public static final String  CSS_PREFIX = "batik-panel";
     public static final String  CSS_SECTION = CSS_PREFIX + "-section";
     public static final String  CSS_SECTION_EXPANDABLE = CSS_SECTION + "-expandable";
@@ -110,6 +106,15 @@ public class DefaultToolkit
         mdRendererFactories.add( factory );
     }
 
+    /**
+     * The toolkit of the given control.
+     * <p/>
+     * XXX Current implementation return a toolkit with <b>no</b> connection to
+     * the given control or its panel. Panel related methods do not work properly.
+     */
+    public static final DefaultToolkit of( Control control ) {
+        return new DefaultToolkit( null, null ); 
+    }
     
     // instance *******************************************
 
