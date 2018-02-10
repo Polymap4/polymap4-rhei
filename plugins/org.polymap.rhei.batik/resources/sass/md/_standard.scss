@@ -22,12 +22,12 @@ $font-size-headline:    24px;  /* Regular */
 $text-color:            #4a4a4a;
 $text-color-disabled:   #7a7a7a;
 
-$action-bg:             #599FE2;
+$action-bg:             lighten( #486BAA, 10%);
 $action-fg:             #ffffff;
 $action-disabled-bg:    #C0C0C0;
 $action-disabled-fg:    #ffffff;
 
-$link-color:            desaturate( darken( $action-bg, 10% ), 25% );  /*#5a9cbd;*/
+$link-color:            saturate( $action-bg, 10% );
 
 /* Selected lines of list, trees and tables */
 $selection-bg:          #FFFCCC;              /*lighten( $action-bg, 30% );*/

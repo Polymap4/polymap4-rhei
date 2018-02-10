@@ -31,7 +31,6 @@
 /**********************************************************
  * Colors
  */
-/*#5a9cbd;*/
 /* Selected lines of list, trees and tables */
 /*lighten( $action-bg, 30% );*/
 /*#b0b0b0;*/
@@ -47,7 +46,7 @@
 /* line 22, ../../sass/md/flowtext.scss */
 a {
   /*color: #50D225; */
-  color: #4c85bc;
+  color: #5c83c9;
   text-decoration: none;
 }
 
