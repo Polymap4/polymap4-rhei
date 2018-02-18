@@ -42,10 +42,6 @@
 /**********************************************************
  * Icons
  */
-/*
- *    Background grey: #f3f3f3 
- *    Action blue: background-color: #5a9cbd;
- */
 /* line 25, ../../sass/md/md-standard.scss */
 * {
   color: #4a4a4a;
@@ -1197,7 +1193,7 @@ Label.atlas-header {
 Button[TOGGLE].atlas-navi, 
 Button[PUSH].atlas-navi {
   color: #4a8aaf;
-  background-color: #f3f3f3;
+  background-color: $shell_bg;
   background-image: none;
   border: none;
 }
@@ -2374,8 +2370,7 @@ FileUpload-FocusIndicator {
 /* line 9, ../../sass/md/_toolbar2.scss */
 Composite.toolbar2, Composite.toolbar2-top, Composite.toolbar2-bottom {
   color: #4a4a4a;
-  background-color: #f3f3f3;
-  /*#64686F;  /*$header-bg;*/
+  background-color: #efeded;
   border-radius: 2px;
   padding: 0px;
   spacing: 0;

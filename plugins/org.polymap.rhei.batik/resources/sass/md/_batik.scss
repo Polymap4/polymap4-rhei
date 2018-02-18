@@ -22,7 +22,7 @@
 @import "batik_panel";
  
 Shell.atlas-shell {
-  background-color: #f3f3f3;
+  background-color: $shell_bg;
 }
 
 /**********************************************************
@@ -47,7 +47,7 @@ Label.atlas-header {
 Button[TOGGLE].atlas-navi, 
 Button[PUSH].atlas-navi {
   color: #4a8aaf;
-  background-color: #f3f3f3;
+  background-color: $shell_bg;
   background-image: none;
   border: none;
 }
