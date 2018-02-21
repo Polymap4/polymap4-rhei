@@ -15,7 +15,11 @@
 package org.polymap.rhei.batik.toolkit.md;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.google.common.collect.FluentIterable;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -32,6 +36,8 @@ import org.polymap.core.runtime.StreamIterable;
 public class ListTreeContentProvider
         implements ITreeContentProvider {
 
+    private static final Log log = LogFactory.getLog( ListTreeContentProvider.class );
+    
     private Object[]            input;
     
     @Override
@@ -63,14 +69,17 @@ public class ListTreeContentProvider
         if (newInput == null) {
             input = null;
         }
+        else if (newInput.getClass().isArray()) {
+            this.input = (Object[])newInput;
+        }
         else if (newInput instanceof Collection) {
             this.input = ((Collection)newInput).toArray();
         }
         else if (newInput instanceof Iterable) {
-            input = StreamIterable.of( (Iterable<Object>)newInput ).stream().collect( Collectors.toList() ).toArray();
-        }
-        else if (newInput.getClass().isArray()) {
-            this.input = (Object[])newInput;
+            if (newInput instanceof StreamIterable) {
+                log.warn( "!!!Check deprecated StreamIterable!!!" );
+            }
+            input = FluentIterable.from( (Iterable)newInput ).toArray( Object.class );
         }
         else {
             throw new RuntimeException( "Unsupported input: " + input );
