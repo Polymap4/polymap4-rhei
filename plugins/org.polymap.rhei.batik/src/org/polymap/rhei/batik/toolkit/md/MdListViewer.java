@@ -216,11 +216,11 @@ public class MdListViewer
                 cell.setSelectable( true );
             }
             // actions
-            int width = 50;
-            int actionCount = getActionCount();
+            int width = 46;
+            int actionCount = getActionCount()-1;  // -1 because no expand icon
             if (thirdSecondaryActionProvider.isPresent()) {
-                createActionCell( template, thirdSecondaryActionProvider.get(), CELL_THIRDACTION, dp( actionCount--*width ), tileHeight )
-                        .setBindingIndex( colCount++ );
+                createActionCell( template, thirdSecondaryActionProvider.get(), CELL_THIRDACTION, 
+                        dp( actionCount--*width ), tileHeight ).setBindingIndex( colCount++ );
             }
             if (secondSecondaryActionProvider.isPresent()) {
                 createActionCell( template, secondSecondaryActionProvider.get(), CELL_SECONDACTION, dp( actionCount--*width ), tileHeight )
@@ -309,7 +309,7 @@ public class MdListViewer
 
         ImageCell cell = new ImageCell( template );
         cell.setName( cellName );
-        cell.setRight( right.pix() ).setWidth( dp( 56 ).pix() )
+        cell.setRight( right.pix()+1 ).setWidth( dp( 56 ).pix() )
             .setTop( 0 ).setHeight( tileHeight.pix() )
             .setVerticalAlignment( SWT.CENTER ).setHorizontalAlignment( SWT.CENTER );
         cell.setSelectable( true );
