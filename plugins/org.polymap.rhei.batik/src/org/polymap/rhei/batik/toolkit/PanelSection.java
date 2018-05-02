@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -74,8 +75,11 @@ public class PanelSection
 
     private Label               chevron;
 
+    private DefaultToolkit      tk;
+
     
     public PanelSection( DefaultToolkit tk, Composite parent, int[] styles ) {
+        this.tk = tk;
         control = new Composite( parent, SWT.NO_FOCUS | tk.stylebits( styles ) );
         UIUtils.setVariant( control, DefaultToolkit.CSS_SECTION  );
         control.setData( "panelSection", this );
@@ -236,6 +240,11 @@ public class PanelSection
         // after content has been created
         control.layout();
         control.getParent().layout();
+        
+        // trigger resize handler of the ScrollableComposite of the panel
+        Point panelSize = tk.panelPage.control.getSize();
+        tk.panelPage.control.setSize( panelSize.x, panelSize.y+1 );
+
         return this;
     }
     
