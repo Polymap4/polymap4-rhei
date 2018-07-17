@@ -33,6 +33,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -43,6 +44,7 @@ import org.polymap.core.runtime.config.Config2;
 import org.polymap.core.runtime.config.Configurable;
 import org.polymap.core.runtime.config.DefaultBoolean;
 import org.polymap.core.runtime.config.DefaultInt;
+import org.polymap.core.runtime.config.DefaultString;
 import org.polymap.core.runtime.config.NumberRangeValidator;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.runtime.event.EventManager;
@@ -85,10 +87,21 @@ public class ActionText
     @Check( value=NumberRangeValidator.class, args={"0","10000"} )
     public Config2<ActionText,Integer>      performDelayMillis;
 
+    /**
+     * A hint that is displayed as "grayed" text as long as the user has not entered
+     * any text.
+     */
+    @DefaultString( "..." )
+    public Config2<ActionText,String>       textHint;
+
     protected Composite                     container;
     
     protected Text                          text;
     
+    private Color                           defaultForeground;
+    
+    private Color                           hintForeground = UIUtils.getColor( 0xa0, 0xa0, 0xa0 );
+
     private List<TextActionItem>            actions = new ArrayList();
 
     private List<Button>                    actionBtns = new ArrayList();
@@ -103,20 +116,21 @@ public class ActionText
         text = new Text( container, SWT.SEARCH | SWT.CANCEL );
         text.setLayoutData( FormDataFactory.filled().create() );
         text.moveBelow( null );
+        
+        defaultForeground = text.getForeground();
+        text.setForeground( hintForeground );
 
         text.addFocusListener( this );
 
         text.addKeyListener( new KeyAdapter() {
-            @Override
-            public void keyReleased( KeyEvent ev ) {
+            @Override public void keyReleased( KeyEvent ev ) {
                 if (ev.keyCode == SWT.Selection && performOnEnter.get()) {
                     defaultAction().ifPresent( item -> item.action.get().accept( null ) );
                 }
             }
         });
         text.addModifyListener( new ModifyListener() {
-            @Override
-            public void modifyText( ModifyEvent ev ) {
+            @Override public void modifyText( ModifyEvent ev ) {
                 if (!performOnEnter.get() /*&& defaultAction().isPresent()*/) {
                     String v = text.getText();
                     text.getDisplay().timerExec( performDelayMillis.get(), () -> {
@@ -149,20 +163,19 @@ public class ActionText
     
     @Override
     public void focusLost( FocusEvent ev ) {
-//        if (text.getText().length() == 0) {
-//            searchTxt.setText( "Suchen..." );
-//            searchTxt.setForeground( Graphics.getColor( 0xa0, 0xa0, 0xa0 ) );
-//            clearBtn.setVisible( false );
-//        }
+        if (text.getText().length() == 0) {
+            text.setText( textHint.get() );
+            text.setForeground( hintForeground );
+        }
     }
     
     
     @Override
     public void focusGained( FocusEvent ev ) {
-        if (!modified) {
+        if (text.getText().equals( textHint.get() )) {
             modified = true;
             text.setText( "" );
-            text.setForeground( text.getParent().getForeground() );
+            text.setForeground( defaultForeground );
         }
     }
     
@@ -187,10 +200,15 @@ public class ActionText
 
     
     protected void updateActions() {
+        //
+        text.setText( textHint.get() );
+        
         // defaultAction
         defaultAction().ifPresent( action -> {
-            text.setForeground( UIUtils.getColor( 0xa0, 0xa0, 0xa0 ) );
-            action.text.ifPresent( v -> text.setText( v ) );
+            action.text.ifPresent( v -> {
+                text.setText( v );
+                text.setForeground( defaultForeground );
+            });
             action.tooltip.ifPresent( v -> text.setToolTipText( v ) );
         });
         
