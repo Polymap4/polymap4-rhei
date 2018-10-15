@@ -140,7 +140,7 @@ public class BatikProgressProvider
 
         @Override
         public void beginTask( String name, int totalWork ) {
-            log.info( LOG_PREFIX + name + " - beginTask: " );
+            log.debug( LOG_PREFIX + name + " - beginTask: " );
             this.taskName = name;
             this.total = totalWork;
             update( true );
@@ -154,7 +154,7 @@ public class BatikProgressProvider
 
         @Override
         public void subTask( String name ) {
-            log.info( LOG_PREFIX + taskName + " - subtask: " + name );
+            log.debug( LOG_PREFIX + taskName + " - subtask: " + name );
             this.subTaskName = name;
             update( true );
         }
@@ -166,7 +166,7 @@ public class BatikProgressProvider
 
         @Override
         public void done() {
-            log.info( LOG_PREFIX + taskName + " - done. (" + snackbarEverSeen + ")" );
+            log.debug( LOG_PREFIX + taskName + " - done. (" + snackbarEverSeen + ")" );
             this.worked = this.total;
             this.subTaskName = "done.";
             update( !snackbarEverSeen );

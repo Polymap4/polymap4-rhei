@@ -917,307 +917,6 @@ Label-SeparatorLine[SHADOW_OUT] {
   border: 1px outset;
 }
 
-/*
- * polymap.org
- * Copyright 2015, Falko Bräutigam. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3.0 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
-/*
- * Material Design: Batik
- */
-/*
- * polymap.org
- * Copyright 2015, Falko Bräutigam. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3.0 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
-/*
- * Batik panel section
- */
-/* line 20, ../../sass/md/_batik_section.scss */
-Composite[BORDER].batik-panel-section-client {
-  /* BORDER style just signals that the entiry section has a border;
-     the client has no border but white background */
-  border: none;
-  background-color: #faf8f8;
-}
-
-/* line 29, ../../sass/md/_batik_section.scss */
-Composite[BORDER].batik-panel-section {
-  background-color: #faf8f8;
-  border-radius: 4px;
-  border: 1px solid #ffffff;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-  /* XXX space for shadow; does not work; see DefaultAddDesign.createPanelContents() for fix */
-  /*margin: 2px 3px 4px 3px; */
-  padding: 5px 8px;
-  /*animation: slideIn 300ms ease-out, slideOut 300ms ease-in;*/
-}
-
-/* line 39, ../../sass/md/_batik_section.scss */
-Composite[BORDER].batik-panel-section-expandable {
-  background-color: #faf8f8;
-  border-radius: 4px;
-  border: 1px solid #ffffff;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
-  padding: 5px 8px;
-  animation: slideIn 300ms ease-out, slideOut 300ms ease-in;
-}
-
-/* line 48, ../../sass/md/_batik_section.scss */
-Label.batik-panel-section-title {
-  font: 22px "Roboto", "Noto", sans-serif;
-  border: none;
-}
-
-/* line 52, ../../sass/md/_batik_section.scss */
-Label.batik-panel-section-title-expandable {
-  /* color: $link-color; */
-  font: 22px "Roboto", "Noto", sans-serif;
-  border: none;
-  cursor: pointer;
-}
-
-/* line 58, ../../sass/md/_batik_section.scss */
-Label:disabled.batik-panel-section-title {
-  opacity: 0.3;
-}
-
-/* line 61, ../../sass/md/_batik_section.scss */
-Label[SEPARATOR],
-Label[SEPARATOR].batik-panel-section-separator,
-Label.batik-panel-section-separator {
-  background-color: #dddddd;
-  color: transparent;
-}
-
-/* line 67, ../../sass/md/_batik_section.scss */
-Label-SeparatorLine,
-Label-SeparatorLine.batik-panel-section-separator {
-  background-image: none;
-  background-color: #dddddd;
-  /* ! */
-  border: 0px solid #000000;
-  width: 1px;
-  color: #000000;
-}
-
-/* Label.batik-panel-section-separator {
-  opacity: 0;
-}*/
-/*
- * polymap.org
- * Copyright 2015, Falko Bräutigam. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3.0 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
-/*
- * Tooltip: deprecated/removed panel status
- */
-/* line 20, ../../sass/md/_batik_tooltip.scss */
-ToolTip, Shell.batik-status-tooltip {
-  cursor: default;
-  border-radius: 3px;
-  padding: 3px 3px;
-  opacity: 1;
-  /*background-image : gradient(linear, left top, right top, from(#fffae5), to(#fff5ce));*/
-  border: 1px solid #6FA1DA;
-  background-color: #f8f8f8;
-  /*background-color: #FFFEDB;*/
-  /*background-image: gradient(linear, left top, left bottom, from(#888), to(#363532));*/
-  /*background-image: gradient(linear, left top, left bottom, from(#ffffff), to(#e5e9ec));*/
-  /*background-image: gradient(linear, left top, left bottom, from(#f6f8fa), to(#dde0e1));*/
-  color: #f0f0f0;
-  /*animation: fadeIn 200ms linear, fadeOut 500ms ease-out;*/
-  animation: flyInTop 500ms ease-out, flyOutTop 500ms ease-in;
-  box-shadow: 0px 1px 4px #808080;
-  /*  
-  border: 2px solid #6eb02e;
-  background-color: #f5f5f5;
-  color: #444;
-  animation: flyInRight 500ms ease-out, flyOutRight 500ms ease-in;
-  box-shadow: 0px 1px 5px #cdcdcd;
-  background-image: gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
-  */
-}
-
-/* line 48, ../../sass/md/_batik_tooltip.scss */
-ToolTip-Text,
-Label.batik-status-tooltip-text {
-  color: #f8f8f8;
-  text-shadow: none;
-}
-
-/* line 53, ../../sass/md/_batik_tooltip.scss */
-ToolTip-Message,
-Label.batik-status-tooltip-message {
-  color: #e8e8e8;
-  text-shadow: none;
-}
-
-/*
- * polymap.org
- * Copyright 2015, Falko Bräutigam. All rights reserved.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 3.0 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- */
-/*
- * Panel and header
- */
-/* line 20, ../../sass/md/_batik_panel.scss */
-Composite.atlas-panel,
-Composite[BORDER].atlas-panel {
-  /* space for header shadow */
-  padding: 1px 3px 0px 3px;
-}
-
-/* line 26, ../../sass/md/_batik_panel.scss */
-Composite.atlas-panel-right,
-Composite[BORDER].atlas-panel-right {
-  padding: 1px 3px 0px 3px;
-  animation: flyInRight 500ms ease-out, fadeOut 500ms ease-in;
-}
-
-/* line 31, ../../sass/md/_batik_panel.scss */
-Composite.atlas-panel-left,
-Composite[BORDER].atlas-panel-left {
-  padding: 1px 3px 0px 3px;
-  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-out;
-  /*animation: fadeIn 400ms ease-in, fadeOut 400ms ease-out;*/
-}
-
-/* line 38, ../../sass/md/_batik_panel.scss */
-Composite.atlas-panel-client {
-  /* space for section shadow does not work here */
-  /* padding: 5px 5px; */
-}
-
-/* line 43, ../../sass/md/_batik_panel.scss */
-Composite[BORDER].atlas-panel-header {
-  border-radius: 3px;
-  border: 0px solid #90a7d0;
-  background-color: #8aa2ce;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
-  /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
-}
-
-/* line 51, ../../sass/md/_batik_panel.scss */
-Button[PUSH].atlas-panel-header,
-Button[TOGGLE].atlas-panel-header {
-  font: 14px "Roboto", "Noto", sans-serif;
-  border-radius: 3px;
-  padding: 0px 5px;
-  spacing: 0px;
-  background-color: #8aa2ce;
-  /*  background-color: #ffffff; */
-  /*  background-image : url( resources/icons/close3.gif );*/
-  border: 0px solid #ffffff;
-  color: #ffffff;
-  box-shadow: none;
-}
-
-/* line 65, ../../sass/md/_batik_panel.scss */
-Button[PUSH]:hover.atlas-panel-header,
-Button[TOGGLE]:hover.atlas-panel-header {
-  color: #ffffff;
-  border: none;
-  background-color: #6786be;
-  box-shadow: none;
-}
-
-/* line 73, ../../sass/md/_batik_panel.scss */
-Label.atlas-panel-header {
-  font: 16px "Roboto", "Noto", sans-serif;
-  color: #ffffff;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
-}
-
-/* line 24, ../../sass/md/_batik.scss */
-Shell.atlas-shell {
-  background-color: #f3f3f3;
-}
-
-/**********************************************************
- * App header
- */
-/* line 31, ../../sass/md/_batik.scss */
-Composite.atlas-header,
-Composite[BORDER].atlas-header {
-  border-radius: 0px;
-  border: none;
-}
-
-/* line 37, ../../sass/md/_batik.scss */
-Label.atlas-header {
-  font: 28px "Roboto", "Noto", sans-serif;
-  color: #808080;
-}
-
-/**********************************************************
- * Navigation/Action Buttons
- */
-/*
-Button[TOGGLE].atlas-navi, 
-Button[PUSH].atlas-navi {
-  color: #4a8aaf;
-  background-color: $shell_bg;
-  background-image: none;
-  border: none;
-}
-
-Button[TOGGLE]:selected.atlas-navi, 
-Button[TOGGLE]:hover.atlas-navi, 
-Button[PUSH]:hover.atlas-navi {
-  background-color: #fcfcff;
-  background-image: none;
-  border: 1px solid #6BBAE1;
-}
-
-Button[TOGGLE]:selected.atlas-navi { 
-  color: #606060;
-  border: 1px solid #a0a0a0;
-}
-
-Composite[BORDER].atlas-actions {
-  background-color: #f5f5f5;
-  border-radius: 3px;
-  border: 1px solid #e8e8e8;
-  border-top-color: #ffffff;
-}
-*/
 /* Button default theme */
 /* line 4, ../../sass/md/_button.scss */
 Button {
@@ -2855,3 +2554,305 @@ Link-Hyperlink:hover:disabled {
   color: #959595;
   text-decoration: none;
 }
+
+/*
+ * polymap.org
+ * Copyright 2015, Falko Bräutigam. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3.0 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ */
+/*
+ * Material Design: Batik
+ */
+/*
+ * polymap.org
+ * Copyright 2015, Falko Bräutigam. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3.0 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ */
+/*
+ * Batik panel section
+ */
+/* line 20, ../../sass/md/_batik_section.scss */
+Composite[BORDER].batik-panel-section-client {
+  /* BORDER style just signals that the entiry section has a border;
+     the client has no border but white background */
+  border: none;
+  background-color: #faf8f8;
+}
+
+/* line 29, ../../sass/md/_batik_section.scss */
+Composite[BORDER].batik-panel-section {
+  background-color: #faf8f8;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+  /* XXX space for shadow; does not work; see DefaultAddDesign.createPanelContents() for fix */
+  /*margin: 2px 3px 4px 3px; */
+  padding: 5px 8px;
+  /*animation: slideIn 300ms ease-out, slideOut 300ms ease-in;*/
+}
+
+/* line 39, ../../sass/md/_batik_section.scss */
+Composite[BORDER].batik-panel-section-expandable {
+  background-color: #faf8f8;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+  padding: 5px 8px;
+  animation: slideIn 300ms ease-out, slideOut 300ms ease-in;
+}
+
+/* line 48, ../../sass/md/_batik_section.scss */
+Label.batik-panel-section-title {
+  font: 22px "Roboto", "Noto", sans-serif;
+  border: none;
+}
+
+/* line 52, ../../sass/md/_batik_section.scss */
+Label.batik-panel-section-title-expandable {
+  /* color: $link-color; */
+  font: 22px "Roboto", "Noto", sans-serif;
+  border: none;
+  cursor: pointer;
+}
+
+/* line 58, ../../sass/md/_batik_section.scss */
+Label:disabled.batik-panel-section-title {
+  opacity: 0.3;
+}
+
+/* line 61, ../../sass/md/_batik_section.scss */
+Label[SEPARATOR],
+Label[SEPARATOR].batik-panel-section-separator,
+Label.batik-panel-section-separator {
+  background-color: #dddddd;
+  color: transparent;
+}
+
+/* line 67, ../../sass/md/_batik_section.scss */
+Label-SeparatorLine,
+Label-SeparatorLine.batik-panel-section-separator {
+  background-image: none;
+  background-color: #dddddd;
+  /* ! */
+  border: 0px solid #000000;
+  width: 1px;
+  color: #000000;
+}
+
+/* Label.batik-panel-section-separator {
+  opacity: 0;
+}*/
+/*
+ * polymap.org
+ * Copyright 2015, Falko Bräutigam. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3.0 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ */
+/*
+ * Tooltip: deprecated/removed panel status
+ */
+/* line 20, ../../sass/md/_batik_tooltip.scss */
+ToolTip, Shell.batik-status-tooltip {
+  cursor: default;
+  border-radius: 3px;
+  padding: 3px 3px;
+  opacity: 1;
+  /*background-image : gradient(linear, left top, right top, from(#fffae5), to(#fff5ce));*/
+  border: 1px solid #6FA1DA;
+  background-color: #f8f8f8;
+  /*background-color: #FFFEDB;*/
+  /*background-image: gradient(linear, left top, left bottom, from(#888), to(#363532));*/
+  /*background-image: gradient(linear, left top, left bottom, from(#ffffff), to(#e5e9ec));*/
+  /*background-image: gradient(linear, left top, left bottom, from(#f6f8fa), to(#dde0e1));*/
+  color: #f0f0f0;
+  /*animation: fadeIn 200ms linear, fadeOut 500ms ease-out;*/
+  animation: flyInTop 500ms ease-out, flyOutTop 500ms ease-in;
+  box-shadow: 0px 1px 4px #808080;
+  /*  
+  border: 2px solid #6eb02e;
+  background-color: #f5f5f5;
+  color: #444;
+  animation: flyInRight 500ms ease-out, flyOutRight 500ms ease-in;
+  box-shadow: 0px 1px 5px #cdcdcd;
+  background-image: gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
+  */
+}
+
+/* line 48, ../../sass/md/_batik_tooltip.scss */
+ToolTip-Text,
+Label.batik-status-tooltip-text {
+  color: #f8f8f8;
+  text-shadow: none;
+}
+
+/* line 53, ../../sass/md/_batik_tooltip.scss */
+ToolTip-Message,
+Label.batik-status-tooltip-message {
+  color: #e8e8e8;
+  text-shadow: none;
+}
+
+/*
+ * polymap.org
+ * Copyright 2015, Falko Bräutigam. All rights reserved.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 3.0 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ */
+/*
+ * Panel and header
+ */
+/* line 20, ../../sass/md/_batik_panel.scss */
+Composite.atlas-panel,
+Composite[BORDER].atlas-panel {
+  /* space for header shadow */
+  padding: 1px 3px 0px 3px;
+}
+
+/* line 26, ../../sass/md/_batik_panel.scss */
+Composite.atlas-panel-right,
+Composite[BORDER].atlas-panel-right {
+  padding: 1px 3px 0px 3px;
+  animation: flyInRight 500ms ease-out, fadeOut 500ms ease-in;
+}
+
+/* line 31, ../../sass/md/_batik_panel.scss */
+Composite.atlas-panel-left,
+Composite[BORDER].atlas-panel-left {
+  padding: 1px 3px 0px 3px;
+  animation: flyInLeft 500ms ease-out, flyOutLeft 400ms ease-out;
+  /*animation: fadeIn 400ms ease-in, fadeOut 400ms ease-out;*/
+}
+
+/* line 38, ../../sass/md/_batik_panel.scss */
+Composite.atlas-panel-client {
+  /* space for section shadow does not work here */
+  /* padding: 5px 5px; */
+}
+
+/* line 43, ../../sass/md/_batik_panel.scss */
+Composite[BORDER].atlas-panel-header {
+  border-radius: 3px;
+  border: 0px solid #90a7d0;
+  background-color: #8aa2ce;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
+}
+
+/* line 51, ../../sass/md/_batik_panel.scss */
+Button[PUSH].atlas-panel-header,
+Button[TOGGLE].atlas-panel-header {
+  font: 15px "Roboto", "Noto", sans-serif;
+  border-radius: 3px;
+  padding: 0px 5px;
+  spacing: 0px;
+  background-color: #8aa2ce;
+  /*  background-color: #ffffff; */
+  /*  background-image : url( resources/icons/close3.gif );*/
+  border: 0px solid #ffffff;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* line 65, ../../sass/md/_batik_panel.scss */
+Button[PUSH]:hover.atlas-panel-header,
+Button[TOGGLE]:hover.atlas-panel-header {
+  color: #ffffff;
+  border: none;
+  background-color: #6786be;
+  box-shadow: none;
+}
+
+/* line 73, ../../sass/md/_batik_panel.scss */
+Label.atlas-panel-header {
+  font: 15px "Roboto", "Noto", sans-serif;
+  color: #ffffff;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+/* line 24, ../../sass/md/_batik.scss */
+Shell.atlas-shell {
+  background-color: #f3f3f3;
+}
+
+/**********************************************************
+ * App header
+ */
+/* line 31, ../../sass/md/_batik.scss */
+Composite.atlas-header,
+Composite[BORDER].atlas-header {
+  border-radius: 0px;
+  border: none;
+}
+
+/* line 37, ../../sass/md/_batik.scss */
+Label.atlas-header {
+  font: 28px "Roboto", "Noto", sans-serif;
+  color: #808080;
+}
+
+/**********************************************************
+ * Navigation/Action Buttons
+ */
+/*
+Button[TOGGLE].atlas-navi, 
+Button[PUSH].atlas-navi {
+  color: #4a8aaf;
+  background-color: $shell_bg;
+  background-image: none;
+  border: none;
+}
+
+Button[TOGGLE]:selected.atlas-navi, 
+Button[TOGGLE]:hover.atlas-navi, 
+Button[PUSH]:hover.atlas-navi {
+  background-color: #fcfcff;
+  background-image: none;
+  border: 1px solid #6BBAE1;
+}
+
+Button[TOGGLE]:selected.atlas-navi { 
+  color: #606060;
+  border: 1px solid #a0a0a0;
+}
+
+Composite[BORDER].atlas-actions {
+  background-color: #f5f5f5;
+  border-radius: 3px;
+  border: 1px solid #e8e8e8;
+  border-top-color: #ffffff;
+}
+*/

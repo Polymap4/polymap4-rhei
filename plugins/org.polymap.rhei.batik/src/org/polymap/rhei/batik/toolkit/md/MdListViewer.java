@@ -158,7 +158,7 @@ public class MdListViewer
             Template template = new Template();
 
             // 16dp used for the tree node handle
-            dp left = iconProvider.isPresent() ? dp( 64 ) : dp( 0 );
+            dp left = iconProvider.isPresent() ? dp( 58 ) : dp( 0 );
             dp tileHeight = dp( 0 );
             int colCount = 0;
             
@@ -170,7 +170,7 @@ public class MdListViewer
                 TextCell cell = new TextCell( template );
                 cell.setName( CELL_FIRSTLINE );
                 cell.setLeft( left.pix() ).setRight( 50 )
-                        .setTop( dp( 11 ).pix() ).setHeight( 18 )
+                        .setTop( dp( 10 ).pix() ).setHeight( 18 )
                         .setHorizontalAlignment( SWT.LEFT );
                 cell.setBindingIndex( colCount++ );
                 // this makes text a link, which flickers and does not look very smooth
@@ -190,7 +190,7 @@ public class MdListViewer
                 cell.setBindingIndex( colCount++ );
                 cell.setForeground( UIUtils.getColor( 150, 150, 150 ) );
 
-                tileHeight = dp( 75 );
+                tileHeight = dp( 72 );
             }
             // third line
             if (thirdLineLabelProvider.isPresent()) {
