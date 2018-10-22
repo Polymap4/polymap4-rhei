@@ -45,11 +45,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import org.eclipse.rap.rwt.RWT;
-import org.eclipse.rap.rwt.client.service.BrowserNavigation;
-import org.eclipse.rap.rwt.client.service.BrowserNavigationEvent;
-import org.eclipse.rap.rwt.client.service.BrowserNavigationListener;
-
 import org.polymap.core.runtime.StreamIterable;
 import org.polymap.core.runtime.event.EventHandler;
 import org.polymap.core.ui.FormDataFactory;
@@ -79,7 +74,7 @@ import org.polymap.rhei.batik.toolkit.LayoutSupplier;
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
 public class DefaultAppDesign
-        implements IAppDesign, BrowserNavigationListener {
+        implements IAppDesign {
 
     private static final Log log = LogFactory.getLog( DefaultAppDesign.class );
     
@@ -98,8 +93,6 @@ public class DefaultAppDesign
     
     protected Shell                     mainWindow;
     
-    protected BrowserNavigation         browserHistory;
-
     protected DefaultUserPreferences    userPrefs;
 
     protected PageStack<PanelPath>      panelsArea;
@@ -109,48 +102,22 @@ public class DefaultAppDesign
     protected DefaultLayoutSupplier     appLayoutSettings = new DefaultLayoutSupplier();
 
     private int                         pagePriorityCount;
+
+    private DefaultBrowserNavigation    browserNavi;
     
 
     @Override
     public void init() {
         appManager = (DefaultAppManager)BatikApplication.instance().getAppManager();
-
-        browserHistory = RWT.getClient().getService( BrowserNavigation.class );
-        browserHistory.addBrowserNavigationListener( this );
+        browserNavi = new DefaultBrowserNavigation();
+        browserNavi.init();
     }
 
 
     @Override
     public void close() {
-        if (browserHistory != null) {
-            browserHistory.removeBrowserNavigationListener( this );
-            browserHistory = null;
-        }
         appManager.getContext().removeListener( this );
-    }
-
-
-    /** 
-     * Browser history event. 
-     */
-    @Override
-    public void navigated( BrowserNavigationEvent ev ) {
-//        new SimpleDialog()
-//                .setContents( parent -> {
-//                    new Label( parent, SWT.WRAP ).setText( "Browser navigation is not supported yet." );
-//                })
-//                .addOkAction( () -> { 
-//                    close(); return true; 
-//                })
-//                .open();
-        
-        // XXX start is not always the name of the first panel, this causes the first panel
-        // to created, disposed and created again
-        log.info( "navigated: " + ev.getState() + " - NOT SUPPORTED CURRENTLY!" );
-//        if (!ev.getState().equals( "start" )) {
-//            IAppContext context = appManager.getContext();
-//            context.openPanel( PanelPath.ROOT, new PanelIdentifier( "start" ) );
-//        }
+        browserNavi.close();
     }
 
 
@@ -487,11 +454,11 @@ public class DefaultAppDesign
      * <p/>
      * If <b>delay</b> is to <b>short</b> then intermediate states, such as panel is
      * closed before new panel gets opened, are displayed to the user. If it is to
-     * <b>long</b> then there might be an remarkable delay in UI response.
+     * <b>long</b> then there might be a remarkable delay in UI response.
      */
-    @EventHandler( display=true, delay=75 )
-    protected void panelChanged( List<PanelChangeEvent> evs ) {
-        log.debug( "events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
+    @EventHandler( display=true, delay=250 )
+    protected void onPanelChanged( List<PanelChangeEvent> evs ) {
+        //log.warn( "Events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
         
         boolean layoutRefreshNeeded = false;
         Set<PanelSite> updatePanelSites = new HashSet();
@@ -523,8 +490,7 @@ public class DefaultAppDesign
                     }
 
                     String title = ev.getSource().title.orElse( "" );
-                    mainWindow.setText( title );
-//                    browserHistory.pushState( panel.id().id(), "mapzone: " + StringUtils.abbreviate( title, 25 ) );
+                    mainWindow.setText( title );                    
                 }
 
                 // disposed
