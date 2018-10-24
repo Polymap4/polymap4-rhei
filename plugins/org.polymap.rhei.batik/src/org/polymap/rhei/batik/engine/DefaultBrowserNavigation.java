@@ -95,7 +95,7 @@ public class DefaultBrowserNavigation
      */
     @EventHandler( display=true, delay=500 )
     protected void onPanelChanged( List<PanelChangeEvent> evs ) {
-        log.warn( "Events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
+        log.debug( "Events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
         for (PanelChangeEvent ev : Lists.reverse( evs )) {
             PanelStatus newStatus = (PanelStatus)ev.getNewValue();
             PanelStatus oldStatus = (PanelStatus)ev.getOldValue();
@@ -145,7 +145,7 @@ public class DefaultBrowserNavigation
 
     protected void pushState( String state, String title ) {
         assert !StringUtils.isBlank( state );
-        log.warn( "pushState(): " + state + " / " + title );
+        log.debug( "pushState(): " + state + " / " + title );
         js.execute( Joiner.on( "" ).useForNull( "" ).join( 
                 "window.history.pushState({},'", title, "','#", state, "');" ) );
                 //"document.title='", title , "';" ) );
@@ -154,7 +154,7 @@ public class DefaultBrowserNavigation
     
     protected void replaceState( String state, String title ) {
         assert !StringUtils.isBlank( state );
-        log.warn( "replaceState(): " + state + " / " + title );
+        log.debug( "replaceState(): " + state + " / " + title );
         js.execute( Joiner.on( "" ).useForNull( "" ).join( 
                 "window.history.replaceState({},'", title, "','#", state, "');" ) ); 
                 //"document.title='", title , "';" ) );

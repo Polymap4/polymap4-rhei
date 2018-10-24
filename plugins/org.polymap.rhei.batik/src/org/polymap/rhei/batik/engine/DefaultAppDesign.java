@@ -272,18 +272,33 @@ public class DefaultAppDesign
 
         // panel
         Composite panelParent = setVariant( new Composite( scrolled, SWT.NO_FOCUS ), CSS_PANEL_CLIENT );
-        panelParent.setLayout( new ConstraintLayout( new DelegatingLayoutSupplier( getPanelLayoutPreferences() ) {
-            /** 
-             * Add an extra margin on top of the panel; panel layout probably has 0
-             * margin top in order to have compact sections
-             */
-            @Override
-            public int getMarginTop() { return dp( 24 ); }
-            @Override
-            public int getMarginBottom() { return super.getMarginBottom() + dp( 16 ); }
-        }));
-        panel.createContents( panelParent );
         panelParent.setLayoutData( FormDataFactory.filled().top( 0, dp( 54 ) ).create() );
+        
+        // Contents
+        // defer rendering to next request cycle; so that panel is made visible immediately
+        long start = System.currentTimeMillis();
+        UIUtils.sessionDisplay().timerExec( 10, () -> {
+            try {
+                UIUtils.disposeChildren( panelParent );
+
+                panelParent.setLayout( new ConstraintLayout( new PanelLayoutSupplier( getPanelLayoutPreferences() ) ) );
+                panel.createContents( panelParent );
+                scrolled.layout( true, true );
+                
+                // delay response until panel animation has ended; prevent flickering
+                long sleep = Math.max( 0, 650 - (System.currentTimeMillis() - start) );
+                log.debug( "SLEEP: " + sleep );
+                Thread.sleep( sleep );
+            }
+            catch (Exception e) {
+                log.warn( "Error while creating panel.", e );
+            }
+        });
+        // loading... indicator
+        panelParent.setLayout( FormLayoutFactory.defaults().create() );
+        FormDataFactory.on( new Label( panelParent, SWT.NONE ) )
+                .top( 30 ).left( 50, -12 )
+                .<Label>control().setImage( BatikPlugin.images().image( "resources/icons/loading24.gif" ) );
 
         scrolled.setContent( panelParent );
         scrolled.layout();
@@ -456,7 +471,7 @@ public class DefaultAppDesign
      * closed before new panel gets opened, are displayed to the user. If it is to
      * <b>long</b> then there might be a remarkable delay in UI response.
      */
-    @EventHandler( display=true, delay=250 )
+    @EventHandler( display=true, delay=50 )
     protected void onPanelChanged( List<PanelChangeEvent> evs ) {
         //log.warn( "Events: " + evs.stream().map( ev -> ev.toString() ).reduce( "", (r,s) -> r + "\n\t\t" + s ) );
         
@@ -485,6 +500,7 @@ public class DefaultAppDesign
                             @Override public int preferred() { return ev.getSource().preferredWidth.get(); }
                         });
                         UIUtils.setVariant( page, CSS_PANEL+"-right" );
+                        page.moveAbove( null );
                         createPanelContents( panel, page );
                         layoutRefreshNeeded = true;
                     }
@@ -622,6 +638,27 @@ public class DefaultAppDesign
             return delegate.getSpacing();
         }
         
+    }
+
+
+    /**
+     * Add an extra margin on top of the panel; panel layout probably has 0 margin
+     * top in order to have compact sections
+     */
+    protected class PanelLayoutSupplier
+            extends DelegatingLayoutSupplier {
+    
+        protected PanelLayoutSupplier( LayoutSupplier delegate ) {
+            super( delegate );
+        }
+        @Override
+        public int getMarginTop() { 
+            return dp( 24 ); 
+        }
+        @Override
+        public int getMarginBottom() { 
+            return super.getMarginBottom() + dp( 16 ); 
+        }
     }
     
 }
