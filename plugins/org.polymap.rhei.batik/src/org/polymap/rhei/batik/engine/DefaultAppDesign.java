@@ -298,7 +298,7 @@ public class DefaultAppDesign
         panelParent.setLayout( FormLayoutFactory.defaults().create() );
         FormDataFactory.on( new Label( panelParent, SWT.NONE ) )
                 .top( 30 ).left( 50, -12 )
-                .<Label>control().setImage( BatikPlugin.images().image( "resources/icons/loading24.gif" ) );
+                .<Label>control().setImage( BatikPlugin.images().image( "resources/icons/loading32.gif" ) );
 
         scrolled.setContent( panelParent );
         scrolled.layout();
