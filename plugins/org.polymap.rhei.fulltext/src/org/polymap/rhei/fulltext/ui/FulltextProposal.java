@@ -181,12 +181,12 @@ public class FulltextProposal
         protected void runWithException( IProgressMonitor monitor ) throws Exception {
             // skip if control is disposed or no longer focused
             if (control == null || control.isDisposed()) {
-                log.info( "Control is disposed." );
+                log.debug( "Control is disposed." );
                 return;
             }
             // skip if search text has changed
             if (value != currentSearchTxtValue) {
-                log.info( "Search text has changed: " + value + " -> " + currentSearchTxtValue );
+                log.debug( "Search text has changed: " + value + " -> " + currentSearchTxtValue );
                 return;
             }
 
@@ -196,7 +196,7 @@ public class FulltextProposal
             // display
             control.getDisplay().asyncExec( () -> {
                 if (!control.isFocusControl()) {
-                    log.info( "Control is no longer focused." );
+                    log.debug( "Control is no longer focused." );
                     return;
                 }
 

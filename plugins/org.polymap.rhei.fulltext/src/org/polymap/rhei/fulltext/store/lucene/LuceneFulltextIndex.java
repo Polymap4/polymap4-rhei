@@ -116,7 +116,7 @@ public class LuceneFulltextIndex
     @Override
     public boolean isEmpty() {
         long storeSize = store.storeSizeInByte();
-        log.info( "Store size: " + storeSize );
+        log.debug( "Store size: " + storeSize );
         return storeSize < 100;
     }
 
@@ -145,7 +145,7 @@ public class LuceneFulltextIndex
                 if (!proposalTerm.startsWith( term )) {
                     break;
                 }
-                log.info( "Proposal: term: " + proposalTerm + ", docFreq: " + docFreq );
+                log.debug( "Proposal: term: " + proposalTerm + ", docFreq: " + docFreq );
                 result.put( docFreq, proposalTerm );
                 if (!terms.next()) {
                     break;
@@ -178,7 +178,7 @@ public class LuceneFulltextIndex
         parser.setLowercaseExpandedTerms( false );
         parser.setDefaultOperator( QueryParser.AND_OPERATOR );
         Query query = parser.parse( queryStr );
-        log.info( "    ===> Lucene query: " + query );
+        log.debug( "    ===> Lucene query: " + query );
 
         maxResults = maxResults == -1 || maxResults > LuceneRecordQuery.BIG_BUT_NOT_MAX_VALUE 
                 ? LuceneRecordQuery.BIG_BUT_NOT_MAX_VALUE : maxResults;
