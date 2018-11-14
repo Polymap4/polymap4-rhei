@@ -23,7 +23,7 @@ $shell-bg:              #f3f3f3;
 $text-color:            #4a4a4a;
 $text-color-disabled:   #7a7a7a;
 
-$action-bg:             lighten( #486BAA, 10%);
+$action-bg:             lighten( #374A5E, 25%);
 $action-fg:             #ffffff;
 $action-disabled-bg:    #C0C0C0;
 $action-disabled-fg:    #ffffff;
@@ -35,7 +35,7 @@ $selection-bg:          #FFFCCC;              /*lighten( $action-bg, 30% );*/
 $selection-fg:          $text-color;
 $selection-hover:       #fafafa;
 
-$header-bg:             lighten( $action-bg, 10% );
+$header-bg:             lighten( $action-bg, 0% );
 $header-fg:             #ffffff;
 
 $fab-bg:                #81CC39;

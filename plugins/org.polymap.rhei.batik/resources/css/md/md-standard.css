@@ -959,7 +959,7 @@ Button[TOGGLE],
 Button[PUSH][BORDER],
 Button[TOGGLE][BORDER] {
   color: #ffffff;
-  background-color: #6786be;
+  background-color: #6c89a9;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
@@ -967,7 +967,7 @@ Button[TOGGLE][BORDER] {
 /* line 46, ../../sass/md/_button.scss */
 Button[PUSH][FLAT],
 Button[TOGGLE][FLAT] {
-  color: #6786be;
+  color: #6c89a9;
   background-color: transparent;
   box-shadow: none;
 }
@@ -1018,7 +1018,7 @@ Button[TOGGLE][FLAT]:disabled {
 Button[ARROW]:hover,
 Button[PUSH]:hover,
 Button[TOGGLE]:hover {
-  background-color: #486baa;
+  background-color: #53708e;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
   animation: hoverOut 400ms ease-out;
 }
@@ -1027,14 +1027,14 @@ Button[TOGGLE]:hover {
 Button[PUSH][FLAT]:hover,
 Button[TOGGLE][FLAT]:hover {
   background-color: transparent;
-  color: #486baa;
+  color: #53708e;
 }
 
 /* line 111, ../../sass/md/_button.scss */
 Button[ARROW]:pressed,
 Button[PUSH]:pressed,
 Button[TOGGLE]:pressed {
-  background-color: #395486;
+  background-color: #40576e;
   /*background-image: gradient(
     linear, left top, left bottom,
     from( #d5d5d5 ),
@@ -1535,7 +1535,7 @@ Text[MULTI][BORDER] {
 /* line 29, ../../sass/md/_text.scss */
 Text[BORDER]:focused,
 Text[MULTI][BORDER]:focused {
-  border: 1px solid #6786be;
+  border: 1px solid #6c89a9;
   background-color: #FFFCCC;
   box-shadow: none;
 }
@@ -1632,7 +1632,7 @@ Table-RowOverlay {
 Table-RowOverlay:hover,
 Table-RowOverlay:linesvisible:even:hover {
   color: #171717;
-  background-color: #d9e1ef;
+  background-color: #d3dce5;
 }
 
 /* line 61, ../../sass/md/_table.scss */
@@ -1741,12 +1741,12 @@ ScrollBar-Thumb {
 
 /* line 19, ../../sass/md/_scrollbar.scss */
 ScrollBar-Thumb:hover {
-  background-color: #9cb1d5;
+  background-color: #9cb0c5;
 }
 
 /* line 22, ../../sass/md/_scrollbar.scss */
 ScrollBar-Thumb:pressed {
-  background-color: #7894c6;
+  background-color: #7c96b2;
 }
 
 /* line 25, ../../sass/md/_scrollbar.scss */
@@ -1781,7 +1781,7 @@ ScrollBar-DownButton[VERTICAL] {
 /* line 3, ../../sass/md/_toolbar.scss */
 ToolBar {
   color: #ffffff;
-  background-color: #8aa2ce;
+  background-color: #6c89a9;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
   border-radius: 2px;
   padding: 0px;
@@ -1801,7 +1801,7 @@ ToolBar[BORDER] {
 ToolItem {
   font: 14px "Roboto", "Noto", sans-serif;
   color: inherit;
-  background-color: #8aa2ce;
+  background-color: #6c89a9;
   background-image: none;
   border: none;
   border-radius: 2px;
@@ -1814,7 +1814,7 @@ ToolItem {
 
 /* line 34, ../../sass/md/_toolbar.scss */
 ToolItem:hover {
-  background-color: #6786be;
+  background-color: #53708e;
   /*  background-image: gradient(
       linear, left top, left bottom,
       from( #f9f9f9 ),
@@ -1829,7 +1829,7 @@ ToolItem:pressed, ToolItem:selected {
   border: 1px solid #a4a4a4;
   border-radius: 2px;
   padding: 9px 8px 8px 9px;
-  background-color: #486baa;
+  background-color: #40576e;
 }
 
 /* line 52, ../../sass/md/_toolbar.scss */
@@ -2017,7 +2017,7 @@ FileUpload[BORDER] {
   box-shadow: 0px 1px 2px $shadow;
   */
   /* FLAT */
-  color: #6786be;
+  color: #6c89a9;
   background-color: transparent;
   box-shadow: none;
 }
@@ -2039,7 +2039,7 @@ FileUpload:disabled {
 /* line 44, ../../sass/md/_upload.scss */
 FileUpload:hover {
   cursor: pointer;
-  color: #486baa;
+  color: #53708e;
   background-color: #e6e6e6;
   /*background-color: darken( $action-bg, 10% );*/
   animation: hoverOut 400ms ease-out;
@@ -2047,7 +2047,7 @@ FileUpload:hover {
 
 /* line 52, ../../sass/md/_upload.scss */
 FileUpload:pressed {
-  background-color: #6786be;
+  background-color: #6c89a9;
 }
 
 /* line 56, ../../sass/md/_upload.scss */
@@ -2062,7 +2062,7 @@ FileUpload-FocusIndicator {
 /** MdToolbar */
 /* line 3, ../../sass/md/_toolbar2.scss */
 .atlas-toolbar {
-  background-image: gradient(linear, left top, left bottom, from(#8aa2ce), to(#ffffff));
+  background-image: gradient(linear, left top, left bottom, from(#6c89a9), to(#ffffff));
 }
 
 /** MdToolbar2 */
@@ -2104,7 +2104,7 @@ Button[TOGGLE].toolbar2-item {
 Button[PUSH].toolbar2-item:hover,
 Button[TOGGLE].toolbar2-item:hover,
 Button[TOGGLE].toolbar2-item:hover:selected {
-  border: 1px solid #6786be;
+  border: 1px solid #6c89a9;
   background-color: inherit;
   background-image: none;
   animation: hoverIn 400ms ease-in;
@@ -2114,7 +2114,7 @@ Button[TOGGLE].toolbar2-item:hover:selected {
 Button[PUSH].toolbar2-item:pressed,
 Button[TOGGLE].toolbar2-item:pressed,
 Button[TOGGLE].toolbar2-item:pressed:selected {
-  border: 2px solid #6786be;
+  border: 2px solid #6c89a9;
 }
 
 /* line 51, ../../sass/md/_toolbar2.scss */
@@ -2139,7 +2139,7 @@ Combo[BORDER] {
 /* line 13, ../../sass/md/_combo.scss */
 Combo:focused,
 Combo[BORDER]:focused {
-  border: 1px solid #6786be;
+  border: 1px solid #6c89a9;
   background-color: #FFFCCC;
   box-shadow: none;
 }
@@ -2417,7 +2417,7 @@ Spinner[BORDER] {
 /* line 13, ../../sass/md/_spinner.scss */
 Spinner:focused,
 Spinner[BORDER]:focused {
-  border: 1px solid #6786be;
+  border: 1px solid #6c89a9;
   background-color: #FFFCCC;
   box-shadow: none;
 }
@@ -2503,7 +2503,7 @@ Sash[BORDER] {
 
 /* line 15, ../../sass/md/_sash.scss */
 Sash:hover {
-  background-color: #9cb1d5;
+  background-color: #9cb0c5;
 }
 
 /* line 19, ../../sass/md/_sash.scss */
@@ -2519,7 +2519,7 @@ Sash-Handle:vertical {
 /* Link default theme */
 /* line 4, ../../sass/md/_link.scss */
 Link {
-  color: #5c83c9;
+  color: #6089b4;
   background-color: #ffffff;
   background-image: none;
   background-repeat: repeat;
@@ -2534,7 +2534,7 @@ Link[BORDER] {
 
 /* line 17, ../../sass/md/_link.scss */
 Link-Hyperlink {
-  color: #5c83c9;
+  color: #6089b4;
   text-shadow: none;
   text-decoration: none;
 }
@@ -2766,8 +2766,8 @@ Composite.atlas-panel-client {
 /* line 43, ../../sass/md/_batik_panel.scss */
 Composite[BORDER].atlas-panel-header {
   border-radius: 3px;
-  border: 0px solid #90a7d0;
-  background-color: #8aa2ce;
+  border: 0px solid #718dac;
+  background-color: #6c89a9;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
   /*background-image: gradient(linear, left top, left bottom, from($header-bg), to(#ffffff));*/
 }
@@ -2779,7 +2779,7 @@ Button[TOGGLE].atlas-panel-header {
   border-radius: 3px;
   padding: 0px 5px;
   spacing: 0px;
-  background-color: #8aa2ce;
+  background-color: #6c89a9;
   /*  background-color: #ffffff; */
   /*  background-image : url( resources/icons/close3.gif );*/
   border: 0px solid #ffffff;
@@ -2792,7 +2792,7 @@ Button[PUSH]:hover.atlas-panel-header,
 Button[TOGGLE]:hover.atlas-panel-header {
   color: #ffffff;
   border: none;
-  background-color: #6786be;
+  background-color: #53708e;
   box-shadow: none;
 }
 
