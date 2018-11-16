@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2015, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2015-2018, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -44,7 +44,7 @@ import org.polymap.core.ui.StatusDispatcher;
 import org.polymap.core.ui.UIUtils;
 
 /**
- * Provides a simple dialog consisting of a title, an contents area and and action
+ * Provides a simple dialog consisting of a title, a contents area and action
  * buttons at the bottom.
  * 
  * @see <a href="http://www.google.com/design/spec/components/dialogs.html">Material
@@ -214,14 +214,20 @@ public class SimpleDialog
     protected void initializeBounds() {
         super.initializeBounds();
 
+        // adapt to display size
+        Shell shell = getShell();
+        Rectangle shellBounds = shell.getBounds();
+        Rectangle displayBounds = shell.getDisplay().getBounds();
+        shell.setSize( 
+                shellBounds.width = Math.min( displayBounds.width - 12, shellBounds.width ),
+                shellBounds.height = Math.min( displayBounds.height - 80, shellBounds.height ));
+        log.info( "shell" + shell.getBounds() );
         // center
         centerOn.ifPresent( parent -> {
-            Shell shell = getShell();
-            Rectangle bounds = parent.getBounds();
+            Rectangle parentBounds = parent.getBounds();
             Point pos = parent.toDisplay( 0, 0 );
-            Rectangle rect = shell.getBounds();
-            int x = pos.x + (bounds.width - rect.width) / 2 ;
-            int y = pos.y + (bounds.height - rect.height) / 2 ;
+            int x = pos.x + (parentBounds.width - shellBounds.width) / 2 ;
+            int y = pos.y + (parentBounds.height - shellBounds.height) / 2 ;
             shell.setLocation( x, y );
         });
     }
@@ -230,7 +236,6 @@ public class SimpleDialog
     @Override
     protected void configureShell( Shell newShell ) {
         super.configureShell( newShell );
-        // title
         title.ifPresent( t -> newShell.setText( t ) );        
     }
 
