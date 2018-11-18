@@ -15,6 +15,7 @@
 package org.polymap.rhei.batik.engine;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -51,6 +52,8 @@ public class DefaultBrowserNavigation
         implements BrowserNavigationListener {
 
     private static final Log log = LogFactory.getLog( DefaultBrowserNavigation.class );
+    
+    private static final Pattern    NO_TITLE_CHAR = Pattern.compile( "[^A-Za-z0-9 _-]" );
     
     private JavaScriptExecutor      js;
 
@@ -145,6 +148,7 @@ public class DefaultBrowserNavigation
 
     protected void pushState( String state, String title ) {
         assert !StringUtils.isBlank( state );
+        title = NO_TITLE_CHAR.matcher( StringUtils.defaultIfBlank( title, "-" ) ).replaceAll( "" );
         log.debug( "pushState(): " + state + " / " + title );
         js.execute( Joiner.on( "" ).useForNull( "" ).join( 
                 "window.history.pushState({},'", title, "','#", state, "');" ) );
@@ -154,6 +158,7 @@ public class DefaultBrowserNavigation
     
     protected void replaceState( String state, String title ) {
         assert !StringUtils.isBlank( state );
+        title = NO_TITLE_CHAR.matcher( StringUtils.defaultIfBlank( title, "-" ) ).replaceAll( "" );
         log.debug( "replaceState(): " + state + " / " + title );
         js.execute( Joiner.on( "" ).useForNull( "" ).join( 
                 "window.history.replaceState({},'", title, "','#", state, "');" ) ); 
