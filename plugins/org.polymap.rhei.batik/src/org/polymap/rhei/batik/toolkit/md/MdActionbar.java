@@ -66,7 +66,8 @@ public class MdActionbar
         tk.adapt( this );
         this.moveAbove( null );
         UIUtils.setVariant( this, MdToolkit.CSS_ACTIONBAR );
-        FormDataFactory.on( this ).fill().top( 0, dp( DefaultAppDesign.HEADER_HEIGHT ) ).noBottom().height( 35 );
+        FormDataFactory.on( this ).fill().top( 0, dp( DefaultAppDesign.HEADER_HEIGHT ) )
+                .noBottom().height( dp( DefaultAppDesign.HEADER_HEIGHT ) );
 
         setLayout( FormLayoutFactory.defaults().margins( 3 ).spacing( 8 ).create() );
 //        setLayout( RowLayoutFactory.fillDefaults()
@@ -165,8 +166,10 @@ public class MdActionbar
         btn.addSelectionListener( UIUtils.selectionListener( ev -> action.run() ) );
         
         action.addPropertyChangeListener( ev -> {
-            log.info( "PROP: " + ev.getProperty() );
-            if (ev.getProperty().equals( "text" )) {
+            if (btn.isDisposed()) {
+                log.warn( "Button of this Action is disposed already." );
+            }
+            else if (ev.getProperty().equals( "text" )) {
                 btn.setText( action.getText() );
             }
             else if (ev.getProperty().equalsIgnoreCase( "tooltiptext" )) {
