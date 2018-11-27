@@ -87,6 +87,8 @@ public class DefaultAppDesign
     public static final String          CSS_PANEL_CLIENT = CSS_PANEL + "-client";
     public static final String          CSS_SWITCHER = CSS_PANEL + "-switcher";
 
+    public static final int             HEADER_HEIGHT = 58;
+
     private DefaultAppManager           appManager;
 
     protected Display                   display;
@@ -157,7 +159,7 @@ public class DefaultAppDesign
 
         // panels
         Composite panelContainer = fillPanelsArea( mainWindow );
-        panelContainer.setLayoutData( FormDataFactory.filled().top( 0, 3 ).create() );            
+        panelContainer.setLayoutData( FormDataFactory.filled().top( 0 ).create() );            
         if (headerContainer != null) {
             panelContainer.setLayoutData( FormDataFactory.filled().top( headerContainer ).create() );
         }
@@ -250,7 +252,7 @@ public class DefaultAppDesign
         
         // head
         Composite head = setVariant( new Composite( parent, SWT.BORDER | SWT.NO_FOCUS ), CSS_PANEL_HEADER );
-        head.setLayoutData( FormDataFactory.filled().clearBottom().height( dp( 54 ) ).create() );
+        head.setLayoutData( FormDataFactory.filled().clearBottom().height( dp( HEADER_HEIGHT ) ).create() );
         head.setLayout( FormLayoutFactory.defaults().margins( 2 ).spacing( 2 ).create() );
 
         // decoration
@@ -264,7 +266,7 @@ public class DefaultAppDesign
 
         // scrolled
         ScrolledComposite scrolled = new ScrolledComposite( parent, SWT.NO_FOCUS | SWT.V_SCROLL );
-        scrolled.setLayoutData( FormDataFactory.filled().top( 0, dp( 54 ) ).create() );
+        scrolled.setLayoutData( FormDataFactory.filled().top( 0, dp( HEADER_HEIGHT ) ).create() );
         scrolled.setExpandVertical( true );
         scrolled.setExpandHorizontal( true );
         scrolled.setTouchEnabled( true );
@@ -272,7 +274,7 @@ public class DefaultAppDesign
 
         // panel
         Composite panelParent = setVariant( new Composite( scrolled, SWT.NO_FOCUS ), CSS_PANEL_CLIENT );
-        panelParent.setLayoutData( FormDataFactory.filled().top( 0, dp( 54 ) ).create() );
+        panelParent.setLayoutData( FormDataFactory.filled().top( 0, dp( HEADER_HEIGHT ) ).create() );
         
         // Contents
         // defer rendering to next request cycle; so that panel is made visible immediately
@@ -351,22 +353,19 @@ public class DefaultAppDesign
                 .stream()
                 .sorted( reverseOrder( comparing( p -> p.site().stackPriority.get() ) ) )
                 .forEach( p -> {
-                        int btnCount = switcher.getChildren().length;
-                        Button btn = createSwitcherButton( switcher, p );
-                        if (btn.getLayoutData() == null) {
-                            btn.setLayoutData( btnCount == 0
-                                    ? FormDataFactory.filled().noRight().create()
-                                    : FormDataFactory.filled().noRight().left( switcher.getChildren()[btnCount-1] ).create() );
+                    int btnCount = switcher.getChildren().length;
+                    Button btn = createSwitcherButton( switcher, p );
+                    if (btn.getLayoutData() == null) {
+                        btn.setLayoutData( btnCount == 0
+                                ? FormDataFactory.filled().noRight().create()
+                                : FormDataFactory.filled().noRight().left( switcher.getChildren()[btnCount-1] ).create() );
+                    }
+
+                    btn.addSelectionListener( new SelectionAdapter() {
+                        public void widgetSelected( SelectionEvent ev ) {
+                            appManager.getContext().openPanel( panelPath, p.id() );
                         }
-
-//                        IPanelSite panelSite = p.getSite();
-//                        btn.setSelection( panelSite.getPanelStatus().ge( PanelStatus.VISIBLE ) );
-
-                        btn.addSelectionListener( new SelectionAdapter() {
-                            public void widgetSelected( SelectionEvent ev ) {
-                                appManager.getContext().openPanel( panelPath, p.id() );
-                            }
-                        });
+                    });
                 });
 
         Point size = switcher.computeSize( SWT.DEFAULT, 30, true );

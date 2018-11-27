@@ -1162,7 +1162,7 @@ Button-FocusIndicator[CHECK], Button-FocusIndicator[RADIO] {
   opacity: 1;
 }
 
-/* Floating Action Button theme */
+/* Floating Action Button */
 /* line 3, ../../sass/md/_fab.scss */
 Button.batik-panel-fab {
   border-radius: 30px;
@@ -1192,6 +1192,39 @@ Button:pressed.batik-panel-fab {
 Button:disabled.batik-panel-fab {
   border: 1px solid #C0C0C0;
   background-color: #C0C0C0;
+}
+
+/* Floating Actionbar */
+/* line 32, ../../sass/md/_fab.scss */
+Composite.batik-panel-actionbar {
+  background-color: #373232;
+  /*background-color: $header-bg;*/
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  padding: 0px;
+  spacing: 0;
+  background-image: none;
+  border: none;
+  opacity: 1;
+  animation: flyInTop 400ms ease-in, flyOutTop 300ms ease-in;
+}
+
+/* line 44, ../../sass/md/_fab.scss */
+Button[PUSH].batik-panel-actionbar {
+  color: #ffffff;
+  /*background-color: $fab-bg;*/
+  background-color: #6c89a9;
+  /*background-color: transparent;*/
+  box-shadow: none;
+  padding: 5px 10px;
+}
+
+/* line 52, ../../sass/md/_fab.scss */
+Button[PUSH]:hover.batik-panel-actionbar {
+  color: #ffffff;
+  /*background-color: $fab-hover;*/
+  background-color: #53708e;
+  box-shadow: none;
 }
 
 /* Tree default theme */
@@ -2233,7 +2266,7 @@ Combo-FocusIndicator {
 /** Snackbar */
 /* line 3, ../../sass/md/_snackbar.scss */
 Composite.snackbar-fly {
-  background-color: #323232;
+  background-color: #373232;
   box-shadow: 0px -1px 2px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   padding: 0px;
@@ -2246,7 +2279,7 @@ Composite.snackbar-fly {
 
 /* line 15, ../../sass/md/_snackbar.scss */
 Composite.snackbar-fade {
-  background-color: #323232;
+  background-color: #373232;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
   border-radius: 3px;
   padding: 0px;
@@ -2266,7 +2299,7 @@ Label.snackbar-message {
 /* line 2, ../../sass/md/_tooltip.scss */
 Widget-ToolTip {
   padding: 8px;
-  background-color: #323232;
+  background-color: #373232;
   background-image: none;
   border: none;
   border-radius: 3px;

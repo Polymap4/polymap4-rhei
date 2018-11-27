@@ -372,11 +372,15 @@ public class DefaultToolkit
 
     @Override
     public Button createButton( Composite parent, String text, int... styles ) {
-        Button control = adapt( new Button( parent, stylebits( styles ) ), true, true );
+        Button control = new Button( parent, stylebits( styles ) ) {
+            @Override public void setText( String _text ) {
+                super.setText( StringUtils.upperCase( _text, Polymap.getSessionLocale() ) );
+            }
+        };
         if (text != null) {
-            control.setText( StringUtils.upperCase( text, Polymap.getSessionLocale() ) );
+            control.setText( text );
         }
-        return control;
+        return adapt( control, true, true );
     }
     
     @Override

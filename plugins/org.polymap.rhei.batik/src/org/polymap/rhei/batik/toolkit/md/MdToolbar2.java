@@ -54,7 +54,7 @@ import org.polymap.rhei.batik.toolkit.RadioItem;
 public class MdToolbar2
         extends GroupItem {
 
-    private static Log log = LogFactory.getLog( MdToolbar2.class );
+    private static final Log log = LogFactory.getLog( MdToolbar2.class );
     
     /** Pseudo class of the toolbar Composite: basic, no shadow */
     private static final String     CSS_TOOLBAR = "toolbar2";

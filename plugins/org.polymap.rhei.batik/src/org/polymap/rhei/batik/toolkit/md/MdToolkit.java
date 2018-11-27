@@ -47,6 +47,7 @@ public class MdToolkit
     public static final IMessages   i18n = Messages.forPrefix( "MdToolkit" );
     
     public static final String      CSS_FAB = CSS_PREFIX + "-fab";
+    public static final String      CSS_ACTIONBAR = CSS_PREFIX + "-actionbar";
 
     
     public MdToolkit( PanelPath panelPath, PageStack<PanelPath>.Page panelPage ) {
@@ -203,6 +204,21 @@ public class MdToolkit
 //    public Composite createCard( Composite parent ) {
 //        throw new RuntimeException( "not yet..." );
 //    }
+
+
+    /**
+     *
+     * @param styles
+     *        <ul>
+     *        <li>SWT.TOP - Toolbar on top, shadow at the bottom.</li>
+     *        <li>SWT.BOTTOM - Toolbar on bottom, shadow at the top.</li>
+     *        </ul>
+     * @see <a href="https://material.io/design/components/app-bars-top.html#">
+     *      Material Design</a>
+     */
+    public MdActionbar createFloatingActionbar() {
+        return new MdActionbar( this, panelPage.control );
+    }
 
 
     public MdListViewer createListViewer( Composite parent, int... styles ) {
