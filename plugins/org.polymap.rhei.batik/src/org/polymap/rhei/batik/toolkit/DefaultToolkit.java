@@ -33,6 +33,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Throwables;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -219,46 +220,14 @@ public class DefaultToolkit
      * 
      */
     protected static class PegDownRenderOutput
-            implements MarkdownRenderOutput {
+            extends MarkdownRenderOutput {
 
-        private String      url, text, title, id, clazz;
-        
-        @Override
-        public void setUrl( String linkUrl ) {
-            this.url = linkUrl;
-        }
-
-        @Override
-        public void setTitle( String title ) {
-            this.title = title;
-        }
-
-        @Override
-        public void setText( String text ) {
-            this.text = text;
-        }
-        
-        @Override
-        public void setId( String id ) {
-            this.id = id;
-        }
-        
-        @Override
-        public void setClass( String clazz ) {
-            this.clazz = clazz;
-        }
-        
         public Rendering createRendering() {
-            Rendering rendering = new Rendering( url, text );
-            if (!StringUtils.isEmpty( title )) {
-                rendering.withAttribute( "title", FastEncoder.encode( title ) );
-            }
-            if (!StringUtils.isEmpty( id )) {
-                rendering.withAttribute( "id", FastEncoder.encode( id ) );
-            }
-            if (!StringUtils.isEmpty( clazz )) {
-                rendering.withAttribute( "class", FastEncoder.encode( clazz ) );
-            }
+            Rendering rendering = new Rendering( url.get(), text.get() );
+            title.ifPresent( v -> rendering.withAttribute( "title", FastEncoder.encode( v ) ) );
+            id.ifPresent( v -> rendering.withAttribute( "id", FastEncoder.encode( v ) ) );
+            clazz.ifPresent( v -> rendering.withAttribute( "class", FastEncoder.encode( v ) ) );
+            target.ifPresent( v -> rendering.withAttribute( "target", FastEncoder.encode( v ) ) );
             return rendering;
         }
     }
@@ -279,21 +248,28 @@ public class DefaultToolkit
         }
 
         protected Rendering render( IMarkdownNode node ) {
+            Rendering result = null;
+            // check registered factories
             for (Callable<IMarkdownRenderer> factory : mdRendererFactories) {
                 PegDownRenderOutput out = new PegDownRenderOutput();
                 try {
                     if (factory.call().render( DefaultToolkit.this, node, out, widget )) {
-                        return out.createRendering();
+                        result = out.createRendering();
+                        break;
                     }
                 }
-                catch (RuntimeException e) {
-                    throw e;
-                }
                 catch (Exception e) {
-                    throw new RuntimeException( e );
+                    throw Throwables.propagate( e );
                 }
             }
-            return null;
+            // default: simple external link
+            if (result == null) {
+                PegDownRenderOutput out = new PegDownRenderOutput();
+                if (new ExternalLinkRenderer().render( DefaultToolkit.this, node, out, widget )) {
+                    result = out.createRendering();
+                }
+            }
+            return result;
         }
         
         @Override

@@ -36,7 +36,7 @@ p {
   color: lighten( $text-color, 15%);
   font-size: $font-size-body2 !important; 
   line-height: 1.3em;
-  text-align: justify;
+  text-align: left; /*justify;*/
   margin: 10px 0 10px 0;
 }
 ul {

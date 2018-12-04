@@ -1,6 +1,6 @@
 /* 
  * polymap.org
- * Copyright (C) 2014, Falko Bräutigam. All rights reserved.
+ * Copyright (C) 2014-2018, Falko Bräutigam. All rights reserved.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -42,7 +42,7 @@ import org.polymap.rhei.batik.engine.linkaction.LinkActionServiceHandler;
 class PageLinkRenderer
         implements IMarkdownRenderer, DisposeListener, ILinkAction {
 
-    private static Log log = LogFactory.getLog( PageLinkRenderer.class );
+    private static final Log log = LogFactory.getLog( PageLinkRenderer.class );
     
     private Display             display;
 
@@ -69,9 +69,9 @@ class PageLinkRenderer
             assert display != null;
             
             String linkUrl = "javascript:sendServiceHandlerRequest('" + LinkActionServiceHandler.SERVICE_HANDLER_ID + "','" + id + "');";
-            out.setUrl( linkUrl );
-            out.setText( node.text() );
-            out.setTitle( node.title() );
+            out.url.set( linkUrl );
+            out.text.set( node.text() );
+            out.title.set( node.title() );
             return true;
             
 //            Rendering rendering = new Rendering( linkUrl, linktext );

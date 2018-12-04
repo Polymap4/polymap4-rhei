@@ -14,20 +14,64 @@
  */
 package org.polymap.rhei.batik.toolkit;
 
+import org.polymap.core.runtime.config.Config2;
+import org.polymap.core.runtime.config.Configurable;
+import org.polymap.core.runtime.config.Mandatory;
+
 /**
- * 
+ * Describes a link to be rendered.
  *
  * @author <a href="http://www.polymap.de">Falko Bräutigam</a>
  */
-public interface MarkdownRenderOutput {
+public abstract class MarkdownRenderOutput
+        extends Configurable {
 
-    public void setUrl( String linkUrl );
+    @Mandatory
+    public Config2<MarkdownRenderOutput,String>     url;
+    
+    public Config2<MarkdownRenderOutput,String>     title;
+    
+    public Config2<MarkdownRenderOutput,String>     text;
+    
+    public Config2<MarkdownRenderOutput,String>     id;
+    
+    public Config2<MarkdownRenderOutput,String>     clazz;
+    
+    public Config2<MarkdownRenderOutput,String>     target;
+    
+    /** 
+     * @deprecated Use {@link #url} instead. 
+     */
+    public void setUrl( String linkUrl ) {
+        this.url.set( linkUrl );
+    }
 
-    public void setTitle( String title );
+    /** 
+     * @deprecated Use {@link #title} instead. 
+     */
+    public void setTitle( String title ) {
+        this.title.set( title );
+    }
 
-    public void setText( String text );
+    /** 
+     * @deprecated Use {@link #text} instead. 
+     */
+    public void setText( String text ) {
+        this.text.set( text );
+    }
 
-    public void setId( String id );
+    /** 
+     * @deprecated Use {@link #id} instead. 
+     */
+    public void setId( String id ) {
+        this.id.set( id );
+    }
 
-    public void setClass( String clazz );
+    /** 
+     * @deprecated Use {@link #clazz} instead. 
+     */
+    public void setClass( String clazz ) {
+        this.clazz.set( clazz );
+    }
+    
 }
