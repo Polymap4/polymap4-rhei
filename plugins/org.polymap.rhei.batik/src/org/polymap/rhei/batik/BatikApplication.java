@@ -52,6 +52,9 @@ public class BatikApplication
 
     private static final Log log = LogFactory.getLog( BatikApplication.class );
     
+    /** The interval used for {@link ServerPushManager} to re-new server push requests. */
+    public static final int             REQUEST_CHECK_INTERVAL = 30*1000;
+    
     /**
      * @deprecated Use {@link UIUtils} instead.
      */
@@ -189,7 +192,7 @@ public class BatikApplication
     protected void initUICallback() {
         UIUtils.activateCallback( BatikApplication.class.getSimpleName() );
         ServerPushManager serverPush = ServerPushManager.getInstance();
-        serverPush.setRequestCheckInterval( 30000 );
+        serverPush.setRequestCheckInterval( REQUEST_CHECK_INTERVAL );
         
         // Adds a runnable every 30s; this causes the UI callback request to be woken up
         // and returning to the client; this re-news the request and prevents intermediate
@@ -205,11 +208,11 @@ public class BatikApplication
                     display.asyncExec( () -> {
                         //System.out.print( "." );                
                     });
-                    schedule( 30000 );
+                    schedule( REQUEST_CHECK_INTERVAL );
                 }
             }
         };
         job.setSystem( true );
-        job.schedule( 30000 );
+        job.schedule( REQUEST_CHECK_INTERVAL );
     }
 }
