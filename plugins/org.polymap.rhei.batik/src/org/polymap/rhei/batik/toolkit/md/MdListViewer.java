@@ -431,4 +431,11 @@ public class MdListViewer
         throw new UnsupportedOperationException( "The Material Design list supports multiple lines of text, for example call #setFirstLineLabelProvider()." );
     }
 
+
+    @Override
+    protected void fireOpen( OpenEvent ev ) {
+        // allow package classes to access
+        super.fireOpen( ev );
+    }
+
 }
